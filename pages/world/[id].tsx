@@ -10,6 +10,7 @@ import OrbitCameraController from '../../threeComponents/OrbitController';
 const ThreeTest:NextPage = () => {
 
     const roomId = useRef<string | null>()
+    const [roomScale, setRoomScale] = useState(0.5);
 
     const getRoomId = () => {
       const url = window.location.href;
@@ -76,10 +77,10 @@ const ThreeTest:NextPage = () => {
       // const gltf = useLoader(GLTFLoader, 'public/3d_models/living_room_isometric_lowpoly/scene.gltf')
 
       const RoomModel = () => {
-        const gltf = useLoader(GLTFLoader, '/3d_models/living_room_isometric_lowpoly/scene.gltf');
+        const gltf = useLoader(GLTFLoader, '/3d_models/living_room_isometric_lowpoly/items/room_wall.glb');
         return (
           <>
-          <primitive  position={[0, 0, 0]} object={gltf.scene} scale={0.02} />
+          <primitive  position={[0, 0, 0]} object={gltf.scene} scale={roomScale} />
       </>
         )
       }
@@ -93,6 +94,10 @@ const ThreeTest:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
+          <div className="z-10 absolute">
+              <button className="w-4 h-4 text-lg" onClick={() => {setRoomScale(roomScale => roomScale += 0.05)}}>+</button>
+              <button className="w-4 h-4 text-lg" onClick={() => {setRoomScale(roomScale => roomScale -= 0.05)}}>-</button>
+          </div>
                     <Canvas className="w-screen h-screen" camera={{ position: [0, -40, 20] }} >
           <OrbitCameraController />
           <ambientLight />
@@ -103,7 +108,6 @@ const ThreeTest:NextPage = () => {
               <RoomModel />
            </Suspense>
         </Canvas>,
-
         </section>
     )
 

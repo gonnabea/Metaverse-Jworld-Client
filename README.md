@@ -13,7 +13,7 @@
 - [ ] Context-API
 - [ ] GraphQL
 - [ ] REST API
-- [x] Websocket
+- [x] Socket.io
 - [ ] WebRTC
 
 
@@ -94,3 +94,7 @@
 
 - [ ] 아이템 구매 기능
 - [ ] 가구 구매 기능
+
+### 기획 Figma
+
+- https://www.figma.com/file/8HQy4JpmEwmkXsWAR53sbF/Untitled?node-id=24%3A15
