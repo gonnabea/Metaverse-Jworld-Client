@@ -2,15 +2,10 @@ import type { NextPage } from 'next'
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
 import wsConnection from '../../multiplay/wsConnection';
-import { useLoader } from '@react-three/fiber';
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import { Suspense } from "react";
-import OrbitCameraController from '../../threeComponents/OrbitController';
 
 const ThreeTest:NextPage = () => {
 
     const roomId = useRef<string | null>()
-    const [roomScale, setRoomScale] = useState(0.5);
 
     const getRoomId = () => {
       const url = window.location.href;
@@ -74,17 +69,6 @@ const ThreeTest:NextPage = () => {
         )
       }
 
-      // const gltf = useLoader(GLTFLoader, 'public/3d_models/living_room_isometric_lowpoly/scene.gltf')
-
-      const RoomModel = () => {
-        const gltf = useLoader(GLTFLoader, '/3d_models/living_room_isometric_lowpoly/items/room_wall.glb');
-        return (
-          <>
-          <primitive  position={[0, 0, 0]} object={gltf.scene} scale={roomScale} />
-      </>
-        )
-      }
-
       useEffect(() => {
         
         window.addEventListener("beforeunload", leaveLobby);
@@ -94,19 +78,11 @@ const ThreeTest:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <div className="z-10 absolute">
-              <button className="w-4 h-4 text-lg" onClick={() => {setRoomScale(roomScale => roomScale += 0.05)}}>+</button>
-              <button className="w-4 h-4 text-lg" onClick={() => {setRoomScale(roomScale => roomScale -= 0.05)}}>-</button>
-          </div>
-                    <Canvas className="w-screen h-screen" camera={{ position: [0, -40, 20] }} >
-          <OrbitCameraController />
+                    <Canvas className="w-screen h-screen">
           <ambientLight />
-          {/* <pointLight position={[10, 10, 10]} />
+          <pointLight position={[10, 10, 10]} />
           <Box position={[-1.2, 0, 0]} />
-          <Box position={[1.2, 0, 0]} /> */}
-          <Suspense fallback={null}>
-              <RoomModel />
-           </Suspense>
+          <Box position={[1.2, 0, 0]} />
         </Canvas>,
         </section>
     )
