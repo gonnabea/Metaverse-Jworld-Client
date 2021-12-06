@@ -5,6 +5,8 @@ import SiteMark from '../components/SiteMark';
 import { wsRoom } from '../types/wsRoom';
 import io, { Socket } from "socket.io-client";
 import socketIoClient from '../multiplay/wsConnection';
+import BottomUI from '../components/BottomUI';
+
 
 
 
@@ -12,6 +14,7 @@ import socketIoClient from '../multiplay/wsConnection';
 const Lobby:NextPage = () => {
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
+    const [chatContents, setChatContents] = useState("");
 
     // 웹소켓 리스너
     const handleSocketListeners = () => {
@@ -23,6 +26,7 @@ const Lobby:NextPage = () => {
 
         socketIoClient.on("chat", (data) => {
             console.log(data)
+            setChatContents(chatContents => chatContents = chatContents + data.client + ": " + data.msg)
             })
 
         socketIoClient.on("create-room", (data) => {
@@ -40,6 +44,7 @@ const Lobby:NextPage = () => {
         const chatContent = e.target[0].value;
         socketIoClient.emit("chat", chatContent);
         e.target[0].value = ""
+        setChatContents(chatContents => chatContents = chatContents + clientId.current + ": " + chatContent)
     }
 
     
@@ -107,15 +112,22 @@ const Lobby:NextPage = () => {
                     }
                 ): null}
             </div>
+
+            
             <form onSubmit={(e) => sendBroadChat(e)} action="">
             <input type="text" placeholder="채팅 내용 입력" />
             <input type="submit" value="전송" />
             </form>
 
+            
             <form onSubmit={(e) => createRoom(e)} action="">
             <input type="text" maxLength={10} placeholder="채팅방 이름" />
             <input type="submit" value="채팅방 생성" />
             </form>
+
+            
+            <BottomUI chatContents={chatContents} />
+            
 
         </section>
     )
