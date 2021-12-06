@@ -1,25 +1,22 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
-import { modelList } from '../../data/modelList';
+import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 
-interface tvModelOpts {
+interface carpet2ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
 }
 
-const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0])
-
-
-    const gltf = useLoader(GLTFLoader, modelList.tv);
-
+const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
+    const [position, setPosition] = useState([0, 0, 0]);
+    
+    const gltf = useLoader(GLTFLoader, modelList.carpet_2);
+    
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
-
-
-
+    
     const installModel = () => {
 
       // 마우스 클릭한 지점 위치 얻기
@@ -27,7 +24,7 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
 
       // 모델 설치
       if(closedObjPosition && isFocused === true){
-            console.log("tv 포커싱 상태");
+          console.log("카페트2 포커싱 상태");
           setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
       }
   };
@@ -41,14 +38,16 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
     }, [isFocused])
 
     if(installed === true){
+
         return (
             <>
-                <primitive 
-                    onClick={() => console.log("tv 클릭됨")} 
-                    position={position} scale={scale} 
-                    object={gltf.scene} 
-                />
-            </>
+            <primitive 
+                onClick={() => console.log("카페트2 클릭됨")} 
+                position={position} scale={scale} 
+                object={gltf.scene} 
+            />
+
+          </>
         )
     }
     else{
@@ -56,4 +55,4 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
     }
   }
 
-export default TvModel;
+export default Carpet2Model;

@@ -2,13 +2,13 @@ import type { NextPage } from 'next'
 import { Canvas } from '@react-three/fiber';
 import React, { useEffect, useState } from 'react';
 import { Suspense } from "react";
-import OrbitCameraController from '../../threeComponents/OrbitController';
-import RoomModel from '../../threeComponents/models/RoomModel';
-import Carpet1Model from '../../threeComponents/models/Carpet1Model';
-import TvModel from '../../threeComponents/models/tvModel';
-import Carpet2Model from '../../threeComponents/models/carpet2Model';
+import OrbitCameraController from '../../components/threeComponents/OrbitController';
+import RoomModel from '../../components/threeComponents/models/RoomModel';
+import Carpet1Model from '../../components/threeComponents/models/Carpet1Model';
+import TvModel from '../../components/threeComponents/models/TvModel';
+import Carpet2Model from '../../components/threeComponents/models/Carpet2Model';
 import MiniHompiCustomUI from '../../components/MiniHompiCustomUI';
-import StandingLampModel from '../../threeComponents/models/StandingLampModel';
+import StandingLampModel from '../../components/threeComponents/models/StandingLampModel';
 
 
 const MiniHomepage:NextPage = () => {

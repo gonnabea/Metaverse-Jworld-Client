@@ -1,18 +1,18 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
-import { modelList } from '../../data/modelList';
+import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 
-interface carpet2ModelOpts {
+interface carpet1ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
 }
 
-const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
+const Carpet1Model = ({installed, scale, isFocused}:carpet1ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
-    const gltf = useLoader(GLTFLoader, modelList.carpet_2);
+    const gltf = useLoader(GLTFLoader, modelList.carpet_1);
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
@@ -24,7 +24,7 @@ const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
 
       // 모델 설치
       if(closedObjPosition && isFocused === true){
-          console.log("카페트2 포커싱 상태");
+          console.log("카페트 포커싱 상태");
           setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
       }
   };
@@ -42,7 +42,7 @@ const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
         return (
             <>
             <primitive 
-                onClick={() => console.log("카페트2 클릭됨")} 
+                onClick={() => console.log("카페트1 클릭됨")} 
                 position={position} scale={scale} 
                 object={gltf.scene} 
             />
@@ -55,4 +55,4 @@ const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
     }
   }
 
-export default Carpet2Model;
+export default Carpet1Model;

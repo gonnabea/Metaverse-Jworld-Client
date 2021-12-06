@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLoader } from '@react-three/fiber';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import { Suspense } from "react";
-import OrbitCameraController from '../../threeComponents/OrbitController';
+import OrbitCameraController from '../../components/threeComponents/OrbitController';
 import { modelList } from '../../data/modelList';
 
 const SoccerWorld:NextPage = () => {

@@ -1,34 +1,30 @@
 import type { NextPage } from 'next'
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useEffect, useRef, useState } from 'react';
-import wsConnection from '../../multiplay/wsConnection';
+import socketIoClient from '../../multiplay/wsConnection';
+import { Socket } from 'socket.io-client';
 
-const ThreeTest:NextPage = () => {
+const World:NextPage = () => {
 
-    const roomId = useRef<string | null>()
+    const roomId = useRef<string | null>();
+    
 
+    // url로 부터 roomId 얻기
     const getRoomId = () => {
       const url = window.location.href;
       roomId.current = url.split("world/")[1];
+      alert(roomId.current)
     }
 
 
-      // 웹소켓 리스너
-      wsConnection.onmessage = ({data}) => {
-        if(typeof(data) === 'string'){
-          const parsedData = JSON.parse(data);
-          console.log(parsedData)
-          switch(parsedData.event){
-            case "broadcast":
-              console.log(parsedData)
-              break;
-          }
-        }
-      }
+
+    socketIoClient.on("broadcast", (data) => {
+      console.log(data)
+    })
 
 
     const leaveRoom = () => {
-      wsConnection.send(JSON.stringify({
+      socketIoClient.send(JSON.stringify({
           event: "leave-room",
           data: null
       }))
@@ -37,12 +33,8 @@ const ThreeTest:NextPage = () => {
     const leaveLobby = () => {
            
       alert(roomId.current)
-      wsConnection.send(JSON.stringify({
-          event: "leave-lobby",
-          data: {
-            roomId: roomId.current,
-          }
-        }))
+      socketIoClient.emit("leave-lobby", { roomId: roomId.current });
+
     }
     
 
@@ -61,6 +53,7 @@ const ThreeTest:NextPage = () => {
             ref={ref}
             scale={active ? 1.5 : 1}
             onClick={(event) => setActive(!active)}
+            onDoubleClick={() => leaveLobby()}
             onPointerOver={(event) => setHover(true)}
             onPointerOut={(event) => setHover(false)}>
             <boxGeometry args={[1, 1, 1]} />
@@ -71,8 +64,9 @@ const ThreeTest:NextPage = () => {
 
       useEffect(() => {
         
-        window.addEventListener("beforeunload", leaveLobby);
-        getRoomId();
+        
+        getRoomId()
+
 
       }, [])
 
@@ -89,4 +83,4 @@ const ThreeTest:NextPage = () => {
 
 }
 
-export default ThreeTest;
+export default World;

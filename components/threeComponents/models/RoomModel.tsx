@@ -1,6 +1,6 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader } from '@react-three/fiber';
-import { modelList } from '../../data/modelList';
+import { modelList } from '../../../data/modelList';
 
 interface roomModelOpts {
     roomScale: number;

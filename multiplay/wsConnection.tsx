@@ -1,12 +1,7 @@
-import { w3cwebsocket } from "websocket";
+import { io } from "socket.io-client";
 
-const wsConnection = new w3cwebsocket('ws://localhost:4001')
 
-  wsConnection.onopen = () => {
-      console.log("웹소켓 연결됨")
+export const socketIoClient = io('ws://localhost:4001')
 
-      
 
-  }
-
-export default wsConnection;
+export default socketIoClient;

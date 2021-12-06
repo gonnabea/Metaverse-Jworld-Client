@@ -1,96 +1,86 @@
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { w3cwebsocket } from 'websocket';
 import PageTitle from '../components/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { wsRoom } from '../types/wsRoom';
+import io, { Socket } from "socket.io-client";
+import socketIoClient from '../multiplay/wsConnection';
 
 
 
-export const w3cWs = new w3cwebsocket('ws://localhost:4001')
 
 const Lobby:NextPage = () => {
     const clientId = useRef<string | null>()
-    const {current: wsConnection} = useRef<w3cwebsocket>(w3cWs)
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
 
-
     // 웹소켓 리스너
-    wsConnection.onmessage = ({data}) => {
-        if(typeof(data) === 'string'){
-          const parsedData = JSON.parse(data);
-          console.log(parsedData)
-          switch(parsedData.event){
-            case "enter-lobby":
-              clientId.current = parsedData.clientId;
-              setActiveRooms(parsedData.activeRooms)
-              break;
-            case "broadcast":
-              console.log(parsedData)
-              break;
-            case "create-room":
-              console.log(parsedData)
-              // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-              window.location.replace(`world/${parsedData.roomId}`)
-              break;  
-          }
-        }
-      }
+    const handleSocketListeners = () => {
+        socketIoClient.on("enter-lobby", (data) => {
 
+            clientId.current = data.clientId;
+            setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
+        })
+
+        socketIoClient.on("chat", (data) => {
+            console.log(data)
+            })
+
+        socketIoClient.on("create-room", (data) => {
+            
+            // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
+            window.location.replace(`world/${data.roomId}`) // 방 생성 후 리다이렉트 해주기
+        })
+        
+    }
+
+
+    // 로비 채팅 전송
     const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        wsConnection.send(JSON.stringify({
-            event: "broadcast",
-            data: e.target[0].value
-        }))
+        e.preventDefault();
+        const chatContent = e.target[0].value;
+        socketIoClient.emit("chat", chatContent);
         e.target[0].value = ""
     }
 
+    
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        // wsConnection.send(JSON.stringify({
-        //     event: "enter-lobby",
-        //     data: `클라이언트 접속: ${Math.random()}`
-        // }))
-
-        wsConnection.send(JSON.stringify({
-            event: "create-room",
-            data: {
-                roomName: e.target[0].value,
-                creatorId: clientId.current
+        socketIoClient.emit(
+            "create-room", {
+                roomName: e.target[0].value
             }
-        }))
-
+        )
     
     }
 
-    const leaveLobby = () => {
-           
-
-            wsConnection.send(JSON.stringify({
-                event: "leave-lobby",
-                data: null
-            }))
+    const leaveLobby = async() => {
+     
+        console.log("로비 나가기");
+        socketIoClient.emit("leave-lobby");
         
     }
 
     const joinRoom = async(roomId) => {
-        console.log(roomId)
+        
         console.log("Dsfasfadsfadsf")
-        wsConnection.send(JSON.stringify({
-            event: "join-room",
-            data: {roomId}
-        }))
+        socketIoClient.emit("join-room", {roomId} )
 
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
         window.location.replace(`world/${roomId}`)
     }
+
+    const createConnection = () => {
+        socketIoClient.emit("enter-lobby")
+        
+    }
     
     useEffect(() => {
-        
-        // window.addEventListener('beforeunload', leaveLobby)
-        console.log("컴포넌트 마운트");
+
+        createConnection();
+
+        handleSocketListeners();
+
     }, [])
     
     return(
@@ -117,12 +107,12 @@ const Lobby:NextPage = () => {
                     }
                 ): null}
             </div>
-            <form onSubmit={sendBroadChat} action="">
+            <form onSubmit={(e) => sendBroadChat(e)} action="">
             <input type="text" placeholder="채팅 내용 입력" />
             <input type="submit" value="전송" />
             </form>
 
-            <form onSubmit={createRoom} action="">
+            <form onSubmit={(e) => createRoom(e)} action="">
             <input type="text" maxLength={10} placeholder="채팅방 이름" />
             <input type="submit" value="채팅방 생성" />
             </form>
