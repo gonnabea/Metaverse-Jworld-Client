@@ -6,6 +6,7 @@ import { wsRoom } from '../types/wsRoom';
 import io, { Socket } from "socket.io-client";
 import socketIoClient from '../multiplay/wsConnection';
 import BottomUI from '../components/BottomUI';
+import { Chat } from '../types/wsPayloads';
 
 
 
@@ -14,7 +15,7 @@ import BottomUI from '../components/BottomUI';
 const Lobby:NextPage = () => {
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
-    const [chatContents, setChatContents] = useState("");
+    const [chatContents, setChatContents] = useState<Array<any>>([]);
 
     // 웹소켓 리스너
     const handleSocketListeners = () => {
@@ -26,8 +27,8 @@ const Lobby:NextPage = () => {
 
         socketIoClient.on("chat", (data) => {
             console.log(data)
-            setChatContents(chatContents => chatContents = chatContents + data.client + ": " + data.msg)
-            })
+            setChatContents(chatContents => [...chatContents, data])
+        })
 
         socketIoClient.on("create-room", (data) => {
             
@@ -42,10 +43,12 @@ const Lobby:NextPage = () => {
     const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const chatContent = e.target[0].value;
-        socketIoClient.emit("chat", chatContent);
-        e.target[0].value = ""
-        setChatContents(chatContents => chatContents = chatContents + clientId.current + ": " + chatContent)
-    }
+        if(chatContent.length > 0){
+            socketIoClient.emit("chat", chatContent);
+            e.target[0].value = ""
+            setChatContents(chatContents => [...chatContents, {client: clientId.current, msg: chatContent}])
+        }
+        }
 
     
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
@@ -114,10 +117,8 @@ const Lobby:NextPage = () => {
             </div>
 
             
-            <form onSubmit={(e) => sendBroadChat(e)} action="">
-            <input type="text" placeholder="채팅 내용 입력" />
-            <input type="submit" value="전송" />
-            </form>
+
+
 
             
             <form onSubmit={(e) => createRoom(e)} action="">
@@ -125,8 +126,12 @@ const Lobby:NextPage = () => {
             <input type="submit" value="채팅방 생성" />
             </form>
 
-            
-            <BottomUI chatContents={chatContents} />
+            <BottomUI chatContents={chatContents} ChatForm={() =>
+                <form className="absolute bottom-14 w-96 left-4" onSubmit={(e) => sendBroadChat(e)} action="">
+                <input className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
+                <input className="" type="submit" value="전송" />
+                </form>
+            } />
             
 
         </section>
