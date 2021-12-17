@@ -82,12 +82,22 @@ const Lobby:NextPage = () => {
         socketIoClient.emit("enter-lobby")
         
     }
+
+    // 배경음 시작
+    const startBgm = () => {
+        const bgm = new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`)
+    
+        bgm.loop = true;
+        bgm.play();
+    }
     
     useEffect(() => {
 
         createConnection();
 
         handleSocketListeners();
+
+        startBgm();
 
     }, [])
     
@@ -130,9 +140,9 @@ const Lobby:NextPage = () => {
             CreateRoomForm={() => 
                 <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
                     {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
-                    <form className="flex flex-col w-3/6 h-2/6 justify-around" onSubmit={(e) => createRoom(e)} action="">
-                        <input className="text-center h-1/6" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
-                        <input className="text-center h-1/6" type="number" maxLength={1} max={8} min={1} required={true} placeholder="최대인원 설정" />
+                    <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
+                        <input className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
+                        <input className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
                         <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="채팅방 생성" />
                     </form>
 
