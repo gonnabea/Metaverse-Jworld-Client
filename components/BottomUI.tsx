@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
 
 interface props {
@@ -6,11 +6,12 @@ interface props {
     ChatForm?: Function;
     CreateRoomForm?: Function;
     SettingForm?: Function;
+    newMsgCount?: number;
 }
 
 
 
-const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm }:props) => {
+const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgCount }:props) => {
     
     const [showChats, setShowChats] = useState(false);
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
@@ -54,18 +55,18 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm }:props)
         if(showChats === true)
         return (
             <>
-            <div className="absolute bg-blue-200 text-black bottom-20 left-4 w-96 h-60 p-4 overflow-x-hidden overflow-y-auto">
+            <div id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-4 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
                 {chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold">{content.client}: </span>
                     <span className="">{content.msg}</span>
                     </div>
                 )}
-      
+               
             </div>
+
                 <ChatForm/>
                 </>
         )
-        else
         return (
             <div className="hidden">
             
@@ -92,7 +93,11 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm }:props)
         return <></>
         
     }
-    
+
+    useEffect(() => {
+
+    },[])
+
     return <div className="absolute bottom-0 left-4 w-72 h-12 flex justify-around">
         <ChatBtn />
         <ChatScreen showChats={showChats} chatContents={chatContents} />
@@ -100,6 +105,7 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm }:props)
         <SettingBtn />
         <CreateRoomModal showRoomModal={showRoomModal} />
         <SettingModal showSettingModal={showSettingModal}  />
+               
     </div>
 }
 

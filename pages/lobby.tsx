@@ -15,7 +15,9 @@ import { Chat } from '../types/wsPayloads';
 const Lobby:NextPage = () => {
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
-    const [chatContents, setChatContents] = useState<Array<any>>([]);
+    const [chatContents, setChatContents] = useState<any>([]);
+    const [newMsgCount, setNewMsgCount] = useState<number>(0);
+    const chatInput = useRef<HTMLInputElement>()
 
     const playBtnSoundEffect = () => {
         const btnSoundEffect = new Audio(`/sound_effects/btn_click.wav`);
@@ -40,6 +42,7 @@ const Lobby:NextPage = () => {
         socketIoClient.on("chat", (data) => {
             console.log(data)
             setChatContents(chatContents => [...chatContents, data]);
+            setNewMsgCount(newMsgCount => newMsgCount + 1);
             playChatSoundEffect()
         })
 
@@ -56,12 +59,24 @@ const Lobby:NextPage = () => {
     const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const chatContent = e.target[0].value;
+        console.log(e.target[0])
         if(chatContent.length > 0){
             socketIoClient.emit("chat", chatContent);
-            e.target[0].value = ""
-            setChatContents(chatContents => [...chatContents, {client: clientId.current, msg: chatContent}])
+            
+            setChatContents((chatContents:Chat[]) => [...chatContents, {client: clientId.current, msg: chatContent}]);
+            
+            // 채팅 전송 후 다시 포커스 해주기 위함.
+            setTimeout(() => {
+                chatInput.current?.focus();
+                const chatScreen = document.getElementById("chatScreen");
+                chatScreen?.scrollTo({
+                    top: chatScreen.scrollHeight,
+                    left: 0,
+                    
+                  })
+            }, 0)
         }
-        }
+    }
 
     
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
@@ -97,11 +112,11 @@ const Lobby:NextPage = () => {
     }
 
     // 배경음 시작
-    const startBgm = () => {
+    const startBgm = async() => {
         const bgm = new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`)
     
         bgm.loop = true;
-        bgm.play();
+        await bgm.play();
     }
     
     useEffect(() => {
@@ -110,8 +125,9 @@ const Lobby:NextPage = () => {
         
         handleSocketListeners();
         
-        startBgm();
-
+        startBgm()
+        
+        
     }, [])
     
     return(
@@ -143,10 +159,10 @@ const Lobby:NextPage = () => {
 
 
 
-            <BottomUI chatContents={chatContents} 
+            <BottomUI chatContents={chatContents} newMsgCount={newMsgCount}
             ChatForm={() =>
-                <form className="absolute bottom-14 w-96 left-4 z-10" onSubmit={(e) => sendBroadChat(e)} action="">
-                <input className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
+                <form className="absolute bottom-14 w-96 left-4 z-10" onSubmit={sendBroadChat}>
+                <input id="chatInput" ref={chatInput} className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
                 <input className="" type="submit" value="전송" />
                 </form>
             } 
@@ -162,7 +178,7 @@ const Lobby:NextPage = () => {
                 </div>
             }
             SettingForm={() =>
-                
+
                 <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
                     <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
                         <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
@@ -173,7 +189,7 @@ const Lobby:NextPage = () => {
             }
             />
             
-
+            
         </section>
     )
 }
