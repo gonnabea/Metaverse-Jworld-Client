@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useEffect } from 'react'
 import WsConnect from '../multiplay/wsConnection'
 import PageTitle from '../components/PageTItle'
@@ -12,10 +12,45 @@ import SiteMark from '../components/SiteMark'
 
 const Login: NextPage = () => {
 
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+    remember_user: false,
+  });
+  
+  const loginSubmitBtn = useRef<HTMLInputElement>()
+  
+  const { email, password, remember_user } = inputs;
 
+  const login = (e) => {
+
+  }
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs, // 기존의 input 객체를 복사한 뒤
+      [name]: value // name 키를 가진 값을 value 로 설정
+    });
+    
+  }
+  
+  const activateLoginBtn = () => {
+    console.log(inputs)
+    if(email.length >= 10 && password.length >= 8) {
+      loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl"
+    }
+    else {
+      loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-gray-400 text-white text-2xl"
+    }
+
+  }
+  
+  
   useEffect(() => {
-    console.log("컴포넌트 마운트")
-}, [])
+    console.log("컴포넌트 마운트");
+    activateLoginBtn()
+}, [inputs])
 
   return (
     <section>
@@ -28,13 +63,13 @@ const Login: NextPage = () => {
         </ul>
     </nav>
     
-    <form className="flex flex-col p-6" id="loginForm">
-        <input className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="아이디 또는 이메일" />
-        <input className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
+    <form onSubmit={login} className="flex flex-col p-6" id="loginForm">
+        <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="아이디 또는 이메일" />
+        <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
         <div className="self-center p-6">
-        <input className="self-center" type="checkbox" /> <span className="self-center">로그인 상태 유지</span>
+        <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" /> <span className="self-center">로그인 상태 유지</span>
         </div>
-        <input className="w-4/6 self-center p-10 bg-black text-white text-2xl" type="submit" value="LOGIN" />
+        <input ref={loginSubmitBtn} className="w-4/6 self-center p-10 bg-gray-400 text-white text-2xl" type="submit" value="LOGIN" />
     </form>
 
     <nav className="w-screen flex justify-center list-none">
