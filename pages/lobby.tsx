@@ -17,6 +17,18 @@ const Lobby:NextPage = () => {
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
     const [chatContents, setChatContents] = useState<Array<any>>([]);
 
+    const playBtnSoundEffect = () => {
+        const btnSoundEffect = new Audio(`/sound_effects/btn_click.wav`);
+        
+        btnSoundEffect.play()
+    }
+    
+    const playChatSoundEffect = () => {
+        const chatSoundEffect = new Audio(`/sound_effects/chat.wav`);
+
+        chatSoundEffect.play();
+    }
+
     // 웹소켓 리스너
     const handleSocketListeners = () => {
         socketIoClient.on("enter-lobby", (data) => {
@@ -27,7 +39,8 @@ const Lobby:NextPage = () => {
 
         socketIoClient.on("chat", (data) => {
             console.log(data)
-            setChatContents(chatContents => [...chatContents, data])
+            setChatContents(chatContents => [...chatContents, data]);
+            playChatSoundEffect()
         })
 
         socketIoClient.on("create-room", (data) => {
@@ -92,11 +105,11 @@ const Lobby:NextPage = () => {
     }
     
     useEffect(() => {
-
+        
         createConnection();
-
+        
         handleSocketListeners();
-
+        
         startBgm();
 
     }, [])
@@ -141,9 +154,9 @@ const Lobby:NextPage = () => {
                 <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
                     {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
                     <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
-                        <input className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
-                        <input className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
-                        <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="채팅방 생성" />
+                        <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
+                        <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
+                        <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="채팅방 생성" />
                     </form>
 
                 </div>
