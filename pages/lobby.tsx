@@ -10,8 +10,6 @@ import { Chat } from '../types/wsPayloads';
 
 
 
-
-
 const Lobby:NextPage = () => {
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()

@@ -8,9 +8,13 @@ import WsConnect from '../multiplay/wsConnection';
 import PageTitle from '../components/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
+import { gql, useMutation, useQuery } from "@apollo/client";
 
-
-
+const LOGIN = gql`
+query {
+  sayHello
+}
+`
 
 const Login: NextPage = () => {
 
@@ -20,11 +24,13 @@ const Login: NextPage = () => {
   });
   
   const loginSubmitBtn = useRef<HTMLInputElement>()
+  const loginReq = useQuery(LOGIN)
   
   const { email, password, remember_user } = inputs;
 
   const login = (e) => {
-    
+    e.preventDefault();
+    console.log(loginReq)
   }
 
   const onChange = (e) => {
@@ -65,7 +71,7 @@ const Login: NextPage = () => {
     </nav>
     
     <form onSubmit={login} className="flex flex-col p-6" id="loginForm">
-        <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="아이디 또는 이메일" />
+        <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="이메일" />
         <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
         <div className="self-center p-6">
         <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" checked={false} /> <span className="self-center">로그인 상태 유지</span>

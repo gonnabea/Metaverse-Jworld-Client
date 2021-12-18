@@ -10,8 +10,8 @@
 - [x] Three.js (React-Three-Fiber)
 - [x] Tailwind CSS
 - [ ] Styled-Components
-- [ ] Context-API
 - [ ] GraphQL
+- [ ] GraphQL-Apollo
 - [ ] REST API
 - [x] Socket.io
 - [ ] WebRTC
