@@ -7,9 +7,26 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
 
 
+// `mutation createUser($input: CreateUserInput!) {
+//   createUser(input: $input) {
+//     user {
+//       id
+//       username
+//       email
+//       phone
+//       firstName
+//       lastName
+//     }
+//   }
+// }``
+
+
 const JOIN = gql`
-mutation {
-  sayHello
+mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
+  join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
+    ok,
+    error
+  }
 }
 `
 
@@ -19,25 +36,32 @@ const Join: NextPage = () => {
       email: '',
       password: '',
       password2: '',
+      nickname: '',
     });
 
     const joinSubmitBtn = useRef();
-
-
+    
+    
     useEffect(() => {
       console.log("컴포넌트 마운트");
       activateJoinBtn();
-  }, [inputs])
+    }, [inputs])
+    
+    const { email, password, password2, nickname } = inputs;
 
-    const handleJoinSubmit = () => {
+    const [ reqJoin, { data, loading, error }] = useMutation(JOIN)
+
+    const handleJoinSubmit = async(e) => {
+      e.preventDefault();
+      const {data, errors} = await reqJoin({ variables: {email, nickname, password, password2} });
+      console.log(data, errors);
       
     }
 
-    const { email, password, password2 } = inputs;
 
     const onChange = (e) => {
 
-      const { value, name, checked } = e.target;
+      const { value, name } = e.target;
       setInputs({
         ...inputs, // 기존의 input 객체를 복사한 뒤
         [name]: value, // name 키를 가진 값을 value 로 설정
@@ -47,7 +71,7 @@ const Join: NextPage = () => {
 
     const activateJoinBtn = () => {
       console.log(inputs)
-      if(validateEmail(email) && validatePw(password) && password === password2) {
+      if(validateEmail(email) && validatePw(password) && password === password2 && nickname.length >= 2 && nickname.length <= 10) {
         joinSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl"
       }
       else {
@@ -67,9 +91,10 @@ const Join: NextPage = () => {
           </ul>
       </nav>
       
-      <form className="flex flex-col p-6" id="joinForm">
-          <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="아이디 또는 이메일" />
-          <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
+      <form onSubmit={(e) => handleJoinSubmit(e, {email, password, password2, nickname})} className="flex flex-col p-6" id="joinForm">
+          <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="이메일" />
+          <input onChange={onChange} name="nickname" className="border-2 w-4/6 p-6 self-center" type="string" required placeholder="닉네임 (2 ~ 10자)" />
+          <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 (영문, 숫자 , 특수문자 포함)" />
           <input onChange={onChange} name="password2" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 확인" />
 
           <div className="self-center p-6">
