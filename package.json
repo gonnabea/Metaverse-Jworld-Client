@@ -9,11 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
     "@nrwl/react": "^12.9.0",
     "@react-three/drei": "^7.20.0",
     "@react-three/fiber": "^7.0.17",
+    "apollo-boost": "^0.4.9",
+    "axios": "^0.24.0",
     "browserify-zlib": "^0.2.0",
     "crypto": "^1.0.1",
+    "graphql": "^15.8.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
     "net": "^1.0.2",

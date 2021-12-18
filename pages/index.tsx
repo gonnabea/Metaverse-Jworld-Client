@@ -1,12 +1,14 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRef, useState } from 'react'
-import { useEffect } from 'react'
-import WsConnect from '../multiplay/wsConnection'
-import PageTitle from '../components/PageTItle'
-import SiteMark from '../components/SiteMark'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { useEffect } from 'react';
+import WsConnect from '../multiplay/wsConnection';
+import PageTitle from '../components/PageTItle';
+import SiteMark from '../components/SiteMark';
+import { validateEmail, validatePw } from '../config/regexChecks';
+
 
 
 
@@ -15,7 +17,6 @@ const Login: NextPage = () => {
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
-    remember_user: false,
   });
   
   const loginSubmitBtn = useRef<HTMLInputElement>()
@@ -23,21 +24,21 @@ const Login: NextPage = () => {
   const { email, password, remember_user } = inputs;
 
   const login = (e) => {
-
+    
   }
 
   const onChange = (e) => {
-    const { value, name } = e.target;
+    const { value, name, checked } = e.target;
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
-      [name]: value // name 키를 가진 값을 value 로 설정
+      [name]: value, // name 키를 가진 값을 value 로 설정
     });
     
   }
   
   const activateLoginBtn = () => {
     console.log(inputs)
-    if(email.length >= 10 && password.length >= 8) {
+    if(validateEmail(email) && validatePw(password)) {
       loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl"
     }
     else {
@@ -67,7 +68,7 @@ const Login: NextPage = () => {
         <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="아이디 또는 이메일" />
         <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
         <div className="self-center p-6">
-        <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" /> <span className="self-center">로그인 상태 유지</span>
+        <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" checked={false} /> <span className="self-center">로그인 상태 유지</span>
         </div>
         <input ref={loginSubmitBtn} className="w-4/6 self-center p-10 bg-gray-400 text-white text-2xl" type="submit" value="LOGIN" />
     </form>
