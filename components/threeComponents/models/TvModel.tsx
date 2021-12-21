@@ -36,6 +36,7 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
 
   
     useEffect(() => {
+        
         window.addEventListener("click", installModel);
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])

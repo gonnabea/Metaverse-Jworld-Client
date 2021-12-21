@@ -129,6 +129,16 @@ const MiniHomepage:NextPage = () => {
                   <button className="text-lg" onClick={() => {setCarpet1Scale(carpet1Scale => carpet1Scale -= 0.05)}}>-</button>
                 </div>
                 }
+
+                modelImgUI={
+                  carpet1Focused ? <img 
+
+                    src="/model_images/carpet1.png" 
+                    onClick={() => setCarpet1Focused(false)} 
+                    className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
+                  
+                 : <img src="/model_images/carpet1.png" onClick={() => setCarpet1Focused(true)}  className="text-lg w-4/12 h-4/12" />
+              }
                 backgroundColor="blue"
               />
 
@@ -160,6 +170,16 @@ const MiniHomepage:NextPage = () => {
                     <button className="text-lg" onClick={() => {setCarpet2Scale(carpet2Scale => carpet2Scale -= 0.05)}}>-</button>
                   </div>
                 }
+
+                modelImgUI={
+                  carpet2Focused ? <img 
+
+                    src="/model_images/carpet2.png" 
+                    onClick={() => setCarpet2Focused(false)} 
+                    className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
+                  
+                 : <img src="/model_images/carpet2.png" onClick={() => setCarpet2Focused(true)}  className="text-lg w-4/12 h-4/12" />
+              }
                 
                 backgroundColor="yellow"
               />
@@ -181,6 +201,7 @@ const MiniHomepage:NextPage = () => {
                           
                         setInstallStandingLamp(!installStandingLamp);
                           
+                        // 모델 설치 시 포커싱 상태 적용
                         if(!installStandingLamp) {
                           setStandingLampFocused(true);
                         }
@@ -188,7 +209,7 @@ const MiniHomepage:NextPage = () => {
                           setStandingLampFocused(false);
                         }
                         
-                        // 모델 설치 시 포커싱 상태 적용
+                        
                         
                       
 
@@ -201,7 +222,16 @@ const MiniHomepage:NextPage = () => {
                       <button className="text-lg" onClick={() => {setStandingLampScale(standingLampScale => standingLampScale -= 0.05)}}>-</button>
                     </div>
                   }
-                  backgroundColor="orange"
+                  modelImgUI={
+                      standingLampFocused ? <img 
+
+                        src="/model_images/standing_lamp.png" 
+                        onClick={() => setStandingLampFocused(false)} 
+                        className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
+                      
+                     : <img src="/model_images/standing_lamp.png" onClick={() => setStandingLampFocused(true)}  className="text-lg w-4/12 h-4/12" />
+                  }
+                  backgroundColor="red"
 
                 />        
               </>
@@ -237,6 +267,16 @@ const MiniHomepage:NextPage = () => {
                   <button className="text-lg" onClick={() => {setTvScale(tvScale => tvScale -= 0.05)}}>-</button>
                 </div>
               }
+
+              modelImgUI={
+                tvFocused ? <img 
+
+                  src="/model_images/tv.png" 
+                  onClick={() => setTvFocused(false)} 
+                  className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                
+               : <img src="/model_images/tv.png" onClick={() => setTvFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+            }
 
               backgroundColor="purple"
 

@@ -1,18 +1,19 @@
+import { ReactElement } from "react";
 
 
 
 interface props {
     modelName: string;
     sizeControlUI: any;
-    installUI?: any;
-    focusingUI?: any;
+    installUI?: ReactElement;
     modelImg?: string;
     backgroundColor?: string;
+    modelImgUI?: ReactElement
 }
 
 
-const ModelSettingBox = ({modelName, sizeControlUI, installUI, focusingUI, backgroundColor}:props) => 
-    <div className={`bg-${backgroundColor}-200 border-dashed border-4 border-light-blue-500`}>
+const ModelSettingBox = ({modelName, sizeControlUI, installUI, modelImgUI, backgroundColor}:props) => 
+    <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
 
         {installUI ?         
             <div className="">
@@ -31,15 +32,9 @@ const ModelSettingBox = ({modelName, sizeControlUI, installUI, focusingUI, backg
             {sizeControlUI}
         </div> 
         
+        {modelImgUI}
 
-        {focusingUI ? 
-            <div className="">
-            <span className="">
-                {modelName + " 위치 지정 활성화"}
-            </span>
-                {focusingUI}
-            </div>
-        : null}
+
     </div>
 
 
