@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
-import PageTitle from "../components/PageTItle"
+import PageTitle from "../components/common/PageTItle"
 import SiteMark from "../components/SiteMark"
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"

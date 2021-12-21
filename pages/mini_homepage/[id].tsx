@@ -7,10 +7,10 @@ import RoomModel from '../../components/threeComponents/models/RoomModel';
 import Carpet1Model from '../../components/threeComponents/models/Carpet1Model';
 import TvModel from '../../components/threeComponents/models/TvModel';
 import Carpet2Model from '../../components/threeComponents/models/Carpet2Model';
-import MiniHompiCustomUI from '../../components/MiniHompiCustomUI';
 import StandingLampModel from '../../components/threeComponents/models/StandingLampModel';
 import BottomUI from '../../components/BottomUI';
-import ModelInstallPop from '../../components/ModelInstallPop';
+import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
+import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
 
 
 const MiniHomepage:NextPage = () => {
@@ -56,7 +56,7 @@ const MiniHomepage:NextPage = () => {
 
           <div className="z-10 absolute">
 
-              <MiniHompiCustomUI 
+              <ModelSettingBox 
                 modelName={"방"} 
                 sizeControlUI={
                   <div>
@@ -91,17 +91,17 @@ const MiniHomepage:NextPage = () => {
           <button ref={applyInstallBtn} className="z-10 absolute bottom-0 right-2 text-lg" value="설치 적용" 
           onClick={() => {
             
-            initEditMode();
-            applyInstallBtn.current.style.display = "none"
+            initEditMode()
+            // applyInstallBtn.current.style.display = "none"
           }
         }>
           설치 적용
           </button>
           <ModelInstallPop 
-
+        
             carpets={
               <>
-              <MiniHompiCustomUI 
+              <ModelSettingBox 
                 modelName={"카페트1"} 
                 installUI={
                   <div>
@@ -113,7 +113,12 @@ const MiniHomepage:NextPage = () => {
 
                       setInstallCarpet1(!installCarpet1);
 
-                      setCarpet1Focused(!carpet1Focused);
+                      if(!installCarpet1) {
+                        setCarpet1Focused(true);
+                      }
+                      else {
+                        setCarpet1Focused(false);
+                      }
                       
                       }}>ON / OFF</button>
                   </div>
@@ -128,7 +133,7 @@ const MiniHomepage:NextPage = () => {
               />
 
 
-              <MiniHompiCustomUI 
+              <ModelSettingBox 
                 modelName={"카페트2"} 
                 installUI={
                   <div>
@@ -140,7 +145,11 @@ const MiniHomepage:NextPage = () => {
 
                       setInstallCarpet2(!installCarpet2);
 
-                      setCarpet2Focused(!carpet2Focused);
+                      if(!installCarpet2)
+                        setCarpet2Focused(true);
+                      else {
+                        setCarpet2Focused(false);
+                      }
                       
                       }}>ON / OFF</button>
                   </div>
@@ -159,27 +168,25 @@ const MiniHomepage:NextPage = () => {
 
             lights={
               <>
-                <MiniHompiCustomUI 
+                <ModelSettingBox 
                   modelName={"스탠딩 램프"} 
                   installUI={
                     <div>
                       <button className="text-lg" 
                       onClick={() => {
-                        alert(standingLampFocused)
+                        
                         // 중복 포커싱 방지
-                        if(standingLampFocused === false){
+                        if(standingLampFocused === false)
                           initEditMode();
                           
-                        }
-                        if(installStandingLamp === false) {
-                          applyInstallBtn.current.style.display = "block"
+                        setInstallStandingLamp(!installStandingLamp);
+                          
+                        if(!installStandingLamp) {
+                          setStandingLampFocused(true);
                         }
                         else {
-                          applyInstallBtn.current.style.display = "none"
-
+                          setStandingLampFocused(false);
                         }
-                        setInstallStandingLamp(!installStandingLamp)
-                        setStandingLampFocused(!standingLampFocused);
                         
                         // 모델 설치 시 포커싱 상태 적용
                         
@@ -194,16 +201,6 @@ const MiniHomepage:NextPage = () => {
                       <button className="text-lg" onClick={() => {setStandingLampScale(standingLampScale => standingLampScale -= 0.05)}}>-</button>
                     </div>
                   }
-                  // focusingUI={
-                  //   <div>
-                  //     <button 
-                  //     className="text-lg" 
-                  //     onClick={() => {
-                  //       if(standingLampFocused === false) {initEditMode()}; // 중복 포커싱 방지
-                  //       setStandingLampFocused(standingLampFocused => standingLampFocused = !standingLampFocused)
-                  //       }}>ON / OFF</button>
-                  //   </div>
-                  // }
                   backgroundColor="orange"
 
                 />        
@@ -211,7 +208,7 @@ const MiniHomepage:NextPage = () => {
             }
 
             electronics={
-              <MiniHompiCustomUI 
+              <ModelSettingBox 
               modelName={"TV"} 
               installUI={
                 <div>
@@ -223,7 +220,13 @@ const MiniHomepage:NextPage = () => {
 
                       setInstallTv(installTv => installTv = !installTv);
 
-                      setTvFocused(tvFocused => tvFocused = !tvFocused);
+                      if(!installTv)
+                        setTvFocused(true);
+                      else{
+                        setTvFocused(false);
+                      }
+
+                      
                     
                   }}>ON / OFF</button>
                 </div>

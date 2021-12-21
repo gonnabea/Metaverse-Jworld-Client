@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import PageTitle from '../components/PageTItle';
+import PageTitle from '../components/common/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { wsRoom } from '../types/wsRoom';
 import io, { Socket } from "socket.io-client";

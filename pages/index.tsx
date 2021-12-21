@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import WsConnect from '../multiplay/wsConnection';
-import PageTitle from '../components/PageTItle';
+import PageTitle from '../components/common/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
 import { gql, useMutation, useQuery } from "@apollo/client";

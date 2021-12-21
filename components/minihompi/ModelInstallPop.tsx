@@ -36,16 +36,16 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics }:props) => {
     }
 
     return (
-        <div className="w-4/12 h-5/6 bg-black z-10 absolute top-0 right-0">
+        <div className="w-3/12 h-5/6 bg-black z-10 absolute top-0 right-0 opacity-90">
             <header className="text-white w-full flex">
                 <ul className="w-full flex justify-around">
                     {
                         categories.map(category => {
                             if(category === selectedCategory) {
-                                return <li className="text-lg font-bold">{selectedCategory}</li>
+                                return <li className="text-lg font-bold cursor-pointer">{selectedCategory}</li>
                             }
                             
-                            return <li onClick={() => setSelectedCategory(category)} className="">{category}</li>
+                            return <li onClick={() => setSelectedCategory(category)} className="cursor-pointer">{category}</li>
 
                         })
                     }
@@ -53,7 +53,7 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics }:props) => {
                 </ul>
                 
             </header>
-            <section className="bg-blue-300 h-full">
+            <section className="bg-blue-500 h-full">
 
              {selectCategory()}
 

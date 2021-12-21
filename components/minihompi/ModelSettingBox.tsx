@@ -11,7 +11,7 @@ interface props {
 }
 
 
-const MiniHompiCustomUI = ({modelName, sizeControlUI, installUI, focusingUI, backgroundColor}:props) => 
+const ModelSettingBox = ({modelName, sizeControlUI, installUI, focusingUI, backgroundColor}:props) => 
     <div className={`bg-${backgroundColor}-200 border-dashed border-4 border-light-blue-500`}>
 
         {installUI ?         
@@ -44,4 +44,4 @@ const MiniHompiCustomUI = ({modelName, sizeControlUI, installUI, focusingUI, bac
 
 
 
-export default MiniHompiCustomUI;
+export default ModelSettingBox;
