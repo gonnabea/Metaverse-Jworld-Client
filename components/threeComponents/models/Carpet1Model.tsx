@@ -25,7 +25,7 @@ const Carpet1Model = ({installed, scale, isFocused}:carpet1ModelOpts) => {
       // 모델 설치
       if(closedObjPosition && isFocused === true){
           console.log("카페트 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
+          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
       }
   };
 

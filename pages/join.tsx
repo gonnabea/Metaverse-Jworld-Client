@@ -7,20 +7,6 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
 
 
-// `mutation createUser($input: CreateUserInput!) {
-//   createUser(input: $input) {
-//     user {
-//       id
-//       username
-//       email
-//       phone
-//       firstName
-//       lastName
-//     }
-//   }
-// }``
-
-
 const JOIN = gql`
 mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
   join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
@@ -51,6 +37,7 @@ const Join: NextPage = () => {
 
     const [ reqJoin, { data, loading, error }] = useMutation(JOIN)
 
+    // 회원가입 submit 버튼 눌렀을 시 API 요청
     const handleJoinSubmit = async(e) => {
       e.preventDefault();
       const {data, errors} = await reqJoin({ variables: {email, nickname, password, password2} });
@@ -59,6 +46,7 @@ const Join: NextPage = () => {
     }
 
 
+    // input에 글자 입력 시 조건 실시간 체크
     const onChange = (e) => {
 
       const { value, name } = e.target;
@@ -69,6 +57,7 @@ const Join: NextPage = () => {
       
     }
 
+    // 조건 만족 여부 실시간 확인용
     const activateJoinBtn = () => {
       console.log(inputs)
       if(validateEmail(email) && validatePw(password) && password === password2 && nickname.length >= 2 && nickname.length <= 10) {

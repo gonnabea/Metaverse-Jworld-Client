@@ -9,10 +9,9 @@
 - [x] TypeScript
 - [x] Three.js (React-Three-Fiber)
 - [x] Tailwind CSS
-- [ ] Styled-Components
 - [ ] GraphQL
 - [ ] GraphQL-Apollo
-- [ ] REST API
+- [ ] REST API (Axios)
 - [x] Socket.io
 - [ ] WebRTC
 
@@ -24,7 +23,7 @@
 - 공통
 
 - [ ] 친구맺기
-- [ ] 전체 채팅
+- [x] 전체 채팅
 - [ ] 로그인 & 회원가입
 
 - 로비
@@ -69,6 +68,10 @@
 - [ ] 최대인원 설정 기능 (2-22명)
 - [ ] 공 연동
 - [ ] 스코어 기능
+
+- 피아노
+
+- [ ] 3D 모델
 
 ### 2차 대규모 업데이트 (부분 유료화 - 수익 모델)
 

@@ -24,6 +24,7 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgC
     }
 
     const ChatBtn = () => {
+        if(ChatForm)
         return <button 
         onClick={() => { 
             setShowSettingModal(false)
@@ -31,24 +32,34 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgC
             setShowChats(showChats => !showChats); }} 
         onMouseOver={() => playBtnSoundEffect()} 
         className="bg-black text-white rounded-lg hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >채팅</button>
+
+        return <></>
     }
 
     const CreateRoomBtn = () => {
+        if(CreateRoomForm)
         return <button onClick={() => {
             setShowChats(false)
             setShowSettingModal(false)
             setShowRoomModal(showRoomModal => !showRoomModal); }} 
             onMouseOver={() => playBtnSoundEffect()} 
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >방 만들기</button>
+        
+        return <></>
+
     }
 
     const SettingBtn = () => {
+        if(SettingForm)
         return <button onClick={() => { 
             setShowChats(false);
             setShowRoomModal(false); 
             setShowSettingModal(showSettingModal => !showSettingModal); }} 
             onMouseOver={() => playBtnSoundEffect()} 
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >설정</button>
+
+        return <></>
+        
     }
 
     const ChatScreen = ({ showChats, chatContents }) => {

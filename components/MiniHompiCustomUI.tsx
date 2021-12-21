@@ -12,10 +12,10 @@ interface props {
 
 
 const MiniHompiCustomUI = ({modelName, sizeControlUI, installUI, focusingUI, backgroundColor}:props) => 
-    <div className={`bg-${backgroundColor}-200`}>
+    <div className={`bg-${backgroundColor}-200 border-dashed border-4 border-light-blue-500`}>
 
         {installUI ?         
-            <div className="border-dashed border-4 border-light-blue-500">
+            <div className="">
             <span className="">
                 {modelName + " 설치"}
             </span>
@@ -24,7 +24,7 @@ const MiniHompiCustomUI = ({modelName, sizeControlUI, installUI, focusingUI, bac
         : null}
 
             
-        <div className="border-dashed border-4 border-light-blue-500">
+        <div className="">
         <span className="">
             {modelName + " 크기 조절"}
         </span>
@@ -33,7 +33,7 @@ const MiniHompiCustomUI = ({modelName, sizeControlUI, installUI, focusingUI, bac
         
 
         {focusingUI ? 
-            <div className="border-dashed border-4 border-light-blue-500">
+            <div className="">
             <span className="">
                 {modelName + " 위치 지정 활성화"}
             </span>
