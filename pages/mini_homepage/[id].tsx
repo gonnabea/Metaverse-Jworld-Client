@@ -60,8 +60,16 @@ const MiniHomepage:NextPage = () => {
                 modelName={"방"} 
                 sizeControlUI={
                   <div>
-                  <button className="text-lg" onClick={() => {setRoomScale(roomScale => roomScale += 0.05)}}>+</button>
-                  <button className="text-lg" onClick={() => {setRoomScale(roomScale => roomScale -= 0.05)}}>-</button>
+                  <button className="text-lg" 
+                    onClick={() => {
+                      if(roomScale < 0.6)
+                      setRoomScale(roomScale => roomScale += 0.05)
+                    }}>+</button>
+                  <button className="text-lg" 
+                    onClick={() => {
+                      if(roomScale > 0.1)
+                      setRoomScale(roomScale => roomScale -= 0.05)
+                      }}>-</button>
                   </div>
                 }
                 backgroundColor="green"
@@ -86,6 +94,12 @@ const MiniHomepage:NextPage = () => {
 
           <BottomUI 
             chatContents={["Asdasd"]}
+            ChatForm={
+              () => <form className="absolute bottom-14 w-96 left-4 z-10" >
+              <input id="chatInput" className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
+              <input className="" type="submit" value="전송" />
+              </form>
+            }
             />
 
           <button ref={applyInstallBtn} className="z-10 absolute bottom-0 right-2 text-lg" value="설치 적용" 

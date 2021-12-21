@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 interface props {
     modelName: string;
-    sizeControlUI: any;
+    sizeControlUI: ReactElement;
     installUI?: ReactElement;
     modelImg?: string;
     backgroundColor?: string;

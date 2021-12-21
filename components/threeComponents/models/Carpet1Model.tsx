@@ -17,13 +17,13 @@ const Carpet1Model = ({installed, scale, isFocused}:carpet1ModelOpts) => {
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
     
-    const installModel = () => {
+    const installModel = (e) => {
 
       // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
 
       // 모델 설치
-      if(closedObjPosition && isFocused === true){
+      if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트 포커싱 상태");
           setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
       }

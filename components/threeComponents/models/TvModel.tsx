@@ -20,24 +20,24 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
 
 
 
-    const installModel = () => {
-
-      // 마우스 클릭한 지점 위치 얻기
-      const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
-
-      // 모델 설치
-      if(closedObjPosition && isFocused === true){
-            console.log("tv 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
-      }
+    const installModel = (e) => {
+        
+            // 마우스 클릭한 지점 위치 얻기
+            const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
+            console.dir(e.target.tagName)
+            // 모델 설치
+            if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
+                  console.log("tv 포커싱 상태");
+                setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+            }
+        
   };
 
 
 
   
     useEffect(() => {
-        
-        window.addEventListener("click", installModel);
+        window.addEventListener("click", installModel)
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])
 
