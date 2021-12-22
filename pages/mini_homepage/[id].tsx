@@ -12,6 +12,7 @@ import BottomUI from '../../components/BottomUI';
 import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
 import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
 import VaseModel from '../../components/threeComponents/models/VaseModel';
+import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
 
 const MiniHomepage:NextPage = () => {
@@ -43,6 +44,7 @@ const MiniHomepage:NextPage = () => {
     const [installVase, setInstallVase] = useState(false);
     const [vaseScale, setVaseScale] = useState(0.1);
     const [vaseFocused, setVaseFocused] = useState(false);
+
 
     const applyInstallBtn = useRef();
 
@@ -88,14 +90,24 @@ const MiniHomepage:NextPage = () => {
             <Canvas className="w-screen h-screen" camera={{ position: [0, -40, 20] }} >
               <OrbitCameraController />
               <pointLight intensity={1} color={"skyblue"} />
-              <ambientLight color={"white"} />
+              
+              <directionalLight
+                
+                intensity={0.6}
+                position={[0, 2, 2]}
+                shadow-mapSize-width={2048}
+                shadow-mapSize-height={2048}
+                castShadow
+            />
               <Suspense fallback={null}>
+              <EffectComposer>
                   <RoomModel roomScale={roomScale} />
                   <Carpet1Model installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} />
                   <Carpet2Model installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} />
                   <TvModel installed={installTv} scale={tvScale} isFocused={tvFocused} />
                   <StandingLampModel installed={installStandingLamp} scale={standingLampScale} isFocused={standingLampFocused} />
                   <VaseModel installed={installVase} scale={vaseScale} isFocused={vaseFocused} />
+              </EffectComposer>
               </Suspense>
           </Canvas>,
 

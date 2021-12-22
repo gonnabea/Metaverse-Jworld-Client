@@ -14,7 +14,7 @@ export const modelList = {
     glass_1: `${roomModelsUrl}/glass_1.glb`,
     vase_1: `${roomModelsUrl}/vase_1.glb`,
     vase: `/3d_models/vase.glb`,
-
+    
 }
 
 export const modelListArr = [

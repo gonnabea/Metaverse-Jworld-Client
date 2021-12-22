@@ -12,12 +12,13 @@ interface props {
 
 const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:props) => {
     
-    const categories = ["의자", "카페트", "탁자", "소파", "침대", "선반", "가전", "조명", "장식"]
+    const categories = ["카페트", "가구", "선반", "가전", "조명", "장식"]
 
     const [selectedCategory, setSelectedCategory] = useState("의자");
 
     const selectCategory = () => {
         switch (selectedCategory) {
+            
             case "카페트":
                 return carpets
                 
@@ -29,6 +30,7 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:prop
 
             case "가전":
                 return electronics
+
             case "장식":
                 return beauties
         
@@ -56,7 +58,7 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:prop
                 </ul>
                 
             </header>
-            <section className="bg-blue-500 h-full">
+            <section className="bg-blue-300 h-full">
 
              {selectCategory()}
 
