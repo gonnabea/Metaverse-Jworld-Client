@@ -28,7 +28,7 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
             // 모델 설치
             if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
                   console.log("tv 포커싱 상태");
-                setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+                setPosition(position => position = [closedObjPosition.x, 0.4, closedObjPosition.z]);
             }
         
   };

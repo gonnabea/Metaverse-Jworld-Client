@@ -11,6 +11,7 @@ import StandingLampModel from '../../components/threeComponents/models/StandingL
 import BottomUI from '../../components/BottomUI';
 import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
 import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
+import VaseModel from '../../components/threeComponents/models/VaseModel';
 
 
 const MiniHomepage:NextPage = () => {
@@ -37,6 +38,11 @@ const MiniHomepage:NextPage = () => {
     const [installStandingLamp, setInstallStandingLamp] = useState(false);
     const [standingLampScale, setStandingLampScale] = useState(0.3);
     const [standingLampFocused, setStandingLampFocused] = useState(false);
+
+    // Vase 관련 state
+    const [installVase, setInstallVase] = useState(false);
+    const [vaseScale, setVaseScale] = useState(0.1);
+    const [vaseFocused, setVaseFocused] = useState(false);
 
     const applyInstallBtn = useRef();
 
@@ -89,6 +95,7 @@ const MiniHomepage:NextPage = () => {
                   <Carpet2Model installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} />
                   <TvModel installed={installTv} scale={tvScale} isFocused={tvFocused} />
                   <StandingLampModel installed={installStandingLamp} scale={standingLampScale} isFocused={standingLampFocused} />
+                  <VaseModel installed={installVase} scale={vaseScale} isFocused={vaseFocused} />
               </Suspense>
           </Canvas>,
 
@@ -100,6 +107,16 @@ const MiniHomepage:NextPage = () => {
               <input className="" type="submit" value="전송" />
               </form>
             }
+            SettingForm={() =>
+
+              <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col z-20">
+                  <form className="flex flex-col w-3/6 h-2/6 justify-around " action="">
+                      <input className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
+                      <input className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
+                      <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" />
+                  </form>
+              </div>
+          }
             />
 
           <button ref={applyInstallBtn} className="z-10 absolute bottom-0 right-2 text-lg" value="설치 적용" 
@@ -295,6 +312,52 @@ const MiniHomepage:NextPage = () => {
               backgroundColor="purple"
 
             />       
+            }
+
+            beauties={
+              <ModelSettingBox 
+              modelName={"꽃병"} 
+              installUI={
+                <div>
+                  <button className="text-lg" 
+                    onClick={() => {
+
+                      // 중복 포커싱 방지
+                      if(vaseFocused === false) initEditMode(); 
+
+                      setInstallVase(installVase => installVase = !installVase);
+
+                      if(!installVase)
+                        setVaseFocused(true);
+                      else{
+                        setVaseFocused(false);
+                      }
+
+                      
+                    
+                  }}>ON / OFF</button>
+                </div>
+              }
+              sizeControlUI={
+                <div>
+                  <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale += 0.05)}}>+</button>
+                  <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale -= 0.05)}}>-</button>
+                </div>
+              }
+
+              modelImgUI={
+                vaseFocused ? <img 
+
+                  src="/model_images/vase.png" 
+                  onClick={() => setVaseFocused(false)} 
+                  className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                
+               : <img src="/model_images/vase.png" onClick={() => setVaseFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+            }
+
+              backgroundColor="green"
+
+            />   
             }
 
             />

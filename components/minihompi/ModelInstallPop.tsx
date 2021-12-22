@@ -6,12 +6,13 @@ interface props {
     chairs?: ReactElement<any, any>
     lights?: ReactElement<any, any>
     electronics?: ReactElement<any, any>
+    beauties?: ReactElement<any, any>
 }
 
 
-const ModelInstallPop = ({ carpets, chairs, lights, electronics }:props) => {
+const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:props) => {
     
-    const categories = ["의자", "카페트", "탁자", "소파", "침대", "선반", "가전", "조명"]
+    const categories = ["의자", "카페트", "탁자", "소파", "침대", "선반", "가전", "조명", "장식"]
 
     const [selectedCategory, setSelectedCategory] = useState("의자");
 
@@ -28,6 +29,8 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics }:props) => {
 
             case "가전":
                 return electronics
+            case "장식":
+                return beauties
         
             default:
                 break;

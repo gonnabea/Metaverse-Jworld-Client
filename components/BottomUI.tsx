@@ -31,7 +31,7 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgC
             setShowRoomModal(false); 
             setShowChats(showChats => !showChats); }} 
         onMouseOver={() => playBtnSoundEffect()} 
-        className="bg-black text-white rounded-lg hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >채팅</button>
+        className="bg-black text-white rounded-lg hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >채팅</button>
 
         return <></>
     }
@@ -43,7 +43,7 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgC
             setShowSettingModal(false)
             setShowRoomModal(showRoomModal => !showRoomModal); }} 
             onMouseOver={() => playBtnSoundEffect()} 
-            className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >방 만들기</button>
+            className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >방 만들기</button>
         
         return <></>
 
@@ -56,7 +56,7 @@ const BottomUI = ({ chatContents, ChatForm, CreateRoomForm, SettingForm, newMsgC
             setShowRoomModal(false); 
             setShowSettingModal(showSettingModal => !showSettingModal); }} 
             onMouseOver={() => playBtnSoundEffect()} 
-            className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-10" >설정</button>
+            className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >설정</button>
 
         return <></>
         

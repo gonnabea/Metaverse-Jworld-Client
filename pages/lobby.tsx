@@ -109,12 +109,15 @@ const Lobby:NextPage = () => {
         
     }
 
-    // 배경음 시작
-    const startBgm = async() => {
-        const bgm = new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`)
     
+    // 배경음 시작
+    const startBgm = () => {
+        const bgm = new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`)
+        if(bgm.paused === false) {
+            bgm.pause();
+        }
+        bgm.play();
         bgm.loop = true;
-        await bgm.play();
     }
     
     useEffect(() => {
@@ -122,8 +125,6 @@ const Lobby:NextPage = () => {
         createConnection();
         
         handleSocketListeners();
-        
-        startBgm()
         
         
     }, [])
@@ -179,8 +180,8 @@ const Lobby:NextPage = () => {
 
                 <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
                     <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
-                        <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
-                        <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
+                        <input onClick={() => {playBtnSoundEffect(); startBgm();}} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
+                        <input onClick={() => {playBtnSoundEffect()}} className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
                         <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" />
                     </form>
                 </div>
