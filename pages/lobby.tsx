@@ -5,7 +5,7 @@ import SiteMark from '../components/SiteMark';
 import { wsRoom } from '../types/wsRoom';
 import io, { Socket } from "socket.io-client";
 import socketIoClient from '../multiplay/wsConnection';
-import BottomUI from '../components/BottomUI';
+import BottomUI from '../components/common/BottomUI';
 import { Chat } from '../types/wsPayloads';
 
 

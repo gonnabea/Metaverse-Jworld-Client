@@ -290,7 +290,7 @@ const Book3D: React.FC<props> = ({
      <Container
       id="container"
       onClick={(e: any) => takeOutBook(e)}
-      onMouseLeave={(e: any) => {revertBook(e);}}
+    //   onMouseLeave={(e: any) => {revertBook(e);}}
       width={width}
       height={height}
       spineWidth={spineWidth}

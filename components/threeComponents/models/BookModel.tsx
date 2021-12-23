@@ -29,7 +29,7 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY}:B
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
       }
   };
 

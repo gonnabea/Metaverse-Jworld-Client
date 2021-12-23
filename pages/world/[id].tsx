@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import socketIoClient from '../../multiplay/wsConnection';
 import { Socket } from 'socket.io-client';
+import StreamWorldModel from '../../components/threeComponents/streamWorldModels/StreamWorldModel';
+import OrbitCameraController from '../../components/threeComponents/OrbitController';
 
 const World:NextPage = () => {
 
@@ -48,6 +50,7 @@ const World:NextPage = () => {
         useFrame((state, delta) => (ref.current.rotation.x += 0.01))
         // Return the view, these are regular Threejs elements expressed in JSX
         return (
+
           <mesh
             {...props}
             ref={ref}
@@ -73,10 +76,16 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
                     <Canvas className="w-screen h-screen">
+          <OrbitCameraController />
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-          <Box position={[-1.2, 0, 0]} />
-          <Box position={[1.2, 0, 0]} />
+
+          {/* <Box position={[-1.2, 0, 0]} />
+          <Box position={[1.2, 0, 0]} /> */}
+          <Suspense fallback={null}>
+            <StreamWorldModel />
+
+          </Suspense>
         </Canvas>,
         </section>
     )

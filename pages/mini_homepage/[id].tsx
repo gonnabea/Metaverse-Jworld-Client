@@ -8,7 +8,7 @@ import Carpet1Model from '../../components/threeComponents/models/Carpet1Model';
 import TvModel from '../../components/threeComponents/models/TvModel';
 import Carpet2Model from '../../components/threeComponents/models/Carpet2Model';
 import StandingLampModel from '../../components/threeComponents/models/StandingLampModel';
-import BottomUI from '../../components/BottomUI';
+import BottomUI from '../../components/common/BottomUI';
 import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
 import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
 import VaseModel from '../../components/threeComponents/models/VaseModel';
@@ -20,6 +20,8 @@ import CurtainModel from '../../components/threeComponents/models/CurtainModel';
 
 
 const MiniHomepage:NextPage = () => {
+
+    const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
     // 방 크기 조절 state
     const [roomScale, setRoomScale] = useState(0.3);
@@ -104,7 +106,35 @@ const MiniHomepage:NextPage = () => {
               />         
 
               {/* CSS 3D 메모장*/}
-              <Book3D visible={css3dBookVisible} setVisible={setCss3dBookVisible} />
+              <Book3D 
+              visible={css3dBookVisible} setVisible={setCss3dBookVisible} 
+              front={
+                <section className="w-full h-full bg-blue-300 text-black">
+                  <button value="수정" onClick={() => setEditBook(!editBook)} >책 수정하기</button>
+                  <form className="w-full h-full flex flex-col justify-around">
+                    
+                    <h2>책 제목</h2>
+                    {editBook ? <input type="text" name="bookTitle" placeholder="책 제목 입력"  /> : null}
+                    <cite>작가명</cite>
+                    
+                    <p>소개글</p>
+                    {editBook ? <input type="text" name="bookIntro" placeholder="책 소개글 입력" /> : null}
+                    {editBook ? <input 
+                    onClick={(e) => {e.target.style.height="100%"; e.target.style.width="100%"; e.target.style.position="absolute"}} 
+                    onMouseLeave={(e) => {e.target.style.height="10%"; e.target.style.width="100%"; e.target.style.position="block" }}
+                    type="text" 
+                    name="bookContent"
+                     placeholder="책 내용 입력" /> : null}
+                    {editBook ? <>
+                    <label htmlFor={"bookImg"}>책 표지 등록</label>
+                    <input type="file" name="bookImg" /> 
+                    </> : null}
+                    {editBook ? <input type="submit" value="등록" />  : null }
+                  </form>
+                </section>
+              }
+              
+              />
           
               
               
@@ -136,6 +166,8 @@ const MiniHomepage:NextPage = () => {
 
               </EffectComposer>
               </Suspense>
+
+         
           </Canvas>,
 
           <BottomUI 

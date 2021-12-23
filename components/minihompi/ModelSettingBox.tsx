@@ -77,8 +77,8 @@ const ModelSettingBox = ({
             {modelName + " 크기 조절"}
         </span>
              <div>
-                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState += 0.05)}}>+</button>
-                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState -= 0.05)}}>-</button>
+                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState += 0.03)}}>+</button>
+                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState -= 0.03)}}>-</button>
                   </div>
         </div> : null }
 

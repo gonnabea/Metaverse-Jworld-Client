@@ -17,7 +17,8 @@ export const modelList = {
     book_ani: `/3d_models/note_book/scene.gltf`,
     chair: `/3d_models/chair.glb`,
     curtain: `/3d_models/curtain.glb`,
-
+    frame: `/3d_models/frame.glb`,
+    lobby: `/3d_models/streamWorld.glb`
 }
 
 export const modelListArr = [
