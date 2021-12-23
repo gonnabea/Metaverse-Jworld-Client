@@ -299,6 +299,7 @@ const Book3D: React.FC<props> = ({
       >
 
     <div className="absolute top-4 left-4 text-lg text-blue-500" onClick={(e) => {
+        console.log(setVisible)
         setVisible ? setVisible(false) : null;
         
     }}>X</div>

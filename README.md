@@ -9,6 +9,7 @@
 - [x] TypeScript
 - [x] Three.js (React-Three-Fiber)
 - [x] Tailwind CSS
+- [ ] Styled-Components
 - [ ] GraphQL
 - [ ] GraphQL-Apollo
 - [ ] REST API (Axios)

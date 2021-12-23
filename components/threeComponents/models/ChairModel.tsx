@@ -1,21 +1,18 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 
-interface BookModelOpts {
+interface ChairModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
-    setCss3dBookVisible: any
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelOpts) => {
+const ChairModel = ({installed, scale, isFocused}:ChairModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
-
     
-    
-    const gltf = useLoader(GLTFLoader, modelList.book_ani);
+    const gltf = useLoader(GLTFLoader, modelList.chair);
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
@@ -27,17 +24,13 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelO
 
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
-          console.log("카페트 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          console.log("카페트2 포커싱 상태");
+          setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
       }
   };
 
 
-    useFrame(({ clock}) => {
-        const a = clock.getElapsedTime()
-        // console.log("Hey, I'm executing every frame!");
-        // console.log(a)
-    })
+
   
     useEffect(() => {
         window.addEventListener("click", installModel);
@@ -49,21 +42,11 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelO
         return (
             <>
             <primitive 
-                
-                onClick={() => {
-                    setCss3dBookVisible(visible => !visible);
-                }} 
+                onClick={() => console.log("의자 클릭됨")} 
                 position={position} scale={scale} 
                 object={gltf.scene} 
-                onPointerOver={() => {
-                    document.body.style.cursor = "pointer"
-                }}
-                onPointerOut={() => {
-                    document.body.style.cursor = "default"
-
-                }}
             />
-            
+
           </>
         )
     }
@@ -72,4 +55,4 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelO
     }
   }
 
-export default BookModel;
+export default ChairModel;

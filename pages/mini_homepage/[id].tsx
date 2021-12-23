@@ -15,6 +15,7 @@ import VaseModel from '../../components/threeComponents/models/VaseModel';
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 import BookModel from '../../components/threeComponents/models/BookModel';
 import Book3D from '../../components/Book3d';
+import ChairModel from '../../components/threeComponents/models/ChairModel';
 
 
 const MiniHomepage:NextPage = () => {
@@ -51,6 +52,11 @@ const MiniHomepage:NextPage = () => {
     const [installBook, setInstallBook] = useState(false);
     const [bookScale, setBookScale] = useState(0.1);
     const [bookFocused, setBookFocused] = useState(false);
+
+    // 의자 관련 state
+    const [installChair, setInstallChair] = useState(false);
+    const [chairScale, setChairScale] = useState(0.1);
+    const [chairFocused, setChairFocused] = useState(false);
 
 
     const applyInstallBtn = useRef();
@@ -120,7 +126,9 @@ const MiniHomepage:NextPage = () => {
                   <TvModel installed={installTv} scale={tvScale} isFocused={tvFocused} />
                   <StandingLampModel installed={installStandingLamp} scale={standingLampScale} isFocused={standingLampFocused} />
                   <VaseModel installed={installVase} scale={vaseScale} isFocused={vaseFocused} />
+                  <ChairModel installed={installChair} scale={chairScale} isFocused={chairFocused} />
                   <BookModel setCss3dBookVisible={setCss3dBookVisible} installed={installBook} scale={bookScale} isFocused={bookFocused} />
+
               </EffectComposer>
               </Suspense>
           </Canvas>,
@@ -296,99 +304,148 @@ const MiniHomepage:NextPage = () => {
 
             electronics={
               <ModelSettingBox 
-              modelName={"TV"} 
-              installUI={
-                <div>
-                  <button className="text-lg" 
-                    onClick={() => {
+                modelName={"TV"} 
+                installUI={
+                  <div>
+                    <button className="text-lg" 
+                      onClick={() => {
 
-                      // 중복 포커싱 방지
-                      if(tvFocused === false) initEditMode(); 
+                        // 중복 포커싱 방지
+                        if(tvFocused === false) initEditMode(); 
 
-                      setInstallTv(installTv => installTv = !installTv);
+                        setInstallTv(installTv => installTv = !installTv);
 
-                      if(!installTv)
-                        setTvFocused(true);
-                      else{
-                        setTvFocused(false);
-                      }
+                        if(!installTv)
+                          setTvFocused(true);
+                        else{
+                          setTvFocused(false);
+                        }
 
+                        
                       
-                    
-                  }}>ON / OFF</button>
-                </div>
+                    }}>ON / OFF</button>
+                  </div>
+                }
+                sizeControlUI={
+                  <div>
+                    <button className="text-lg" onClick={() => {setTvScale(tvScale => tvScale += 0.05)}}>+</button>
+                    <button className="text-lg" onClick={() => {setTvScale(tvScale => tvScale -= 0.05)}}>-</button>
+                  </div>
+                }
+
+                modelImgUI={
+                  tvFocused ? <img 
+
+                    src="/model_images/tv.png" 
+                    onClick={() => setTvFocused(false)} 
+                    className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                  
+                : <img src="/model_images/tv.png" onClick={() => { initEditMode(); setTvFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
               }
-              sizeControlUI={
-                <div>
-                  <button className="text-lg" onClick={() => {setTvScale(tvScale => tvScale += 0.05)}}>+</button>
-                  <button className="text-lg" onClick={() => {setTvScale(tvScale => tvScale -= 0.05)}}>-</button>
-                </div>
-              }
 
-              modelImgUI={
-                tvFocused ? <img 
-
-                  src="/model_images/tv.png" 
-                  onClick={() => setTvFocused(false)} 
-                  className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
-                
-               : <img src="/model_images/tv.png" onClick={() => { initEditMode(); setTvFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
-            }
-
-              backgroundColor="purple"
+                backgroundColor="purple"
 
             />       
             }
 
             beauties={
+              <>
               <ModelSettingBox 
-              modelName={"꽃병"} 
-              installUI={
-                <div>
-                  <button className="text-lg" 
-                    onClick={() => {
+                modelName={"꽃병"} 
+                installUI={
+                  <div>
+                    <button className="text-lg" 
+                      onClick={() => {
 
-                      // 중복 포커싱 방지
-                      if(vaseFocused === false) initEditMode(); 
+                        // 중복 포커싱 방지
+                        if(vaseFocused === false) initEditMode(); 
 
-                      setInstallVase(installVase => installVase = !installVase);
+                        setInstallVase(installVase => installVase = !installVase);
 
-                      if(!installVase)
-                        setVaseFocused(true);
-                      else{
-                        setVaseFocused(false);
-                      }
+                        if(!installVase)
+                          setVaseFocused(true);
+                        else{
+                          setVaseFocused(false);
+                        }
 
+                        
                       
-                    
-                  }}>ON / OFF</button>
-                </div>
+                    }}>ON / OFF</button>
+                  </div>
+                }
+                sizeControlUI={
+                  <div>
+                    <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale += 0.05)}}>+</button>
+                    <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale -= 0.05)}}>-</button>
+                  </div>
+                }
+
+                modelImgUI={
+                  vaseFocused ? <img 
+
+                    src="/model_images/vase.png" 
+                    onClick={() => setVaseFocused(false)} 
+                    className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                  
+                : <img src="/model_images/vase.png" onClick={() => { initEditMode(); setVaseFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
               }
-              sizeControlUI={
-                <div>
-                  <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale += 0.05)}}>+</button>
-                  <button className="text-lg" onClick={() => {setVaseScale(vaseScale => vaseScale -= 0.05)}}>-</button>
-                </div>
-              }
 
-              modelImgUI={
-                vaseFocused ? <img 
-
-                  src="/model_images/vase.png" 
-                  onClick={() => setVaseFocused(false)} 
-                  className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
-                
-               : <img src="/model_images/vase.png" onClick={() => { initEditMode(); setVaseFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
-            }
-
-              backgroundColor="green"
+                backgroundColor="green"
 
             />   
+          
+          </>
             }
 
             writes={
               <ModelSettingBox 
-              modelName={"메모장"} 
+                modelName={"메모장"} 
+                installUI={
+                  <div>
+                    <button className="text-lg" 
+                      onClick={() => {
+
+                        // 중복 포커싱 방지
+                        if(vaseFocused === false) initEditMode(); 
+
+                        setInstallBook(installBook => installBook = !installBook);
+
+                        if(!installBook)
+                          setBookFocused(true);
+                        else{
+                          setBookFocused(false);
+                        }
+
+                        
+                      
+                    }}>ON / OFF</button>
+                  </div>
+                }
+                sizeControlUI={
+                  <div>
+                    <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale += 0.05)}}>+</button>
+                    <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale -= 0.05)}}>-</button>
+                  </div>
+                }
+
+                modelImgUI={
+                  bookFocused ? <img 
+
+                    src="/model_images/book_ani.png" 
+                    onClick={() => setBookFocused(false)} 
+                    className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                  
+                : <img src="/model_images/book_ani.png" onClick={() => { initEditMode(); setBookFocused(true) }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+              }
+
+                backgroundColor="black"
+
+            />   
+            }
+            
+            furnitures = {
+              <ModelSettingBox 
+              modelName={"의자"} 
               installUI={
                 <div>
                   <button className="text-lg" 
@@ -397,12 +454,12 @@ const MiniHomepage:NextPage = () => {
                       // 중복 포커싱 방지
                       if(vaseFocused === false) initEditMode(); 
 
-                      setInstallBook(installBook => installBook = !installBook);
+                      setInstallChair(installChair => installChair = !installChair);
 
-                      if(!installBook)
-                        setBookFocused(true);
+                      if(!installChair)
+                        setChairFocused(true);
                       else{
-                        setBookFocused(false);
+                        setChairFocused(false);
                       }
 
                       
@@ -412,24 +469,24 @@ const MiniHomepage:NextPage = () => {
               }
               sizeControlUI={
                 <div>
-                  <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale += 0.05)}}>+</button>
-                  <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale -= 0.05)}}>-</button>
+                  <button className="text-lg" onClick={() => {setChairScale(chairScale + 0.05)}}>+</button>
+                  <button className="text-lg" onClick={() => {setChairScale(chairScale - 0.05)}}>-</button>
                 </div>
               }
 
               modelImgUI={
-                bookFocused ? <img 
+                chairFocused ? <img 
 
-                  src="/model_images/book_ani.png" 
-                  onClick={() => setBookFocused(false)} 
+                  src="/model_images/tv.png" 
+                  onClick={() => setChairFocused(false)} 
                   className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
                 
-               : <img src="/model_images/book_ani.png" onClick={() => { initEditMode(); setBookFocused(true) }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+              : <img src="/model_images/tv.png" onClick={() => { initEditMode(); setChairFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
             }
 
-              backgroundColor="black"
+              backgroundColor="blue"
 
-            />   
+          />   
             }
 
             />

@@ -17,6 +17,8 @@
     "@react-three/postprocessing": "^2.1.2",
     "apollo-boost": "^0.4.9",
     "axios": "^0.24.0",
+    "babel-plugin-styled-components": "^2.0.2",
+    "babel-preset-next": "^1.4.0",
     "browserify-zlib": "^0.2.0",
     "crypto": "^1.0.1",
     "graphql": "^15.8.0",

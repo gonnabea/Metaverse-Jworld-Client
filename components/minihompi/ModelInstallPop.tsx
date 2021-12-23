@@ -8,11 +8,11 @@ interface props {
     electronics?: ReactElement<any, any>
     beauties?: ReactElement<any, any>
     writes?: ReactElement<any, any>
-
+    furnitures?: ReactElement<any, any>
 }
 
 
-const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes }:props) => {
+const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes, furnitures }:props) => {
     
     const categories = ["카페트", "가구", "선반", "가전", "조명", "장식", "기록"]
 
@@ -35,9 +35,13 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, write
 
             case "장식":
                 return beauties
-                
+
             case "기록":
                 return writes
+
+            case "가구" :
+                return furnitures
+            
         
             default:
                 break;
