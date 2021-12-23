@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "styled-components"
 
 interface props {
@@ -14,16 +15,20 @@ interface props {
   inside3?: JSX.Element
   inside4?: JSX.Element
   inside5?: JSX.Element
-
+  visible?: boolean
   bookTitle?: string
+  setVisible?: Function
 }
 // So there's currently no way in TypeScript to pass a generic type to a tagged template literal
 // https://stackoverflow.com/questions/63169809/property-name-does-not-exist-on-type-themedstyledprops
 
 const Container = styled.section`
+  display: ${(props: props) => (props.visible ? "block" : "none")};
   cursor: pointer;
   transform-style: preserve-3d;
-  position: relative;
+  position: absolute;
+  top: 30vh;
+  left: 50vw;
   color: white;
   animation: rotate 0.5s forwards;
   /* width: ${(props: props) => (props.width ? props.width : "!00px")}; <- 원본 코드 */
@@ -221,6 +226,8 @@ const Book3D: React.FC<props> = ({
   back,
   spine,
   bookTitle,
+  visible,
+  setVisible
 }) => {
   // 책 닫혔을 때 책 페이지 넘겨지는 버그 방지
   let bookState: string
@@ -253,6 +260,7 @@ const Book3D: React.FC<props> = ({
       200,
       e.currentTarget
     )
+    
   }
 
   const openBook = (e: React.MouseEvent) => {
@@ -278,20 +286,30 @@ const Book3D: React.FC<props> = ({
   }
 
   return (
-    <Container
+    <>
+     <Container
       id="container"
       onClick={(e: any) => takeOutBook(e)}
-      onMouseLeave={(e: any) => revertBook(e)}
+      onMouseLeave={(e: any) => {revertBook(e);}}
       width={width}
       height={height}
       spineWidth={spineWidth}
       bookTitle={bookTitle}
-    >
+      visible={visible}
+      >
+
+    <div className="absolute top-4 left-4 text-lg text-blue-500" onClick={(e) => {
+        setVisible ? setVisible(false) : null;
+        
+    }}>X</div>
+
+
       <Front
         onClick={(e: React.MouseEvent) => openBook(e)}
         width={width}
         height={height}
         spineWidth={spineWidth}
+        
       >
         {front}
       </Front>
@@ -354,6 +372,7 @@ const Book3D: React.FC<props> = ({
         {spine}
       </Spine>
     </Container>
+    </>
   )
 }
 

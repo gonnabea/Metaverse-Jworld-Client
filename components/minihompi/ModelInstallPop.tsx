@@ -7,18 +7,20 @@ interface props {
     lights?: ReactElement<any, any>
     electronics?: ReactElement<any, any>
     beauties?: ReactElement<any, any>
+    writes?: ReactElement<any, any>
+
 }
 
 
-const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:props) => {
+const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes }:props) => {
     
-    const categories = ["카페트", "가구", "선반", "가전", "조명", "장식"]
+    const categories = ["카페트", "가구", "선반", "가전", "조명", "장식", "기록"]
 
     const [selectedCategory, setSelectedCategory] = useState("의자");
 
     const selectCategory = () => {
         switch (selectedCategory) {
-            
+
             case "카페트":
                 return carpets
                 
@@ -33,6 +35,9 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties }:prop
 
             case "장식":
                 return beauties
+                
+            case "기록":
+                return writes
         
             default:
                 break;

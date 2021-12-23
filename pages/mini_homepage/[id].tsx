@@ -13,6 +13,8 @@ import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
 import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
 import VaseModel from '../../components/threeComponents/models/VaseModel';
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
+import BookModel from '../../components/threeComponents/models/BookModel';
+import Book3D from '../../components/Book3d';
 
 
 const MiniHomepage:NextPage = () => {
@@ -45,8 +47,14 @@ const MiniHomepage:NextPage = () => {
     const [vaseScale, setVaseScale] = useState(0.1);
     const [vaseFocused, setVaseFocused] = useState(false);
 
+    // book_ani 관련 state
+    const [installBook, setInstallBook] = useState(false);
+    const [bookScale, setBookScale] = useState(0.1);
+    const [bookFocused, setBookFocused] = useState(false);
+
 
     const applyInstallBtn = useRef();
+    const [css3dBookVisible, setCss3dBookVisible] = useState(false);
 
     const initEditMode = () => {
       setCarpet1Focused(false)
@@ -82,6 +90,9 @@ const MiniHomepage:NextPage = () => {
                 }
                 backgroundColor="green"
               />         
+
+              {/* CSS 3D 메모장*/}
+              <Book3D visible={css3dBookVisible} setVisible={setCss3dBookVisible} />
           
               
               
@@ -107,6 +118,7 @@ const MiniHomepage:NextPage = () => {
                   <TvModel installed={installTv} scale={tvScale} isFocused={tvFocused} />
                   <StandingLampModel installed={installStandingLamp} scale={standingLampScale} isFocused={standingLampFocused} />
                   <VaseModel installed={installVase} scale={vaseScale} isFocused={vaseFocused} />
+                  <BookModel setCss3dBookVisible={setCss3dBookVisible} installed={installBook} scale={bookScale} isFocused={bookFocused} />
               </EffectComposer>
               </Suspense>
           </Canvas>,
@@ -368,6 +380,52 @@ const MiniHomepage:NextPage = () => {
             }
 
               backgroundColor="green"
+
+            />   
+            }
+
+            writes={
+              <ModelSettingBox 
+              modelName={"메모장"} 
+              installUI={
+                <div>
+                  <button className="text-lg" 
+                    onClick={() => {
+
+                      // 중복 포커싱 방지
+                      if(vaseFocused === false) initEditMode(); 
+
+                      setInstallBook(installBook => installBook = !installBook);
+
+                      if(!installBook)
+                        setBookFocused(true);
+                      else{
+                        setBookFocused(false);
+                      }
+
+                      
+                    
+                  }}>ON / OFF</button>
+                </div>
+              }
+              sizeControlUI={
+                <div>
+                  <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale += 0.05)}}>+</button>
+                  <button className="text-lg" onClick={() => {setBookScale(bookScale => bookScale -= 0.05)}}>-</button>
+                </div>
+              }
+
+              modelImgUI={
+                bookFocused ? <img 
+
+                  src="/model_images/vase.png" 
+                  onClick={() => setBookFocused(false)} 
+                  className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                
+               : <img src="/model_images/vase.png" onClick={() => setBookFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+            }
+
+              backgroundColor="black"
 
             />   
             }
