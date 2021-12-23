@@ -3,17 +3,17 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 
-interface ChairModelOpts {
+interface CurtainModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
     rotateY: number;
 }
 
-const ChairModel = ({installed, scale, rotateY, isFocused}:ChairModelOpts) => {
+const CurtainModel = ({installed, scale, rotateY, isFocused}:CurtainModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
-    const gltf = useLoader(GLTFLoader, modelList.chair);
+    const gltf = useLoader(GLTFLoader, modelList.curtain);
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
@@ -56,4 +56,4 @@ const ChairModel = ({installed, scale, rotateY, isFocused}:ChairModelOpts) => {
     }
   }
 
-export default ChairModel;
+export default CurtainModel;

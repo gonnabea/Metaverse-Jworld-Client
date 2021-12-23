@@ -15,7 +15,9 @@ export const modelList = {
     vase_1: `${roomModelsUrl}/vase_1.glb`,
     vase: `/3d_models/vase.glb`,
     book_ani: `/3d_models/note_book/scene.gltf`,
-    chair: `/3d_models/chair.glb`
+    chair: `/3d_models/chair.glb`,
+    curtain: `/3d_models/curtain.glb`,
+
 }
 
 export const modelListArr = [
