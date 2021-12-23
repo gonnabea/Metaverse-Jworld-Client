@@ -8,9 +8,10 @@ interface BookModelOpts {
     scale: number;
     isFocused: boolean;
     setCss3dBookVisible: any
+    rotateY: number;
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelOpts) => {
+const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY}:BookModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
 
     
@@ -62,6 +63,7 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible}:BookModelO
                     document.body.style.cursor = "default"
 
                 }}
+                rotation={[0, rotateY, 0]}
             />
             
           </>

@@ -40,11 +40,12 @@ const ModelSettingBox = ({
     setFocusState,
     initEditMode,
     modelImgUrl
-}:props) => 
+}:props
+) => 
     <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
 
                  
-           { installState !== null ? <div className="">
+           { installState !== undefined ? <div className="">
             <span className="">
                 {modelName + " 설치"}
             </span>
@@ -81,7 +82,7 @@ const ModelSettingBox = ({
                   </div>
         </div> : null }
 
-        { rotateYState ? <div>
+        { rotateYState !== undefined ? <div>
             <span>
                 {modelName + " 회전"}
             </span>

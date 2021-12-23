@@ -7,9 +7,10 @@ interface tvModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
+    rotateY: number;
 }
 
-const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
+const TvModel = ({installed, scale, isFocused, rotateY}:tvModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0])
 
 
@@ -48,6 +49,7 @@ const TvModel = ({installed, scale, isFocused}:tvModelOpts) => {
                     onClick={() => console.log("tv 클릭됨")} 
                     position={position} scale={scale} 
                     object={gltf.scene} 
+                    rotation={[0, rotateY, 0]}
                 />
             </>
         )

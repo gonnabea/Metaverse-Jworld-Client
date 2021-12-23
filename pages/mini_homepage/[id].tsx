@@ -28,37 +28,44 @@ const MiniHomepage:NextPage = () => {
     const [installCarpet1, setInstallCarpet1] = useState(false);
     const [carpet1Scale, setCarpet1Scale] = useState(0.3);
     const [carpet1Focused, setCarpet1Focused] = useState(false);
+    const [carpet1RotateY, setCarpet1RotateY] = useState(0)
 
     // 카페트2 관련 state
     const [installCarpet2, setInstallCarpet2] = useState(false);
     const [carpet2Scale, setCarpet2Scale] = useState(0.3);
     const [carpet2Focused, setCarpet2Focused] = useState(false);
+    const [carpet2RotateY, setCarpet2RotateY] = useState(0)
 
     // tv 관련 state
     const [installTv, setInstallTv] = useState(false);
     const [tvScale, setTvScale] = useState(0.3);
     const [tvFocused, setTvFocused] = useState(false);
+    const [tvRotateY, setTvRotateY] = useState(0)
 
     // 스탠딩 램프 관련 state
     const [installStandingLamp, setInstallStandingLamp] = useState(false);
     const [standingLampScale, setStandingLampScale] = useState(0.3);
     const [standingLampFocused, setStandingLampFocused] = useState(false);
+    const [standingLampRotateY, setStandingLampRotateY] = useState(0)
 
     // Vase 관련 state
     const [installVase, setInstallVase] = useState(false);
     const [vaseScale, setVaseScale] = useState(0.1);
     const [vaseFocused, setVaseFocused] = useState(false);
+    const [vaseRotateY, setVaseRotateY] = useState(0)
 
     // book_ani 관련 state
     const [installBook, setInstallBook] = useState(false);
     const [bookScale, setBookScale] = useState(0.1);
     const [bookFocused, setBookFocused] = useState(false);
+    const [bookRotateY, setBookRotateY] = useState(0)
 
     // 의자 관련 state
     const [installChair, setInstallChair] = useState(false);
     const [chairScale, setChairScale] = useState(0.1);
     const [chairRotateY, setChairRotateY] = useState(0)
     const [chairFocused, setChairFocused] = useState(false);
+    
 
     // 커튼 관련 state
     const [installCurtain, setInstallCurtain] = useState(false);
@@ -118,14 +125,14 @@ const MiniHomepage:NextPage = () => {
               <Suspense fallback={null}>
               <EffectComposer>
                   <RoomModel roomScale={roomScale} />
-                  <Carpet1Model installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} />
-                  <Carpet2Model installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} />
-                  <TvModel installed={installTv} scale={tvScale} isFocused={tvFocused} />
-                  <StandingLampModel installed={installStandingLamp} scale={standingLampScale} isFocused={standingLampFocused} />
-                  <VaseModel installed={installVase} scale={vaseScale} isFocused={vaseFocused} />
+                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} />
+                  <Carpet2Model rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} />
+                  <TvModel installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused} />
+                  <StandingLampModel installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale} isFocused={standingLampFocused} />
+                  <VaseModel installed={installVase} scale={vaseScale} rotateY={vaseRotateY} isFocused={vaseFocused} />
                   <ChairModel installed={installChair} scale={chairScale} rotateY={chairRotateY} isFocused={chairFocused} />
                   <CurtainModel installed={installCurtain} scale={curtainScale} rotateY={curtainRotateY} isFocused={curtainFocused} />
-                  <BookModel setCss3dBookVisible={setCss3dBookVisible} installed={installBook} scale={bookScale} isFocused={bookFocused} />
+                  <BookModel setCss3dBookVisible={setCss3dBookVisible} rotateY={bookRotateY} installed={installBook} scale={bookScale} isFocused={bookFocused} />
 
               </EffectComposer>
               </Suspense>
@@ -170,8 +177,8 @@ const MiniHomepage:NextPage = () => {
                 setInstallState={setInstallCarpet1}
                 scaleState={carpet1Scale}
                 setScaleState={setCarpet1Scale}
-                // rotateYState={carpet1RotateY}
-                // setRotateYState={setCarpet1RotateY}
+                rotateYState={carpet1RotateY}
+                setRotateYState={setCarpet1RotateY}
                 focusState={carpet1Focused}
                 setFocusState={setCarpet1Focused}
                 initEditMode={initEditMode}
@@ -189,8 +196,8 @@ const MiniHomepage:NextPage = () => {
                 setInstallState={setInstallCarpet2}
                 scaleState={carpet2Scale}
                 setScaleState={setCarpet2Scale}
-                // rotateYState={carpet2RotateY}
-                // setRotateYState={setCarpet2RotateY}
+                rotateYState={carpet2RotateY}
+                setRotateYState={setCarpet2RotateY}
                 focusState={carpet2Focused}
                 setFocusState={setCarpet2Focused}
                 initEditMode={initEditMode}
@@ -213,8 +220,8 @@ const MiniHomepage:NextPage = () => {
                   setInstallState={setInstallStandingLamp}
                   scaleState={standingLampScale}
                   setScaleState={setStandingLampScale}
-                  // rotateYState={standingLampRotateY}
-                  // setRotateYState={setStandingLampRotateY}
+                  rotateYState={standingLampRotateY}
+                  setRotateYState={setStandingLampRotateY}
                   focusState={standingLampFocused}
                   setFocusState={setStandingLampFocused}
                   initEditMode={initEditMode}
@@ -232,8 +239,8 @@ const MiniHomepage:NextPage = () => {
                 setInstallState={setInstallTv}
                 scaleState={tvScale}
                 setScaleState={setTvScale}
-                // rotateYState={TvRotateY}
-                // setRotateYState={setTvRotateY}
+                rotateYState={tvRotateY}
+                setRotateYState={setTvRotateY}
                 focusState={tvFocused}
                 setFocusState={setTvFocused}
                 initEditMode={initEditMode}
@@ -253,8 +260,8 @@ const MiniHomepage:NextPage = () => {
                 setInstallState={setInstallVase}
                 scaleState={vaseScale}
                 setScaleState={setVaseScale}
-                // rotateYState={vaseRotateY}
-                // setRotateYState={setVaseRotateY}
+                rotateYState={vaseRotateY}
+                setRotateYState={setVaseRotateY}
                 focusState={vaseFocused}
                 setFocusState={setVaseFocused}
                 initEditMode={initEditMode}
@@ -289,8 +296,8 @@ const MiniHomepage:NextPage = () => {
                 setInstallState={setInstallBook}
                 scaleState={bookScale}
                 setScaleState={setBookScale}
-                // rotateYState={bookRotateY}
-                // setRotateYState={setBookRotateY}
+                rotateYState={bookRotateY}
+                setRotateYState={setBookRotateY}
                 focusState={bookFocused}
                 setFocusState={setBookFocused}
                 initEditMode={initEditMode}

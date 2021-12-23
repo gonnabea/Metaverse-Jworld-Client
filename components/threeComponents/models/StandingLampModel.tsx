@@ -13,9 +13,10 @@ interface props {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
+    rotateY: number;
 }
 
-const StandingLampModel = ({installed, scale, isFocused}:props) => {
+const StandingLampModel = ({installed, scale, isFocused, rotateY}:props) => {
     const [position, setPosition] = useState({ x: 0, y: 0, z:0 });
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
@@ -71,7 +72,9 @@ const StandingLampModel = ({installed, scale, isFocused}:props) => {
                     document.body.style.cursor = "default"
 
                 }}
-                position={[position.x, position.y, position.z]} scale={scale} 
+                position={[position.x, position.y, position.z]} 
+                scale={scale} 
+                rotation={[0, rotateY, 0]}
                 object={gltf.scene} 
             />
 

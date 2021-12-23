@@ -7,9 +7,10 @@ interface carpet2ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
+    rotateY: number;
 }
 
-const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
+const Carpet2Model = ({installed, scale, isFocused, rotateY}:carpet2ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.carpet_2);
@@ -43,7 +44,9 @@ const Carpet2Model = ({installed, scale, isFocused}:carpet2ModelOpts) => {
             <>
             <primitive 
                 onClick={() => console.log("카페트2 클릭됨")} 
-                position={position} scale={scale} 
+                position={position} 
+                scale={scale} 
+                rotation={[0, rotateY, 0]}
                 object={gltf.scene} 
             />
 

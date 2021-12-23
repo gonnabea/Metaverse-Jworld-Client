@@ -7,9 +7,10 @@ interface VaseModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
+    rotateY: number;
 }
 
-const VaseModel = ({installed, scale, isFocused}:VaseModelOpts) => {
+const VaseModel = ({installed, scale, isFocused, rotateY}:VaseModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.vase);
@@ -45,6 +46,7 @@ const VaseModel = ({installed, scale, isFocused}:VaseModelOpts) => {
                 onClick={() => console.log("VaseModel 클릭됨")} 
                 position={position} scale={scale} 
                 object={gltf.scene} 
+                rotation={[0, rotateY, 0]}
             />
 
           </>
