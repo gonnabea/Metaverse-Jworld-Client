@@ -61,6 +61,8 @@ const MiniHomepage:NextPage = () => {
       setCarpet2Focused(false)
       setTvFocused(false)
       setStandingLampFocused(false)
+      setVaseFocused(false)
+      setBookFocused(false)
     }
 
     useEffect(() => {
@@ -192,7 +194,7 @@ const MiniHomepage:NextPage = () => {
                     onClick={() => setCarpet1Focused(false)} 
                     className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
                   
-                 : <img src="/model_images/carpet1.png" onClick={() => setCarpet1Focused(true)}  className="text-lg w-4/12 h-4/12" />
+                 : <img src="/model_images/carpet1.png" onClick={() => { initEditMode(); setCarpet1Focused(true) }}  className="text-lg w-4/12 h-4/12" />
               }
                 backgroundColor="blue"
               />
@@ -233,7 +235,7 @@ const MiniHomepage:NextPage = () => {
                     onClick={() => setCarpet2Focused(false)} 
                     className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
                   
-                 : <img src="/model_images/carpet2.png" onClick={() => setCarpet2Focused(true)}  className="text-lg w-4/12 h-4/12" />
+                 : <img src="/model_images/carpet2.png" onClick={() => { initEditMode(); setCarpet2Focused(true) }}  className="text-lg w-4/12 h-4/12" />
               }
                 
                 backgroundColor="yellow"
@@ -281,10 +283,10 @@ const MiniHomepage:NextPage = () => {
                       standingLampFocused ? <img 
 
                         src="/model_images/standing_lamp.png" 
-                        onClick={() => setStandingLampFocused(false)} 
+                        onClick={() => {setStandingLampFocused(false);}} 
                         className="text-lg border-solid border-4 border-green-400 w-4/12 h-4/12" />
                       
-                     : <img src="/model_images/standing_lamp.png" onClick={() => setStandingLampFocused(true)}  className="text-lg w-4/12 h-4/12" />
+                     : <img src="/model_images/standing_lamp.png" onClick={() => {initEditMode(); setStandingLampFocused(true)}}  className="text-lg w-4/12 h-4/12" />
                   }
                   backgroundColor="red"
 
@@ -330,7 +332,7 @@ const MiniHomepage:NextPage = () => {
                   onClick={() => setTvFocused(false)} 
                   className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
                 
-               : <img src="/model_images/tv.png" onClick={() => setTvFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+               : <img src="/model_images/tv.png" onClick={() => { initEditMode(); setTvFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
             }
 
               backgroundColor="purple"
@@ -376,7 +378,7 @@ const MiniHomepage:NextPage = () => {
                   onClick={() => setVaseFocused(false)} 
                   className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
                 
-               : <img src="/model_images/vase.png" onClick={() => setVaseFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+               : <img src="/model_images/vase.png" onClick={() => { initEditMode(); setVaseFocused(true); }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
             }
 
               backgroundColor="green"
@@ -418,11 +420,11 @@ const MiniHomepage:NextPage = () => {
               modelImgUI={
                 bookFocused ? <img 
 
-                  src="/model_images/vase.png" 
+                  src="/model_images/book_ani.png" 
                   onClick={() => setBookFocused(false)} 
                   className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
                 
-               : <img src="/model_images/vase.png" onClick={() => setBookFocused(true)}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
+               : <img src="/model_images/book_ani.png" onClick={() => { initEditMode(); setBookFocused(true) }}  className="text-lg w-4/12 h-4/12 r-0 h-full" />
             }
 
               backgroundColor="black"
