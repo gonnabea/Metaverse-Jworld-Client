@@ -13,8 +13,10 @@ interface CharacterModelOpts {
 const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const [prevPositionX, setPrevPositionX] = useState(0);
     const [prevPositionZ, setPrevPositionZ] = useState(0);
+    const [prevPositionY, setPrevPositionY] = useState(0.1);
     const [positionX, setPositionX] = useState(0);
     const [positionZ, setPositionZ] = useState(0);
+    const [positionY, setPositionY] = useState(0.1);
     const characterRef = useRef();
 
 
@@ -46,21 +48,21 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             switch (e.key) {
                 case "w":
                     setPrevPositionZ(positionZ)
-                    setPositionZ(positionZ - 0.2)
+                    setPositionZ(positionZ - 0.4)
                     break;
                 case "a":
                     setPrevPositionX(positionX)
-                    setPositionX(positionX - 0.2)
+                    setPositionX(positionX - 0.4)
                     break;
                     
                 case "d":
                     setPrevPositionX(positionX)
-                    setPositionX(positionX + 0.2)
+                    setPositionX(positionX + 0.4)
                     break;
 
                 case "s":
                     setPrevPositionZ(positionZ)
-                    setPositionZ(positionZ + 0.2)
+                    setPositionZ(positionZ + 0.4)
                     break;
                 
                 default:
@@ -73,13 +75,24 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
     function Cube(props) {
         const [ref, api] = useBox(() => ({ 
-            mass: 1, 
+            mass: 100, 
             ...props, 
-            onCollideBegin: (e) => { 
+            onCollide: (e) => { 
                 
 
                 if(e.body.name === "ground1") {
                     console.log("바닥과 충돌")
+                    console.log(e)
+                    // 큐브의 y 위치가 변했을 때 (떨어질 때) 캐릭터의 위치로 반영
+                    if(e.body.position.y !== positionY) {
+                        setPositionY(e.body.position.y)
+                    }
+                    
+                }
+                else if(e.body.name === "stair") {
+                    console.log("계단과 충돌")
+                    setPositionY(e.body.position.y + 0.1)
+
                 }
                 else {
                     console.log("물체와 충돌")
@@ -90,6 +103,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 
                 
             },
+
             
             }))
         
@@ -119,7 +133,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     // onClick={(e) => {
                         //     findPosition(e)
                         // }} 
-                        position={[positionX, 0, positionZ]} 
+                        position={[positionX, positionY, positionZ]} 
                         scale={scale} 
                         rotation={rotation}
                         object={fbx} 
@@ -131,7 +145,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                         }}
                     />
 
-                <Cube position={[positionX, 0.5, positionZ]} />
+                <Cube position={[positionX, positionY, positionZ]} />
           </>
         )
         

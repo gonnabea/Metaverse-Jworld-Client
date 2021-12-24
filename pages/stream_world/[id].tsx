@@ -74,24 +74,44 @@ const World:NextPage = () => {
         const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
 
         return (
-          <mesh ref={ref} name="ground1" visible={true}>
+          <mesh ref={ref} name="ground1">
             <planeGeometry args={[20, 15]}  />
             <meshStandardMaterial color="#f0f0f0" />
           </mesh>
         )
       }
 
-      function HeightField(props) {
+      function ObstacleBox(props) {
         const [ref] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
-          console.log("벽과 충돌")
+          
         }  }))
         
-        return (
-          <mesh castShadow ref={ref} >
-            <boxGeometry args={props.args}  />
-            <meshStandardMaterial color="orange"  />
-          </mesh>
+        if(props.isGround === true){
+          return (
+              <mesh castShadow ref={ref} name={"ground1"}  >
+                <boxGeometry args={props.args}  />
+                <meshStandardMaterial color="orange"  />
+              </mesh>
+
+          )
+        }
+        else if(props.isStair === true) {
+          return (
+            <mesh castShadow ref={ref} name={"stair"}  >
+              <boxGeometry args={props.args}  />
+              <meshStandardMaterial color="orange"  />
+            </mesh>
+
         )
+        }
+        else {
+          return (
+          <mesh castShadow ref={ref} >
+          <boxGeometry args={props.args}   />
+          <meshStandardMaterial color="orange"  />
+        </mesh>
+          )
+        }
       }
 
       function ObstaclePlane(props) {
@@ -137,10 +157,38 @@ const World:NextPage = () => {
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
               <CharacterModel rotation={[0,0,0]} scale={[0.015,0.015,0.015]} />
-              <Ground1 />
-              <ObstaclePlane position={[2,0,-7.5]} size={100} />
+              
+              {/* <ObstaclePlane position={[2,0,-7.5]} size={100} /> */}
               {/* <ObstaclePlane position={[2,0, 7.5]} /> */}
-              <HeightField position={[-0.5,0,0]} args= {[0.5, 6, 6]} />
+              <ObstacleBox position={[-0.5,0,0]} args= {[0.5, 6, 6]} />
+              <ObstacleBox position={[-8,1,0]} args= {[3.5, 6, 0.5]} />
+
+              {/* 계단 위 바닥 */}
+              <ObstacleBox position={[0,-0.1,0]} args= {[21, 0.1, 15]} isGround={true} />
+
+              <ObstacleBox position={[-10,2,0]} args= {[0.1, 4, 15]} />
+              <ObstacleBox position={[8.6,2,3.5]} args= {[3.5, 4, 0.1]} />
+              <ObstacleBox position={[8.6,2,-3.5]} args= {[3.5, 4, 0.1]} />
+              <ObstacleBox position={[0,2,7.5]} args= {[21, 4, 0.1]} />
+              <ObstacleBox position={[0,2,-7.5]} args= {[21, 4, 0.1]} />
+
+
+              {/* 계단 아래 바닥 */}
+              <ObstacleBox position={[15,-2.2,0]} args= {[10, 0.1, 15]} isGround={true} />
+
+              {/* 계단 */}
+              <ObstacleBox position={[12,-1.3,5.5]} args= {[4, 0.1, 4]} rotation={[0,0,-0.5]} isStair={true} />
+              <ObstacleBox position={[12,-1.3,-5.5]} args= {[4, 0.1, 4]} rotation={[0,0,-0.5]} isStair={true} />
+
+              <ObstacleBox position={[15.5,1,7.5]} args= {[10, 7, 0.1]} />
+              <ObstacleBox position={[15.5,1,-7.5]} args= {[10, 7, 0.1]} />
+
+              <ObstacleBox position={[20,1,0]} args= {[0.1, 7, 15]} />
+
+
+
+
+             
             </Suspense>
             </Physics>
         </Canvas>,
