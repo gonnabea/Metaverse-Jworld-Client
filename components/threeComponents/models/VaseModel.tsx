@@ -14,7 +14,7 @@ const VaseModel = ({installed, scale, isFocused, rotateY}:VaseModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.vase);
-    
+    // gltf.scene.castShadow = true;
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
     

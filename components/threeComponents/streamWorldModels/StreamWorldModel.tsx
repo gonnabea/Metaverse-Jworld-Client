@@ -46,13 +46,13 @@ const LobbyModel = () => {
                 }} 
                 position={[0,0,0]} scale={[1,1,1]} 
                 object={gltf.scene} 
-                onPointerOver={() => {
-                    document.body.style.cursor = "pointer"
-                }}
-                onPointerOut={() => {
-                    document.body.style.cursor = "default"
+                // onPointerOver={() => {
+                //     document.body.style.cursor = "pointer"
+                // }}
+                // onPointerOut={() => {
+                //     document.body.style.cursor = "default"
 
-                }}
+                // }}
                 rotation={[0, 0, 0]}
             />
             

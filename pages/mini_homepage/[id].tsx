@@ -151,6 +151,10 @@ const MiniHomepage:NextPage = () => {
                 shadow-mapSize-width={2048}
                 shadow-mapSize-height={2048}
                 castShadow
+                shadow-camera-left={-10}
+                shadow-camera-right={10}
+                shadow-camera-top={-50}
+                shadow-camera-bottom={10}
             />
               <Suspense fallback={null}>
               <EffectComposer>

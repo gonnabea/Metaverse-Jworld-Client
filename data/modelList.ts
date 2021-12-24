@@ -1,4 +1,6 @@
+const modelsUrl = "/3d_models"
 const roomModelsUrl = "/3d_models/living_room_isometric_lowpoly/items"
+const characterModelsUrl = "/3d_models/characters"
 
 export const modelList = {
     book1: `${roomModelsUrl}/book_1.glb`,
@@ -13,12 +15,14 @@ export const modelList = {
     table_2: `${roomModelsUrl}/table_2.glb`,
     glass_1: `${roomModelsUrl}/glass_1.glb`,
     vase_1: `${roomModelsUrl}/vase_1.glb`,
-    vase: `/3d_models/vase.glb`,
-    book_ani: `/3d_models/note_book/scene.gltf`,
-    chair: `/3d_models/chair.glb`,
-    curtain: `/3d_models/curtain.glb`,
-    frame: `/3d_models/frame.glb`,
-    lobby: `/3d_models/streamWorld.glb`
+    vase: `${modelsUrl}/vase.glb`,
+    book_ani: `${modelsUrl}/note_book/scene.gltf`,
+    chair: `${modelsUrl}/chair.glb`,
+    curtain: `${modelsUrl}/curtain.glb`,
+    frame: `${modelsUrl}/frame.glb`,
+    lobby: `${modelsUrl}/streamWorld.glb`,
+    screen: `${modelsUrl}/tv2.glb`,
+    character: `${characterModelsUrl}/little_girl.fbx`,
 }
 
 export const modelListArr = [

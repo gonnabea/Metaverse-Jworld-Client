@@ -8,7 +8,7 @@ interface roomModelOpts {
 
 const RoomModel = ({roomScale}:roomModelOpts) => {
     const gltf = useLoader(GLTFLoader, modelList.room_wall);
-
+    // gltf.scene.receiveShadow = true
     return (
       <>
         <primitive onClick={() => {console.log("룸모델 클릭됨"); }}  position={[0, 0, 0]} object={gltf.scene} scale={roomScale}  />

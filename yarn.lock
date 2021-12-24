@@ -1748,6 +1748,14 @@
     "schema-utils" "^2.6.5"
     "source-map" "^0.7.3"
 
+"@react-three/cannon@^4.3.0":
+  "integrity" "sha512-U0ne4JcwxhdsOVmgGW9qhsl8wHWJxyVsUsGaLyFDujjl4YvG4uGkYAfwrifmmXhTRHkCh+HzE0Dhjq+ms3CwFQ=="
+  "resolved" "https://registry.npmjs.org/@react-three/cannon/-/cannon-4.3.0.tgz"
+  "version" "4.3.0"
+  dependencies:
+    "cannon-es" "^0.18.0"
+    "cannon-es-debugger" "^0.1.4"
+
 "@react-three/drei@^7.20.0":
   "integrity" "sha512-ME4n6ygY7ET4A+jYdxOU7/dDwd+qh4AfifO3hs21JFJxNvyRXQQsbNnmX2K0zDsW2swWGyCaatOVuLiIlbtDTA=="
   "resolved" "https://registry.npmjs.org/@react-three/drei/-/drei-7.20.0.tgz"
@@ -3692,6 +3700,16 @@
   "integrity" "sha512-YzBnspggWV5hep1m9Z6sZVLOt7vrju8xWooFAgN6BA5qvy98qPAPb7vNUzypFaoh2pb3vlfzbDO8tB57UPGbtw=="
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001265.tgz"
   "version" "1.0.30001265"
+
+"cannon-es-debugger@^0.1.4":
+  "integrity" "sha512-RefSPWX6gDMQsx3UWoQpkGW3R03Wwn8p1JteexQUYxDC5DnOS3U3iKhns2vVpFp6Q3AKiSSmRf7NIXnGN8L0RA=="
+  "resolved" "https://registry.npmjs.org/cannon-es-debugger/-/cannon-es-debugger-0.1.4.tgz"
+  "version" "0.1.4"
+
+"cannon-es@^0.18.0", "cannon-es@0.x.x":
+  "integrity" "sha512-GiQ1bd0etZsMVSnUhNc+p+FEh0R/cULpp8uRSAhEK4Kax+y/31Au03m6h1h1xdDivAMnFg8YDwevHgzLynOHlw=="
+  "resolved" "https://registry.npmjs.org/cannon-es/-/cannon-es-0.18.0.tgz"
+  "version" "0.18.0"
 
 "caseless@~0.12.0":
   "integrity" "sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw="
@@ -12178,7 +12196,7 @@
     "potpack" "^1.0.1"
     "zstddec" "^0.0.2"
 
-"three@^0.133.1", "three@>= 0.102.0 < 0.136.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.126", "three@>=0.128.0", "three@>=0.130.1":
+"three@^0.133.1", "three@>= 0.102.0 < 0.136.0", "three@>= 0.123.0", "three@>=0.103.0", "three@>=0.126", "three@>=0.128.0", "three@>=0.130.1", "three@0.x.x":
   "integrity" "sha512-WydohO8ll949B0FTD6MGz59Yv2Lwj8hvObg/0Heh2r42S6+tQC1WByfCNRdmG4D7+odfGod+n8JPV1I2xrboWw=="
   "resolved" "https://registry.npmjs.org/three/-/three-0.133.1.tgz"
   "version" "0.133.1"
@@ -12499,7 +12517,7 @@
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
 
-"typescript@*", "typescript@>=2.4.0", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", "typescript@>=3.3.1", "typescript@4.4.3":
+"typescript@*", "typescript@>=2.4.0", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", "typescript@>=3.3.1", "typescript@>=3.8", "typescript@4.4.3":
   "integrity" "sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA=="
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.4.3.tgz"
   "version" "4.4.3"
