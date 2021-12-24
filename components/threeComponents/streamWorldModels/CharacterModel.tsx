@@ -82,38 +82,15 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     console.log("바닥과 충돌")
                 }
                 else {
+                    console.log("물체와 충돌")
                     setPositionX(prevPositionX); 
                     setPositionZ(prevPositionZ);
+                   
                 }
                 
                 
             },
-            onCollideEnd: (e) => { 
-                
-
-                if(e.body.name === "ground1") {
-                    console.log("바닥과 충돌")
-                }
-                else {
-                    setPositionX(prevPositionX); 
-                    setPositionZ(prevPositionZ);
-                }
-                
-                
-            },
-            onCollide: (e) => { 
-                
-
-                if(e.body.name === "ground1") {
-                    console.log("바닥과 충돌")
-                }
-                else {
-                    setPositionX(prevPositionX); 
-                    setPositionZ(prevPositionZ);
-                }
-                
-                
-            }
+            
             }))
         
         return (

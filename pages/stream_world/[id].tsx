@@ -7,7 +7,7 @@ import StreamWorldModel from '../../components/threeComponents/streamWorldModels
 import OrbitCameraController from '../../components/threeComponents/OrbitController';
 import ScreenModel from '../../components/threeComponents/streamWorldModels/ScreenModel';
 import CharacterModel from '../../components/threeComponents/streamWorldModels/CharacterModel';
-import { Physics, useBox, usePlane } from '@react-three/cannon';
+import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, useHeightfield, usePlane, useSphere } from '@react-three/cannon';
 
 const World:NextPage = () => {
 
@@ -72,10 +72,24 @@ const World:NextPage = () => {
 
       function Ground1(props) {
         const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+
         return (
-          <mesh receiveShadow ref={ref} name="ground1">
-            <planeGeometry args={[500, 500]} />
+          <mesh ref={ref} name="ground1" visible={true}>
+            <planeGeometry args={[20, 15]}  />
             <meshStandardMaterial color="#f0f0f0" />
+          </mesh>
+        )
+      }
+
+      function HeightField(props) {
+        const [ref] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
+          console.log("벽과 충돌")
+        }  }))
+        
+        return (
+          <mesh castShadow ref={ref} >
+            <boxGeometry args={props.args}  />
+            <meshStandardMaterial color="orange"  />
           </mesh>
         )
       }
@@ -84,9 +98,9 @@ const World:NextPage = () => {
         const [ref] = usePlane(() => ({ rotation: [0, 0, 0], ...props }))
         
         return (
-          <mesh castShadow ref={ref}>
-            <planeGeometry args={[500, 500]} />
-            <meshStandardMaterial color="orange" />
+          <mesh castShadow ref={ref} >
+            <planeGeometry args={[10, 10]} />
+            <meshStandardMaterial color="orange"  />
           </mesh>
         )
       }
@@ -124,7 +138,9 @@ const World:NextPage = () => {
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
               <CharacterModel rotation={[0,0,0]} scale={[0.015,0.015,0.015]} />
               <Ground1 />
-              <ObstaclePlane position={[2,0,0]} />
+              <ObstaclePlane position={[2,0,-7.5]} size={100} />
+              {/* <ObstaclePlane position={[2,0, 7.5]} /> */}
+              <HeightField position={[-0.5,0,0]} args= {[0.5, 6, 6]} />
             </Suspense>
             </Physics>
         </Canvas>,

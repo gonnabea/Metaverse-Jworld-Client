@@ -8,6 +8,7 @@
 - [x] Next.js
 - [x] TypeScript
 - [x] Three.js (React-Three-Fiber)
+- [x] Cannon.js
 - [x] Tailwind CSS
 - [x] Styled-Components
 - [x] GraphQL
