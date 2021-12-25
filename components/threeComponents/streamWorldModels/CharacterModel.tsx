@@ -1,4 +1,3 @@
-
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
@@ -8,6 +7,8 @@ import { useAnimations, useGLTF } from '@react-three/drei';
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Vector3 } from 'three';
+import OrbitCameraController from '../OrbitController';
+import ThirdPersonCamera from '../thirdPersonCamera';
 
 interface CharacterModelOpts {
     scale: number[]
@@ -301,6 +302,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     onPointerOut={() => {
                         document.body.style.cursor = "default"
                     }}> 
+                    <ThirdPersonCamera positionX={positionX} positionY={positionY} positionZ={positionZ} move={move} />
                         <primitive 
                             object={nodes.mixamorigHips}
 

@@ -9,12 +9,15 @@ import ScreenModel from '../../components/threeComponents/streamWorldModels/Scre
 import CharacterModel from '../../components/threeComponents/streamWorldModels/CharacterModel';
 import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, useHeightfield, usePlane, useSphere } from '@react-three/cannon';
 import Amy from '../../components/threeComponents/streamWorldModels/Amy';
+import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamera';
 
 const World:NextPage = () => {
 
     const roomId = useRef<string | null>();
     const [characterPosition, setCharacterPosition] = useState([0,0,0]);
     const cubeRef = useRef()
+
+
     
 
     // url로 부터 roomId 얻기
@@ -139,7 +142,7 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
                     <Canvas className="w-screen h-screen">
-          <OrbitCameraController />
+          
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} />
           {/* <directionalLight
@@ -153,12 +156,17 @@ const World:NextPage = () => {
 
           {/* <Box position={[-1.2, 0, 0]} />
           <Box position={[1.2, 0, 0]} /> */}
+
           <Physics gravity= {[0, -1000, 0]} >
             <Suspense fallback={null}>
               <StreamWorldModel />
+              <CharacterModel 
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.015,0.015,0.015]} 
+              />
+              
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
-              <CharacterModel rotation={[Math.PI / 2,0,0]} scale={[0.015,0.015,0.015]} />
               
               {/* <ObstaclePlane position={[2,0,-7.5]} size={100} /> */}
               {/* <ObstaclePlane position={[2,0, 7.5]} /> */}
