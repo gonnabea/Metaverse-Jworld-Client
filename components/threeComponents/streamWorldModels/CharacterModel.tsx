@@ -24,11 +24,13 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const [positionY, setPositionY] = useState(0.1);
 
     const [onStair, setOnstair] = useState(false)
+    const [onCollide, setOnCollide] = useState(false);
 
     const characterRef = useRef();
     const cubeRef = useRef()
 
-    const [xMove, setXmove] = useState("");
+    const [move, setMove] = useState("");
+
 
 
     
@@ -59,38 +61,68 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         console.log(clickedPosition)
     };
     
-    const smoothMove = (vector) => {
-        switch (vector) {
-            case "+x":
-                characterRef.current.position.x += 0.03
-                break;
-            case "-x":
-                characterRef.current.position.x -= 0.03
-                break;
-            default:
-                break;
-        }
-    }
+
     
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime()
         // console.log("Hey, I'm executing every frame!");
-        switch (xMove) {
-            case "+x":
-                moveNum += 0.03
-            if(moveNum < 0.3) {
-                smoothMove("+x")
-            }
-            case "-x":
-                moveNum += 0.03
-            if(moveNum < 0.3) {
-                smoothMove("-x")
-            }
-                break;
         
-            default:
-                break;
-        }
+            switch (move) {
+                case "+x":
+                    console.log(moveNum)
+                    moveNum += 0.04
+                    characterRef.current.position.x += moveNum
+                    if(moveNum >= 0.2) {
+                        moveNum = 0;
+                        setMove("")
+                        setPositionX(characterRef.current.position.x)
+                        actions.run?.play();
+
+                    }
+                    if(onCollide === true) {
+                        setMove("")
+                        characterRef.current.position.x - 0.2
+                        setPositionX(characterRef.current.position.x)
+                    }
+                    break;
+                case "-x":
+                    moveNum += 0.04
+                    characterRef.current.position.x -= moveNum
+                    if(moveNum >= 0.2) {
+                        moveNum = 0;
+                        setMove("")
+                        setPositionX(characterRef.current.position.x)
+                        actions.run?.play();
+
+                    }
+                    break;
+                case "+z":
+                    moveNum += 0.04
+                    characterRef.current.position.z += moveNum
+                    if(moveNum >= 0.2) {
+                        moveNum = 0;
+                        setMove("")
+                        setPositionZ(characterRef.current.position.z)
+                        actions.run?.play();
+                    }
+                    break;
+                case "-z":
+                    moveNum += 0.04
+                    characterRef.current.position.z -= moveNum
+                    if(moveNum >= 0.2) {
+                        moveNum = 0;
+                        setMove("")
+                        setPositionZ(characterRef.current.position.z)
+                        actions.run?.play();
+
+                    }
+                    break;
+            
+                default:
+                    break;
+            }
+        
+      
 
     
         
@@ -101,14 +133,12 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
             switch (e.key) {
                 case "w":
-                        setPrevPositionZ(positionZ)
-                        setPositionZ(positionZ - 1)
+                        setMove("-z")
                     
                     break;
                 case "a":
-                        setPrevPositionX(positionX)
-                        setPositionX(positionX - 0.1)
-                        setXmove("-x")
+                      
+                        setMove("-x")
                         if(onStair) {
                             setPositionY(positionY + 0.05)
                         }
@@ -116,9 +146,8 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     break;
                     
                 case "d":
-                    setPrevPositionX(positionX)
-                    setPositionX(positionX + 0.1)
-                    setXmove("+x")
+                   
+                    setMove("+x")
                     
                     if(onStair) {
                         setPositionY(positionY - 0.05)
@@ -126,9 +155,10 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     break;
 
                 case "s":
-                    setPrevPositionZ(positionZ)
-                    setPositionZ(positionZ + 0.4)
-                    actions.run.play();
+                    
+                    setMove("+z")
+
+                    
                     
                     break;
                 
@@ -157,20 +187,20 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                         
                     // }
                     setOnstair(false);
-                    
+                    setOnCollide(false);
                     
                 }
                 else if(e.body.name === "stair") {
                     console.log("계단과 충돌")
                     setOnstair(true);
+                    setOnCollide(false);
                     
                     // setPositionY(e.body.position.y)
 
                 }
                 else {
                     console.log("물체와 충돌")
-                    setPositionX(prevPositionX); 
-                    setPositionZ(prevPositionZ);
+                    setOnCollide(true)
                    
                 }
             },
@@ -179,8 +209,8 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             }))
         
         return (
-          <mesh castShadow ref={ref} >
-            <boxGeometry args={[0.1,0.1,0.1]} />
+          <mesh castShadow ref={ref} visible={false} >
+            <boxGeometry />
             <meshStandardMaterial color="orange" />
             
           </mesh>
@@ -196,7 +226,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
         return () => window.removeEventListener("keydown", controlCharacter)
 
-        }, [positionX, positionZ])
+        }, [move])
                 
         return (
             <>
