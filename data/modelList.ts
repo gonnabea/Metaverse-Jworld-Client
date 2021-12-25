@@ -22,7 +22,8 @@ export const modelList = {
     frame: `${modelsUrl}/frame.glb`,
     lobby: `${modelsUrl}/streamWorld.glb`,
     screen: `${modelsUrl}/tv2.glb`,
-    character: `${characterModelsUrl}/little_girl.fbx`,
+    character: `${characterModelsUrl}/amy.glb`,
+    amy: `${characterModelsUrl}/amy.glb`
 }
 
 export const modelListArr = [

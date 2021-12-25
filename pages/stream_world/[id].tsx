@@ -8,6 +8,7 @@ import OrbitCameraController from '../../components/threeComponents/OrbitControl
 import ScreenModel from '../../components/threeComponents/streamWorldModels/ScreenModel';
 import CharacterModel from '../../components/threeComponents/streamWorldModels/CharacterModel';
 import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, useHeightfield, usePlane, useSphere } from '@react-three/cannon';
+import Amy from '../../components/threeComponents/streamWorldModels/Amy';
 
 const World:NextPage = () => {
 
@@ -48,6 +49,7 @@ const World:NextPage = () => {
     function Box(props) {
         // This reference will give us direct access to the THREE.Mesh object
         const ref = useRef()
+        useF
         // Set up state for the hovered and active state
         const [hovered, setHover] = useState(false)
         const [active, setActive] = useState(false)
@@ -88,7 +90,7 @@ const World:NextPage = () => {
         
         if(props.isGround === true){
           return (
-              <mesh castShadow ref={ref} name={"ground1"}  >
+              <mesh castShadow ref={ref} name={"ground1"} visible={false} >
                 <boxGeometry args={props.args}  />
                 <meshStandardMaterial color="orange"  />
               </mesh>
@@ -97,7 +99,7 @@ const World:NextPage = () => {
         }
         else if(props.isStair === true) {
           return (
-            <mesh castShadow ref={ref} name={"stair"}  >
+            <mesh castShadow ref={ref} name={"stair"} visible={false}   >
               <boxGeometry args={props.args}  />
               <meshStandardMaterial color="orange"  />
             </mesh>
@@ -106,8 +108,8 @@ const World:NextPage = () => {
         }
         else {
           return (
-          <mesh castShadow ref={ref} >
-          <boxGeometry args={props.args}   />
+          <mesh castShadow ref={ref} visible={false}   >
+          <boxGeometry args={props.args}  />
           <meshStandardMaterial color="orange"  />
         </mesh>
           )
@@ -151,12 +153,12 @@ const World:NextPage = () => {
 
           {/* <Box position={[-1.2, 0, 0]} />
           <Box position={[1.2, 0, 0]} /> */}
-          <Physics >
+          <Physics gravity= {[0, -1000, 0]} >
             <Suspense fallback={null}>
               <StreamWorldModel />
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
-              <CharacterModel rotation={[0,0,0]} scale={[0.015,0.015,0.015]} />
+              <CharacterModel rotation={[Math.PI / 2,0,0]} scale={[0.015,0.015,0.015]} />
               
               {/* <ObstaclePlane position={[2,0,-7.5]} size={100} /> */}
               {/* <ObstaclePlane position={[2,0, 7.5]} /> */}
@@ -187,7 +189,7 @@ const World:NextPage = () => {
 
 
 
-
+              {/* <Amy /> */}
              
             </Suspense>
             </Physics>

@@ -3,20 +3,20 @@ import { Canvas } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
 import { Suspense } from "react";
 import OrbitCameraController from '../../components/threeComponents/OrbitController';
-import RoomModel from '../../components/threeComponents/models/RoomModel';
-import Carpet1Model from '../../components/threeComponents/models/Carpet1Model';
-import TvModel from '../../components/threeComponents/models/TvModel';
-import Carpet2Model from '../../components/threeComponents/models/Carpet2Model';
-import StandingLampModel from '../../components/threeComponents/models/StandingLampModel';
+import RoomModel from '../../components/threeComponents/miniHompiModels/RoomModel';
+import Carpet1Model from '../../components/threeComponents/miniHompiModels/Carpet1Model';
+import TvModel from '../../components/threeComponents/miniHompiModels/TvModel';
+import Carpet2Model from '../../components/threeComponents/miniHompiModels/Carpet2Model';
+import StandingLampModel from '../../components/threeComponents/miniHompiModels/StandingLampModel';
 import BottomUI from '../../components/common/BottomUI';
 import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
 import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
-import VaseModel from '../../components/threeComponents/models/VaseModel';
+import VaseModel from '../../components/threeComponents/miniHompiModels/VaseModel';
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
-import BookModel from '../../components/threeComponents/models/BookModel';
+import BookModel from '../../components/threeComponents/miniHompiModels/BookModel';
 import Book3D from '../../components/Book3d';
-import ChairModel from '../../components/threeComponents/models/ChairModel';
-import CurtainModel from '../../components/threeComponents/models/CurtainModel';
+import ChairModel from '../../components/threeComponents/miniHompiModels/ChairModel';
+import CurtainModel from '../../components/threeComponents/miniHompiModels/CurtainModel';
 
 
 const MiniHomepage:NextPage = () => {
