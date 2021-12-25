@@ -62,11 +62,9 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     };
     
 
-    
-    useFrame(({ clock }) => {
-        const a = clock.getElapsedTime()
-        // console.log("Hey, I'm executing every frame!");
+    const handleMove = () => {
         
+        if(!onCollide) {
             switch (move) {
                 case "+x":
                     console.log(moveNum)
@@ -75,15 +73,18 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     if(moveNum >= 0.2) {
                         moveNum = 0;
                         setMove("")
+                        setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
                         actions.run?.play();
+                        
+                    }
 
-                    }
-                    if(onCollide === true) {
-                        setMove("")
-                        characterRef.current.position.x - 0.2
-                        setPositionX(characterRef.current.position.x)
-                    }
+                    // if(onCollide) {
+                    // characterRef.current.position.x = prevPositionX - 0.2
+                    // setPositionX(prevPositionX - 0.2)
+                    //     setOnCollide(false)
+                    // }
+                    
                     break;
                 case "-x":
                     moveNum += 0.04
@@ -91,10 +92,17 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     if(moveNum >= 0.2) {
                         moveNum = 0;
                         setMove("")
+                        setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
                         actions.run?.play();
-
+    
                     }
+
+                    // if(onCollide) {
+                    //     characterRef.current.position.x = prevPositionX + 0.2
+                    //     setPositionX(prevPositionX + 0.2)
+                    //         setOnCollide(false)
+                    //     }
                     break;
                 case "+z":
                     moveNum += 0.04
@@ -102,9 +110,17 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     if(moveNum >= 0.2) {
                         moveNum = 0;
                         setMove("")
+                        setPrevPositionZ(positionZ)
                         setPositionZ(characterRef.current.position.z)
+
                         actions.run?.play();
                     }
+
+                    // if(onCollide) {
+                    //     characterRef.current.position.z = prevPositionZ - 0.2
+                    //     setPositionZ(prevPositionZ - 0.2)
+                    //         setOnCollide(false)
+                    //     }
                     break;
                 case "-z":
                     moveNum += 0.04
@@ -112,15 +128,41 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     if(moveNum >= 0.2) {
                         moveNum = 0;
                         setMove("")
+                        setPrevPositionZ(positionZ)
                         setPositionZ(characterRef.current.position.z)
                         actions.run?.play();
-
+    
                     }
+
+                    // if(onCollide) {
+                    //     characterRef.current.position.z = prevPositionZ + 0.2
+                    //     setPositionZ(prevPositionZ + 0.2)
+                    //         setOnCollide(false)
+                    //     }
                     break;
             
                 default:
                     break;
             }
+        }
+        else {
+            characterRef.current.position.x = prevPositionX
+            characterRef.current.position.z = prevPositionZ
+            setPositionX(prevPositionX)
+            setPositionZ(prevPositionZ)
+            setOnCollide(false)
+        }
+        
+    }
+    
+    useFrame(({ clock }) => {
+        const a = clock.getElapsedTime()
+        // console.log("Hey, I'm executing every frame!");
+        
+            handleMove()
+        
+            
+        
         
       
 
@@ -172,7 +214,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
     function Cube(props) {
         const [ref, api] = useBox(() => ({ 
-            mass:1000000, 
+            mass:1, 
             ...props, 
             onCollideBegin: (e) => { 
                 
@@ -187,13 +229,13 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                         
                     // }
                     setOnstair(false);
-                    setOnCollide(false);
+                    
                     
                 }
                 else if(e.body.name === "stair") {
                     console.log("계단과 충돌")
                     setOnstair(true);
-                    setOnCollide(false);
+                    
                     
                     // setPositionY(e.body.position.y)
 
@@ -201,7 +243,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 else {
                     console.log("물체와 충돌")
                     setOnCollide(true)
-                   
+                    
                 }
             },
 
@@ -210,7 +252,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
         return (
           <mesh castShadow ref={ref} visible={false} >
-            <boxGeometry />
+            <boxGeometry  />
             <meshStandardMaterial color="orange" />
             
           </mesh>
@@ -222,9 +264,9 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         // return () => window.removeEventListener("click", installModel);
         
         
-        window.addEventListener("keydown", (e) => controlCharacter(e))
+        window.addEventListener("keypress", (e) => controlCharacter(e))
 
-        return () => window.removeEventListener("keydown", controlCharacter)
+        return () => window.removeEventListener("keypress", controlCharacter)
 
         }, [move])
                 
@@ -267,7 +309,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 </group>
             </group>
 
-                <Cube position={[positionX, positionY, positionZ]} />
+                <Cube position={[positionX, positionY + 1, positionZ]} />
           </>
         )
         
