@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three";
 
-const ThirdPersonCamera = ({positionX=1,positionY=1,positionZ=1, move}) => {
+const ThirdPersonCamera = ({positionX=1,positionY=1,positionZ=1, moveNumX=0, moveNumZ=0}) => {
    const { camera, gl } = useThree();
    const [time, setTime] = useState(0)
    useFrame(() => {
@@ -19,11 +19,11 @@ const ThirdPersonCamera = ({positionX=1,positionY=1,positionZ=1, move}) => {
            controls.maxDistance = 10;
            
 
-        
-           camera.position.set(positionX-2,positionY+3,positionZ-2)
+           camera.position.set(positionX+moveNumX-2,positionY+2,positionZ+moveNumZ-2)
 
+            
 
-           camera.lookAt(positionX,positionY+2,positionZ)
+           camera.lookAt(positionX+moveNumX,positionY,positionZ+moveNumZ)
       
          console.log("asasasqqqqq")
          return () => {
@@ -31,7 +31,7 @@ const ThirdPersonCamera = ({positionX=1,positionY=1,positionZ=1, move}) => {
           
          };
       },
-      [camera, gl, time]
+      [camera, gl, moveNumX, moveNumZ]
    );
    return null;
 };

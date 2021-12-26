@@ -15,7 +15,7 @@ interface CharacterModelOpts {
     rotation: number[]
 }
 
-let moveNum = 0
+// let moveNum = 0
 const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const [prevPositionX, setPrevPositionX] = useState(1);
     const [prevPositionZ, setPrevPositionZ] = useState(0);
@@ -31,6 +31,9 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const cubeRef = useRef()
 
     const [move, setMove] = useState("");
+    const [moveNum, setMoveNum] = useState(0)
+    const [moveNumX, setMoveNumX] = useState(0)
+    const [moveNumZ, setMoveNumZ] = useState(0)
 
 
 
@@ -68,16 +71,18 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         if(!onCollide) {
             switch (move) {
                 case "+x":
+                    actions.run?.play();
                     console.log(moveNum)
-                    moveNum += 0.04
-                    characterRef.current.position.x += moveNum
-                    if(moveNum >= 0.2) {
-                        moveNum = 0;
+                    
+                    setMoveNumX(moveNumX + 0.05)
+                    characterRef.current.position.x = positionX + moveNumX
+                    if(characterRef.current.position.x >= positionX + 2) {
+                        setMoveNumX(0)
                         setMove("")
-                        setPrevPositionX(positionX)
+                        // setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
-                        actions.run?.play();
-                        
+                        setPositionZ(characterRef.current.position.z)
+                        actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -88,15 +93,16 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     
                     break;
                 case "-x":
-                    moveNum += 0.04
-                    characterRef.current.position.x -= moveNum
-                    if(moveNum >= 0.2) {
-                        moveNum = 0;
+                    actions.run?.play();
+                    setMoveNumX(moveNumX - 0.05)
+                    characterRef.current.position.x = positionX + moveNumX
+                    if(characterRef.current.position.x <= positionX - 2) {
+                        setMoveNumX(0)
                         setMove("")
-                        setPrevPositionX(positionX)
+                        // setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
-                        actions.run?.play();
-    
+                        setPositionZ(characterRef.current.position.z)
+                        actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -106,15 +112,16 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     //     }
                     break;
                 case "+z":
-                    moveNum += 0.04
-                    characterRef.current.position.z += moveNum
-                    if(moveNum >= 0.2) {
-                        moveNum = 0;
+                    actions.run?.play();
+                    setMoveNumZ(moveNumZ + 0.05)
+                    characterRef.current.position.z = positionZ + moveNumZ
+                    if(characterRef.current.position.z >= positionZ + 2) {
+                        setMoveNumZ(0)
                         setMove("")
-                        setPrevPositionZ(positionZ)
+                        // setPrevPositionZ(positionZ)
+                        setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-
-                        actions.run?.play();
+                        actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -124,14 +131,17 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     //     }
                     break;
                 case "-z":
-                    moveNum += 0.04
-                    characterRef.current.position.z -= moveNum
-                    if(moveNum >= 0.2) {
-                        moveNum = 0;
+                    actions.run?.play();
+                    setMoveNumZ(moveNumZ - 0.05)
+                    characterRef.current.position.z = positionZ + moveNumZ
+                    if(characterRef.current.position.z <= positionZ - 2) {
+                        setMoveNumZ(0)
                         setMove("")
-                        setPrevPositionZ(positionZ)
+                        // setPrevPositionZ(positionZ)
+                        setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-                        actions.run?.play();
+                        actions.run?.stop();
+
     
                     }
 
@@ -152,6 +162,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             setPositionX(prevPositionX)
             setPositionZ(prevPositionZ)
             setOnCollide(false)
+            
         }
         
     }
@@ -218,7 +229,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             mass:1, 
             ...props, 
             onCollideBegin: (e) => { 
-                
+            
 
                 if(e.body.name === "ground1") {
                     console.log("바닥과 충돌")
@@ -292,6 +303,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
             <group ref={group} dispose={null}>
                 <group  
+                    
                     ref={characterRef}
                     position={[positionX, positionY, positionZ]} 
                     scale={scale} 
@@ -302,7 +314,14 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     onPointerOut={() => {
                         document.body.style.cursor = "default"
                     }}> 
-                    <ThirdPersonCamera positionX={positionX} positionY={positionY} positionZ={positionZ} move={move} />
+                        <ThirdPersonCamera 
+                            positionX={positionX} 
+                            positionY={positionY} 
+                            positionZ={positionZ} 
+                            moveNumX={moveNumX} 
+                            moveNumZ={moveNumZ} 
+                        />
+
                         <primitive 
                             object={nodes.mixamorigHips}
 
