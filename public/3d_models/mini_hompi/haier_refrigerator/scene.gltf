@@ -1,0 +1,346 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        0.41668498516082764,
+        1.8032840490341187,
+        0.33376798033714294
+      ],
+      "min": [
+        -0.41668498516082764,
+        -0.0009059906005859375,
+        -0.5843240022659302
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 626676,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.4901161193847656e-08,
+        0.00894463062286377
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 417784,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.4901161193847656e-08,
+        0.00894463062286377
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 835568,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.4901161193847656e-08,
+        0.00894463062286377
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1253352,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.4901161193847656e-08,
+        0.00894463062286377
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1671136,
+      "componentType": 5126,
+      "count": 52223,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.4901161193847656e-08,
+        0.00894463062286377
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 283725,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "cgwings (https://sketchfab.com/chandansingh512)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/haier-refrigerator-c9c4e705bf794cb88d5d8726095f4917",
+      "title": "Haier Refrigerator"
+    },
+    "generator": "Sketchfab-10.59.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1134900,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2088920,
+      "byteOffset": 1134900,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1253352,
+      "byteOffset": 3223820,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 835568,
+      "byteOffset": 4477172,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 5312740,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Haier_Refrigerator_baseColor.png"
+    },
+    {
+      "uri": "textures/Haier_Refrigerator_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Haier_Refrigerator_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Haier_Refrigerator",
+      "normalTexture": {
+        "index": 2,
+        "texCoord": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1,
+          "texCoord": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5,
+            "TEXCOORD_3": 6,
+            "TEXCOORD_4": 7
+          },
+          "indices": 8,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        -1.0,
+        -2.8327693431939995e-16,
+        1.6081226229577284e-16,
+        0.0,
+        1.6081226229577292e-16,
+        6.123232939436859e-17,
+        1.0,
+        0.0,
+        -2.832769343193999e-16,
+        1.0,
+        -6.123232939436859e-17,
+        0.0,
+        -5.960464477539063e-08,
+        5.563517538358158e-17,
+        -0.2505585551261902,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode_0"
+    },
+    {
+      "children": [
+        5
+      ],
+      "name": "Haier_Refrigerator2_1"
+    },
+    {
+      "children": [
+        6
+      ],
+      "name": "Haier_Refrigerator2_2"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_6"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}

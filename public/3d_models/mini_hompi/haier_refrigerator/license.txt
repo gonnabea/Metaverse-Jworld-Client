@@ -1,0 +1,11 @@
+Model Information:
+* title:	Haier Refrigerator
+* source:	https://sketchfab.com/3d-models/haier-refrigerator-c9c4e705bf794cb88d5d8726095f4917
+* author:	cgwings (https://sketchfab.com/chandansingh512)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Haier Refrigerator" (https://sketchfab.com/3d-models/haier-refrigerator-c9c4e705bf794cb88d5d8726095f4917) by cgwings (https://sketchfab.com/chandansingh512) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

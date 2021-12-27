@@ -335,7 +335,46 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 else {
                     console.log("물체와 충돌")
                     setOnCollide(true)
-
+                    setPrevPositionX(positionX -0.1)
+                    setPrevPositionZ(positionZ -0.1)
+                    setMoveNumX(0)
+                    setMoveNumZ(0)
+                    switch(move) {
+                        case "d":
+                            
+                            setPositionX(positionX -0.1)
+                            setPrevPositionX(positionX -0.1)
+                            setMoveNumX(0)
+                            break;
+                        case "a":
+                           
+                            setPositionX(positionX +0.1)
+                            setPrevPositionX(positionX +0.1)
+                            setMoveNumX(0)
+                            break;
+                        case "s":
+                         
+                            setPositionZ(positionZ -0.1)
+                            setPrevPositionZ(positionZ -0.1)
+                            setMoveNumZ(0)
+                            break;
+                        case "w":
+                           
+                            setPositionZ(positionZ +0.1)
+                            setPrevPositionZ(positionZ +0.1)
+                            setMoveNumZ(0)
+                            break;
+                        default:
+                            setPrevPositionX(positionX)
+                            setPrevPositionZ(positionZ)
+                            setMoveNumX(0)
+                            setMoveNumZ(0)
+                            break;
+                    }
+              
+                    setTimeout(() => {
+                        setOnCollide(false)
+                    },300)
                    
                    
                 }

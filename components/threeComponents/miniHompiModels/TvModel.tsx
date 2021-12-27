@@ -2,16 +2,28 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
+import { useAspect } from "@react-three/drei";
+import { Vector3 } from 'three';
 
 interface tvModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
     rotateY: number;
+    videoUrl?: string;
 }
 
-const TvModel = ({installed, scale, isFocused, rotateY}:tvModelOpts) => {
+const TvModel = ({installed, scale, isFocused, rotateY, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:tvModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0])
+
+    const size = useAspect(18 * scale, 10 * scale);
+    const [video, setVideo] = useState(() => {
+      const vid = document.createElement("video");
+      vid.src = videoUrl;
+      vid.crossOrigin = "Anonymous";
+      vid.loop = true;
+      return vid;
+    });
 
 
     const gltf = useLoader(GLTFLoader, modelList.tv);
@@ -34,27 +46,44 @@ const TvModel = ({installed, scale, isFocused, rotateY}:tvModelOpts) => {
         
   };
 
-
-
   
     useEffect(() => {
         window.addEventListener("click", installModel)
+        video.pause()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [isFocused, video, video.paused, video.src])
 
     if(installed === true){
+        video.play()
         return (
             <>
                 <primitive 
-                    onClick={() => console.log("tv 클릭됨")} 
+                    onClick={() => {
+                        video.paused ? video.play() : video.pause()
+                    }} 
+                    
                     position={position} scale={scale} 
                     object={gltf.scene} 
                     rotation={[0, rotateY, 0]}
+                    onPointerOver={() => {
+                        document.body.style.cursor = "pointer"
+                    }}
+                    onPointerOut={() => {
+                        document.body.style.cursor = "default"
+    
+                    }}
                 />
+                    <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={[scale * 25, scale * 15, scale* 25]} rotation={[0,rotateY+2 *3/4,0]} position={new Vector3(position[0],position[1]+1 *5,position[2])}>
+                        <planeBufferGeometry />
+                        <meshBasicMaterial>
+                            <videoTexture attach="map" args={[video]} />
+                        </meshBasicMaterial>
+                    </mesh>
             </>
         )
     }
     else{
+        video.pause()
         return <></>
     }
   }

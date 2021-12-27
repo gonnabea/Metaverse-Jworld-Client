@@ -116,7 +116,7 @@ const StandingLampModel = ({installed, scale, isFocused, rotateY}:props) => {
             <pointLight 
                 
                 ref={pointLightRef} 
-                color="yellow" 
+                color="orange" 
                 intensity={1} 
                 position={new Vector3(position.x + 0.2, position.y + 25 * scale, position.z)} 
                 
