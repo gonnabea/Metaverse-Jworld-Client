@@ -87,13 +87,13 @@ const World:NextPage = () => {
       }
 
       function ObstacleBox(props) {
-        const [ref] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
+        const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
           
         }  }))
         
         if(props.isGround === true){
           return (
-              <mesh castShadow ref={ref} name={"ground1"} visible={false} >
+              <mesh ref={ref} name={"ground1"} visible={false} >
                 <boxGeometry args={props.args}  />
                 <meshStandardMaterial color="orange"  />
               </mesh>
@@ -102,7 +102,7 @@ const World:NextPage = () => {
         }
         else if(props.isStair === true) {
           return (
-            <mesh castShadow ref={ref} name={"stair"} visible={false}   >
+            <mesh ref={ref} name={"stair"} visible={false}   >
               <boxGeometry args={props.args}  />
               <meshStandardMaterial color="orange"  />
             </mesh>
@@ -111,7 +111,7 @@ const World:NextPage = () => {
         }
         else {
           return (
-          <mesh castShadow ref={ref} visible={false}   >
+          <mesh ref={ref} visible={true}   >
           <boxGeometry args={props.args}  />
           <meshStandardMaterial color="orange"  />
         </mesh>
@@ -162,7 +162,7 @@ const World:NextPage = () => {
               <StreamWorldModel />
               <CharacterModel 
               rotation={[Math.PI / 2,0,0]} 
-              scale={[0.015,0.015,0.015]} 
+              scale={[0.01,0.01,0.01]} 
               />
               
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
@@ -173,8 +173,6 @@ const World:NextPage = () => {
               <ObstacleBox position={[-0.5,0,0]} args= {[0.5, 6, 6]} />
               <ObstacleBox position={[-8,1,0]} args= {[3.5, 6, 0.5]} />
 
-              {/* 계단 위 바닥 */}
-              <ObstacleBox position={[0,-0.1,0]} args= {[21, 0.1, 15]} isGround={true} />
 
               <ObstacleBox position={[-10,2,0]} args= {[0.1, 4, 15]} />
               <ObstacleBox position={[8.6,2,3.5]} args= {[3.5, 4, 0.1]} />
@@ -182,6 +180,8 @@ const World:NextPage = () => {
               <ObstacleBox position={[0,2,7.5]} args= {[21, 4, 0.1]} />
               <ObstacleBox position={[0,2,-7.5]} args= {[21, 4, 0.1]} />
 
+              {/* 계단 위 바닥 */}
+              <ObstacleBox position={[0,-0.1,0]} args= {[21, 0.1, 15]} isGround={true} />
 
               {/* 계단 아래 바닥 */}
               <ObstacleBox position={[15,-2.2,0]} args= {[10, 0.1, 15]} isGround={true} />

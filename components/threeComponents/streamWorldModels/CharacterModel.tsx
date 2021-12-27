@@ -1,8 +1,8 @@
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
-import { useBox, useCylinder, useHeightfield, useSphere } from '@react-three/cannon';
+import { useBox, useConvexPolyhedron, useCylinder, useHeightfield, useSphere } from '@react-three/cannon';
 import { useAnimations, useGLTF } from '@react-three/drei';
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -35,8 +35,9 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const [moveNumX, setMoveNumX] = useState(0)
     const [moveNumZ, setMoveNumZ] = useState(0)
 
-
-
+    
+    
+    
     
     
     const gltf = useLoader(GLTFLoader, modelList.character);
@@ -44,7 +45,6 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const group = useRef<THREE.Group>()
     console.log(animations)
     const { actions } = useAnimations<GLTFActions>(animations, group)
-
 
     // const mixer = new THREE.AnimationMixer(gltf.scene);
     // const {clips} = useAnimations(gltf.animations, characterRef);
@@ -70,19 +70,21 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
         if(!onCollide) {
             switch (move) {
-                case "+x":
+                case "d":
                     actions.run?.play();
+                    setMoveNumX(0)
+                    setMoveNumZ(0)
                     console.log(moveNum)
                     
-                    setMoveNumX(moveNumX + 0.05)
+                    setMoveNumX(moveNumX + 0.04)
                     characterRef.current.position.x = positionX + moveNumX
-                    if(characterRef.current.position.x >= positionX + 2) {
+                    setPrevPositionX(characterRef.current.position.x)
+                    if(characterRef.current.position.x >= positionX + 0.4) {
                         setMoveNumX(0)
                         setMove("")
-                        // setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-                        actions.run?.stop();
+                        // actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -92,17 +94,19 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     // }
                     
                     break;
-                case "-x":
+                case "a":
                     actions.run?.play();
-                    setMoveNumX(moveNumX - 0.05)
+                    setMoveNumX(0)
+                    setMoveNumZ(0)
+                    setMoveNumX(moveNumX - 0.04)
                     characterRef.current.position.x = positionX + moveNumX
-                    if(characterRef.current.position.x <= positionX - 2) {
+                    setPrevPositionX(characterRef.current.position.x)
+                    if(characterRef.current.position.x <= positionX - 0.4) {
                         setMoveNumX(0)
                         setMove("")
-                        // setPrevPositionX(positionX)
                         setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-                        actions.run?.stop();
+                        // actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -111,17 +115,19 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     //         setOnCollide(false)
                     //     }
                     break;
-                case "+z":
+                case "s":
                     actions.run?.play();
-                    setMoveNumZ(moveNumZ + 0.05)
+                    setMoveNumX(0)
+                    setMoveNumZ(0)
+                    setMoveNumZ(moveNumZ + 0.04)
                     characterRef.current.position.z = positionZ + moveNumZ
-                    if(characterRef.current.position.z >= positionZ + 2) {
+                    setPrevPositionZ(characterRef.current.position.z)
+                    if(characterRef.current.position.z >= positionZ + 0.4) {
                         setMoveNumZ(0)
                         setMove("")
-                        // setPrevPositionZ(positionZ)
                         setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-                        actions.run?.stop();
+                        // actions.run?.stop();
                     }
 
                     // if(onCollide) {
@@ -130,17 +136,19 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     //         setOnCollide(false)
                     //     }
                     break;
-                case "-z":
+                case "w":
                     actions.run?.play();
-                    setMoveNumZ(moveNumZ - 0.05)
+                    setMoveNumX(0)
+                    setMoveNumZ(0)
+                    setMoveNumZ(moveNumZ - 0.04)
                     characterRef.current.position.z = positionZ + moveNumZ
-                    if(characterRef.current.position.z <= positionZ - 2) {
+                    setPrevPositionZ(characterRef.current.position.z)
+                    if(characterRef.current.position.z <= positionZ - 0.4) {
                         setMoveNumZ(0)
                         setMove("")
-                        // setPrevPositionZ(positionZ)
                         setPositionX(characterRef.current.position.x)
                         setPositionZ(characterRef.current.position.z)
-                        actions.run?.stop();
+                        // actions.run?.stop();
 
     
                     }
@@ -157,11 +165,46 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             }
         }
         else {
-            characterRef.current.position.x = prevPositionX
-            characterRef.current.position.z = prevPositionZ
-            setPositionX(prevPositionX)
-            setPositionZ(prevPositionZ)
-            setOnCollide(false)
+
+            // 장애물에 부딪혔을 경우 처리
+                switch(move) {
+                    case "d":
+                        
+                        setPositionX(positionX -0.1)
+                        setPrevPositionX(positionX -0.1)
+                        setMoveNumX(0)
+                        break;
+                    case "a":
+                       
+                        setPositionX(positionX +0.1)
+                        setPrevPositionX(positionX +0.1)
+                        setMoveNumX(0)
+                        break;
+                    case "s":
+                     
+                        setPositionZ(positionZ -0.1)
+                        setPrevPositionZ(positionZ -0.1)
+                        setMoveNumZ(0)
+                        break;
+                    case "w":
+                       
+                        setPositionZ(positionZ +0.1)
+                        setPrevPositionZ(positionZ +0.1)
+                        setMoveNumZ(0)
+                        break;
+                    default:
+                        setPrevPositionX(positionX)
+                        setPrevPositionZ(positionZ)
+                        setMoveNumX(0)
+                        setMoveNumZ(0)
+                        break;
+                }
+          
+                setTimeout(() => {
+                    setOnCollide(false)
+                },300)
+            
+        
             
         }
         
@@ -173,7 +216,40 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
             handleMove()
         
-            
+            // if(onCollide) {
+            //     switch(move) {
+            //         case "d":
+            //             setPositionX(positionX -1)
+            //             setPrevPositionX(positionX)
+            //             setMoveNumX(0)
+            //             break;
+            //         case "a":
+            //             setPositionX(positionX +1)
+            //             setPrevPositionX(positionX)
+            //             setMoveNumX(0)
+            //             break;
+            //         case "s":
+            //             setPositionZ(positionZ -1)
+            //             setPrevPositionZ(positionZ)
+            //             setMoveNumZ(0)
+            //             break;
+            //         case "w":
+            //             setPositionZ(positionZ +1)
+            //             setPrevPositionZ(positionZ)
+            //             setMoveNumZ(0)
+            //             setMoveNumX(0)
+            //             break;
+            //             default:
+            //                 // setPrevPositionX(positionX)
+            //                 // setPrevPositionZ(positionZ)
+            //                 // setMoveNumX(0)
+            //                 // setMoveNumZ(0)
+            //                 break;
+            //     }
+          
+                
+            //     setOnCollide(false)
+            // }
         
         
       
@@ -184,15 +260,15 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
     const controlCharacter = (e) => {
     
-        
+            console.log(e.key)
             switch (e.key) {
                 case "w":
-                        setMove("-z")
+                        setMove("w")
                     
                     break;
                 case "a":
                       
-                        setMove("-x")
+                        setMove("a")
                         if(onStair) {
                             setPositionY(positionY + 0.05)
                         }
@@ -201,7 +277,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     
                 case "d":
                    
-                    setMove("+x")
+                    setMove("d")
                     
                     if(onStair) {
                         setPositionY(positionY - 0.05)
@@ -210,7 +286,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
                 case "s":
                     
-                    setMove("+z")
+                    setMove("s")
 
                     
                     
@@ -228,9 +304,12 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         const [ref, api] = useBox(() => ({ 
             mass:1, 
             ...props, 
+            
+            args:[1,1,1],
+            
             onCollideBegin: (e) => { 
             
-
+                
                 if(e.body.name === "ground1") {
                     console.log("바닥과 충돌")
                     console.log(e)
@@ -240,6 +319,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     //     setPositionY(e.body.position.y)
                         
                     // }
+                    ref.current.position.y = 1;
                     setOnstair(false);
                     
                     
@@ -255,16 +335,20 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 else {
                     console.log("물체와 충돌")
                     setOnCollide(true)
-                    
+
+                   
+                   
                 }
-            },
+            }
+            
+           
 
             
             }))
         
         return (
-          <mesh castShadow ref={ref} visible={false} >
-            <boxGeometry  />
+          <mesh ref={ref}>
+            <boxGeometry args={[1,0.1,1]}/>
             <meshStandardMaterial color="orange" />
             
           </mesh>
@@ -272,15 +356,13 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
       }
   
     useEffect(() => {
-        // window.addEventListener("click", installModel);
-        // return () => window.removeEventListener("click", installModel);
         
         
         window.addEventListener("keypress", (e) => controlCharacter(e))
 
         return () => window.removeEventListener("keypress", controlCharacter)
 
-        }, [move])
+        }, [])
                 
         return (
             <>
@@ -305,7 +387,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 <group  
                     
                     ref={characterRef}
-                    position={[positionX, positionY, positionZ]} 
+                    position={[prevPositionX, positionY, prevPositionZ]} 
                     scale={scale} 
                     rotation={rotation}
                     onPointerOver={() => {
@@ -320,6 +402,8 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                             positionZ={positionZ} 
                             moveNumX={moveNumX} 
                             moveNumZ={moveNumZ} 
+                            prevPositionX={prevPositionX}
+                            prevPositionZ={prevPositionZ}
                         />
 
                         <primitive 
@@ -330,7 +414,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 </group>
             </group>
 
-                <Cube position={[positionX, positionY + 1, positionZ]} />
+            <Cube position={[prevPositionX, 1, prevPositionZ]} />
           </>
         )
         
