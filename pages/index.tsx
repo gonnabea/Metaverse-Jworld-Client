@@ -19,7 +19,11 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 
 const LOGIN = gql`
 query login($email: String!, $password: String!){
-  login(input:{email:$email, password:$password})
+  login(input:{email:$email, password:$password}) {
+    ok
+    token
+    error
+  }
 }
 `
 
