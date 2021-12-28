@@ -10,9 +10,16 @@ import SiteMark from '../components/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
 import { gql, useMutation, useQuery } from "@apollo/client";
 
+// query dog($breed:String!){ // query = dog($breed:String!) 선택
+//   dog(breed:$breed){	// query 사용
+//     id	// 반환받을 객체
+//     displayImage
+//   }
+// }
+
 const LOGIN = gql`
-query {
-  sayHello
+query login($email: String!, $password: String!){
+  login(input:{email:$email, password:$password})
 }
 `
 
@@ -24,13 +31,17 @@ const Login: NextPage = () => {
   });
   
   const loginSubmitBtn = useRef<HTMLInputElement>()
-  const loginReq = useQuery(LOGIN)
   
-  const { email, password, remember_user } = inputs;
+  const { email, password } = inputs;
 
-  const login = (e) => {
+  const { data, loading, error } = useQuery(LOGIN, {
+    variables:{email, password}
+  })
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    console.log(loginReq)
+    console.log(data)
+    
   }
 
   const onChange = (e) => {
@@ -70,7 +81,7 @@ const Login: NextPage = () => {
         </ul>
     </nav>
     
-    <form onSubmit={login} className="flex flex-col p-6" id="loginForm">
+    <form onSubmit={handleLogin} className="flex flex-col p-6" id="loginForm">
         <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="이메일" />
         <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
         <div className="self-center p-6">

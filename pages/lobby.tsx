@@ -47,7 +47,7 @@ const Lobby:NextPage = () => {
         socketIoClient.on("create-room", (data) => {
             
             // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-            window.location.replace(`world/${data.roomId}`) // 방 생성 후 리다이렉트 해주기
+            window.location.replace(`/stream_world/${data.roomId}`) // 방 생성 후 리다이렉트 해주기
         })
         
     }
@@ -101,7 +101,7 @@ const Lobby:NextPage = () => {
         socketIoClient.emit("join-room", {roomId} )
 
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-        window.location.replace(`world/${roomId}`)
+        window.location.replace(`/stream_world/${roomId}`)
     }
 
     const createConnection = () => {

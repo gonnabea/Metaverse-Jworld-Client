@@ -145,7 +145,7 @@ const MiniHomepage:NextPage = () => {
 
     // TV 2 관련 state
     const [installTV2, setInstallTV2] = useState(false);
-    const [TV2Scale, setTV2Scale] = useState(1);
+    const [TV2Scale, setTV2Scale] = useState(10);
     const [TV2RotateY, setTV2RotateY] = useState(0)
     const [TV2Focused, setTV2Focused] = useState(false);
 

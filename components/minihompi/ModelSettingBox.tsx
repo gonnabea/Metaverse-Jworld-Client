@@ -41,8 +41,28 @@ const ModelSettingBox = ({
     initEditMode,
     modelImgUrl
 }:props
-) => 
-    <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
+) => {
+
+    const handleScaleScope = () => {
+        let range;
+        console.log(scaleState)
+        switch (scaleState) {
+            case scaleState > 7:
+                range = <input type="range" value={scaleState} max="10" min="4"  step="0.5" onChange={(e) =>{setScaleState(e.target.value)}} />
+                break;
+            case scaleState <= 7 && scaleState > 3:
+                range = <input type="range" value={scaleState} max="7" min="1"  step="0.2" onChange={(e) =>{setScaleState(e.target.value)}} />
+                break
+            default:
+                range = <input type="range" value={scaleState} max="0.2" min="0"  step="0.03" onChange={(e) =>{setScaleState(e.target.value)}} />
+
+                break;
+        }
+
+        return range;
+    }
+
+   return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
 
                  
            { installState !== undefined ? <div className="">
@@ -77,8 +97,11 @@ const ModelSettingBox = ({
             {modelName + " 크기 조절"}
         </span>
              <div>
-                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState += 0.03)}}>+</button>
-                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState -= 0.03)}}>-</button>
+            {handleScaleScope()}
+            
+            
+                    {/* <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState += 0.03)}}>+</button>
+                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState -= 0.03)}}>-</button> */}
                   </div>
         </div> : null }
 
@@ -87,7 +110,7 @@ const ModelSettingBox = ({
                 {modelName + " 회전"}
             </span>
              <div>
-                <input type="range" max="7" min="0"  step="0.1" onChange={(e) =>{setRotateYState(e.target.value)}} />
+                <input type="range" value={rotateYState} max="7" min="0"  step="0.1" onChange={(e) =>{setRotateYState(e.target.value)}} />
               </div>
         </div> : null
         }
@@ -110,6 +133,7 @@ const ModelSettingBox = ({
 
 
     </div>
+}
 
 
 

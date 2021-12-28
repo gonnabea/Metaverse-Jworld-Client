@@ -38,7 +38,7 @@ const Join: NextPage = () => {
     const [ reqJoin, { data, loading, error }] = useMutation(JOIN)
 
     // 회원가입 submit 버튼 눌렀을 시 API 요청
-    const handleJoinSubmit = async(e) => {
+    const handleJoinSubmit = async(e, {email, nickname, password, password2}) => {
       e.preventDefault();
       const {data, errors} = await reqJoin({ variables: {email, nickname, password, password2} });
       console.log(data, errors);

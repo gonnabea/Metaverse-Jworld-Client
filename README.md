@@ -13,7 +13,7 @@
 - [x] Styled-Components
 - [x] GraphQL
 - [ ] GraphQL-Apollo
-- [ ] REST API (Axios)
+- [ ] Axios (REST-API)
 - [x] Socket.io
 - [ ] WebRTC
 
