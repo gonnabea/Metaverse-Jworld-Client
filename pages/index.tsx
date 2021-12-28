@@ -45,7 +45,11 @@ const Login: NextPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(data)
-    
+    const {login:{ ok, token }} = data;
+    if(ok === true) {
+        localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)
+        window.location.href = "/lobby";
+    }
   }
 
   const onChange = (e) => {
