@@ -87,13 +87,13 @@ const Join: NextPage = () => {
           <input onChange={onChange} name="password2" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 확인" />
 
           <div className="self-center p-6">
-          <input className="self-center" type="checkbox" /> <span className="self-center">약관 동의</span>
+          <input className="self-center" type="checkbox" /> <span className="self-center cursor-pointer" onClick={() => alert("어떠한 개인정보도 이용하지 않습니다.")}>약관 동의</span>
           </div>
           <input ref={joinSubmitBtn} className="w-4/6 self-center p-10 bg-black text-white text-2xl" type="submit" value="JOIN" />
       </form>
   
       <nav className="w-screen flex justify-center list-none">
-      <li className="p-4 border-r-2 border-gray"><Link href="/find-email">아이디찾기</Link></li>
+      <li className="p-4 border-r-2 border-gray"><Link href="/lobby">비회원 로그인</Link></li>
       <li className="p-4"><Link href="/find-password">비밀번호찾기</Link></li>
       </nav>
   

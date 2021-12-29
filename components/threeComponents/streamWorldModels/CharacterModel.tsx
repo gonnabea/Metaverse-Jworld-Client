@@ -422,7 +422,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                         }}
                     /> */}
 
-            <group ref={group} dispose={null}>
+            <group ref={group}>
                 <group  
                     
                     ref={characterRef}

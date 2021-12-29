@@ -10,10 +10,10 @@
 - [x] Three.js (React-Three-Fiber)
 - [x] Cannon.js
 - [x] Tailwind CSS
-- [x] Styled-Components
+- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
 - [x] GraphQL
 - [ ] GraphQL-Apollo
-- [ ] Axios (REST-API)
+- [ ] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
 - [x] Socket.io
 - [ ] WebRTC
 

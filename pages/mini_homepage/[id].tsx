@@ -25,6 +25,7 @@ import SofaModel from '../../components/threeComponents/miniHompiModels/SofaMode
 import Chair2Model from '../../components/threeComponents/miniHompiModels/Chair2Model';
 import TableLampModel from '../../components/threeComponents/miniHompiModels/TableLampModel';
 import TV2Model from '../../components/threeComponents/miniHompiModels/Tv2Model';
+import SiteMark from '../../components/SiteMark';
 
 
 const MiniHomepage:NextPage = () => {
@@ -167,7 +168,7 @@ const MiniHomepage:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-
+          <SiteMark title={"미니홈피"} bgColor={"bg-green-400"} />
           <div className="z-10 absolute">
 
               <ModelSettingBox 

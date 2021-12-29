@@ -7,6 +7,25 @@ import io, { Socket } from "socket.io-client";
 import socketIoClient from '../multiplay/wsConnection';
 import BottomUI from '../components/common/BottomUI';
 import { Chat } from '../types/wsPayloads';
+import gql from 'graphql-tag';
+import { Cache, useQuery, Resolver, makeVar, useReactiveVar, useLazyQuery } from '@apollo/client';
+import { applyMe, setMe } from '../stores/loggedUser';
+
+
+
+const GETME = gql`
+query getMe {
+    getMe {
+      ok
+      error
+      user {
+          id
+          email
+          nickname
+      }
+    }
+  }
+`
 
 
 
@@ -17,6 +36,23 @@ const Lobby:NextPage = () => {
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
     const chatInput = useRef<HTMLInputElement>()
 
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
+    
+
+    
+    
+    
+        // const setMe = (userData) => {
+        //     applyVar({ me: userData })
+        // } 
+      
+    
+
+
+    const applyStore = useReactiveVar(applyMe);
+
+
+    
     const playBtnSoundEffect = () => {
         const btnSoundEffect = new Audio(`/sound_effects/btn_click.wav`);
         
@@ -119,6 +155,8 @@ const Lobby:NextPage = () => {
         bgm.play();
         bgm.loop = true;
     }
+
+      
     
     useEffect(() => {
         
@@ -126,6 +164,7 @@ const Lobby:NextPage = () => {
         
         handleSocketListeners();
         
+        console.log(applyStore)
         
     }, [])
     
@@ -161,7 +200,7 @@ const Lobby:NextPage = () => {
             <BottomUI chatContents={chatContents} newMsgCount={newMsgCount}
             ChatForm={() =>
                 <form className="absolute bottom-14 w-96 left-4 z-10" onSubmit={sendBroadChat}>
-                <input id="chatInput" ref={chatInput} className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
+                <input id="chatInput" autoComplete="off" ref={chatInput} className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
                 <input className="" type="submit" value="전송" />
                 </form>
             } 

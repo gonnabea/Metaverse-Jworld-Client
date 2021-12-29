@@ -8,7 +8,9 @@ import WsConnect from '../multiplay/wsConnection';
 import PageTitle from '../components/common/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useRouter } from 'next/dist/client/router';
+import { applyMe, setMe } from '../stores/loggedUser';
 
 // query dog($breed:String!){ // query = dog($breed:String!) 선택
 //   dog(breed:$breed){	// query 사용
@@ -34,6 +36,8 @@ const Login: NextPage = () => {
     password: '',
   });
   
+  const router = useRouter();
+  
   const loginSubmitBtn = useRef<HTMLInputElement>()
   
   const { email, password } = inputs;
@@ -42,13 +46,21 @@ const Login: NextPage = () => {
     variables:{email, password}
   })
 
+  const applyStore = useReactiveVar(applyMe);
+
+
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(data)
-    const {login:{ ok, token }} = data;
-    if(ok === true) {
+    if(data) {
+      const {login:{ ok, token }} = data;
         localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)
-        window.location.href = "/lobby";
+        setMe(data); // 전역 상태관리
+
+        router.push("/lobby")
+    }
+    else {
+        alert("로그인 실패.")
     }
   }
 
@@ -71,7 +83,8 @@ const Login: NextPage = () => {
     }
 
   }
-  
+
+
   
   useEffect(() => {
     console.log("컴포넌트 마운트");
@@ -99,7 +112,9 @@ const Login: NextPage = () => {
     </form>
 
     <nav className="w-screen flex justify-center list-none">
-    <li className="p-4 border-r-2 border-gray"><Link href="/find-email">아이디찾기</Link></li>
+    <li className="p-4 border-r-2 border-gray"onClick={() => {
+      localStorage.setItem("jwt_token", "");
+    }}><Link href="/lobby">비회원 로그인</Link></li>
     <li className="p-4"><Link href="/find-password">비밀번호찾기</Link></li>
     </nav>
 

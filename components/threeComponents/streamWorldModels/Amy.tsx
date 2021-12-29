@@ -26,7 +26,7 @@ export default function Amy(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials, animations } = useGLTF(modelList.amy) as GLTFResult
   const { actions } = useAnimations<GLTFActions>(animations, group)
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props}>
       <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
         <primitive object={nodes.mixamorigHips} />
         <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />

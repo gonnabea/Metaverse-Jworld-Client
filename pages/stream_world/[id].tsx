@@ -10,12 +10,17 @@ import CharacterModel from '../../components/threeComponents/streamWorldModels/C
 import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, useHeightfield, usePlane, useSphere } from '@react-three/cannon';
 import Amy from '../../components/threeComponents/streamWorldModels/Amy';
 import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamera';
+import PageTitle from '../../components/common/PageTItle';
+import SiteMark from '../../components/SiteMark';
+import { useReactiveVar } from '@apollo/client';
 
 const World:NextPage = () => {
 
     const roomId = useRef<string | null>();
     const [characterPosition, setCharacterPosition] = useState([0,0,0]);
-    const cubeRef = useRef()
+    const cubeRef = useRef();
+
+    const applyStore = useReactiveVar(applyS)
 
 
     
@@ -141,7 +146,8 @@ const World:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-                    <Canvas className="w-screen h-screen">
+          <SiteMark title={"Stream World"} bgColor={"bg-black"} />
+          <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} />
