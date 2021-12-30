@@ -11,6 +11,7 @@ interface TV2ModelOpts {
     isFocused: boolean;
     rotateY: number;
     videoUrl?: string;
+    
 }
 
 const TV2Model = ({installed, scale, isFocused, rotateY, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {

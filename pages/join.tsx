@@ -5,6 +5,7 @@ import PageTitle from "../components/common/PageTItle"
 import SiteMark from "../components/SiteMark"
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
+import { useRouter } from "next/dist/client/router"
 
 
 const JOIN = gql`
@@ -26,6 +27,7 @@ const Join: NextPage = () => {
     });
 
     const joinSubmitBtn = useRef();
+    const router = useRouter();
     
     
     useEffect(() => {
@@ -42,6 +44,13 @@ const Join: NextPage = () => {
       e.preventDefault();
       const {data, errors} = await reqJoin({ variables: {email, nickname, password, password2} });
       console.log(data, errors);
+      if(data.join.ok === true) {
+        alert("가입 성공")
+        router.push("/")
+      }
+      else {
+        alert(data.join.error)
+      }
       
     }
 

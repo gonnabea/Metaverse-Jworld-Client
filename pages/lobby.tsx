@@ -11,6 +11,10 @@ import gql from 'graphql-tag';
 import { Cache, useQuery, Resolver, makeVar, useReactiveVar, useLazyQuery } from '@apollo/client';
 import { applyMe, setMe } from '../stores/loggedUser';
 
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+
 
 
 const GETME = gql`
@@ -29,27 +33,43 @@ query getMe {
 
 
 
+
 const Lobby:NextPage = () => {
+    const applyStore = useReactiveVar(applyMe);
+    
+    
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
     const [chatContents, setChatContents] = useState<any>([]);
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
+    const [jwtToken, setJwtToken] = useState()
+    const [nickname, setNickname] = useState();
     const chatInput = useRef<HTMLInputElement>()
 
-    // 로비 입장 시 로그인 된 유저 정보 가져오기
+  
+    const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
+        context: {
+            headers: {
+                "Authorization":  "Bearer " + jwtToken
+            }
+        }
+        
+    })
     
 
     
-    
-    
-        // const setMe = (userData) => {
-        //     applyVar({ me: userData })
-        // } 
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
+    const getMe = async() => {
+        setJwtToken(localStorage.getItem("jwt_token"));
+       
+        const {data: {getMe: {user}} } = await reqGetMe()
+        console.log(user)
+        setNickname(user.nickname)
+    }
       
     
 
 
-    const applyStore = useReactiveVar(applyMe);
 
 
     
@@ -97,7 +117,7 @@ const Lobby:NextPage = () => {
         if(chatContent.length > 0){
             socketIoClient.emit("chat", chatContent);
             
-            setChatContents((chatContents:Chat[]) => [...chatContents, {client: clientId.current, msg: chatContent}]);
+            setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: chatContent}]);
             
             // 채팅 전송 후 다시 포커스 해주기 위함.
             setTimeout(() => {
@@ -165,6 +185,8 @@ const Lobby:NextPage = () => {
         handleSocketListeners();
         
         console.log(applyStore)
+
+        getMe()
         
     }, [])
     
