@@ -89,7 +89,7 @@ const Lobby:NextPage = () => {
     // 웹소켓 리스너
     const handleSocketListeners = () => {
         socketIoClient.on("enter-lobby", (data) => {
-
+            
             clientId.current = data.clientId;
             setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
         })
@@ -141,10 +141,13 @@ const Lobby:NextPage = () => {
     
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        const roomName = e.target[0].value;
+        const maxPeopleNum = e.target[1].value;
         socketIoClient.emit(
             "create-room", {
-                roomName: e.target[0].value
+                nickname,
+                roomName,
+                maxPeopleNum,
             }
         )
     
@@ -167,7 +170,7 @@ const Lobby:NextPage = () => {
     }
 
     const createConnection = () => {
-        socketIoClient.emit("enter-lobby")
+        socketIoClient.emit("enter-lobby", {nickname})
         
     }
 
@@ -216,8 +219,8 @@ const Lobby:NextPage = () => {
                                 {console.log(room)}
                             <div className="flex flex-col">
                             <cite className="text-6xl w-full">{room.roomName}</cite>
-                            <span className="text-2xl"><span className="text-blue-500">{room.userList.length}</span> / 20 명</span>
-                            <span className="text-2xl">생성자: {room.creatorId}</span>
+                            <span className="text-2xl"><span className="text-blue-500">{room.userList.length}</span> / {room.maxPeopleNum} 명</span>
+                            <span className="text-2xl">생성자: {room.creator}</span>
                             <span className="text-2xl">생성일시: {room.createdAt}</span>
                             </div>
                             {/* <span className="text-6xl">{`ㅇ`}</span> */}
