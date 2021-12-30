@@ -94,6 +94,7 @@ const Lobby:NextPage = () => {
             setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
         })
 
+        // 채팅 받았을 때
         socketIoClient.on("chat", (data) => {
             console.log(data)
             setChatContents(chatContents => [...chatContents, data]);
@@ -113,13 +114,16 @@ const Lobby:NextPage = () => {
     // 로비 채팅 전송
     const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const chatContent = e.target[0].value;
-        console.log(e.target[0])
-        if(chatContent.length > 0){
-            socketIoClient.emit("chat", chatContent);
+        
+        
+        if(e.target[0].value.length > 0){
+            socketIoClient.emit("chat", {
+                nickname,
+                text: e.target[0].value
+            });
             
-            setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: chatContent}]);
-            
+            setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: e.target[0].value}]);
+            playChatSoundEffect()
             // 채팅 전송 후 다시 포커스 해주기 위함.
             setTimeout(() => {
                 chatInput.current?.focus();
