@@ -21,7 +21,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
    
     const playBtnSoundEffect = () => {
-        
+        btnSoundEffect.volume = 0.3
         btnSoundEffect.play()
     }
 
@@ -43,7 +43,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         
         {/* 채팅 팝업 */}
         {showChats ? <>
-            <div id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-4 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
+            <div id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
                 {chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold">{content.client}: </span>
                     <span className="">{content.msg}</span>
@@ -51,9 +51,9 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                 )}
                
             </div>
-            <form className="absolute bottom-14 w-96 left-4 z-10" onSubmit={sendBroadChat}>
-                <input id="chatInput" autoComplete="off" ref={chatInput} className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
-                <input className="" type="submit" value="전송" />
+            <form className="absolute bottom-14 w-96 left-1 z-10" onSubmit={sendBroadChat}>
+                <input id="chatInput" autoComplete="off" ref={chatInput} className="w-10/12 pl-2" type="text" min="1" placeholder="채팅 내용 입력" />
+                <input className="w-2/12 bg-black text-white font-bold" type="submit" value="전송" />
             </form>
                 
         </> : null
@@ -82,7 +82,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
                 <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
                 <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
-                <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="채팅방 생성" />
+                <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
             </form>
 
         </div> : null }

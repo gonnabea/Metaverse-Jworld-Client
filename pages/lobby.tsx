@@ -44,7 +44,8 @@ const Lobby:NextPage = () => {
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
     const [jwtToken, setJwtToken] = useState()
     const [nickname, setNickname] = useState();
-    const chatInput = useRef<HTMLInputElement>()
+    const chatInput = useRef<HTMLInputElement>();
+    const [bgm, setBgm] = useState();
 
   
     const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
@@ -169,12 +170,16 @@ const Lobby:NextPage = () => {
     
     // 배경음 시작
     const startBgm = () => {
-        const bgm = new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`)
-        if(bgm.paused === false) {
-            bgm.pause();
+        
+        setBgm(new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`));
+
+        if(bgm){
+            if(bgm.paused === false) {
+                bgm.pause();
+            }
+            bgm.play();
+            bgm.loop = true;
         }
-        bgm.play();
-        bgm.loop = true;
     }
 
       
@@ -185,7 +190,9 @@ const Lobby:NextPage = () => {
         
         handleSocketListeners();
         
-        console.log(applyStore)
+        console.log(applyStore);
+        
+        startBgm()
 
         getMe()
         
