@@ -13,6 +13,7 @@ import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamer
 import PageTitle from '../../components/common/PageTItle';
 import SiteMark from '../../components/SiteMark';
 import { useReactiveVar } from '@apollo/client';
+import { applyMe } from '../../stores/loggedUser';
 
 const World:NextPage = () => {
 
@@ -20,7 +21,7 @@ const World:NextPage = () => {
     const [characterPosition, setCharacterPosition] = useState([0,0,0]);
     const cubeRef = useRef();
 
-    const applyStore = useReactiveVar(applyS)
+    const applyStore = useReactiveVar(applyMe)
 
 
     

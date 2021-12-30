@@ -26,9 +26,14 @@ import Chair2Model from '../../components/threeComponents/miniHompiModels/Chair2
 import TableLampModel from '../../components/threeComponents/miniHompiModels/TableLampModel';
 import TV2Model from '../../components/threeComponents/miniHompiModels/Tv2Model';
 import SiteMark from '../../components/SiteMark';
+import { useReactiveVar } from '@apollo/client';
+import { applyMe } from '../../stores/loggedUser';
 
 
 const MiniHomepage:NextPage = () => {
+
+    const applyStore = useReactiveVar(applyMe);
+
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
@@ -163,7 +168,7 @@ const MiniHomepage:NextPage = () => {
     }
 
     useEffect(() => {
-
+      console.log(applyStore)
     }, [])
 
     return(
@@ -304,7 +309,9 @@ const MiniHomepage:NextPage = () => {
                 setFocusState={setCarpet1Focused}
                 initEditMode={initEditMode}
                 modelImgUrl="/model_images/carpet1.png"
-                
+                maxScale={0.7}
+                minScale={0.3}
+                scaleStep={0.04}
 
                 
                 backgroundColor="blue"
@@ -324,7 +331,9 @@ const MiniHomepage:NextPage = () => {
                 initEditMode={initEditMode}
                 modelImgUrl="/model_images/carpet2.png"
                 
-                
+                maxScale={0.2}
+                minScale={0.14}
+                scaleStep={0.005}
                 
                 backgroundColor="yellow"
               />
@@ -348,6 +357,9 @@ const MiniHomepage:NextPage = () => {
                   initEditMode={initEditMode}
                   backgroundColor="red"
                   modelImgUrl="/model_images/standing_lamp.png"
+                  maxScale={0.4}
+                  minScale={0.2}
+                  scaleStep={0.05}
 
                 />     
                                 <ModelSettingBox 
@@ -365,6 +377,9 @@ const MiniHomepage:NextPage = () => {
                   initEditMode={initEditMode}
                   backgroundColor="red"
                   modelImgUrl="/model_images/standing_lamp.png"
+                  maxScale={0.2}
+                  minScale={0.1}
+                  scaleStep={0.01}
 
                 />        
               </>
@@ -401,8 +416,9 @@ const MiniHomepage:NextPage = () => {
                 setFocusState={setTV2Focused}
                 initEditMode={initEditMode}
                 modelImgUrl="/model_images/tv.png"
-
-
+                minScale={5}
+                maxScale={12}
+                scaleStep={0.1}
                 backgroundColor="purple"
 
             />  
@@ -423,7 +439,9 @@ const MiniHomepage:NextPage = () => {
                 setFocusState={setVaseFocused}
                 initEditMode={initEditMode}
                 modelImgUrl="/model_images/vase.png"
-
+                maxScale={0.2}
+                minScale={0.05}
+                scaleStep={0.01}
 
                 backgroundColor="green"
 
@@ -462,7 +480,9 @@ const MiniHomepage:NextPage = () => {
 
                 backgroundColor="black"
                 modelImgUrl="/model_images/book_ani.png"
-
+                maxScale={0.5}
+                minScale={0.1}
+                scaleStep={0.05}
 
             />   
 
@@ -480,7 +500,9 @@ const MiniHomepage:NextPage = () => {
 
             backgroundColor="black"
             modelImgUrl="/model_images/frame1.png"
-
+            maxScale={2.5}
+            minScale={0.8}
+            scaleStep={0.1}
 
         />   
 
@@ -495,7 +517,9 @@ const MiniHomepage:NextPage = () => {
             focusState={frame2Focused}
             setFocusState={setFrame2Focused}
             initEditMode={initEditMode}
-
+            maxScale={0.2}
+            minScale={0.05}
+            scaleStep={0.01}
             backgroundColor="black"
             modelImgUrl="/model_images/frame1.png"
 
@@ -519,6 +543,9 @@ const MiniHomepage:NextPage = () => {
               initEditMode={initEditMode}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
+              maxScale={0.1}
+              minScale={0.05}
+              scaleStep={0.005}
 
           />   
             <ModelSettingBox 
@@ -534,7 +561,9 @@ const MiniHomepage:NextPage = () => {
               initEditMode={initEditMode}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
-
+              maxScale={0.1}
+              minScale={0.05}
+              scaleStep={0.005}
           />   
 
             <ModelSettingBox 
@@ -550,6 +579,9 @@ const MiniHomepage:NextPage = () => {
               initEditMode={initEditMode}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
+              maxScale={6}
+              minScale={4}
+              scaleStep={0.1}
 
           />   
 
@@ -566,7 +598,9 @@ const MiniHomepage:NextPage = () => {
               initEditMode={initEditMode}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
-
+              maxScale={0.1}
+              minScale={0.04}
+              scaleStep={0.005}
           />   
           </>
             }

@@ -46,7 +46,6 @@ const Login: NextPage = () => {
     variables:{email, password}
   })
 
-  const applyStore = useReactiveVar(applyMe);
 
 
   const handleLogin = (e) => {
@@ -55,7 +54,7 @@ const Login: NextPage = () => {
     if(data) {
       const {login:{ ok, token }} = data;
         localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)
-        setMe(data); // 전역 상태관리
+        
 
         router.push("/lobby")
     }

@@ -23,7 +23,10 @@ interface props {
 
     backgroundColor?: string;
     
-    initEditMode?: any
+    initEditMode?: any;
+    maxScale?: number;
+    minScale?: number;
+    scaleStep?: number;
 }
 
 
@@ -39,28 +42,14 @@ const ModelSettingBox = ({
     focusState,
     setFocusState,
     initEditMode,
-    modelImgUrl
+    modelImgUrl,
+    maxScale = 5,
+    minScale = 0.1,
+    scaleStep = 0.1
 }:props
 ) => {
 
-    const handleScaleScope = () => {
-        let range;
-        console.log(scaleState)
-        switch (scaleState) {
-            case scaleState > 7:
-                range = <input type="range" value={scaleState} max="10" min="4"  step="0.5" onChange={(e) =>{setScaleState(e.target.value)}} />
-                break;
-            case scaleState <= 7 && scaleState > 3:
-                range = <input type="range" value={scaleState} max="7" min="1"  step="0.2" onChange={(e) =>{setScaleState(e.target.value)}} />
-                break
-            default:
-                range = <input type="range" value={scaleState} max="0.2" min="0"  step="0.03" onChange={(e) =>{setScaleState(e.target.value)}} />
-
-                break;
-        }
-
-        return range;
-    }
+    
 
    return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
 
@@ -97,11 +86,9 @@ const ModelSettingBox = ({
             {modelName + " 크기 조절"}
         </span>
              <div>
-            {handleScaleScope()}
             
-            
-                    {/* <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState += 0.03)}}>+</button>
-                    <button className="text-lg" onClick={() => {setScaleState(scaleState => scaleState -= 0.03)}}>-</button> */}
+             <input type="range" value={scaleState} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{setScaleState(e.target.value); console.log(e.target.value)}} />
+ 
                   </div>
         </div> : null }
 
