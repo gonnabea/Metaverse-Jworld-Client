@@ -12,16 +12,52 @@ import Amy from '../../components/threeComponents/streamWorldModels/Amy';
 import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamera';
 import PageTitle from '../../components/common/PageTItle';
 import SiteMark from '../../components/SiteMark';
-import { useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { applyMe } from '../../stores/loggedUser';
+import gql from 'graphql-tag';
+
+
+const GETME = gql`
+query getMe {
+    getMe {
+      ok
+      error
+      user {
+          id
+          email
+          nickname
+      }
+    }
+  }
+`
 
 const World:NextPage = () => {
 
     const roomId = useRef<string | null>();
     const [characterPosition, setCharacterPosition] = useState([0,0,0]);
     const cubeRef = useRef();
+    const [jwtToken, setJwtToken] = useState();
+    const [nickname, setNickname] = useState();
+    const [userId, setUserId] = useState();
 
-    const applyStore = useReactiveVar(applyMe)
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
+    const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
+      context: {
+          headers: {
+              "Authorization":  "Bearer " + jwtToken
+          }
+      }
+      
+  })
+      
+    const getMe = async() => {
+        setJwtToken(localStorage.getItem("jwt_token"));
+        
+        const {data: {getMe: {user}} } = await reqGetMe()
+        console.log(user)
+        setNickname(user.nickname);
+        setUserId(user.id);
+    }
 
 
     
@@ -41,16 +77,14 @@ const World:NextPage = () => {
 
 
     const leaveRoom = () => {
-      socketIoClient.send(JSON.stringify({
-          event: "leave-room",
-          data: null
-      }))
+      alert(roomId.current)
+      socketIoClient.emit("leave-room", { roomId: roomId.current, userId });
     }
 
     const leaveLobby = () => {
            
       alert(roomId.current)
-      socketIoClient.emit("leave-lobby", { roomId: roomId.current });
+      socketIoClient.emit("leave-lobby", { roomId: roomId.current, userId });
 
     }
     
@@ -141,13 +175,14 @@ const World:NextPage = () => {
         
         
         getRoomId()
-
+        getMe()
+        // window.addEventListener("beforeunload", leaveLobby);
 
       }, [])
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <SiteMark title={"Stream World"} bgColor={"bg-black"} />
+          <SiteMark title={"Stream World"} bgColor={"bg-black"} handleLeave={leaveRoom} />
           <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />

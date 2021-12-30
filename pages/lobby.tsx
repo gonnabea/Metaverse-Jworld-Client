@@ -44,10 +44,12 @@ const Lobby:NextPage = () => {
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
     const [jwtToken, setJwtToken] = useState()
     const [nickname, setNickname] = useState();
+    const [userId, setUserId] = useState();
     const chatInput = useRef<HTMLInputElement>();
     const [bgm, setBgm] = useState();
 
   
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
     const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
         context: {
             headers: {
@@ -57,15 +59,13 @@ const Lobby:NextPage = () => {
         
     })
     
-
-    
-    // 로비 입장 시 로그인 된 유저 정보 가져오기
     const getMe = async() => {
         setJwtToken(localStorage.getItem("jwt_token"));
        
         const {data: {getMe: {user}} } = await reqGetMe()
         console.log(user)
-        setNickname(user.nickname)
+        setNickname(user.nickname);
+        setUserId(user.id);
     }
       
     
@@ -148,6 +148,7 @@ const Lobby:NextPage = () => {
                 nickname,
                 roomName,
                 maxPeopleNum,
+                userId
             }
         )
     
@@ -163,14 +164,14 @@ const Lobby:NextPage = () => {
     const joinRoom = async(roomId) => {
         
         console.log("Dsfasfadsfadsf")
-        socketIoClient.emit("join-room", {roomId} )
+        socketIoClient.emit("join-room", {roomId, userId} )
 
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
         window.location.replace(`/stream_world/${roomId}`)
     }
 
     const createConnection = () => {
-        socketIoClient.emit("enter-lobby", {nickname})
+        socketIoClient.emit("enter-lobby", {nickname, userId})
         
     }
 
@@ -231,10 +232,6 @@ const Lobby:NextPage = () => {
                     }
                 ): null}
             </div>
-
-            
-
-
 
             <BottomUI 
             chatContents={chatContents} 
