@@ -17,7 +17,8 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
     const [showChats, setShowChats] = useState(false);
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
     const [showSettingModal, setShowSettingModal] = useState(false);
-    const [btnSoundEffect, setBtnSoundEffect] = useState()
+    const [btnSoundEffect, setBtnSoundEffect] = useState();
+    const chattingPop = useRef();
 
    
     const playBtnSoundEffect = () => {
@@ -27,8 +28,10 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
   
     useEffect(() => {
-        setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`))
-    },[])
+        setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`));
+        chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
+        
+    },[showChats])
 
     return <div className="absolute bottom-0 left-4 w-72 h-12 flex justify-around">
         {/* 채팅 버튼 */}
@@ -43,7 +46,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         
         {/* 채팅 팝업 */}
         {showChats ? <>
-            <div id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
+            <div ref={chattingPop} id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
                 {chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold">{content.client}: </span>
                     <span className="">{content.msg}</span>
@@ -56,7 +59,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                 <input className="w-2/12 bg-black text-white font-bold" type="submit" value="전송" />
             </form>
                 
-        </> : null
+        </> : <div ref={chattingPop}></div>
         }
         {/* 방 만들기 버튼 */}
         <button onClick={() => {
