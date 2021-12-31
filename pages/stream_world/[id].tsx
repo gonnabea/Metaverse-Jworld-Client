@@ -15,6 +15,7 @@ import SiteMark from '../../components/SiteMark';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { applyMe } from '../../stores/loggedUser';
 import gql from 'graphql-tag';
+import { useRouter } from 'next/router'
 
 
 const GETME = gql`
@@ -39,6 +40,7 @@ const World:NextPage = () => {
     const [jwtToken, setJwtToken] = useState();
     const [nickname, setNickname] = useState();
     const [userId, setUserId] = useState();
+    const router = useRouter()
 
     // 로비 입장 시 로그인 된 유저 정보 가져오기
     const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
@@ -75,6 +77,10 @@ const World:NextPage = () => {
       console.log(data)
     })
 
+    socketIoClient.on("disconnect", (data) => {
+      alert("adsfa")
+    })
+
 
     const leaveRoom = () => {
       alert(roomId.current)
@@ -85,14 +91,14 @@ const World:NextPage = () => {
            
       alert(roomId.current)
       socketIoClient.emit("leave-lobby", { roomId: roomId.current, userId });
-
+      
     }
     
 
     function Box(props) {
         // This reference will give us direct access to the THREE.Mesh object
         const ref = useRef()
-        useF
+        
         // Set up state for the hovered and active state
         const [hovered, setHover] = useState(false)
         const [active, setActive] = useState(false)
@@ -171,13 +177,17 @@ const World:NextPage = () => {
       }
 
 
+      
+      
       useEffect(() => {
         
+    
         
         getRoomId()
         getMe()
-        // window.addEventListener("beforeunload", leaveLobby);
 
+        
+        
       }, [])
 
     return(

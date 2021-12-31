@@ -165,6 +165,15 @@ const MiniHomepage:NextPage = () => {
       setStandingLampFocused(false)
       setVaseFocused(false)
       setBookFocused(false)
+      setChairFocused(false)
+      setCurtainFocused(false)
+      setFrame1Focused(false)
+      setFrame2Focused(false)
+      setTable1Focused(false)
+      setTableLampFocused(false)
+      setSofa1Focused(false)
+      setChair2Focused(false)
+      setTV2Focused(false)
     }
 
     useEffect(() => {

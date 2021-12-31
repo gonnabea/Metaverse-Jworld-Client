@@ -13,6 +13,7 @@ import { applyMe, setMe } from '../stores/loggedUser';
 
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { useRouter } from 'next/router';
 
 
 
@@ -47,6 +48,7 @@ const Lobby:NextPage = () => {
     const [userId, setUserId] = useState();
     const chatInput = useRef<HTMLInputElement>();
     const [bgm, setBgm] = useState();
+    const router = useRouter()
 
   
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -104,8 +106,9 @@ const Lobby:NextPage = () => {
 
         socketIoClient.on("create-room", (data) => {
             
-            // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-            window.location.replace(`/stream_world/${data.roomId}`) // 방 생성 후 리다이렉트 해주기
+            
+            // 방 생성 후 리다이렉트 해주기
+            router.push(`/stream_world/${data.roomId}`)
         })
         
     }
@@ -167,7 +170,9 @@ const Lobby:NextPage = () => {
         socketIoClient.emit("join-room", {roomId, userId} )
 
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-        window.location.replace(`/stream_world/${roomId}`)
+        // window.location.replace(`/stream_world/${roomId}`)
+        router.push(`/stream_world/${roomId}`)
+        
     }
 
     const createConnection = () => {
