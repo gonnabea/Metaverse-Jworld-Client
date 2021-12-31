@@ -110,6 +110,10 @@ const Lobby:NextPage = () => {
             // 방 생성 후 리다이렉트 해주기
             router.push(`/stream_world/${data.roomId}`)
         })
+
+        socketIoClient.on("reloadLobby", ({activeRooms}) => {
+            setActiveRooms(activeRooms)
+        })
         
     }
 
