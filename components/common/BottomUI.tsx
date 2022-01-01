@@ -6,7 +6,7 @@ interface props {
     newMsgCount?: number;
     sendBroadChat: any;
     chatInput: any;
-    createRoom: any; // 웹소켓 룸 만들기 함수
+    createRoom?: any; // 웹소켓 룸 만들기 함수
     startBgm: any;
 }
 
@@ -62,13 +62,15 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         </> : <div ref={chattingPop}></div>
         }
         {/* 방 만들기 버튼 */}
-        <button onClick={() => {
+        {createRoom ? <button onClick={() => {
             setShowChats(false)
             setShowSettingModal(false)
             setShowRoomModal(showRoomModal => !showRoomModal); 
         }} 
             onMouseOver={() => playBtnSoundEffect()} 
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >방 만들기</button>
+            : null
+        }
 
         {/* 설정 버튼 */}
         <button onClick={() => { 

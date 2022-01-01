@@ -2,37 +2,39 @@ import type { NextPage } from 'next'
 import { Canvas } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
 import { Suspense } from "react";
-import OrbitCameraController from '../../components/threeComponents/OrbitController';
-import RoomModel from '../../components/threeComponents/miniHompiModels/RoomModel';
-import Carpet1Model from '../../components/threeComponents/miniHompiModels/Carpet1Model';
-import TvModel from '../../components/threeComponents/miniHompiModels/TvModel';
-import Carpet2Model from '../../components/threeComponents/miniHompiModels/Carpet2Model';
-import StandingLampModel from '../../components/threeComponents/miniHompiModels/StandingLampModel';
-import BottomUI from '../../components/common/BottomUI';
-import ModelInstallPop from '../../components/minihompi/ModelInstallPop';
-import ModelSettingBox from '../../components/minihompi/ModelSettingBox';
-import VaseModel from '../../components/threeComponents/miniHompiModels/VaseModel';
+import OrbitCameraController from '../../../components/threeComponents/OrbitController';
+import RoomModel from '../../../components/threeComponents/miniHompiModels/RoomModel';
+import Carpet1Model from '../../../components/threeComponents/miniHompiModels/Carpet1Model';
+import TvModel from '../../../components/threeComponents/miniHompiModels/TvModel';
+import Carpet2Model from '../../../components/threeComponents/miniHompiModels/Carpet2Model';
+import StandingLampModel from '../../../components/threeComponents/miniHompiModels/StandingLampModel';
+import BottomUI from '../../../components/common/BottomUI';
+import ModelInstallPop from '../../../components/minihompi/ModelInstallPop';
+import ModelSettingBox from '../../../components/minihompi/ModelSettingBox';
+import VaseModel from '../../../components/threeComponents/miniHompiModels/VaseModel';
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
-import BookModel from '../../components/threeComponents/miniHompiModels/BookModel';
-import Book3D from '../../components/Book3d';
-import ChairModel from '../../components/threeComponents/miniHompiModels/ChairModel';
-import CurtainModel from '../../components/threeComponents/miniHompiModels/CurtainModel';
+import BookModel from '../../../components/threeComponents/miniHompiModels/BookModel';
+import Book3D from '../../../components/Book3d';
+import ChairModel from '../../../components/threeComponents/miniHompiModels/ChairModel';
+import CurtainModel from '../../../components/threeComponents/miniHompiModels/CurtainModel';
 import { Physics } from '@react-three/cannon';
-import FrameModel from '../../components/threeComponents/miniHompiModels/FrameModels';
-import Frame2Model from '../../components/threeComponents/miniHompiModels/Frame2Model';
-import TableModel from '../../components/threeComponents/miniHompiModels/TableModel';
-import SofaModel from '../../components/threeComponents/miniHompiModels/SofaModel';
-import Chair2Model from '../../components/threeComponents/miniHompiModels/Chair2Model';
-import TableLampModel from '../../components/threeComponents/miniHompiModels/TableLampModel';
-import TV2Model from '../../components/threeComponents/miniHompiModels/Tv2Model';
-import SiteMark from '../../components/SiteMark';
+import FrameModel from '../../../components/threeComponents/miniHompiModels/FrameModels';
+import Frame2Model from '../../../components/threeComponents/miniHompiModels/Frame2Model';
+import TableModel from '../../../components/threeComponents/miniHompiModels/TableModel';
+import SofaModel from '../../../components/threeComponents/miniHompiModels/SofaModel';
+import Chair2Model from '../../../components/threeComponents/miniHompiModels/Chair2Model';
+import TableLampModel from '../../../components/threeComponents/miniHompiModels/TableLampModel';
+import TV2Model from '../../../components/threeComponents/miniHompiModels/Tv2Model';
+import SiteMark from '../../../components/SiteMark';
 import { useReactiveVar } from '@apollo/client';
-import { applyMe } from '../../stores/loggedUser';
+import { applyMe } from '../../../stores/loggedUser';
+import { useRouter } from 'next/router';
 
 
 const MiniHomepage:NextPage = () => {
 
     const applyStore = useReactiveVar(applyMe);
+    const router = useRouter()
 
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
@@ -176,13 +178,72 @@ const MiniHomepage:NextPage = () => {
       setTV2Focused(false)
     }
 
+
+
+    const saveRoomStatus = (installed, scale, rotateY) => {
+      installCarpet1
+      carpet1Scale
+      carpet1RotateY
+      const carpet1Status = {
+        installed: installCarpet1,
+        scale: carpet1Scale,
+        rotateY: carpet1RotateY
+      }
+      installCarpet2
+      carpet2Scale
+      carpet2RotateY
+      installTv
+      tvScale
+      tvRotateY
+      installStandingLamp
+      standingLampScale
+      standingLampRotateY
+      installVase
+      vaseScale
+      vaseRotateY
+      installBook
+      bookScale
+      bookRotateY
+      installChair
+      chairScale
+      chairRotateY
+      installCurtain
+      curtainScale
+      curtainRotateY
+      installFrame1
+      frame1Scale
+      frame1RotateY
+      installFrame2
+      frame2Scale
+      frame2RotateY
+      installTable1
+      table1Scale
+      table1RotateY
+      installTableLamp
+      tableLampScale
+      tableLampRotateY
+      installSofa1
+      sofa1Scale
+      sofa1RotateY
+      installChair2
+      chair2Scale
+      chair2RotateY
+      installTV2
+      TV2Scale
+      TV2RotateY
+    }
+
     useEffect(() => {
       console.log(applyStore)
     }, [])
 
+    const handleLeave = () => {
+      router.push("/lobby")
+    }
+
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <SiteMark title={"미니홈피"} bgColor={"bg-green-400"} />
+          <SiteMark title={"미니홈피"} bgColor={"bg-green-400"} handleLeave={handleLeave} />
           <div className="z-10 absolute">
 
               <ModelSettingBox 

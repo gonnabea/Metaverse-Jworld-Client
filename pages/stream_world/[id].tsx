@@ -33,13 +33,14 @@ query getMe {
 `
 
 const World:NextPage = () => {
+    const applyStore = useReactiveVar(applyMe);
 
     const roomId = useRef<string | null>();
     const [characterPosition, setCharacterPosition] = useState([0,0,0]);
     const cubeRef = useRef();
     const [jwtToken, setJwtToken] = useState();
-    const [nickname, setNickname] = useState();
-    const [userId, setUserId] = useState();
+    const [nickname, setNickname] = useState("손님");
+    const [userId, setUserId] = useState(JSON.stringify(Math.random()))
     const router = useRouter()
 
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -52,14 +53,17 @@ const World:NextPage = () => {
       
   })
       
-    const getMe = async() => {
-        setJwtToken(localStorage.getItem("jwt_token"));
-        
-        const {data: {getMe: {user}} } = await reqGetMe()
-        console.log(user)
-        setNickname(user.nickname);
-        setUserId(user.id);
-    }
+  const getMe = async() => {
+
+    setJwtToken(localStorage.getItem("jwt_token"));
+  
+    const {data: {getMe: {user}} } = await reqGetMe()
+    console.log(user)
+    setNickname(user.nickname);
+    setUserId(user.id);
+    
+   
+}
 
 
     
@@ -68,7 +72,7 @@ const World:NextPage = () => {
     const getRoomId = () => {
       const url = window.location.href;
       roomId.current = url.split("world/")[1];
-      alert(roomId.current)
+      
     }
 
 
@@ -78,18 +82,18 @@ const World:NextPage = () => {
     })
 
     socketIoClient.on("disconnect", (data) => {
-      alert("adsfa")
+      
     })
 
 
     const leaveRoom = () => {
-      alert(roomId.current)
+      
       socketIoClient.emit("leave-room", { roomId: roomId.current, userId });
     }
 
     const leaveLobby = () => {
            
-      alert(roomId.current)
+     
       socketIoClient.emit("leave-lobby", { roomId: roomId.current, userId });
       
     }

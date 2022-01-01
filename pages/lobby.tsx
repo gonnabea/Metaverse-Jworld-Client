@@ -45,7 +45,7 @@ const Lobby:NextPage = () => {
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
     const [jwtToken, setJwtToken] = useState()
     const [nickname, setNickname] = useState();
-    const [userId, setUserId] = useState();
+    const [userId, setUserId] = useState(); 
     const chatInput = useRef<HTMLInputElement>();
     const [bgm, setBgm] = useState();
     const router = useRouter()
@@ -63,16 +63,23 @@ const Lobby:NextPage = () => {
     
     const getMe = async() => {
         setJwtToken(localStorage.getItem("jwt_token"));
-       
-        const {data: {getMe: {user}} } = await reqGetMe()
-        console.log(user)
-        setNickname(user.nickname);
-        setUserId(user.id);
+        console.log(jwtToken)
+        
+            // 회원일 시
+            const {data: {getMe: {user}} } = await reqGetMe()
+            console.log(user)
+            setNickname(user.nickname);
+            setUserId(user.id);
+            
+        
+        
+        setMe({id: userId, nickname})
+        
     }
       
     
 
-
+    // JSON.stringify(Math.random() * 10)
 
 
     
@@ -222,7 +229,7 @@ const Lobby:NextPage = () => {
             <SiteMark/>
             <PageTitle title="LOBBY"/>
             
-            {/* 방 UI */}
+            {/* 스트림 월드 방 UI */}
             <div className="grid lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4">
                 {activeRooms ? activeRooms.map(
                     (room, key) => {
@@ -241,7 +248,7 @@ const Lobby:NextPage = () => {
                     }
                 ): null}
             </div>
-
+           
             <BottomUI 
             chatContents={chatContents} 
             newMsgCount={newMsgCount}
