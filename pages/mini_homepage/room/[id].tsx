@@ -37,8 +37,8 @@ import gql from 'graphql-tag';
 
 const SAVE_ROOMSTATUS = gql`
 
-mutation saveThreeModels($models: SaveThreeModelInput!) {
-  saveThreeModels(input:{models:$models}) {
+mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
+  saveThreeModels(input:$saveThreeModelInput) {
     ok
   }
 }
@@ -57,26 +57,35 @@ mutation saveThreeModels($models: SaveThreeModelInput!) {
 const MiniHomepage:NextPage = () => {
 
     const {me} = useReactiveVar(applyMe);
-    const router = useRouter()
+    const router = useRouter();
+    const [jwtToken, setJwtToken] = useState<string | null>()
 
-    const [reqSaveRoom, {data, loading, error}] = useMutation(SAVE_ROOMSTATUS)
+  
 
-    
-    type XYZType = {
-      x: number
-      y: number
-      z: number
+    const [reqSaveRoom, {data, loading, error}] = useMutation(SAVE_ROOMSTATUS, {
+      context: {
+        headers: {
+            "Authorization":  "Bearer " + localStorage.getItem("jwt_token")
+        }
     }
-    
-    type ModelType = {
-      name: string
-      position: XYZType
-      scale: XYZType
-      rotateX: number
-      installed: boolean
-      price: number
-    }
+    })
 
+
+    // const getMe = async() => {
+    //      setJwtToken(localStorage.getItem("jwt_token"));
+    //      console.log(jwtToken)
+         
+    //          // 회원일 시
+    //          const {data: {getMe: {user}} } = await reqGetMe()
+    //          console.log(user)
+    //          setNickname(user.nickname);
+    //          setUserId(user.id);
+             
+         
+         
+    //      setMe({id: user.id, nickname: user.nickname})
+         
+    //  }
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
@@ -384,22 +393,46 @@ const MiniHomepage:NextPage = () => {
           <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
           onClick={() => {
             
-
+            // type ThreeModelInput {
+            //   name: String!
+            //   position: JSONObject!
+            //   scale: JSONObject!
+            //   rotateX: Float!
+            //   installed: Boolean!
+            //   price: Float = 0
+            //   videoUrl: String
+            //   imageUrl: String
+            //   textContents: String
+            //   }
 
             initFocused()
             // applyInstallBtn.current.style.display = "none"
 
-            reqSaveRoom({variables: {
-              models: [
-                {
-                  name: "tv2",
-                  position: { x: 0, y: 0, z: 0 },
-                  scale: { x: 1, y: 1, z: 1 },
-                  rotateX: 0,
-                  installed: true,
-                  price: 0
-                }
-              ]
+            reqSaveRoom({
+              
+              variables: {
+
+              saveThreeModelInput: {
+
+                models:[
+                  {
+                    name: "tv2",
+                    position: { x: 0, y: 0, z: 0 },
+                    scale: { x: 1, y: 1, z: 1 },
+                    rotateX: 0,
+                    installed: true,
+                    price: 0
+                  },
+                  {
+                    name: "testModel",
+                    position: { x: 0, y: 0, z: 0 },
+                    scale: { x: 1, y: 1, z: 1 },
+                    rotateX: 0,
+                    installed: true,
+                    price: 0
+                  }
+                ]
+              } 
            
               
             },
@@ -408,6 +441,7 @@ const MiniHomepage:NextPage = () => {
           })
         
             console.log(data)
+            console.log(error)
         
 
           }
