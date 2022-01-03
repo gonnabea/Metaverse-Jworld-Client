@@ -20,8 +20,8 @@ import { applyMe, setMe } from '../stores/loggedUser';
 // }
 
 const LOGIN = gql`
-query login($email: String!, $password: String!){
-  login(input:{email:$email, password:$password}) {
+query login($loginInput: LoginInput!){
+  login(input:$loginInput) {
     ok
     token
     error
@@ -43,7 +43,7 @@ const Login: NextPage = () => {
   const { email, password } = inputs;
 
   const { data, loading, error } = useQuery(LOGIN, {
-    variables:{email, password}
+    variables:{loginInput: {email, password}}
   })
 
 
@@ -53,10 +53,16 @@ const Login: NextPage = () => {
     console.log(data)
     if(data) {
       const {login:{ ok, token }} = data;
+
+      if(ok === true) {
         localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)
     
         
         router.push("/lobby")
+      }
+      else {
+        alert("로그인 실패")
+      }
     }
     else {
         alert("로그인 실패.")

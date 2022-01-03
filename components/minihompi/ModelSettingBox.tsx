@@ -23,7 +23,7 @@ interface props {
 
     backgroundColor?: string;
     
-    initEditMode?: any;
+    initFocused?: any;
     maxScale?: number;
     minScale?: number;
     scaleStep?: number;
@@ -41,7 +41,7 @@ const ModelSettingBox = ({
     setRotateYState,
     focusState,
     setFocusState,
-    initEditMode,
+    initFocused,
     modelImgUrl,
     maxScale = 5,
     minScale = 0.1,
@@ -63,7 +63,7 @@ const ModelSettingBox = ({
                       onClick={() => {
                         console.log(installState)
                         // 중복 포커싱 방지
-                        if(focusState === false) initEditMode ? initEditMode() : null; 
+                        if(focusState === false) initFocused ? initFocused() : null; 
 
                         setInstallState(installState => !installState);
 
@@ -110,7 +110,7 @@ const ModelSettingBox = ({
                             className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
             : <img 
                 src={modelImgUrl} 
-                onClick={() => { initEditMode(); setFocusState(true) }}  
+                onClick={() => { initFocused(); setFocusState(true) }}  
                 className="text-lg w-4/12 h-4/12 r-0 h-full" 
             />
         : null

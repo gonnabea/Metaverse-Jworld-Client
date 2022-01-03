@@ -6,7 +6,7 @@ import { wsRoom } from '../types/wsRoom';
 import io, { Socket } from "socket.io-client";
 import socketIoClient from '../multiplay/wsConnection';
 import BottomUI from '../components/common/BottomUI';
-import { Chat } from '../types/wsPayloads';
+import { Chat } from '../components/threeComponents/streamWorldModels/wsPayloads';
 import gql from 'graphql-tag';
 import { Cache, useQuery, Resolver, makeVar, useReactiveVar, useLazyQuery } from '@apollo/client';
 import { applyMe, setMe } from '../stores/loggedUser';
@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 
 
 
-const GETME = gql`
+export const GETME = gql`
 query getMe {
     getMe {
       ok
@@ -43,7 +43,7 @@ const Lobby:NextPage = () => {
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
     const [chatContents, setChatContents] = useState<any>([]);
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
-    const [jwtToken, setJwtToken] = useState()
+    const [jwtToken, setJwtToken] = useState<string | null>()
     const [nickname, setNickname] = useState();
     const [userId, setUserId] = useState(); 
     const chatInput = useRef<HTMLInputElement>();
@@ -73,7 +73,7 @@ const Lobby:NextPage = () => {
             
         
         
-        setMe({id: userId, nickname})
+        setMe({id: user.id, nickname: user.nickname})
         
     }
       
@@ -227,7 +227,7 @@ const Lobby:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-x-hidden">
             <SiteMark/>
-            <PageTitle title="LOBBY"/>
+            <PageTitle title="Stream Worlds"/>
             
             {/* 스트림 월드 방 UI */}
             <div className="grid lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4">

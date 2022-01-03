@@ -12,12 +12,16 @@ const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
     console.log(router)
     return (
         <>
-        {router.pathname === "/stream_world/[id]" || router.pathname ==="/mini_homepage/lobby" ? 
+        {router.pathname === "/stream_world/[id]" ? 
         <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
         onClick={() => {router.push("/lobby");}}>EXIT</button> : null}
 
-        {router.pathname ==="/lobby" || router.pathname === "/mini_homepage/[id]" ?  <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        {router.pathname ==="/lobby" || router.pathname === "/mini_homepage/room/[id]" ?  <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
         onClick={() => {router.push("/mini_homepage/lobby");}}>Rooms</button> : null}
+
+        {router.pathname === "/mini_homepage/lobby" ? 
+        <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        onClick={() => {router.push("/lobby");}}>Stream Worlds</button> : null}
 
         <h1 className={`py-2 px-4 rounded-lg shadow-md text-white ${bgColor} text-center font-extrabold italic text-2xl`}>{title}</h1>
         </>

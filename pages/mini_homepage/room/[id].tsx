@@ -26,15 +26,56 @@ import Chair2Model from '../../../components/threeComponents/miniHompiModels/Cha
 import TableLampModel from '../../../components/threeComponents/miniHompiModels/TableLampModel';
 import TV2Model from '../../../components/threeComponents/miniHompiModels/Tv2Model';
 import SiteMark from '../../../components/SiteMark';
-import { useReactiveVar } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { applyMe } from '../../../stores/loggedUser';
 import { useRouter } from 'next/router';
+import PageTitle from '../../../components/common/PageTItle';
+import gql from 'graphql-tag';
+
+
+
+
+const SAVE_ROOMSTATUS = gql`
+
+mutation saveThreeModels($models: SaveThreeModelInput!) {
+  saveThreeModels(input:{models:$models}) {
+    ok
+  }
+}
+`
+
+// const JOIN = gql`
+// mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
+//   join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
+//     ok,
+//     error
+//   }
+// }
+// `
 
 
 const MiniHomepage:NextPage = () => {
 
-    const applyStore = useReactiveVar(applyMe);
+    const {me} = useReactiveVar(applyMe);
     const router = useRouter()
+
+    const [reqSaveRoom, {data, loading, error}] = useMutation(SAVE_ROOMSTATUS)
+
+    
+    type XYZType = {
+      x: number
+      y: number
+      z: number
+    }
+    
+    type ModelType = {
+      name: string
+      position: XYZType
+      scale: XYZType
+      rotateX: number
+      installed: boolean
+      price: number
+    }
 
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
@@ -160,7 +201,7 @@ const MiniHomepage:NextPage = () => {
     const applyInstallBtn = useRef();
     const [css3dBookVisible, setCss3dBookVisible] = useState(false);
 
-    const initEditMode = () => {
+    const initFocused = () => {
       setCarpet1Focused(false)
       setCarpet2Focused(false)
       setTvFocused(false)
@@ -234,7 +275,7 @@ const MiniHomepage:NextPage = () => {
     }
 
     useEffect(() => {
-      console.log(applyStore)
+      console.log(me)
     }, [])
 
     const handleLeave = () => {
@@ -243,7 +284,8 @@ const MiniHomepage:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <SiteMark title={"미니홈피"} bgColor={"bg-green-400"} handleLeave={handleLeave} />
+          <SiteMark title={`${me ? me.nickname : null}'s Room`} bgColor={"bg-green-400"} />
+          
           <div className="z-10 absolute">
 
               <ModelSettingBox 
@@ -336,29 +378,38 @@ const MiniHomepage:NextPage = () => {
 
           <BottomUI 
             chatContents={["Asdasd"]}
-            ChatForm={
-              () => <form className="absolute bottom-14 w-96 left-4 z-10" >
-              <input id="chatInput" className="w-11/12" type="text" min="1" placeholder="채팅 내용 입력" />
-              <input className="" type="submit" value="전송" />
-              </form>
-            }
-            SettingForm={() =>
-
-              <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col z-20">
-                  <form className="flex flex-col w-3/6 h-2/6 justify-around " action="">
-                      <input className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
-                      <input className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
-                      <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" />
-                  </form>
-              </div>
-          }
+            
             />
 
-          <button ref={applyInstallBtn} className="z-10 absolute bottom-0 right-2 text-lg" value="설치 적용" 
+          <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
           onClick={() => {
             
-            initEditMode()
+
+
+            initFocused()
             // applyInstallBtn.current.style.display = "none"
+
+            reqSaveRoom({variables: {
+              models: [
+                {
+                  name: "tv2",
+                  position: { x: 0, y: 0, z: 0 },
+                  scale: { x: 1, y: 1, z: 1 },
+                  rotateX: 0,
+                  installed: true,
+                  price: 0
+                }
+              ]
+           
+              
+            },
+            
+          
+          })
+        
+            console.log(data)
+        
+
           }
         }>
           설치 적용
@@ -377,7 +428,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setCarpet1RotateY}
                 focusState={carpet1Focused}
                 setFocusState={setCarpet1Focused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
                 modelImgUrl="/model_images/carpet1.png"
                 maxScale={0.7}
                 minScale={0.3}
@@ -398,7 +449,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setCarpet2RotateY}
                 focusState={carpet2Focused}
                 setFocusState={setCarpet2Focused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
                 modelImgUrl="/model_images/carpet2.png"
                 
                 maxScale={0.2}
@@ -424,7 +475,7 @@ const MiniHomepage:NextPage = () => {
                   setRotateYState={setStandingLampRotateY}
                   focusState={standingLampFocused}
                   setFocusState={setStandingLampFocused}
-                  initEditMode={initEditMode}
+                  initFocused={initFocused}
                   backgroundColor="red"
                   modelImgUrl="/model_images/standing_lamp.png"
                   maxScale={0.4}
@@ -444,7 +495,7 @@ const MiniHomepage:NextPage = () => {
                   setRotateYState={setTableLampRotateY}
                   focusState={tableLampFocused}
                   setFocusState={setTableLampFocused}
-                  initEditMode={initEditMode}
+                  initFocused={initFocused}
                   backgroundColor="red"
                   modelImgUrl="/model_images/standing_lamp.png"
                   maxScale={0.2}
@@ -467,7 +518,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setTvRotateY}
                 focusState={tvFocused}
                 setFocusState={setTvFocused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
                 modelImgUrl="/model_images/tv.png"
 
 
@@ -484,7 +535,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setTV2RotateY}
                 focusState={TV2Focused}
                 setFocusState={setTV2Focused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
                 modelImgUrl="/model_images/tv.png"
                 minScale={5}
                 maxScale={12}
@@ -507,7 +558,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setVaseRotateY}
                 focusState={vaseFocused}
                 setFocusState={setVaseFocused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
                 modelImgUrl="/model_images/vase.png"
                 maxScale={0.2}
                 minScale={0.05}
@@ -527,7 +578,7 @@ const MiniHomepage:NextPage = () => {
               setRotateYState={setCurtainRotateY}
               focusState={curtainFocused}
               setFocusState={setCurtainFocused}
-              initEditMode={initEditMode}
+              initFocused={initFocused}
               modelImgUrl="/model_images/curtain.png"
               />
           
@@ -546,7 +597,7 @@ const MiniHomepage:NextPage = () => {
                 setRotateYState={setBookRotateY}
                 focusState={bookFocused}
                 setFocusState={setBookFocused}
-                initEditMode={initEditMode}
+                initFocused={initFocused}
 
                 backgroundColor="black"
                 modelImgUrl="/model_images/book_ani.png"
@@ -566,7 +617,7 @@ const MiniHomepage:NextPage = () => {
             setRotateYState={setFrame1RotateY}
             focusState={frame1Focused}
             setFocusState={setFrame1Focused}
-            initEditMode={initEditMode}
+            initFocused={initFocused}
 
             backgroundColor="black"
             modelImgUrl="/model_images/frame1.png"
@@ -586,7 +637,7 @@ const MiniHomepage:NextPage = () => {
             setRotateYState={setFrame2RotateY}
             focusState={frame2Focused}
             setFocusState={setFrame2Focused}
-            initEditMode={initEditMode}
+            initFocused={initFocused}
             maxScale={0.2}
             minScale={0.05}
             scaleStep={0.01}
@@ -610,7 +661,7 @@ const MiniHomepage:NextPage = () => {
               setRotateYState={setChairRotateY}
               focusState={chairFocused}
               setFocusState={setChairFocused}
-              initEditMode={initEditMode}
+              initFocused={initFocused}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
               maxScale={0.1}
@@ -628,7 +679,7 @@ const MiniHomepage:NextPage = () => {
               setRotateYState={setChair2RotateY}
               focusState={chair2Focused}
               setFocusState={setChair2Focused}
-              initEditMode={initEditMode}
+              initFocused={initFocused}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
               maxScale={0.1}
@@ -646,7 +697,7 @@ const MiniHomepage:NextPage = () => {
               setRotateYState={setSofa1RotateY}
               focusState={sofa1Focused}
               setFocusState={setSofa1Focused}
-              initEditMode={initEditMode}
+              initFocused={initFocused}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
               maxScale={6}
@@ -665,7 +716,7 @@ const MiniHomepage:NextPage = () => {
               setRotateYState={setTable1RotateY}
               focusState={table1Focused}
               setFocusState={setTable1Focused}
-              initEditMode={initEditMode}
+              initFocused={initFocused}
               modelImgUrl="/model_images/chair1.png"
               backgroundColor="blue"
               maxScale={0.1}

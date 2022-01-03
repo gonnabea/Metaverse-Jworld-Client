@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "apollo-codegen": "apollo client:codegen --outputFlat --target=typescript"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
@@ -17,6 +18,7 @@
     "@react-three/fiber": "^7.0.17",
     "@react-three/gltfjsx": "^4.3.4",
     "@react-three/postprocessing": "^2.1.2",
+    "apollo": "^2.33.9",
     "apollo-boost": "^0.4.9",
     "apollo-cache-persist": "^0.1.1",
     "axios": "^0.24.0",
@@ -44,6 +46,10 @@
     "zlib": "^1.0.5"
   },
   "devDependencies": {
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-operations": "2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.3",
     "@types/react": "17.0.27",
     "@types/react-beforeunload": "^2.1.1",
     "@types/styled-components": "^5.1.18",
