@@ -407,6 +407,9 @@ const MiniHomepage:NextPage = () => {
               setFrame2RotateY(rotateY)
               setFrame2Position(position)
               break;
+            case "room":
+              setRoomScale(scale.x)
+              break;
           }
         })
 
