@@ -32,7 +32,7 @@ import { useRouter } from 'next/router';
 import PageTitle from '../../../components/common/PageTItle';
 import gql from 'graphql-tag';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
-import { currentModelsStatus, getModels, setModels } from '../../../stores/ThreeModels';
+import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
 
 
 const GET_ROOMSTATUS = gql`
@@ -69,6 +69,17 @@ mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
 // }
 // `
 
+const createModelStatus = async ({name, position, installed, scale, rotateY}) => {
+  const modelStatus = {
+    name,
+    position,
+    installed,
+    scale,
+    rotateY
+  }
+  addModel(modelStatus)
+}
+
 
 const MiniHomepage:NextPage = () => {
 
@@ -85,9 +96,6 @@ const MiniHomepage:NextPage = () => {
     }
     })
 
-    const [modelsStatus, setModelsStatus] = useState<ThreeModelInput[] | []>([])
-    const [saveModels, setSaveModels] = useState<boolean>(false);
-
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
     // 방 크기 조절 state
@@ -97,7 +105,7 @@ const MiniHomepage:NextPage = () => {
     const [installCarpet1, setInstallCarpet1] = useState(false);
     const [carpet1Scale, setCarpet1Scale] = useState(0.3);
     const [carpet1Focused, setCarpet1Focused] = useState(false);
-    const [carpet1RotateY, setCarpet1RotateY] = useState(0)
+    const [carpet1RotateY, setCarpet1RotateY] = useState("0")
     const [carpet1Position, setCarpet1Position] = useState({ x: 0, y: 0, z:0 });
     
 
@@ -105,65 +113,65 @@ const MiniHomepage:NextPage = () => {
     const [installCarpet2, setInstallCarpet2] = useState(false);
     const [carpet2Scale, setCarpet2Scale] = useState(0.3);
     const [carpet2Focused, setCarpet2Focused] = useState(false);
-    const [carpet2RotateY, setCarpet2RotateY] = useState(0)
+    const [carpet2RotateY, setCarpet2RotateY] = useState("0")
     const [carpet2Position, setCarpet2Position] = useState({ x: 0, y: 0, z:0 });
     // tv 관련 state
     const [installTv, setInstallTv] = useState(false);
     const [tvScale, setTvScale] = useState(0.3);
     const [tvFocused, setTvFocused] = useState(false);
-    const [tvRotateY, setTvRotateY] = useState(0)
+    const [tvRotateY, setTvRotateY] = useState("0")
     const [tvPosition, setTvPosition] = useState({ x: 0, y: 0, z:0 });
     // 스탠딩 램프 관련 state
     const [installStandingLamp, setInstallStandingLamp] = useState(false);
     const [standingLampScale, setStandingLampScale] = useState(0.3);
     const [standingLampFocused, setStandingLampFocused] = useState(false);
-    const [standingLampRotateY, setStandingLampRotateY] = useState(0)
+    const [standingLampRotateY, setStandingLampRotateY] = useState("0")
     const [standingLampPosition, setStandingLampPosition] = useState({ x: 0, y: 0, z:0 });
     // Vase 관련 state
     const [installVase, setInstallVase] = useState(false);
     const [vaseScale, setVaseScale] = useState(0.1);
     const [vaseFocused, setVaseFocused] = useState(false);
-    const [vaseRotateY, setVaseRotateY] = useState(0)
+    const [vaseRotateY, setVaseRotateY] = useState("0")
     const [vasePosition, setVasePosition] = useState({ x: 0, y: 0, z:0 });
     // book_ani 관련 state
     const [installBook, setInstallBook] = useState(false);
     const [bookScale, setBookScale] = useState(0.3);
     const [bookFocused, setBookFocused] = useState(false);
-    const [bookRotateY, setBookRotateY] = useState(0)
+    const [bookRotateY, setBookRotateY] = useState("0")
     const [bookPosition, setBookPosition] = useState({ x: 0, y: 0, z:0 });
 
     // 의자1 관련 state
     const [installChair, setInstallChair] = useState(false);
     const [chairScale, setChairScale] = useState(0.1);
-    const [chairRotateY, setChairRotateY] = useState(0)
+    const [chairRotateY, setChairRotateY] = useState("0")
     const [chairFocused, setChairFocused] = useState(false);
     const [chairPosition, setChairPosition] = useState({ x: 0, y: 0, z:0 });
 
     // 커튼 관련 state
     const [installCurtain, setInstallCurtain] = useState(false);
     const [curtainScale, setCurtainScale] = useState(0.5);
-    const [curtainRotateY, setCurtainRotateY] = useState(1)
+    const [curtainRotateY, setCurtainRotateY] = useState("1")
     const [curtainFocused, setCurtainFocused] = useState(false);
     const [curtainPosition, setCurtainPosition] = useState({ x: 0, y: 0, z:0 });
 
     // 액자1 관련 state
     const [installFrame1, setInstallFrame1] = useState(false);
     const [frame1Scale, setFrame1Scale] = useState(1);
-    const [frame1RotateY, setFrame1RotateY] = useState(0)
+    const [frame1RotateY, setFrame1RotateY] = useState("0")
     const [frame1Focused, setFrame1Focused] = useState(false);
     const [framePosition, setFramePosition] = useState({ x: 0, y: 0, z:0 });
 
     // 액자2 관련 state
     const [installFrame2, setInstallFrame2] = useState(false);
     const [frame2Scale, setFrame2Scale] = useState(0.1);
-    const [frame2RotateY, setFrame2RotateY] = useState(0)
+    const [frame2RotateY, setFrame2RotateY] = useState("0")
     const [frame2Focused, setFrame2Focused] = useState(false);
     const [frame2Position, setFrame2Position] = useState({ x: 0, y: 0, z:0 });
 
     // 액자3 관련 state
     const [installFrame3, setInstallFrame3] = useState(false);
     const [frame3Scale, setFrame3Scale] = useState(1);
-    const [frame3RotateY, setFrame3RotateY] = useState(0)
+    const [frame3RotateY, setFrame3RotateY] = useState("0")
     const [frame3Focused, setFrame3Focused] = useState(false);
     const [frame3Position, setFrame3Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -171,7 +179,7 @@ const MiniHomepage:NextPage = () => {
 
     const [installTable1, setInstallTable1] = useState(false);
     const [table1Scale, setTable1Scale] = useState(0.05);
-    const [table1RotateY, setTable1RotateY] = useState(0)
+    const [table1RotateY, setTable1RotateY] = useState("0")
     const [table1Focused, setTable1Focused] = useState(false);
     const [table1Position, setTable1Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -179,7 +187,7 @@ const MiniHomepage:NextPage = () => {
 
     const [installTable2, setInstallTable2] = useState(false);
     const [table2Scale, setTable2Scale] = useState(1);
-    const [table2RotateY, setTable2RotateY] = useState(0)
+    const [table2RotateY, setTable2RotateY] = useState("0")
     const [table2Focused, setTable2Focused] = useState(false);
     const [table2Position, setTable2Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -187,7 +195,7 @@ const MiniHomepage:NextPage = () => {
 
     const [installTableLamp, setInstallTableLamp] = useState(false);
     const [tableLampScale, setTableLampScale] = useState(0.1);
-    const [tableLampRotateY, setTableLampRotateY] = useState(0)
+    const [tableLampRotateY, setTableLampRotateY] = useState("0")
     const [tableLampFocused, setTableLampFocused] = useState(false);
     const [tableLampPosition, setTableLampPosition] = useState({ x: 0, y: 0, z:0 });
 
@@ -195,7 +203,7 @@ const MiniHomepage:NextPage = () => {
 
     const [installSofa1, setInstallSofa1] = useState(false);
     const [sofa1Scale, setSofa1Scale] = useState(1);
-    const [sofa1RotateY, setSofa1RotateY] = useState(0)
+    const [sofa1RotateY, setSofa1RotateY] = useState("0")
     const [sofa1Focused, setSofa1Focused] = useState(false);
     const [sofa1Position, setSofa1Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -203,7 +211,7 @@ const MiniHomepage:NextPage = () => {
 
     const [installSofa2, setInstallSofa2] = useState(false);
     const [sofa2Scale, setSofa2Scale] = useState(1);
-    const [sofa2RotateY, setSofa2RotateY] = useState(0)
+    const [sofa2RotateY, setSofa2RotateY] = useState("0")
     const [sofa2Focused, setSofa2Focused] = useState(false);
     const [sofa2Position, setSofa2Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -211,14 +219,14 @@ const MiniHomepage:NextPage = () => {
 
     const [installChair2, setInstallChair2] = useState(false);
     const [chair2Scale, setChair2Scale] = useState(0.1);
-    const [chair2RotateY, setChair2RotateY] = useState(0)
+    const [chair2RotateY, setChair2RotateY] = useState("0")
     const [chair2Focused, setChair2Focused] = useState(false);
     const [chair2Position, setChair2Position] = useState({ x: 0, y: 0, z:0 });
 
     // TV 2 관련 state
     const [installTV2, setInstallTV2] = useState(false);
     const [TV2Scale, setTV2Scale] = useState(10);
-    const [TV2RotateY, setTV2RotateY] = useState(0)
+    const [TV2RotateY, setTV2RotateY] = useState("0")
     const [TV2Focused, setTV2Focused] = useState(false);
     const [TV2Position, setTV2Position] = useState({ x: 0, y: 0, z:0 });
 
@@ -249,6 +257,8 @@ const MiniHomepage:NextPage = () => {
     // rotateY: 0,
     // installed: true,
     // price: 0
+    
+
 
     const saveRoomStatus = (installed, scale, rotateY) => {
       installCarpet1
@@ -305,10 +315,55 @@ const MiniHomepage:NextPage = () => {
       TV2RotateY
     }
 
+    
+
+
+
+    // await createModelStatus({
+    //   name: "carpet1",
+    //   position: carpet1Position,
+    //   rotateY: carpet1RotateY,
+    //   installed: installCarpet1,
+    //   scale: carpet1Scale
+    // })
+
+    // await createModelStatus({
+    //   name: "carpet2",
+    //   position: carpet2Position,
+    //   rotateY: carpet2RotateY,
+    //   installed: installCarpet2,
+    //   scale: carpet2Scale
+    // })
+
+    // await createModelStatus({
+    //   name: "TV2",
+    //   position: TV2Position,
+    //   rotateY: TV2RotateY,
+    //   installed: installTV2,
+    //   scale: TV2Scale
+    // })
+
+    // await createModelStatus({
+    //   name: "standingLamp",
+    //   position: standingLampPosition,
+    //   rotateY: standingLampRotateY,
+    //   installed: installStandingLamp,
+    //   scale: standingLampScale
+    // })
+
+    // await createModelStatus({
+    //   name: "standingLamp",
+    //   position: standingLampPosition,
+    //   rotateY: standingLampRotateY,
+    //   installed: installStandingLamp,
+    //   scale: standingLampScale
+    // })
+    
+
     useEffect(() => {
       console.log(me)
       console.log(savedModels)
-    }, [saveModels])
+    }, [])
 
     const handleLeave = () => {
       router.push("/lobby")
@@ -382,24 +437,24 @@ const MiniHomepage:NextPage = () => {
               <Suspense fallback={null}>
               <EffectComposer>
               <Physics gravity= {[0, -1000, 0]} >
-                  <RoomModel roomScale={roomScale} saveModels={saveModels} />
-                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position} saveModels={saveModels} />
-                  <Carpet2Model position={carpet2Position} setPosition={setCarpet2Position} rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} saveModels={saveModels} />
-                  <TvModel position={tvPosition} setPosition={setTvPosition} installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused} saveModels={saveModels} />
-                  <StandingLampModel position={standingLampPosition} setPosition={setStandingLampPosition} installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale} saveModels={saveModels} isFocused={standingLampFocused} />
-                  <VaseModel position={vasePosition} setPosition={setVasePosition} installed={installVase} scale={vaseScale} rotateY={vaseRotateY} isFocused={vaseFocused} saveModels={saveModels} />
-                  <ChairModel position={chairPosition} setPosition={setChairPosition} installed={installChair} scale={chairScale} rotateY={chairRotateY} isFocused={chairFocused} saveModels={saveModels} />
-                  <CurtainModel position={curtainPosition} setPosition={setCurtainPosition} installed={installCurtain} scale={curtainScale} rotateY={curtainRotateY} isFocused={curtainFocused} saveModels={saveModels} />
-                  <BookModel  setCss3dBookVisible={setCss3dBookVisible} rotateY={bookRotateY} installed={installBook} position={bookPosition} setPosition={setBookPosition} scale={bookScale} saveModels={saveModels} isFocused={bookFocused} />
-                  <FrameModel position={framePosition} setPosition={setFramePosition}  installed={installFrame1} scale={frame1Scale} rotateY={frame1RotateY} isFocused={frame1Focused}  saveModels={saveModels}
+                  <RoomModel roomScale={roomScale}  />
+                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position}  />
+                  <Carpet2Model position={carpet2Position} setPosition={setCarpet2Position} rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused}  />
+                  <TvModel position={tvPosition} setPosition={setTvPosition} installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused}  />
+                  <StandingLampModel position={standingLampPosition} setPosition={setStandingLampPosition} installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale}  isFocused={standingLampFocused} />
+                  <VaseModel position={vasePosition} setPosition={setVasePosition} installed={installVase} scale={vaseScale} rotateY={vaseRotateY} isFocused={vaseFocused}  />
+                  <ChairModel position={chairPosition} setPosition={setChairPosition} installed={installChair} scale={chairScale} rotateY={chairRotateY} isFocused={chairFocused}  />
+                  <CurtainModel position={curtainPosition} setPosition={setCurtainPosition} installed={installCurtain} scale={curtainScale} rotateY={curtainRotateY} isFocused={curtainFocused}  />
+                  <BookModel  setCss3dBookVisible={setCss3dBookVisible} rotateY={bookRotateY} installed={installBook} position={bookPosition} setPosition={setBookPosition} scale={bookScale}  isFocused={bookFocused} />
+                  <FrameModel position={framePosition} setPosition={setFramePosition}  installed={installFrame1} scale={frame1Scale} rotateY={frame1RotateY} isFocused={frame1Focused}  
                   imageUrl={"https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="} />
-                  <Frame2Model position={frame2Position} setPosition={setFrame2Position} installed={installFrame2} scale={frame2Scale} rotateY={frame2RotateY} isFocused={frame2Focused}  saveModels={saveModels}
+                  <Frame2Model position={frame2Position} setPosition={setFrame2Position} installed={installFrame2} scale={frame2Scale} rotateY={frame2RotateY} isFocused={frame2Focused}  
                   imageUrl={"https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="} />
-                  <TableModel position={table1Position} setPosition={setTable1Position} installed={installTable1} scale={table1Scale} rotateY={table1RotateY} isFocused={table1Focused} saveModels={saveModels} />
-                  <SofaModel position={sofa1Position} setPosition={setSofa1Position} installed={installSofa1} scale={sofa1Scale} rotateY={sofa1RotateY} isFocused={sofa1Focused} saveModels={saveModels} />
-                  <Chair2Model position={chair2Position} setPosition={setChair2Position} installed={installChair2} scale={chair2Scale} rotateY={chair2RotateY} isFocused={chair2Focused} saveModels={saveModels} />
-                  <TableLampModel position={tableLampPosition} setPosition={setTableLampPosition} installed={installTableLamp} scale={tableLampScale} rotateY={tableLampRotateY} isFocused={tableLampFocused} saveModels={saveModels} />
-                  <TV2Model position={TV2Position} setPosition={setTV2Position} installed={installTV2} scale={TV2Scale} rotateY={TV2RotateY} isFocused={TV2Focused} saveModels={saveModels} />
+                  <TableModel position={table1Position} setPosition={setTable1Position} installed={installTable1} scale={table1Scale} rotateY={table1RotateY} isFocused={table1Focused}  />
+                  <SofaModel position={sofa1Position} setPosition={setSofa1Position} installed={installSofa1} scale={sofa1Scale} rotateY={sofa1RotateY} isFocused={sofa1Focused}  />
+                  <Chair2Model position={chair2Position} setPosition={setChair2Position} installed={installChair2} scale={chair2Scale} rotateY={chair2RotateY} isFocused={chair2Focused}  />
+                  <TableLampModel position={tableLampPosition} setPosition={setTableLampPosition} installed={installTableLamp} scale={tableLampScale} rotateY={tableLampRotateY} isFocused={tableLampFocused}  />
+                  <TV2Model position={TV2Position} setPosition={setTV2Position} installed={installTV2} scale={TV2Scale} rotateY={TV2RotateY} isFocused={TV2Focused}  />
 
               </Physics>
               </EffectComposer>
@@ -416,14 +471,13 @@ const MiniHomepage:NextPage = () => {
           <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
           onClick={async () => {
             
-            setSaveModels(true);
-            
+    
             
             initFocused()
             // applyInstallBtn.current.style.display = "none"
             
        
-            alert(JSON.stringify(getModels()))
+            console.log(getModels())
             await reqSaveModels({
 
               variables: {
@@ -440,7 +494,7 @@ const MiniHomepage:NextPage = () => {
             
             
           })
-          setSaveModels(false);
+       
           
         
             console.log(data)

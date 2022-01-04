@@ -8,7 +8,18 @@ import { ThreeModelOpts, XYZType } from '../../../types/common';
 
 
 
-const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "carpet1",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
     const gltf = useLoader(GLTFLoader, modelList.carpet_1);
     
@@ -32,19 +43,15 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels, positio
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            alert("carpet1 save: true")
-            addModel({
-                name: "carpet1",
-                installed,
-                scale: {x: scale, y: scale, z:scale},
-                rotateY,
-                position: {x: position.x, y: position.y, z: position.z}
-            })
-            
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused, saveModels])
+    }, [
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

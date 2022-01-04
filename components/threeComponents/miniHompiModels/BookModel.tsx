@@ -12,10 +12,19 @@ interface BookModelOpts extends ThreeModelOpts {
     setCss3dBookVisible: any
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, saveModels, position, setPosition}:BookModelOpts) => {
+const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, position, setPosition}:BookModelOpts) => {
     
-    const [modelStatus, setModelStatus] = useState<ThreeModelInput>();
-
+    
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "book",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
 
     
@@ -47,18 +56,16 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, s
     
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

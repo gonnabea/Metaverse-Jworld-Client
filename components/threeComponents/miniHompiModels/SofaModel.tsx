@@ -7,7 +7,18 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const SofaModel = ({installed, scale, isFocused, rotateY,saveModels, position, setPosition}:ThreeModelOpts) => {
+const SofaModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "sofa",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
     const gltf = useLoader(GLTFLoader, modelList.sofa_1);
     // gltf.scene.castShadow = true;
@@ -31,17 +42,15 @@ const SofaModel = ({installed, scale, isFocused, rotateY,saveModels, position, s
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

@@ -4,10 +4,10 @@ import { modelList } from '../../../data/modelList';
 
 interface roomModelOpts {
     roomScale: number;
-    saveModels: boolean;
+
 }
 
-const RoomModel = ({roomScale, saveModels}:roomModelOpts) => {
+const RoomModel = ({ roomScale }:roomModelOpts) => {
     const gltf = useLoader(GLTFLoader, modelList.room_wall);
     // gltf.scene.receiveShadow = true
     return (

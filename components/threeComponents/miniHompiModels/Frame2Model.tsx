@@ -10,8 +10,18 @@ interface FrameModelOpts extends ThreeModelOpts {
     imageUrl: string;
 }
 
-const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels, position, setPosition}:FrameModelOpts) => {
+const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, position, setPosition}:FrameModelOpts) => {
 
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "frame2",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
     const gltf = useLoader(GLTFLoader, modelList.frame_2);
     const texture = useLoader(TextureLoader, imageUrl); // 이미지 텍스쳐
@@ -38,17 +48,15 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [        
+        installed,
+        scale,
+        isFocused,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

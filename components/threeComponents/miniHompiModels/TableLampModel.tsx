@@ -12,15 +12,18 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-interface props {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
+const TableLampModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
 
-const TableLampModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "tableLamp",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
 
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
@@ -52,18 +55,16 @@ const TableLampModel = ({installed, scale, isFocused, rotateY, saveModels, posit
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
         
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

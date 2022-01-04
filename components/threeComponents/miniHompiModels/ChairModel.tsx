@@ -8,7 +8,18 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const ChairModel = ({installed, scale, rotateY, isFocused, saveModels, position, setPosition}:ThreeModelOpts) => {
+const ChairModel = ({installed, scale, rotateY, isFocused, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "chair",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
     const gltf = useLoader(GLTFLoader, modelList.chair);
     
@@ -32,17 +43,15 @@ const ChairModel = ({installed, scale, rotateY, isFocused, saveModels, position,
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [
+        installed,
+        scale,
+        isFocused,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

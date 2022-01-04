@@ -14,7 +14,18 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, saveModels, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "tv2",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
 
 
     const size = useAspect(18 * scale, 10 * scale);
@@ -51,17 +62,18 @@ const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, 
     useEffect(() => {
         window.addEventListener("click", installModel)
         video.pause()
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused, video, video.paused, video.src])
+    }, [
+        isFocused, 
+        video, 
+        video.paused, 
+        video.src,        
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
         video.play()
@@ -72,7 +84,7 @@ const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, 
                         video.paused ? video.play() : video.pause()
                     }} 
                     
-                    position={position} scale={scale} 
+                    position={[position.x, 0.4, position.z]} scale={scale} 
                     object={gltf.scene} 
                     rotation={[0, rotateY, 0]}
                     onPointerOver={() => {

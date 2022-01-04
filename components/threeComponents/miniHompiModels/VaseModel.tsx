@@ -8,8 +8,18 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const VaseModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+const VaseModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
 
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "vase",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
     
     const gltf = useLoader(GLTFLoader, modelList.vase);
     // gltf.scene.castShadow = true;
@@ -33,17 +43,15 @@ const VaseModel = ({installed, scale, isFocused, rotateY, saveModels, position, 
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

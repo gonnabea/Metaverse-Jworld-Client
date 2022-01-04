@@ -7,7 +7,18 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const CurtainModel = ({installed, scale, rotateY, isFocused,saveModels, position, setPosition}:ThreeModelOpts) => {
+const CurtainModel = ({installed, scale, rotateY, isFocused, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "curtain",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
 
     
     const gltf = useLoader(GLTFLoader, modelList.curtain);
@@ -32,17 +43,15 @@ const CurtainModel = ({installed, scale, rotateY, isFocused,saveModels, position
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

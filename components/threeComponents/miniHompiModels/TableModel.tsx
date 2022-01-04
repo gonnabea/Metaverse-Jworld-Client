@@ -6,15 +6,20 @@ import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 import { ThreeModelOpts } from '../../../types/common';
 
 
-interface TableModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
 
-const TableModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+
+const TableModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "table",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
 
     
     const gltf = useLoader(GLTFLoader, modelList.table_1);
@@ -39,17 +44,15 @@ const TableModel = ({installed, scale, isFocused, rotateY, saveModels, position,
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 

@@ -12,7 +12,19 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const StandingLampModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+const StandingLampModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+
+    const createModelStatus = async () => {
+        const modelStatus = {
+          name: "standingLamp",
+          position,
+          installed,
+          scale: {x: scale, y: scale, z: scale},
+          rotateY
+        }
+        addModel(modelStatus)
+      }
+    
 
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
@@ -44,18 +56,16 @@ const StandingLampModel = ({installed, scale, isFocused, rotateY, saveModels, po
   
     useEffect(() => {
         window.addEventListener("click", installModel);
-        if(saveModels === true) {
-            addModel({
-                name: "book",
-                installed,
-                scale,
-                rotateY,
-                position
-            })
-        }
+        createModelStatus()
         return () => window.removeEventListener("click", installModel);
         
-    }, [isFocused])
+    }, [        
+        isFocused, 
+        installed,
+        scale,
+        rotateY,
+        position
+    ])
 
     if(installed === true){
 
