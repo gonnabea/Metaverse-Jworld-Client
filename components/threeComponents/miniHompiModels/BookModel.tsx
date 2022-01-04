@@ -4,18 +4,16 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts, XYZType } from '../../../types/common';
 
-interface BookModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
+
+
+interface BookModelOpts extends ThreeModelOpts {
     setCss3dBookVisible: any
-    rotateY: number;
-    saveModels: boolean;
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, saveModels}:BookModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, saveModels, position, setPosition}:BookModelOpts) => {
+    
     const [modelStatus, setModelStatus] = useState<ThreeModelInput>();
 
     
@@ -35,7 +33,7 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, s
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
+          setPosition((position:XYZType) => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
       }
 
     };
@@ -71,7 +69,7 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, s
                 onClick={() => {
                     setCss3dBookVisible(visible => !visible);
                 }} 
-                position={position} scale={scale} 
+                position={[position.x, position.y, position.z]} scale={scale} 
                 object={gltf.scene} 
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"

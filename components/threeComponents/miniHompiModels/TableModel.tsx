@@ -3,6 +3,7 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
 interface TableModelOpts {
@@ -13,8 +14,8 @@ interface TableModelOpts {
     saveModels: boolean;
 }
 
-const TableModel = ({installed, scale, isFocused, rotateY, saveModels}:TableModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+const TableModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+
     
     const gltf = useLoader(GLTFLoader, modelList.table_1);
     // gltf.scene.castShadow = true;
@@ -29,7 +30,7 @@ const TableModel = ({installed, scale, isFocused, rotateY, saveModels}:TableMode
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("TableModel 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
       }
   };
 
@@ -56,7 +57,7 @@ const TableModel = ({installed, scale, isFocused, rotateY, saveModels}:TableMode
             <>
             <primitive 
                 onClick={() => console.log("TableModel 클릭됨")} 
-                position={position} scale={scale} 
+                position={[position.x, position.y, position.z]} scale={scale} 
                 object={gltf.scene} 
                 rotation={[0, rotateY, 0]}
             />

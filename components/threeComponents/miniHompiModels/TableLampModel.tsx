@@ -8,6 +8,7 @@ import { BlurPass, Resizer, KernelSize, BlendFunction  } from 'postprocessing'
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import RoomModel from './RoomModel';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
 
@@ -19,8 +20,8 @@ interface props {
     saveModels: boolean;
 }
 
-const TableLampModel = ({installed, scale, isFocused, rotateY, saveModels}:props) => {
-    const [position, setPosition] = useState({ x: 0, y: 0, z:0 });
+const TableLampModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
     const pointLightRef = useRef();

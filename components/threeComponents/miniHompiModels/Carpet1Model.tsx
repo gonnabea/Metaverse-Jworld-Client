@@ -2,19 +2,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
-import { addModel, currentModelsStatus } from '../../../stores/ThreeModels';
+import { addModel } from '../../../stores/ThreeModels';
+import { ThreeModelOpts, XYZType } from '../../../types/common';
 
 
-interface carpet1ModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
 
-const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet1ModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+
+const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
     
     const gltf = useLoader(GLTFLoader, modelList.carpet_1);
     
@@ -29,7 +23,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet1
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
       }
   };
 
@@ -45,9 +39,9 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet1
                 installed,
                 scale: {x: scale, y: scale, z:scale},
                 rotateY,
-                position: {x: position[0], y: position[1], z: position[2]}
+                position: {x: position.x, y: position.y, z: position.z}
             })
-            alert(JSON.stringify(currentModelsStatus))
+            
         }
         return () => window.removeEventListener("click", installModel);
     }, [isFocused, saveModels])
@@ -58,7 +52,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet1
             <>
             <primitive 
                 onClick={() => console.log("카페트1 클릭됨")} 
-                position={position} 
+                position={[position.x, position.y, position.z]} 
                 scale={scale} 
                 rotation={[0, rotateY, 0]}
                 object={gltf.scene} 

@@ -3,18 +3,10 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
-interface Chair2ModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
-
-const Chair2Model = ({installed, scale, rotateY, isFocused, saveModels}:Chair2ModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+const Chair2Model = ({installed, scale, rotateY, isFocused, saveModels, position, setPosition}:ThreeModelOpts) => {
     
     const gltf = useLoader(GLTFLoader, modelList.chair_2);
     
@@ -29,7 +21,7 @@ const Chair2Model = ({installed, scale, rotateY, isFocused, saveModels}:Chair2Mo
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
       }
   };
 
@@ -56,7 +48,7 @@ const Chair2Model = ({installed, scale, rotateY, isFocused, saveModels}:Chair2Mo
             <>
             <primitive 
                 onClick={() => console.log("의자 클릭")} 
-                position={position} scale={scale} rotation={[0, rotateY, 0]}
+                position={[position.x, position.y, position.z]} scale={scale} rotation={[0, rotateY, 0]}
                 object={gltf.scene} 
             />
 

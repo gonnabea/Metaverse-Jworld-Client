@@ -5,20 +5,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
-interface TV2ModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
+interface TV2ModelOpts extends ThreeModelOpts {
+
     videoUrl?: string;
-    saveModels: boolean;
-    
+
 }
 
-const TV2Model = ({installed, scale, isFocused, rotateY, saveModels, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0])
+const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, saveModels, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+
 
     const size = useAspect(18 * scale, 10 * scale);
     const [video, setVideo] = useState(() => {
@@ -45,7 +42,7 @@ const TV2Model = ({installed, scale, isFocused, rotateY, saveModels, videoUrl="h
             // 모델 설치
             if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
                   console.log("tv 포커싱 상태");
-                setPosition(position => position = [closedObjPosition.x, 0.4, closedObjPosition.z]);
+                setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
             }
         
   };
@@ -86,7 +83,7 @@ const TV2Model = ({installed, scale, isFocused, rotateY, saveModels, videoUrl="h
     
                     }}
                 />
-                    <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={new Vector3(scale*1.8, scale, scale)} rotation={[0,rotateY,0]} position={new Vector3(position[0],0.65 * scale,position[2])}>
+                    <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={new Vector3(scale*1.8, scale, scale)} rotation={[0,rotateY,0]} position={new Vector3(position.x,0.65 * scale, position.z)}>
                         <planeBufferGeometry />
                         <meshBasicMaterial>
                             <videoTexture attach="map" args={[video]} />

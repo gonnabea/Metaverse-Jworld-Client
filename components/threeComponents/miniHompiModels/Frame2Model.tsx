@@ -4,19 +4,14 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
-
-interface FrameModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
+interface FrameModelOpts extends ThreeModelOpts {
     imageUrl: string;
-    saveModels: boolean;
 }
 
-const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels}:FrameModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels, position, setPosition}:FrameModelOpts) => {
+
     
     const gltf = useLoader(GLTFLoader, modelList.frame_2);
     const texture = useLoader(TextureLoader, imageUrl); // 이미지 텍스쳐
@@ -33,7 +28,7 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
+          setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
           
       }
   };
@@ -71,7 +66,7 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels
                 }}
                 object={gltf.scene} 
             />
-            <mesh position={new Vector3(position[0], position[1], position[2] + 0.8)} scale={scale}
+            <mesh position={[position.x, position.y, position.z + 0.8]} scale={scale}
             rotation={[0, rotateY, 0]}>
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />

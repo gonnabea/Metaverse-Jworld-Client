@@ -27,6 +27,7 @@ query getMe {
           id
           email
           nickname
+          miniHompiId
       }
     }
   }

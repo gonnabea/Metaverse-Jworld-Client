@@ -8,19 +8,12 @@ import { BlurPass, Resizer, KernelSize, BlendFunction  } from 'postprocessing'
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import RoomModel from './RoomModel';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
 
-interface props {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
+const StandingLampModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
 
-const StandingLampModel = ({installed, scale, isFocused, rotateY, saveModels}:props) => {
-    const [position, setPosition] = useState({ x: 0, y: 0, z:0 });
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
     const pointLightRef = useRef();

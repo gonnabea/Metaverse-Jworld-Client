@@ -3,18 +3,13 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+import { ThreeModelOpts } from '../../../types/common';
 
 
-interface VaseModelOpts {
-    installed: boolean; // 모델 설치 or 미설치
-    scale: number;
-    isFocused: boolean;
-    rotateY: number;
-    saveModels: boolean;
-}
 
-const VaseModel = ({installed, scale, isFocused, rotateY, saveModels}:VaseModelOpts) => {
-    const [position, setPosition] = useState([0, 0, 0]);
+
+const VaseModel = ({installed, scale, isFocused, rotateY, saveModels, position, setPosition}:ThreeModelOpts) => {
+
     
     const gltf = useLoader(GLTFLoader, modelList.vase);
     // gltf.scene.castShadow = true;
@@ -29,7 +24,7 @@ const VaseModel = ({installed, scale, isFocused, rotateY, saveModels}:VaseModelO
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("VaseModel 포커싱 상태");
-          setPosition(position => position = [closedObjPosition.x, 0, closedObjPosition.z]);
+          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
       }
   };
 
@@ -56,7 +51,7 @@ const VaseModel = ({installed, scale, isFocused, rotateY, saveModels}:VaseModelO
             <>
             <primitive 
                 onClick={() => console.log("VaseModel 클릭됨")} 
-                position={position} scale={scale} 
+                position={[position.x, position.y, position.z]} scale={scale} 
                 object={gltf.scene} 
                 rotation={[0, rotateY, 0]}
             />
