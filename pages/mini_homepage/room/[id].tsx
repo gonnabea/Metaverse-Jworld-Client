@@ -347,6 +347,66 @@ const MiniHomepage:NextPage = () => {
               setChair2RotateY(rotateY)
               setChair2Position(position)
               break;
+            case "standingLamp":                          
+              setInstallStandingLamp(installed)
+              setStandingLampScale(scale.x)
+              setStandingLampRotateY(rotateY)
+              setStandingLampPosition(position)
+              break;
+            case "curtain":                          
+              setInstallCurtain(installed)
+              setCurtainScale(scale.x)
+              setCurtainRotateY(rotateY)
+              setCurtainPosition(position)
+              break;
+            case "tv2":                          
+              setInstallTV2(installed)
+              setTV2Scale(scale.x)
+              setTV2RotateY(rotateY)
+              setTV2Position(position)
+              break;
+            case "table":                          
+              setInstallTable1(installed)
+              setTable1Scale(scale.x)
+              setTable1RotateY(rotateY)
+              setTable1Position(position)
+              break;
+            case "tv":                          
+              setInstallTv(installed)
+              setTvScale(scale.x)
+              setTvRotateY(rotateY)
+              setTvPosition(position)
+              break;
+            case "vase":                          
+              setInstallVase(installed)
+              setVaseScale(scale.x)
+              setVaseRotateY(rotateY)
+              setVasePosition(position)
+              break;
+            case "book":                          
+              setInstallBook(installed)
+              setBookScale(scale.x)
+              setBookRotateY(rotateY)
+              setBookPosition(position)
+              break;
+            case "tableLamp":
+              setInstallTableLamp(installed)
+              setTableLampScale(scale.x)
+              setTableLampRotateY(rotateY)
+              setTableLampPosition(position)
+              break;
+            case "frame":
+              setInstallFrame1(installed)
+              setFrame1Scale(scale.x)
+              setFrame1RotateY(rotateY)
+              setFramePosition(position)
+              break;
+            case "frame2":
+              setInstallFrame2(installed)
+              setFrame2Scale(scale.x)
+              setFrame2RotateY(rotateY)
+              setFrame2Position(position)
+              break;
           }
         })
 
