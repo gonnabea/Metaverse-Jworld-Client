@@ -7,6 +7,8 @@ import { Bloom, GodRays, SelectiveBloom, Sepia, SSAO, ToneMapping  } from '@reac
 import { BlurPass, Resizer, KernelSize, BlendFunction  } from 'postprocessing' 
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import RoomModel from './RoomModel';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+
 
 
 interface props {
@@ -14,9 +16,10 @@ interface props {
     scale: number;
     isFocused: boolean;
     rotateY: number;
+    saveModels: boolean;
 }
 
-const StandingLampModel = ({installed, scale, isFocused, rotateY}:props) => {
+const StandingLampModel = ({installed, scale, isFocused, rotateY, saveModels}:props) => {
     const [position, setPosition] = useState({ x: 0, y: 0, z:0 });
     const sefiaEffectRef = useRef()
     const stadingLampRef = useRef()
@@ -48,6 +51,15 @@ const StandingLampModel = ({installed, scale, isFocused, rotateY}:props) => {
   
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
         return () => window.removeEventListener("click", installModel);
         
     }, [isFocused])

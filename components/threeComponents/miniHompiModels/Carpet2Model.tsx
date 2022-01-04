@@ -2,15 +2,18 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+
 
 interface carpet2ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
     rotateY: number;
+    saveModels: boolean;
 }
 
-const Carpet2Model = ({installed, scale, isFocused, rotateY}:carpet2ModelOpts) => {
+const Carpet2Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet2ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.carpet_2);
@@ -35,6 +38,15 @@ const Carpet2Model = ({installed, scale, isFocused, rotateY}:carpet2ModelOpts) =
   
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])
 

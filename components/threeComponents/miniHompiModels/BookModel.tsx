@@ -2,6 +2,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
+import { ThreeModelInput } from '../../../__generated__/globalTypes';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 
 interface BookModelOpts {
     installed: boolean; // 모델 설치 or 미설치
@@ -9,10 +11,14 @@ interface BookModelOpts {
     isFocused: boolean;
     setCss3dBookVisible: any
     rotateY: number;
+    saveModels: boolean;
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY}:BookModelOpts) => {
+const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, saveModels}:BookModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
+    const [modelStatus, setModelStatus] = useState<ThreeModelInput>();
+
+    
 
     
     
@@ -31,17 +37,28 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY}:B
           console.log("카페트 포커싱 상태");
           setPosition(position => position = [closedObjPosition.x, closedObjPosition.y, closedObjPosition.z]);
       }
-  };
 
-
-    useFrame(({ clock}) => {
+    };
+    
+    
+    useFrame(({ clock }) => {
         const a = clock.getElapsedTime()
         // console.log("Hey, I'm executing every frame!");
         // console.log(a)
     })
-  
+    
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
+        
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])
 

@@ -2,15 +2,18 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
+import { addModel, currentModelsStatus } from '../../../stores/ThreeModels';
+
 
 interface carpet1ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
     rotateY: number;
+    saveModels: boolean;
 }
 
-const Carpet1Model = ({installed, scale, isFocused, rotateY}:carpet1ModelOpts) => {
+const Carpet1Model = ({installed, scale, isFocused, rotateY, saveModels}:carpet1ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.carpet_1);
@@ -35,8 +38,19 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY}:carpet1ModelOpts) =
   
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            alert("carpet1 save: true")
+            addModel({
+                name: "carpet1",
+                installed,
+                scale: {x: scale, y: scale, z:scale},
+                rotateY,
+                position: {x: position[0], y: position[1], z: position[2]}
+            })
+            alert(JSON.stringify(currentModelsStatus))
+        }
         return () => window.removeEventListener("click", installModel);
-    }, [isFocused])
+    }, [isFocused, saveModels])
 
     if(installed === true){
 

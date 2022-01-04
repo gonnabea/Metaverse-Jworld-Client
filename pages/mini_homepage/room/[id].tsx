@@ -31,6 +31,8 @@ import { applyMe } from '../../../stores/loggedUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../../components/common/PageTItle';
 import gql from 'graphql-tag';
+import { ThreeModelInput } from '../../../__generated__/globalTypes';
+import { currentModelsStatus, setModels } from '../../../stores/ThreeModels';
 
 
 
@@ -58,7 +60,6 @@ const MiniHomepage:NextPage = () => {
 
     const {me} = useReactiveVar(applyMe);
     const router = useRouter();
-    const [jwtToken, setJwtToken] = useState<string | null>()
 
   
 
@@ -70,22 +71,8 @@ const MiniHomepage:NextPage = () => {
     }
     })
 
-
-    // const getMe = async() => {
-    //      setJwtToken(localStorage.getItem("jwt_token"));
-    //      console.log(jwtToken)
-         
-    //          // 회원일 시
-    //          const {data: {getMe: {user}} } = await reqGetMe()
-    //          console.log(user)
-    //          setNickname(user.nickname);
-    //          setUserId(user.id);
-             
-         
-         
-    //      setMe({id: user.id, nickname: user.nickname})
-         
-    //  }
+    const [modelsStatus, setModelsStatus] = useState<ThreeModelInput[] | []>([])
+    const [saveModels, setSaveModels] = useState<boolean>(false);
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
@@ -228,13 +215,20 @@ const MiniHomepage:NextPage = () => {
       setTV2Focused(false)
     }
 
-
+    // name: "tv2",
+    // position: { x: 0, y: 0, z: 0 },
+    // scale: { x: 1, y: 1, z: 1 },
+    // rotateY: 0,
+    // installed: true,
+    // price: 0
 
     const saveRoomStatus = (installed, scale, rotateY) => {
       installCarpet1
       carpet1Scale
       carpet1RotateY
       const carpet1Status = {
+        name: "carpet1",
+        position: {x:0, y:0, z:0},
         installed: installCarpet1,
         scale: carpet1Scale,
         rotateY: carpet1RotateY
@@ -285,7 +279,8 @@ const MiniHomepage:NextPage = () => {
 
     useEffect(() => {
       console.log(me)
-    }, [])
+      console.log(saveModels)
+    }, [saveModels])
 
     const handleLeave = () => {
       router.push("/lobby")
@@ -359,24 +354,24 @@ const MiniHomepage:NextPage = () => {
               <Suspense fallback={null}>
               <EffectComposer>
               <Physics gravity= {[0, -1000, 0]} >
-                  <RoomModel roomScale={roomScale} />
-                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} />
-                  <Carpet2Model rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} />
-                  <TvModel installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused} />
-                  <StandingLampModel installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale} isFocused={standingLampFocused} />
-                  <VaseModel installed={installVase} scale={vaseScale} rotateY={vaseRotateY} isFocused={vaseFocused} />
-                  <ChairModel installed={installChair} scale={chairScale} rotateY={chairRotateY} isFocused={chairFocused} />
-                  <CurtainModel installed={installCurtain} scale={curtainScale} rotateY={curtainRotateY} isFocused={curtainFocused} />
-                  <BookModel setCss3dBookVisible={setCss3dBookVisible} rotateY={bookRotateY} installed={installBook} scale={bookScale} isFocused={bookFocused} />
-                  <FrameModel installed={installFrame1} scale={frame1Scale} rotateY={frame1RotateY} isFocused={frame1Focused} 
+                  <RoomModel roomScale={roomScale} saveModels={saveModels} />
+                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} saveModels={saveModels} />
+                  <Carpet2Model rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused} saveModels={saveModels} />
+                  <TvModel installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused} saveModels={saveModels} />
+                  <StandingLampModel installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale} saveModels={saveModels} isFocused={standingLampFocused} />
+                  <VaseModel installed={installVase} scale={vaseScale} rotateY={vaseRotateY} isFocused={vaseFocused} saveModels={saveModels} />
+                  <ChairModel installed={installChair} scale={chairScale} rotateY={chairRotateY} isFocused={chairFocused} saveModels={saveModels} />
+                  <CurtainModel installed={installCurtain} scale={curtainScale} rotateY={curtainRotateY} isFocused={curtainFocused} saveModels={saveModels} />
+                  <BookModel setCss3dBookVisible={setCss3dBookVisible} rotateY={bookRotateY} installed={installBook} scale={bookScale} saveModels={saveModels} isFocused={bookFocused} />
+                  <FrameModel installed={installFrame1} scale={frame1Scale} rotateY={frame1RotateY} isFocused={frame1Focused}  saveModels={saveModels}
                   imageUrl={"https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="} />
-                  <Frame2Model installed={installFrame2} scale={frame2Scale} rotateY={frame2RotateY} isFocused={frame2Focused} 
+                  <Frame2Model installed={installFrame2} scale={frame2Scale} rotateY={frame2RotateY} isFocused={frame2Focused}  saveModels={saveModels}
                   imageUrl={"https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="} />
-                  <TableModel installed={installTable1} scale={table1Scale} rotateY={table1RotateY} isFocused={table1Focused} />
-                  <SofaModel installed={installSofa1} scale={sofa1Scale} rotateY={sofa1RotateY} isFocused={sofa1Focused} />
-                  <Chair2Model installed={installChair2} scale={chair2Scale} rotateY={chair2RotateY} isFocused={chair2Focused} />
-                  <TableLampModel installed={installTableLamp} scale={tableLampScale} rotateY={tableLampRotateY} isFocused={tableLampFocused} />
-                  <TV2Model installed={installTV2} scale={TV2Scale} rotateY={TV2RotateY} isFocused={TV2Focused} />
+                  <TableModel installed={installTable1} scale={table1Scale} rotateY={table1RotateY} isFocused={table1Focused} saveModels={saveModels} />
+                  <SofaModel installed={installSofa1} scale={sofa1Scale} rotateY={sofa1RotateY} isFocused={sofa1Focused} saveModels={saveModels} />
+                  <Chair2Model installed={installChair2} scale={chair2Scale} rotateY={chair2RotateY} isFocused={chair2Focused} saveModels={saveModels} />
+                  <TableLampModel installed={installTableLamp} scale={tableLampScale} rotateY={tableLampRotateY} isFocused={tableLampFocused} saveModels={saveModels} />
+                  <TV2Model installed={installTV2} scale={TV2Scale} rotateY={TV2RotateY} isFocused={TV2Focused} saveModels={saveModels} />
 
               </Physics>
               </EffectComposer>
@@ -391,54 +386,33 @@ const MiniHomepage:NextPage = () => {
             />
 
           <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
-          onClick={() => {
+          onClick={async () => {
+            setModels([]);
+            setSaveModels(true);
             
-            // type ThreeModelInput {
-            //   name: String!
-            //   position: JSONObject!
-            //   scale: JSONObject!
-            //   rotateX: Float!
-            //   installed: Boolean!
-            //   price: Float = 0
-            //   videoUrl: String
-            //   imageUrl: String
-            //   textContents: String
-            //   }
-
+            
             initFocused()
             // applyInstallBtn.current.style.display = "none"
+            
+            await setModels(currentModelsStatus)
+            console.log(currentModelsStatus)
+            await reqSaveRoom({
 
-            reqSaveRoom({
-              
               variables: {
 
               saveThreeModelInput: {
 
-                models:[
-                  {
-                    name: "tv2",
-                    position: { x: 0, y: 0, z: 0 },
-                    scale: { x: 1, y: 1, z: 1 },
-                    rotateX: 0,
-                    installed: true,
-                    price: 0
-                  },
-                  {
-                    name: "testModel",
-                    position: { x: 0, y: 0, z: 0 },
-                    scale: { x: 1, y: 1, z: 1 },
-                    rotateX: 0,
-                    installed: true,
-                    price: 0
-                  }
-                ]
+                models: currentModelsStatus
+
               } 
            
               
             },
+
             
-          
+            
           })
+          setSaveModels(false);
         
             console.log(data)
             console.log(error)

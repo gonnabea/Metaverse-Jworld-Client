@@ -2,15 +2,18 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+
 
 interface Chair2ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
     scale: number;
     isFocused: boolean;
     rotateY: number;
+    saveModels: boolean;
 }
 
-const Chair2Model = ({installed, scale, rotateY, isFocused}:Chair2ModelOpts) => {
+const Chair2Model = ({installed, scale, rotateY, isFocused, saveModels}:Chair2ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.chair_2);
@@ -35,6 +38,15 @@ const Chair2Model = ({installed, scale, rotateY, isFocused}:Chair2ModelOpts) => 
   
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])
 

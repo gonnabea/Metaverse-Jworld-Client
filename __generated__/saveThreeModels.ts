@@ -19,5 +19,5 @@ export interface saveThreeModels {
 }
 
 export interface saveThreeModelsVariables {
-  models: SaveThreeModelInput;
+  saveThreeModelInput: SaveThreeModelInput;
 }

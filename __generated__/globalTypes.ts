@@ -20,7 +20,7 @@ export interface ThreeModelInput {
   name: string;
   position: any;
   scale: any;
-  rotateX: number;
+  rotateY: string;
   installed: boolean;
   price?: number | null;
   videoUrl?: string | null;

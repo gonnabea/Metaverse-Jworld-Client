@@ -4,6 +4,8 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+
 
 interface TV2ModelOpts {
     installed: boolean; // 모델 설치 or 미설치
@@ -11,10 +13,11 @@ interface TV2ModelOpts {
     isFocused: boolean;
     rotateY: number;
     videoUrl?: string;
+    saveModels: boolean;
     
 }
 
-const TV2Model = ({installed, scale, isFocused, rotateY, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+const TV2Model = ({installed, scale, isFocused, rotateY, saveModels, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0])
 
     const size = useAspect(18 * scale, 10 * scale);
@@ -51,6 +54,15 @@ const TV2Model = ({installed, scale, isFocused, rotateY, videoUrl="http://common
     useEffect(() => {
         window.addEventListener("click", installModel)
         video.pause()
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
         return () => window.removeEventListener("click", installModel);
     }, [isFocused, video, video.paused, video.src])
 

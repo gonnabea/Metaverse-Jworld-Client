@@ -3,6 +3,8 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
+import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
+
 
 interface FrameModelOpts {
     installed: boolean; // 모델 설치 or 미설치
@@ -10,9 +12,10 @@ interface FrameModelOpts {
     isFocused: boolean;
     rotateY: number;
     imageUrl: string;
+    saveModels: boolean;
 }
 
-const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl}:FrameModelOpts) => {
+const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, saveModels}:FrameModelOpts) => {
     const [position, setPosition] = useState([0, 0, 0]);
     
     const gltf = useLoader(GLTFLoader, modelList.frame_2);
@@ -40,6 +43,15 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl}:FrameModel
   
     useEffect(() => {
         window.addEventListener("click", installModel);
+        if(saveModels === true) {
+            addModel({
+                name: "book",
+                installed,
+                scale,
+                rotateY,
+                position
+            })
+        }
         return () => window.removeEventListener("click", installModel);
     }, [isFocused])
 
