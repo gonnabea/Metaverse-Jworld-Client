@@ -76,7 +76,7 @@ query getThreeModels($id: Float!) {
       installed
       scale
       rotateY
-      
+      position
     }
   }
 }
@@ -130,6 +130,9 @@ const MiniHomepage:NextPage = () => {
         }
     }
     })
+
+    const [getMiniHompi, setGetMiniHompi] = useState()
+    const [getThreeModels, setGetThreeModels] = useState()
 
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
@@ -297,6 +300,55 @@ const MiniHomepage:NextPage = () => {
 
       console.log(getMiniHompi)
       console.log(getThreeModels)
+
+      setGetMiniHompi(getMiniHompi)
+      setGetThreeModels(getThreeModels)
+
+      
+
+
+      // const {installed, id, name, rotateY, scale, position} = getThreeModels.models.find(model => model.name === "carpet1") 
+
+      //   setInstallCarpet1(installed)
+      //   setCarpet1Scale(scale.x)
+      //   setCarpet1RotateY(rotateY)
+      //   setCarpet1Position(position)
+
+        
+        getThreeModels.models.forEach(({installed, id, name, rotateY, scale, position}) => {
+          switch(name) {
+            case "carpet1":
+              setInstallCarpet1(installed)
+              setCarpet1Scale(scale.x)
+              setCarpet1RotateY(rotateY)
+              setCarpet1Position(position)
+              break;
+            case "carpet2":
+              setInstallCarpet2(installed)
+              setCarpet2Scale(scale.x)
+              setCarpet2RotateY(rotateY)
+              setCarpet2Position(position)
+              break;
+            case "sofa":
+              setInstallSofa1(installed)
+              setSofa1Scale(scale.x)
+              setSofa1RotateY(rotateY)
+              setSofa1Position(position)
+              break;
+            case "chair":                          
+              setInstallChair(installed)
+              setChairScale(scale.x)
+              setChairRotateY(rotateY)
+              setChairPosition(position)
+              break;
+            case "chair2":                          
+              setInstallChair2(installed)
+              setChair2Scale(scale.x)
+              setChair2RotateY(rotateY)
+              setChair2Position(position)
+              break;
+          }
+        })
 
       
     }
