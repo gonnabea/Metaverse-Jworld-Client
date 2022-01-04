@@ -102,12 +102,13 @@ mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
 
 
 
-const MiniHomepage:NextPage = () => {
-
+const MiniHomepage:NextPage = (props) => {
+    
     const {me} = useReactiveVar(applyMe);
     const router = useRouter();
-    const { id: roomId } = router.query
-
+    const { id: roomId, owner } = router.query
+    const [isMyRoom, setIsMyRoom] = useState(false);
+    
 
     const parsedRoomId = parseFloat(roomId)
 
@@ -301,6 +302,15 @@ const MiniHomepage:NextPage = () => {
       console.log(getMiniHompi)
       console.log(getThreeModels)
 
+      console.log(me)
+
+      if(me.id === getMiniHompi.miniHompi.ownerId) {
+        setIsMyRoom(true)
+      }
+      else {
+        setIsMyRoom(false)
+      }
+
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
 
@@ -314,7 +324,7 @@ const MiniHomepage:NextPage = () => {
       //   setCarpet1RotateY(rotateY)
       //   setCarpet1Position(position)
 
-        
+        // 저장된 3D 모델 로드 & 배치하기
         getThreeModels.models.forEach(({installed, id, name, rotateY, scale, position}) => {
           switch(name) {
             case "carpet1":
@@ -419,7 +429,7 @@ const MiniHomepage:NextPage = () => {
     useEffect(() => {
 
       getInfos()
-      console.log(me)
+      
     }, [])
 
     const handleLeave = () => {
@@ -428,17 +438,17 @@ const MiniHomepage:NextPage = () => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <SiteMark title={`${me ? me.nickname : null}'s Room`} bgColor={"bg-green-400"} />
+          <SiteMark title={`${owner ? owner + "'s Room" : "Room"}`} bgColor={"bg-green-400"} />
           
           <div className="z-10 absolute">
 
-              <ModelSettingBox 
+              {isMyRoom ? <ModelSettingBox 
                 modelName={"방"} 
                 scaleState={roomScale}
                 setScaleState={setRoomScale}
                 
                 backgroundColor="green"
-              />         
+              /> : null}
 
               {/* CSS 3D 메모장*/}
               <Book3D 
@@ -525,356 +535,334 @@ const MiniHomepage:NextPage = () => {
             
             />
 
-          <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
+          {isMyRoom ? <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
           onClick={async () => {
-            
-    
-            
             initFocused()
-            // applyInstallBtn.current.style.display = "none"
-            
-       
-            console.log(getModels())
             await reqSaveModels({
-
               variables: {
-
               saveThreeModelInput: {
-
                 models: getModels()
-
               } 
-           
-              
             },
-
-            
-            
           })
-       
-          
-        
-            console.log(data)
-            console.log(error)
-        
-
           }
         }>
           설치 적용
-          </button>
-          <ModelInstallPop 
+          </button> : null }
+
+         { isMyRoom ? <ModelInstallPop 
         
-            carpets={
-              <>
-              <ModelSettingBox 
-                modelName={"카페트1"} 
-                installState={installCarpet1}
-                setInstallState={setInstallCarpet1}
-                scaleState={carpet1Scale}
-                setScaleState={setCarpet1Scale}
-                rotateYState={carpet1RotateY}
-                setRotateYState={setCarpet1RotateY}
-                focusState={carpet1Focused}
-                setFocusState={setCarpet1Focused}
-                initFocused={initFocused}
-                modelImgUrl="/model_images/carpet1.png"
-                maxScale={0.7}
-                minScale={0.3}
-                scaleStep={0.04}
-
-                
-                backgroundColor="blue"
-              />
-
-
-              <ModelSettingBox 
-                modelName={"카페트2"} 
-                installState={installCarpet2}
-                setInstallState={setInstallCarpet2}
-                scaleState={carpet2Scale}
-                setScaleState={setCarpet2Scale}
-                rotateYState={carpet2RotateY}
-                setRotateYState={setCarpet2RotateY}
-                focusState={carpet2Focused}
-                setFocusState={setCarpet2Focused}
-                initFocused={initFocused}
-                modelImgUrl="/model_images/carpet2.png"
-                
-                maxScale={0.2}
-                minScale={0.14}
-                scaleStep={0.005}
-                
-                backgroundColor="yellow"
-              />
-            </>
-            }
-
-            lights={
-              <>
-                <ModelSettingBox 
-                  modelName={"스탠딩 램프"} 
-                  
-                  
-                  installState={installStandingLamp}
-                  setInstallState={setInstallStandingLamp}
-                  scaleState={standingLampScale}
-                  setScaleState={setStandingLampScale}
-                  rotateYState={standingLampRotateY}
-                  setRotateYState={setStandingLampRotateY}
-                  focusState={standingLampFocused}
-                  setFocusState={setStandingLampFocused}
-                  initFocused={initFocused}
-                  backgroundColor="red"
-                  modelImgUrl="/model_images/standing_lamp.png"
-                  maxScale={0.4}
-                  minScale={0.2}
-                  scaleStep={0.05}
-
-                />     
-                                <ModelSettingBox 
-                  modelName={"테이블 램프"} 
-                  
-                  
-                  installState={installTableLamp}
-                  setInstallState={setInstallTableLamp}
-                  scaleState={tableLampScale}
-                  setScaleState={setTableLampScale}
-                  rotateYState={tableLampRotateY}
-                  setRotateYState={setTableLampRotateY}
-                  focusState={tableLampFocused}
-                  setFocusState={setTableLampFocused}
-                  initFocused={initFocused}
-                  backgroundColor="red"
-                  modelImgUrl="/model_images/standing_lamp.png"
-                  maxScale={0.2}
-                  minScale={0.1}
-                  scaleStep={0.01}
-
-                />        
-              </>
-            }
-
-            electronics={
-              <>
-              <ModelSettingBox 
-                modelName={"TV"} 
-                installState={installTv}
-                setInstallState={setInstallTv}
-                scaleState={tvScale}
-                setScaleState={setTvScale}
-                rotateYState={tvRotateY}
-                setRotateYState={setTvRotateY}
-                focusState={tvFocused}
-                setFocusState={setTvFocused}
-                initFocused={initFocused}
-                modelImgUrl="/model_images/tv.png"
-
-
-                backgroundColor="purple"
-
-            />       
-              <ModelSettingBox 
-                modelName={"TV2"} 
-                installState={installTV2}
-                setInstallState={setInstallTV2}
-                scaleState={TV2Scale}
-                setScaleState={setTV2Scale}
-                rotateYState={TV2RotateY}
-                setRotateYState={setTV2RotateY}
-                focusState={TV2Focused}
-                setFocusState={setTV2Focused}
-                initFocused={initFocused}
-                modelImgUrl="/model_images/tv.png"
-                minScale={5}
-                maxScale={12}
-                scaleStep={0.1}
-                backgroundColor="purple"
-
-            />  
-            </>
-            }
-
-            beauties={
-              <>
-              <ModelSettingBox 
-                modelName={"꽃병"} 
-                installState={installVase}
-                setInstallState={setInstallVase}
-                scaleState={vaseScale}
-                setScaleState={setVaseScale}
-                rotateYState={vaseRotateY}
-                setRotateYState={setVaseRotateY}
-                focusState={vaseFocused}
-                setFocusState={setVaseFocused}
-                initFocused={initFocused}
-                modelImgUrl="/model_images/vase.png"
-                maxScale={0.2}
-                minScale={0.05}
-                scaleStep={0.01}
-
-                backgroundColor="green"
-
-            />   
-
-            <ModelSettingBox
-              modelName={"커튼"} 
-              installState={installCurtain}
-              setInstallState={setInstallCurtain}
-              scaleState={curtainScale}
-              setScaleState={setCurtainScale}
-              rotateYState={curtainRotateY}
-              setRotateYState={setCurtainRotateY}
-              focusState={curtainFocused}
-              setFocusState={setCurtainFocused}
-              initFocused={initFocused}
-              modelImgUrl="/model_images/curtain.png"
-              />
-          
-          </>
-            }
-
-            writes={
-              <>
-              <ModelSettingBox 
-                modelName={"메모장"} 
-                installState={installBook}
-                setInstallState={setInstallBook}
-                scaleState={bookScale}
-                setScaleState={setBookScale}
-                rotateYState={bookRotateY}
-                setRotateYState={setBookRotateY}
-                focusState={bookFocused}
-                setFocusState={setBookFocused}
-                initFocused={initFocused}
-
-                backgroundColor="black"
-                modelImgUrl="/model_images/book_ani.png"
-                maxScale={0.5}
-                minScale={0.1}
-                scaleStep={0.05}
-
-            />   
-
-            <ModelSettingBox 
-            modelName={"액자1"} 
-            installState={installFrame1}
-            setInstallState={setInstallFrame1}
-            scaleState={frame1Scale}
-            setScaleState={setFrame1Scale}
-            rotateYState={frame1RotateY}
-            setRotateYState={setFrame1RotateY}
-            focusState={frame1Focused}
-            setFocusState={setFrame1Focused}
+        carpets={
+          <>
+          <ModelSettingBox 
+            modelName={"카페트1"} 
+            installState={installCarpet1}
+            setInstallState={setInstallCarpet1}
+            scaleState={carpet1Scale}
+            setScaleState={setCarpet1Scale}
+            rotateYState={carpet1RotateY}
+            setRotateYState={setCarpet1RotateY}
+            focusState={carpet1Focused}
+            setFocusState={setCarpet1Focused}
             initFocused={initFocused}
+            modelImgUrl="/model_images/carpet1.png"
+            maxScale={0.7}
+            minScale={0.3}
+            scaleStep={0.04}
 
-            backgroundColor="black"
-            modelImgUrl="/model_images/frame1.png"
-            maxScale={2.5}
-            minScale={0.8}
-            scaleStep={0.1}
+            
+            backgroundColor="blue"
+          />
 
-        />   
 
           <ModelSettingBox 
-            modelName={"액자2"} 
-            installState={installFrame2}
-            setInstallState={setInstallFrame2}
-            scaleState={frame2Scale}
-            setScaleState={setFrame2Scale}
-            rotateYState={frame2RotateY}
-            setRotateYState={setFrame2RotateY}
-            focusState={frame2Focused}
-            setFocusState={setFrame2Focused}
+            modelName={"카페트2"} 
+            installState={installCarpet2}
+            setInstallState={setInstallCarpet2}
+            scaleState={carpet2Scale}
+            setScaleState={setCarpet2Scale}
+            rotateYState={carpet2RotateY}
+            setRotateYState={setCarpet2RotateY}
+            focusState={carpet2Focused}
+            setFocusState={setCarpet2Focused}
             initFocused={initFocused}
+            modelImgUrl="/model_images/carpet2.png"
+            
+            maxScale={0.2}
+            minScale={0.14}
+            scaleStep={0.005}
+            
+            backgroundColor="yellow"
+          />
+        </>
+        }
+
+        lights={
+          <>
+            <ModelSettingBox 
+              modelName={"스탠딩 램프"} 
+              
+              
+              installState={installStandingLamp}
+              setInstallState={setInstallStandingLamp}
+              scaleState={standingLampScale}
+              setScaleState={setStandingLampScale}
+              rotateYState={standingLampRotateY}
+              setRotateYState={setStandingLampRotateY}
+              focusState={standingLampFocused}
+              setFocusState={setStandingLampFocused}
+              initFocused={initFocused}
+              backgroundColor="red"
+              modelImgUrl="/model_images/standing_lamp.png"
+              maxScale={0.4}
+              minScale={0.2}
+              scaleStep={0.05}
+
+            />     
+                            <ModelSettingBox 
+              modelName={"테이블 램프"} 
+              
+              
+              installState={installTableLamp}
+              setInstallState={setInstallTableLamp}
+              scaleState={tableLampScale}
+              setScaleState={setTableLampScale}
+              rotateYState={tableLampRotateY}
+              setRotateYState={setTableLampRotateY}
+              focusState={tableLampFocused}
+              setFocusState={setTableLampFocused}
+              initFocused={initFocused}
+              backgroundColor="red"
+              modelImgUrl="/model_images/standing_lamp.png"
+              maxScale={0.2}
+              minScale={0.1}
+              scaleStep={0.01}
+
+            />        
+          </>
+        }
+
+        electronics={
+          <>
+          <ModelSettingBox 
+            modelName={"TV"} 
+            installState={installTv}
+            setInstallState={setInstallTv}
+            scaleState={tvScale}
+            setScaleState={setTvScale}
+            rotateYState={tvRotateY}
+            setRotateYState={setTvRotateY}
+            focusState={tvFocused}
+            setFocusState={setTvFocused}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/tv.png"
+
+
+            backgroundColor="purple"
+
+        />       
+          <ModelSettingBox 
+            modelName={"TV2"} 
+            installState={installTV2}
+            setInstallState={setInstallTV2}
+            scaleState={TV2Scale}
+            setScaleState={setTV2Scale}
+            rotateYState={TV2RotateY}
+            setRotateYState={setTV2RotateY}
+            focusState={TV2Focused}
+            setFocusState={setTV2Focused}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/tv.png"
+            minScale={5}
+            maxScale={12}
+            scaleStep={0.1}
+            backgroundColor="purple"
+
+        />  
+        </>
+        }
+
+        beauties={
+          <>
+          <ModelSettingBox 
+            modelName={"꽃병"} 
+            installState={installVase}
+            setInstallState={setInstallVase}
+            scaleState={vaseScale}
+            setScaleState={setVaseScale}
+            rotateYState={vaseRotateY}
+            setRotateYState={setVaseRotateY}
+            focusState={vaseFocused}
+            setFocusState={setVaseFocused}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/vase.png"
             maxScale={0.2}
             minScale={0.05}
             scaleStep={0.01}
-            backgroundColor="black"
-            modelImgUrl="/model_images/frame1.png"
 
+            backgroundColor="green"
 
         />   
-        </>
-            }
-            
-            furnitures = {
-              <>
-              <ModelSettingBox 
-              modelName={"의자1"} 
-              installState={installChair}
-              setInstallState={setInstallChair}
-              scaleState={chairScale}
-              setScaleState={setChairScale}
-              rotateYState={chairRotateY}
-              setRotateYState={setChairRotateY}
-              focusState={chairFocused}
-              setFocusState={setChairFocused}
-              initFocused={initFocused}
-              modelImgUrl="/model_images/chair1.png"
-              backgroundColor="blue"
-              maxScale={0.1}
-              minScale={0.05}
-              scaleStep={0.005}
 
-          />   
-            <ModelSettingBox 
-              modelName={"의자2"} 
-              installState={installChair2}
-              setInstallState={setInstallChair2}
-              scaleState={chair2Scale}
-              setScaleState={setChair2Scale}
-              rotateYState={chair2RotateY}
-              setRotateYState={setChair2RotateY}
-              focusState={chair2Focused}
-              setFocusState={setChair2Focused}
-              initFocused={initFocused}
-              modelImgUrl="/model_images/chair1.png"
-              backgroundColor="blue"
-              maxScale={0.1}
-              minScale={0.05}
-              scaleStep={0.005}
-          />   
+        <ModelSettingBox
+          modelName={"커튼"} 
+          installState={installCurtain}
+          setInstallState={setInstallCurtain}
+          scaleState={curtainScale}
+          setScaleState={setCurtainScale}
+          rotateYState={curtainRotateY}
+          setRotateYState={setCurtainRotateY}
+          focusState={curtainFocused}
+          setFocusState={setCurtainFocused}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/curtain.png"
+          />
+      
+      </>
+        }
 
-            <ModelSettingBox 
-              modelName={"소파1"} 
-              installState={installSofa1}
-              setInstallState={setInstallSofa1}
-              scaleState={sofa1Scale}
-              setScaleState={setSofa1Scale}
-              rotateYState={sofa1RotateY}
-              setRotateYState={setSofa1RotateY}
-              focusState={sofa1Focused}
-              setFocusState={setSofa1Focused}
-              initFocused={initFocused}
-              modelImgUrl="/model_images/chair1.png"
-              backgroundColor="blue"
-              maxScale={6}
-              minScale={4}
-              scaleStep={0.1}
+        writes={
+          <>
+          <ModelSettingBox 
+            modelName={"메모장"} 
+            installState={installBook}
+            setInstallState={setInstallBook}
+            scaleState={bookScale}
+            setScaleState={setBookScale}
+            rotateYState={bookRotateY}
+            setRotateYState={setBookRotateY}
+            focusState={bookFocused}
+            setFocusState={setBookFocused}
+            initFocused={initFocused}
 
-          />   
+            backgroundColor="black"
+            modelImgUrl="/model_images/book_ani.png"
+            maxScale={0.5}
+            minScale={0.1}
+            scaleStep={0.05}
 
-            <ModelSettingBox 
-              modelName={"테이블1"} 
-              installState={installTable1}
-              setInstallState={setInstallTable1}
-              scaleState={table1Scale}
-              setScaleState={setTable1Scale}
-              rotateYState={table1RotateY}
-              setRotateYState={setTable1RotateY}
-              focusState={table1Focused}
-              setFocusState={setTable1Focused}
-              initFocused={initFocused}
-              modelImgUrl="/model_images/chair1.png"
-              backgroundColor="blue"
-              maxScale={0.1}
-              minScale={0.04}
-              scaleStep={0.005}
-          />   
-          </>
-            }
+        />   
 
-            />
+        <ModelSettingBox 
+        modelName={"액자1"} 
+        installState={installFrame1}
+        setInstallState={setInstallFrame1}
+        scaleState={frame1Scale}
+        setScaleState={setFrame1Scale}
+        rotateYState={frame1RotateY}
+        setRotateYState={setFrame1RotateY}
+        focusState={frame1Focused}
+        setFocusState={setFrame1Focused}
+        initFocused={initFocused}
+
+        backgroundColor="black"
+        modelImgUrl="/model_images/frame1.png"
+        maxScale={2.5}
+        minScale={0.8}
+        scaleStep={0.1}
+
+    />   
+
+      <ModelSettingBox 
+        modelName={"액자2"} 
+        installState={installFrame2}
+        setInstallState={setInstallFrame2}
+        scaleState={frame2Scale}
+        setScaleState={setFrame2Scale}
+        rotateYState={frame2RotateY}
+        setRotateYState={setFrame2RotateY}
+        focusState={frame2Focused}
+        setFocusState={setFrame2Focused}
+        initFocused={initFocused}
+        maxScale={0.2}
+        minScale={0.05}
+        scaleStep={0.01}
+        backgroundColor="black"
+        modelImgUrl="/model_images/frame1.png"
+
+
+    />   
+    </>
+        }
+        
+        furnitures = {
+          <>
+          <ModelSettingBox 
+          modelName={"의자1"} 
+          installState={installChair}
+          setInstallState={setInstallChair}
+          scaleState={chairScale}
+          setScaleState={setChairScale}
+          rotateYState={chairRotateY}
+          setRotateYState={setChairRotateY}
+          focusState={chairFocused}
+          setFocusState={setChairFocused}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.05}
+          scaleStep={0.005}
+
+      />   
+        <ModelSettingBox 
+          modelName={"의자2"} 
+          installState={installChair2}
+          setInstallState={setInstallChair2}
+          scaleState={chair2Scale}
+          setScaleState={setChair2Scale}
+          rotateYState={chair2RotateY}
+          setRotateYState={setChair2RotateY}
+          focusState={chair2Focused}
+          setFocusState={setChair2Focused}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.05}
+          scaleStep={0.005}
+      />   
+
+        <ModelSettingBox 
+          modelName={"소파1"} 
+          installState={installSofa1}
+          setInstallState={setInstallSofa1}
+          scaleState={sofa1Scale}
+          setScaleState={setSofa1Scale}
+          rotateYState={sofa1RotateY}
+          setRotateYState={setSofa1RotateY}
+          focusState={sofa1Focused}
+          setFocusState={setSofa1Focused}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={6}
+          minScale={4}
+          scaleStep={0.1}
+
+      />   
+
+        <ModelSettingBox 
+          modelName={"테이블1"} 
+          installState={installTable1}
+          setInstallState={setInstallTable1}
+          scaleState={table1Scale}
+          setScaleState={setTable1Scale}
+          rotateYState={table1RotateY}
+          setRotateYState={setTable1RotateY}
+          focusState={table1Focused}
+          setFocusState={setTable1Focused}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.04}
+          scaleStep={0.005}
+      />   
+      </>
+        }
+
+        /> : null} 
         </section>
     )
 

@@ -9,7 +9,7 @@ interface props {
 const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
 
     const router = useRouter()
-    console.log(router)
+   
     return (
         <>
         {router.pathname === "/stream_world/[id]" ? 
