@@ -26,7 +26,7 @@ import Chair2Model from '../../../components/threeComponents/miniHompiModels/Cha
 import TableLampModel from '../../../components/threeComponents/miniHompiModels/TableLampModel';
 import TV2Model from '../../../components/threeComponents/miniHompiModels/Tv2Model';
 import SiteMark from '../../../components/SiteMark';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar, useLazyQuery } from '@apollo/client';
 import { applyMe } from '../../../stores/loggedUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../../components/common/PageTItle';
@@ -35,10 +35,19 @@ import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
 
 
+
+// gql`
+// query articlesByCategory($id: String!) {
+//   postsByCategory(id: $id) {
+//     id
+//   }
+// }
+// `
+
 const GET_ROOMSTATUS = gql`
-query {
+query getMiniHompi($id: Float!){
   getMiniHompi(input: {
-    id:129
+    id: $id
   }) {
     ok
     error
@@ -46,6 +55,28 @@ query {
       ownerId
       id
       scale
+    }
+  }
+}
+`
+
+
+
+
+const GET_THREE_MODELS = gql`
+query getThreeModels($id: Float!) {
+  getThreeModels(input: {
+    id: $id
+  }) {
+    ok
+    error
+    models{
+      name
+      id
+      installed
+      scale
+      rotateY
+      
     }
   }
 }
@@ -69,24 +100,28 @@ mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
 // }
 // `
 
-const createModelStatus = async ({name, position, installed, scale, rotateY}) => {
-  const modelStatus = {
-    name,
-    position,
-    installed,
-    scale,
-    rotateY
-  }
-  addModel(modelStatus)
-}
 
 
 const MiniHomepage:NextPage = () => {
 
     const {me} = useReactiveVar(applyMe);
     const router = useRouter();
+    const { id: roomId } = router.query
 
-    const {data: savedModels} = useQuery(GET_ROOMSTATUS)
+
+    const parsedRoomId = parseFloat(roomId)
+
+    const [reqRoomInfo, {data: roomInfo, error: getRoomInfoErr}] = useLazyQuery(GET_ROOMSTATUS, {
+      variables: {
+        id: parsedRoomId
+      }
+    })
+
+    const [reqModels, {data: modelsInfo, error: getModelsErr}] = useLazyQuery(GET_THREE_MODELS, {
+      variables: {
+        id: parsedRoomId
+      }
+    })
 
     const [reqSaveModels, {data, loading, error}] = useMutation(SAVE_MODELS, {
       context: {
@@ -95,6 +130,7 @@ const MiniHomepage:NextPage = () => {
         }
     }
     })
+
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
@@ -251,118 +287,24 @@ const MiniHomepage:NextPage = () => {
       setTV2Focused(false)
     }
 
-    // name: "tv2",
-    // position: { x: 0, y: 0, z: 0 },
-    // scale: { x: 1, y: 1, z: 1 },
-    // rotateY: 0,
-    // installed: true,
-    // price: 0
-    
 
+    const getInfos = async() => {
+      
 
-    const saveRoomStatus = (installed, scale, rotateY) => {
-      installCarpet1
-      carpet1Scale
-      carpet1RotateY
-      const carpet1Status = {
-        name: "carpet1",
-        position: {x:0, y:0, z:0},
-        installed: installCarpet1,
-        scale: carpet1Scale,
-        rotateY: carpet1RotateY
-      }
-      installCarpet2
-      carpet2Scale
-      carpet2RotateY
-      installTv
-      tvScale
-      tvRotateY
-      installStandingLamp
-      standingLampScale
-      standingLampRotateY
-      installVase
-      vaseScale
-      vaseRotateY
-      installBook
-      bookScale
-      bookRotateY
-      installChair
-      chairScale
-      chairRotateY
-      installCurtain
-      curtainScale
-      curtainRotateY
-      installFrame1
-      frame1Scale
-      frame1RotateY
-      installFrame2
-      frame2Scale
-      frame2RotateY
-      installTable1
-      table1Scale
-      table1RotateY
-      installTableLamp
-      tableLampScale
-      tableLampRotateY
-      installSofa1
-      sofa1Scale
-      sofa1RotateY
-      installChair2
-      chair2Scale
-      chair2RotateY
-      installTV2
-      TV2Scale
-      TV2RotateY
+      const {data: { getMiniHompi } } = await reqRoomInfo();
+
+      const {data: { getThreeModels } } = await reqModels();
+
+      console.log(getMiniHompi)
+      console.log(getThreeModels)
+
+      
     }
 
-    
-
-
-
-    // await createModelStatus({
-    //   name: "carpet1",
-    //   position: carpet1Position,
-    //   rotateY: carpet1RotateY,
-    //   installed: installCarpet1,
-    //   scale: carpet1Scale
-    // })
-
-    // await createModelStatus({
-    //   name: "carpet2",
-    //   position: carpet2Position,
-    //   rotateY: carpet2RotateY,
-    //   installed: installCarpet2,
-    //   scale: carpet2Scale
-    // })
-
-    // await createModelStatus({
-    //   name: "TV2",
-    //   position: TV2Position,
-    //   rotateY: TV2RotateY,
-    //   installed: installTV2,
-    //   scale: TV2Scale
-    // })
-
-    // await createModelStatus({
-    //   name: "standingLamp",
-    //   position: standingLampPosition,
-    //   rotateY: standingLampRotateY,
-    //   installed: installStandingLamp,
-    //   scale: standingLampScale
-    // })
-
-    // await createModelStatus({
-    //   name: "standingLamp",
-    //   position: standingLampPosition,
-    //   rotateY: standingLampRotateY,
-    //   installed: installStandingLamp,
-    //   scale: standingLampScale
-    // })
-    
-
     useEffect(() => {
+
+      getInfos()
       console.log(me)
-      console.log(savedModels)
     }, [])
 
     const handleLeave = () => {

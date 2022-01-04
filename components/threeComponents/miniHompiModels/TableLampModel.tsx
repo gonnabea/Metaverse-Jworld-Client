@@ -33,7 +33,7 @@ const TableLampModel = ({installed, scale, isFocused, rotateY, position, setPosi
     
     
     const gltf = useLoader(GLTFLoader, modelList.tablelamp);
-    console.log(gltf)
+  
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)

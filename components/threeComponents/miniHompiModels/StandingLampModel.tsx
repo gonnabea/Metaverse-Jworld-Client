@@ -34,7 +34,7 @@ const StandingLampModel = ({installed, scale, isFocused, rotateY, position, setP
     
     
     const gltf = useLoader(GLTFLoader, modelList.standing_lamp);
-    console.log(gltf)
+    
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)

@@ -22,7 +22,8 @@ const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, 
           position,
           installed,
           scale: {x: scale, y: scale, z: scale},
-          rotateY
+          rotateY,
+          videoUrl
         }
         addModel(modelStatus)
       }
