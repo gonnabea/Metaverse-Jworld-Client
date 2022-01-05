@@ -14,7 +14,7 @@ interface props {
 
 const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, writes, furnitures }:props) => {
     
-    const categories = ["카페트", "가구", "선반", "가전", "조명", "장식", "기록"]
+    const categories = ["카페트", "가구", "가전", "조명", "장식", "기록"]
 
     const [selectedCategory, setSelectedCategory] = useState("의자");
 

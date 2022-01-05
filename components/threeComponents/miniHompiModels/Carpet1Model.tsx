@@ -1,14 +1,19 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useLoader, useThree } from '@react-three/fiber';
+import { useGraph, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { addModel } from '../../../stores/ThreeModels';
 import { ThreeModelOpts, XYZType } from '../../../types/common';
+
+
+import {clone} from "../../../config/skeletonUtils";
 
 
 
 
 const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+
+    const [graphNodes, setGraphNodes] = useState();
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -21,29 +26,33 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
         addModel(modelStatus)
       }
     
-    const gltf = useLoader(GLTFLoader, modelList.carpet_1);
-    
-    const raycaster = useThree((state) => state.raycaster);
-    const scene = useThree((state) => state.scene)
-    
-    const installModel = (e) => {
-
-      // 마우스 클릭한 지점 위치 얻기
+      console.log(clone)
+      const raycaster = useThree((state) => state.raycaster);
+      const scene = useThree((state) => state.scene)
+      const gltf = useLoader(GLTFLoader, modelList.carpet_1);
+      const cloned = useMemo(() => clone(gltf.scene), [scene])
+      console.log(cloned)
+      const graph = useGraph(cloned)
+      const installModel = (e) => {
+        
+        // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
-
+      
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
-          console.log("카페트 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
+        console.log("카페트 포커싱 상태");
+        setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
       }
-  };
-
-
-
-  
+    };
+    
+    
+    
+    
     useEffect(() => {
-        window.addEventListener("click", installModel);
-        createModelStatus()
+      console.log(graph.nodes)
+      setGraphNodes(graph.nodes)
+      window.addEventListener("click", installModel);
+      createModelStatus()
         return () => window.removeEventListener("click", installModel);
     }, [
         isFocused, 
@@ -62,8 +71,16 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
                 position={[position.x, position.y, position.z]} 
                 scale={scale} 
                 rotation={[0, rotateY, 0]}
+                object={cloned} 
+            />
+            <primitive 
+                onClick={() => console.log("카페트1 클릭됨")} 
+                position={[position.x-0.5, position.y, position.z-0.5]} 
+                scale={scale} 
+                rotation={[0, rotateY, 0]}
                 object={gltf.scene} 
             />
+            
 
           </>
         )

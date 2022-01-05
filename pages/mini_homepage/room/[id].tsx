@@ -314,15 +314,6 @@ const MiniHomepage:NextPage = (props) => {
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
 
-      
-
-
-      // const {installed, id, name, rotateY, scale, position} = getThreeModels.models.find(model => model.name === "carpet1") 
-
-      //   setInstallCarpet1(installed)
-      //   setCarpet1Scale(scale.x)
-      //   setCarpet1RotateY(rotateY)
-      //   setCarpet1Position(position)
 
         // 저장된 3D 모델 로드 & 배치하기
         getThreeModels.models.forEach(({installed, id, name, rotateY, scale, position}) => {

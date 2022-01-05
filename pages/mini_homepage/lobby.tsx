@@ -80,11 +80,11 @@ const MiniHompiLobby:NextPage = () => {
                             <a key={key} onClick={() => router.push({
                                 pathname: `/mini_homepage/room/${miniHompi.id}`, 
                                 query: {owner: owner?.nickname}})}  
-                                className="bg-white p-6 w-10/12 text-black flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white" >
+                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white`} >
                             {console.log(data)}
                             <div className="flex flex-col">
 
-                            
+                            {miniHompi.ownerId === userId ? <span className="text-yellow-500">★ MyRoom</span> : null}
                             <cite className="text-2xl">{owner?.nickname}'s Room</cite>
                             <span className="text-2xl">생성일시: {miniHompi.createdAt}</span>
                             </div>
