@@ -27,6 +27,8 @@ interface props {
     maxScale?: number;
     minScale?: number;
     scaleStep?: number;
+    installNum?: number;
+    setInstallNum?: Function;
 }
 
 
@@ -45,7 +47,9 @@ const ModelSettingBox = ({
     modelImgUrl,
     maxScale = 5,
     minScale = 0.1,
-    scaleStep = 0.1
+    scaleStep = 0.1,
+    installNum,
+    setInstallNum
 }:props
 ) => {
 
@@ -88,6 +92,17 @@ const ModelSettingBox = ({
              <div>
             
              <input type="range" value={scaleState} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{setScaleState(e.target.value); console.log(e.target.value)}} />
+ 
+                  </div>
+        </div> : null }
+
+        { installNum !== undefined ? <div className="">
+        <span className="">
+            {modelName + " 개수 조절"}
+        </span>
+             <div>
+            
+             <input type="range" value={installNum} max={4} min={1}  step={1} onChange={(e) =>{setInstallNum(e.target.value); console.log(e.target.value)}} />
  
                   </div>
         </div> : null }

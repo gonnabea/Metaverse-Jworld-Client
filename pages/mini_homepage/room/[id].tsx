@@ -147,6 +147,7 @@ const MiniHomepage:NextPage = (props) => {
     const [carpet1Focused, setCarpet1Focused] = useState(false);
     const [carpet1RotateY, setCarpet1RotateY] = useState("0")
     const [carpet1Position, setCarpet1Position] = useState({ x: 0, y: 0, z:0 });
+    const [carpet1Num, setCarpet1Num] = useState(1);
     
 
     // 카페트2 관련 state
@@ -496,7 +497,7 @@ const MiniHomepage:NextPage = (props) => {
               <EffectComposer>
               <Physics gravity= {[0, -1000, 0]} >
                   <RoomModel roomScale={roomScale}  />
-                  <Carpet1Model rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position}  />
+                  <Carpet1Model installNum={carpet1Num} setInstallNum={setCarpet1Num} rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position}  />
                   <Carpet2Model position={carpet2Position} setPosition={setCarpet2Position} rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused}  />
                   <TvModel position={tvPosition} setPosition={setTvPosition} installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused}  />
                   <StandingLampModel position={standingLampPosition} setPosition={setStandingLampPosition} installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale}  isFocused={standingLampFocused} />
@@ -560,8 +561,8 @@ const MiniHomepage:NextPage = (props) => {
             maxScale={0.7}
             minScale={0.3}
             scaleStep={0.04}
-
-            
+            installNum={carpet1Num}
+            setInstallNum={setCarpet1Num}
             backgroundColor="blue"
           />
 

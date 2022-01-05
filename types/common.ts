@@ -13,4 +13,6 @@ export interface ThreeModelOpts {
     rotateY: string;
     position: XYZType;
     setPosition: Function;
+    installNum?: number;
+    setInstallNum?: Function;
 }
