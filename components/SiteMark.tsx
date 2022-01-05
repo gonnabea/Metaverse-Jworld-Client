@@ -1,6 +1,95 @@
-const SiteMark = () => {
+import { useMutation } from "@apollo/client";
+import gql from "graphql-tag";
+import { useRouter } from "next/dist/client/router";
+import { useEffect, useState } from "react";
+
+interface props {
+    title?: string;
+    bgColor?: string;
+}
+
+const SAVE_MODELS = gql`
+
+mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
+  saveThreeModels(input:$saveThreeModelInput) {
+    ok
+  }
+}
+`
+
+const CREATEHOMPI = gql`
+mutation createMiniHompi($createMiniHompiInput: CreateMiniHompiInput!) {
+    createMiniHompi(input: $createMiniHompiInput) {
+      ok
+      error
+      
+    }
+  }
+`
+
+const JOIN = gql`
+mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
+  join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
+    ok,
+    error
+  }
+}
+`
+
+const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
+
+    const [jwtToken, setJwtToken] = useState()
+    const [reqCreateHompi, {data, error, loading}] = useMutation(CREATEHOMPI, {
+        variables: {
+            createMiniHompiInput: {
+                scale: {x:1, y:1, z:1}
+            }},
+        context: {
+            headers: {
+                "Authorization":  "Bearer " + jwtToken
+            }
+        }
+    });
+
+    const router = useRouter()
+
+    useEffect(() => {
+        setJwtToken(localStorage.getItem("jwt_token"))
+    }, [])
+   
     return (
-        <h1 className="py-2 px-4 rounded-lg shadow-md text-white bg-blue-500 text-center font-extrabold italic text-2xl">! Jetaverse !</h1>
+        <>
+        {/* 스트림월드일 경우 */}
+        {router.pathname === "/stream_world/[id]" ? 
+        <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        onClick={() => {router.push("/lobby");}}>EXIT</button> : null}
+
+        {/* 스트림월드 로비일 경우 */}
+        {router.pathname ==="/lobby" || router.pathname === "/mini_homepage/room/[id]" ?  <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        onClick={() => {router.push("/mini_homepage/lobby");}}>Rooms</button> : null}
+
+        {/* 미니홈피 로비일 경우 */}
+        {router.pathname === "/mini_homepage/lobby" ? 
+        <>
+        <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        onClick={() => {router.push("/lobby");}}>Stream Worlds</button> 
+        <button className="absolute right-2 text-white py-2 px-4 top-1 font-extrabold italic" 
+        onClick={async() => {
+            const result = await reqCreateHompi();
+
+            console.log(result)
+            console.log(error)
+
+
+            // router.push(`/mini_homepage/room/${roomId}`);
+            
+            
+            }}>MyRoom</button>
+        </>
+        : null}
+
+        <h1 className={`py-2 px-4 rounded-lg shadow-md text-white ${bgColor} text-center font-extrabold italic text-2xl`}>{title}</h1>
+        </>
     )
 }
 

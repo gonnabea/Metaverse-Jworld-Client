@@ -1,104 +1,236 @@
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { w3cwebsocket } from 'websocket';
-import PageTitle from '../components/PageTItle';
+import PageTitle from '../components/common/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { wsRoom } from '../types/wsRoom';
+import io, { Socket } from "socket.io-client";
+import socketIoClient from '../multiplay/wsConnection';
+import BottomUI from '../components/common/BottomUI';
+import { Chat } from '../components/threeComponents/streamWorldModels/wsPayloads';
+import gql from 'graphql-tag';
+import { Cache, useQuery, Resolver, makeVar, useReactiveVar, useLazyQuery } from '@apollo/client';
+import { applyMe, setMe } from '../stores/loggedUser';
+
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { useRouter } from 'next/router';
 
 
 
-export const w3cWs = new w3cwebsocket('ws://localhost:4001')
+
+export const GETME = gql`
+query getMe {
+    getMe {
+      ok
+      error
+      user {
+          id
+          email
+          nickname
+          miniHompiId
+      }
+    }
+  }
+`
+
+
+
 
 const Lobby:NextPage = () => {
+    const applyStore = useReactiveVar(applyMe);
+    
+    
     const clientId = useRef<string | null>()
-    const {current: wsConnection} = useRef<w3cwebsocket>(w3cWs)
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
+    const [chatContents, setChatContents] = useState<any>([]);
+    const [newMsgCount, setNewMsgCount] = useState<number>(0);
+    const [jwtToken, setJwtToken] = useState<string | null>()
+    const [nickname, setNickname] = useState();
+    const [userId, setUserId] = useState(); 
+    const chatInput = useRef<HTMLInputElement>();
+    const [bgm, setBgm] = useState();
+    const router = useRouter()
 
-
-    // 웹소켓 리스너
-    wsConnection.onmessage = ({data}) => {
-        if(typeof(data) === 'string'){
-          const parsedData = JSON.parse(data);
-          console.log(parsedData)
-          switch(parsedData.event){
-            case "enter-lobby":
-              clientId.current = parsedData.clientId;
-              setActiveRooms(parsedData.activeRooms)
-              break;
-            case "broadcast":
-              console.log(parsedData)
-              break;
-            case "create-room":
-              console.log(parsedData)
-              // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-              window.location.replace(`world/${parsedData.roomId}`)
-              break;  
-          }
+  
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
+    const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
+        context: {
+            headers: {
+                "Authorization":  "Bearer " + jwtToken
+            }
         }
-      }
+        
+    })
+    
+    const getMe = async() => {
+        setJwtToken(localStorage.getItem("jwt_token"));
+        console.log(jwtToken)
+        
+            // 회원일 시
+            const {data: {getMe: {user}} } = await reqGetMe()
+            console.log(user)
+            setNickname(user.nickname);
+            setUserId(user.id);
+            
+        
+        
+        setMe({id: user.id, nickname: user.nickname})
+        
+    }
+      
+    
 
-    const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        wsConnection.send(JSON.stringify({
-            event: "broadcast",
-            data: e.target[0].value
-        }))
-        e.target[0].value = ""
+    // JSON.stringify(Math.random() * 10)
+
+
+    
+    const playBtnSoundEffect = () => {
+        const btnSoundEffect = new Audio(`/sound_effects/btn_click.wav`);
+        
+        btnSoundEffect.play()
+    }
+    
+    const playChatSoundEffect = () => {
+        const chatSoundEffect = new Audio(`/sound_effects/chat.wav`);
+
+        chatSoundEffect.play();
     }
 
+    // 웹소켓 리스너
+    const handleSocketListeners = () => {
+        socketIoClient.on("enter-lobby", (data) => {
+            
+            clientId.current = data.clientId;
+            setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
+        })
+
+        // 채팅 받았을 때
+        socketIoClient.on("chat", (data) => {
+            console.log(data)
+            setChatContents(chatContents => [...chatContents, data]);
+            setNewMsgCount(newMsgCount => newMsgCount + 1);
+            playChatSoundEffect()
+        })
+
+        socketIoClient.on("create-room", (data) => {
+            
+            
+            // 방 생성 후 리다이렉트 해주기
+            router.push(`/stream_world/${data.roomId}`)
+        })
+
+        socketIoClient.on("reloadLobby", ({activeRooms}) => {
+            setActiveRooms(activeRooms)
+        })
+        
+    }
+
+
+    // 로비 채팅 전송
+    const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        
+        if(e.target[0].value.length > 0){
+            socketIoClient.emit("chat", {
+                nickname,
+                text: e.target[0].value
+            });
+            
+            setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: e.target[0].value}]);
+            playChatSoundEffect()
+            // 채팅 전송 후 다시 포커스 해주기 위함.
+            setTimeout(() => {
+                chatInput.current?.focus();
+                chatInput.current.value = ""
+                const chatScreen = document.getElementById("chatScreen");
+                chatScreen?.scrollTo({
+                    top: chatScreen.scrollHeight,
+                    left: 0,
+                    
+                  })
+            }, 0)
+        }
+    }
+
+    
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-        // wsConnection.send(JSON.stringify({
-        //     event: "enter-lobby",
-        //     data: `클라이언트 접속: ${Math.random()}`
-        // }))
-
-        wsConnection.send(JSON.stringify({
-            event: "create-room",
-            data: {
-                roomName: e.target[0].value,
-                creatorId: clientId.current
+        const roomName = e.target[0].value;
+        const maxPeopleNum = e.target[1].value;
+        socketIoClient.emit(
+            "create-room", {
+                nickname,
+                roomName,
+                maxPeopleNum,
+                userId
             }
-        }))
-
+        )
     
     }
 
-    const leaveLobby = () => {
-           
-
-            wsConnection.send(JSON.stringify({
-                event: "leave-lobby",
-                data: null
-            }))
+    const leaveLobby = async() => {
+     
+        console.log("로비 나가기");
+        socketIoClient.emit("leave-lobby");
         
     }
 
     const joinRoom = async(roomId) => {
-        console.log(roomId)
+        
         console.log("Dsfasfadsfadsf")
-        wsConnection.send(JSON.stringify({
-            event: "join-room",
-            data: {roomId}
-        }))
+        socketIoClient.emit("join-room", {roomId, userId} )
 
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
-        window.location.replace(`world/${roomId}`)
+        // window.location.replace(`/stream_world/${roomId}`)
+        router.push(`/stream_world/${roomId}`)
+        
     }
+
+    const createConnection = () => {
+        socketIoClient.emit("enter-lobby", {nickname, userId})
+        
+    }
+
+    
+    // 배경음 시작
+    const startBgm = () => {
+        
+        setBgm(new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`));
+
+        if(bgm){
+            if(bgm.paused === false) {
+                bgm.pause();
+            }
+            bgm.play();
+            bgm.loop = true;
+        }
+    }
+
+
+
+      
     
     useEffect(() => {
         
-        // window.addEventListener('beforeunload', leaveLobby)
-        console.log("컴포넌트 마운트");
+        createConnection();
+        
+        handleSocketListeners();
+        
+        console.log(applyStore);
+        
+        startBgm()
+
+        getMe()
+        
     }, [])
     
     return(
         <section className="w-screen h-screen overflow-x-hidden">
             <SiteMark/>
-            <PageTitle title="LOBBY"/>
+            <PageTitle title="Stream Worlds"/>
             
-
+            {/* 스트림 월드 방 UI */}
             <div className="grid lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4">
                 {activeRooms ? activeRooms.map(
                     (room, key) => {
@@ -107,8 +239,8 @@ const Lobby:NextPage = () => {
                                 {console.log(room)}
                             <div className="flex flex-col">
                             <cite className="text-6xl w-full">{room.roomName}</cite>
-                            <span className="text-2xl"><span className="text-blue-500">{room.userList.length}</span> / 20 명</span>
-                            <span className="text-2xl">생성자: {room.creatorId}</span>
+                            <span className="text-2xl"><span className="text-blue-500">{room.userList.length}</span> / {room.maxPeopleNum} 명</span>
+                            <span className="text-2xl">생성자: {room.creator}</span>
                             <span className="text-2xl">생성일시: {room.createdAt}</span>
                             </div>
                             {/* <span className="text-6xl">{`ㅇ`}</span> */}
@@ -117,16 +249,18 @@ const Lobby:NextPage = () => {
                     }
                 ): null}
             </div>
-            <form onSubmit={sendBroadChat} action="">
-            <input type="text" placeholder="채팅 내용 입력" />
-            <input type="submit" value="전송" />
-            </form>
-
-            <form onSubmit={createRoom} action="">
-            <input type="text" maxLength={10} placeholder="채팅방 이름" />
-            <input type="submit" value="채팅방 생성" />
-            </form>
-
+           
+            <BottomUI 
+            chatContents={chatContents} 
+            newMsgCount={newMsgCount}
+            sendBroadChat={sendBroadChat}
+            chatInput={chatInput}
+            createRoom={createRoom}
+            startBgm={startBgm}
+         
+            />
+            
+            
         </section>
     )
 }
