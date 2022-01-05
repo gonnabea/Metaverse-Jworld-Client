@@ -1,9 +1,11 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { useLoader, useThree } from '@react-three/fiber';
+import { useGraph, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 import { ThreeModelOpts } from '../../../types/common';
+import { SkeletonUtils } from "three/examples/jsm/utils/SkeletonUtils"
+import * as THREE from "three"
 
 
 const Chair2Model = ({installed, scale, rotateY, isFocused, position, setPosition}:ThreeModelOpts) => {
@@ -23,6 +25,8 @@ const Chair2Model = ({installed, scale, rotateY, isFocused, position, setPositio
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
+    // const clone = useMemo(() => SkeletonUtils.clone(scene), [gltf.scene])
+    // const { nodes } = useGraph(clone)
     
     const installModel = (e) => {
 
@@ -60,6 +64,11 @@ const Chair2Model = ({installed, scale, rotateY, isFocused, position, setPositio
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, rotateY, 0]}
                 object={gltf.scene} 
             />
+            {/* <primitive 
+                onClick={() => console.log("의자 클릭")} 
+                position={[position.x+0.5, position.y, position.z+0.5]} scale={scale} rotation={[0, rotateY, 0]}
+                object={nodes} 
+            /> */}
 
           </>
         )
