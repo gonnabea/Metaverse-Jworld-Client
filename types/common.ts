@@ -7,12 +7,8 @@ export interface XYZType {
 
 
 export interface ThreeModelOpts {
-    installed: boolean;
-    scale: number;
-    isFocused:  boolean;
-    rotateY: string;
-    position: XYZType;
-    setPosition: Function;
+    modelStatus: any;
+    setModelStatus: Function;
     installNum?: number;
     setInstallNum?: Function;
 }

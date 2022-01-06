@@ -14,7 +14,10 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -54,7 +57,10 @@ const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, 
             // 모델 설치
             if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
                   console.log("tv 포커싱 상태");
-                setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
+                  setModelStatus({
+                    ...modelStatus,
+                    position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+                });
             }
         
   };
@@ -70,10 +76,8 @@ const TV2Model = ({position, setPosition, installed, scale, isFocused, rotateY, 
         video, 
         video.paused, 
         video.src,        
-        installed,
-        scale,
-        rotateY,
-        position
+        modelStatus
+       
     ])
 
     if(installed === true){

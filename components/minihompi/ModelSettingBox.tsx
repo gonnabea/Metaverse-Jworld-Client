@@ -12,14 +12,11 @@ interface props {
 
     modelImgUrl?: string;
     
-    installState?: any
-    setInstallState?: any
-    scaleState?: any
-    setScaleState?: any
-    rotateYState?: any
-    setRotateYState?: any
-    focusState?: any
-    setFocusState?: any
+
+
+
+
+
 
     backgroundColor?: string;
     
@@ -37,14 +34,8 @@ interface props {
 const ModelSettingBox = ({
     modelName, 
     backgroundColor, 
-    installState,
-    setInstallState,
-    scaleState,
-    setScaleState,
-    rotateYState,
-    setRotateYState,
-    focusState,
-    setFocusState,
+
+
     initFocused,
     modelImgUrl,
     maxScale = 5,
@@ -81,41 +72,39 @@ const ModelSettingBox = ({
    return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
 
                  
-           { installed !== undefined ? <div className="">
+           <div className="">
             <span className="">
                 {modelName + " 설치"}
             </span>
                 <div>
-                    <button className="text-lg" 
+                    <button className="text-lg text-bold text-green-500" 
                       onClick={() => {
-                        console.log(installState)
+                        console.log("installed: " + installed)
                         // 중복 포커싱 방지
-                        if(focusState === false) initFocused ? initFocused() : null; 
+                        if(isFocused === false) initFocused ? initFocused() : null; 
 
-                        setModelStatus({
-                            ...modelStatus,
-                            installed: !installed
-                        });
-
-                        if(!installed)
+                  
+                        if(!installed){
                             setModelStatus({
                                 ...modelStatus,
+                                installed: true,
                                 isFocused: true
                             });
-                         
+                            
+                        }
                         else{
                             setModelStatus({
                                 ...modelStatus,
+                                installed: false,
                                 isFocused: false
                             });
                         }
 
                         
                       
-                    }}>ON / OFF</button>
+                    }}>{installed ? "ON" : "OFF"}</button>
                   </div>
-            </div>  : null
-        }
+            </div>
 
             
         { scale ? <div className="">
@@ -127,9 +116,12 @@ const ModelSettingBox = ({
              <input type="range" value={scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
                  setModelStatus({
                     ...modelStatus,
-                    scale
+                    scale: e.target.value
                  });
-                  console.log(e.target.value)}} />
+                 
+                }}
+                  
+                  />
  
                   </div>
         </div> : null }
@@ -150,11 +142,11 @@ const ModelSettingBox = ({
                 {modelName + " 회전"}
             </span>
              <div>
-                <input type="range" value={rotateYState} max="7" min="0"  step="0.1" 
+                <input type="range" value={rotateY} max="7" min="0"  step="0.1" 
                 onChange={(e) =>{
                     setModelStatus({
                         ...modelStatus,
-                        rotateY
+                        rotateY: e.target.value
                     })
                 }} />
               </div>
@@ -163,7 +155,7 @@ const ModelSettingBox = ({
         
          {
          modelImgUrl ?
-         focusState ? <img 
+         isFocused ? <img 
                             src={modelImgUrl}
                             onClick={() => {
                                 setModelStatus({

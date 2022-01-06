@@ -8,7 +8,9 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const Carpet2Model = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+const Carpet2Model = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
+
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -35,7 +37,10 @@ const Carpet2Model = ({installed, scale, isFocused, rotateY, position, setPositi
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트2 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: -0.5, z: closedObjPosition.z});
+          setModelStatus({
+              ...modelStatus,
+              position: {x: closedObjPosition.x, y: closedObjPosition.y - 0.5, z: closedObjPosition.z}
+          });
       }
   };
 

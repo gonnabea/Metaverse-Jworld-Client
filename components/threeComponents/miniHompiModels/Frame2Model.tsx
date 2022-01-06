@@ -10,7 +10,10 @@ interface FrameModelOpts extends ThreeModelOpts {
     imageUrl: string;
 }
 
-const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, position, setPosition}:FrameModelOpts) => {
+const Frame2Model = ({modelStatus, setModelStatus,}:FrameModelOpts) => {
+
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -38,7 +41,10 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, position, 
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
+          setModelStatus({
+            ...modelStatus,
+            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        });
           
       }
   };

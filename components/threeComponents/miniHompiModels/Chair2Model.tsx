@@ -8,7 +8,9 @@ import { SkeletonUtils } from "three/examples/jsm/utils/SkeletonUtils"
 import * as THREE from "three"
 
 
-const Chair2Model = ({installed, scale, rotateY, isFocused, position, setPosition}:ThreeModelOpts) => {
+const Chair2Model = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
+
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -36,7 +38,10 @@ const Chair2Model = ({installed, scale, rotateY, isFocused, position, setPositio
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
+          setModelStatus({
+            ...modelStatus,
+            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        });
       }
   };
 

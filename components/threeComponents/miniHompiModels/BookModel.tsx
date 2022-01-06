@@ -12,8 +12,9 @@ interface BookModelOpts extends ThreeModelOpts {
     setCss3dBookVisible: any
 }
 
-const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, position, setPosition}:BookModelOpts) => {
-    
+const BookModel = ({modelStatus, setModelStatus, setCss3dBookVisible}:BookModelOpts) => {
+
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
     
     const createModelStatus = async () => {
         const modelStatus = {
@@ -42,7 +43,10 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, p
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("카페트 포커싱 상태");
-          setPosition((position:XYZType) => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
+          setModelStatus({
+              ...modelStatus,
+              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+          });
       }
 
     };
@@ -60,11 +64,7 @@ const BookModel = ({installed, scale, isFocused, setCss3dBookVisible, rotateY, p
         
         return () => window.removeEventListener("click", installModel);
     }, [
-        isFocused, 
-        installed,
-        scale,
-        rotateY,
-        position
+        modelStatus
     ])
 
     if(installed === true){

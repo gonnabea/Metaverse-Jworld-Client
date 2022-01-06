@@ -6,13 +6,8 @@ import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 import { ThreeModelOpts } from '../../../types/common';
 
-interface FrameModelOpts {
-    frame1Status: any;
-    setFrame1Status: Function;
-}
-
-const FrameModel = ({frame1Status, setFrame1Status}:FrameModelOpts) => {
-    const { installed, scale, rotateY, isFocused, position, imageUrl} = frame1Status
+const FrameModel = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
     
     
     const createModelStatus = async () => {
@@ -42,8 +37,8 @@ const FrameModel = ({frame1Status, setFrame1Status}:FrameModelOpts) => {
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
           
-          setFrame1Status({
-              ...frame1Status,
+          setModelStatus({
+              ...modelStatus,
               position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
           });
           

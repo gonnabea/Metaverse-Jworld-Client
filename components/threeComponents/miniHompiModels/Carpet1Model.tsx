@@ -36,8 +36,9 @@ interface CarpetModelOpts extends ThreeModelOpts {
 
 
 
-const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPosition, installNum, setInstallNum, threeModels}:CarpetModelOpts) => {
+const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, threeModels}:CarpetModelOpts) => {
 
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
     
   const [focusedCarpet, setFocusedCarpet] = useState(1);
     
@@ -219,7 +220,10 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
               ...carpetsPosition,
               carpet1: [closedObjPosition.x, 0, closedObjPosition.z],
             }) 
-            setPosition({x: closedObjPosition.x, y: 0, z: closedObjPosition.z})
+            setModelStatus({
+              ...modelStatus,
+              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+          });
             
             break;
           case 2:
@@ -271,7 +275,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
             <>
             <primitive 
                 onClick={() => {console.log("카페트1-1 클릭됨")
-                isFocused = false;
+               
                 setFocusedCarpet(1)
               }} 
               position={carpetsPosition.carpet1} 

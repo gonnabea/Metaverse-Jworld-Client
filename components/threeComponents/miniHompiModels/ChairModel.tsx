@@ -8,7 +8,9 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const ChairModel = ({installed, scale, rotateY, isFocused, position, setPosition}:ThreeModelOpts) => {
+const ChairModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
+  
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -34,7 +36,10 @@ const ChairModel = ({installed, scale, rotateY, isFocused, position, setPosition
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
+          setModelStatus({
+            ...modelStatus,
+            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        });
       }
   };
 

@@ -8,7 +8,10 @@ import { ThreeModelOpts } from '../../../types/common';
 
 
 
-const TableModel = ({installed, scale, isFocused, rotateY, position, setPosition}:ThreeModelOpts) => {
+const TableModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
+
+  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -35,7 +38,10 @@ const TableModel = ({installed, scale, isFocused, rotateY, position, setPosition
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("TableModel 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
+          setModelStatus({
+            ...modelStatus,
+            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        });
       }
   };
 
