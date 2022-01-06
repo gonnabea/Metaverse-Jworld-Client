@@ -69,15 +69,15 @@ const ModelSettingBox = ({
     
     const {installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus;
 
-   return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex h-1/6 justify-between`}>
+   return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex items-center justify-between`}>
 
                  
-           <div className="">
+           <div className="w-3/12 flex flex-col items-center justify-center">
             <span className="">
-                {modelName + " 설치"}
+                {""}
             </span>
                 <div>
-                    <button className="text-lg text-bold text-green-500" 
+                    <button className="text-lg text-bold text-black" 
                       onClick={() => {
                         console.log("installed: " + installed)
                         // 중복 포커싱 방지
@@ -106,10 +106,10 @@ const ModelSettingBox = ({
                   </div>
             </div>
 
-            
+        <div className="flex flex-col">
         { scale ? <div className="">
         <span className="">
-            {modelName + " 크기 조절"}
+            {"크기"}
         </span>
              <div>
             
@@ -128,7 +128,7 @@ const ModelSettingBox = ({
 
         { installNum !== undefined ? <div className="">
         <span className="">
-            {modelName + " 개수 조절"}
+            {"개수"}
         </span>
              <div>
             
@@ -139,7 +139,7 @@ const ModelSettingBox = ({
 
         { rotateY !== undefined ? <div>
             <span>
-                {modelName + " 회전"}
+                {"회전"}
             </span>
              <div>
                 <input type="range" value={rotateY} max="7" min="0"  step="0.1" 
@@ -152,7 +152,7 @@ const ModelSettingBox = ({
               </div>
         </div> : null
         }
-        
+        </div>
          {
          modelImgUrl ?
          isFocused ? <img 
@@ -163,14 +163,14 @@ const ModelSettingBox = ({
                                     isFocused: false
                                 })
                             }} 
-                            className="text-lg border-solid border-4 border-green-400 w-4/12 h-full" />
+                            className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
             : <img 
                 src={modelImgUrl} 
                 onClick={() => { initFocused(); setModelStatus({
                     ...modelStatus,
                     isFocused: true
                 }) }}  
-                className="text-lg w-4/12 h-4/12 r-0 h-full" 
+                className="text-lg w-20 r-0 h-20" 
             />
         : null
         }

@@ -222,7 +222,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
             }) 
             setModelStatus({
               ...modelStatus,
-              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+              position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
           });
             
             break;
@@ -265,7 +265,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         scale,
         rotateY,
         position,
-        
+        focusedCarpet
         
     ])
 
@@ -274,8 +274,13 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         return (
             <>
             <primitive 
-                onClick={() => {console.log("카페트1-1 클릭됨")
-               
+                
+                onClick={() => {
+                  console.log("카페트1-1 클릭됨")
+                setModelStatus({
+                  ...modelStatus,
+                  isFocused: true
+                })
                 setFocusedCarpet(1)
               }} 
               position={carpetsPosition.carpet1} 
@@ -284,7 +289,12 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 object={gltf.scene} 
             />
             { installNum >= 2  ? <primitive 
-                onClick={() => {console.log("카페트1-2 클릭됨")
+                onClick={() => {
+                  console.log("카페트1-2 클릭됨")
+                  setModelStatus({
+                    ...modelStatus,
+                    isFocused: true
+                  })
                 setFocusedCarpet(2)
               }} 
                 position={carpetsPosition.carpet2} 
@@ -293,7 +303,12 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 object={cloned} 
             />: null }
              { installNum >= 3  ? <primitive 
-                onClick={() => {console.log("카페트1-3 클릭됨")
+                onClick={() => {
+                  console.log("카페트1-3 클릭됨")
+                  setModelStatus({
+                    ...modelStatus,
+                    isFocused: true
+                  })
                 setFocusedCarpet(3)
               }} 
                 position={carpetsPosition.carpet3} 
@@ -302,7 +317,12 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 object={cloned2} 
             />: null }
              { installNum >= 4  ? <primitive 
-                onClick={() => {console.log("카페트1-4 클릭됨")
+                onClick={() => {
+                  console.log("카페트1-4 클릭됨")
+                  setModelStatus({
+                    ...modelStatus,
+                    isFocused: true
+                  })
                 setFocusedCarpet(4)
               }} 
                 position={carpetsPosition.carpet4} 

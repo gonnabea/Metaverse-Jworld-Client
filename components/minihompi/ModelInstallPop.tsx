@@ -50,7 +50,7 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, write
     }
 
     return (
-        <div className="w-3/12 h-5/6 bg-black z-10 absolute top-0 right-0 opacity-90">
+        <div className="w-6/12 md:w-3/12 h-3/6 bg-black z-10 absolute top-12 right-0 opacity-90">
             <header className="text-white w-full flex">
                 <ul className="w-full flex justify-around">
                     {

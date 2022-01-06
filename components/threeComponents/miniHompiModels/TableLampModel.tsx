@@ -51,7 +51,7 @@ const TableLampModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
           console.log("스탠딩램프 포커싱 상태");
           setModelStatus({
             ...modelStatus,
-            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+            position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
         });
       }
   };

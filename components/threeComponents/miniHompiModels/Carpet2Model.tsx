@@ -39,7 +39,7 @@ const Carpet2Model = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
           console.log("카페트2 포커싱 상태");
           setModelStatus({
               ...modelStatus,
-              position: {x: closedObjPosition.x, y: closedObjPosition.y - 0.5, z: closedObjPosition.z}
+              position: {x: closedObjPosition.x, y: -0.5, z: closedObjPosition.z}
           });
       }
   };

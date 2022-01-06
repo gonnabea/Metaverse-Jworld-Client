@@ -328,6 +328,7 @@ const MiniHomepage:NextPage = (props) => {
     const applyInstallBtn = useRef();
     const [css3dBookVisible, setCss3dBookVisible] = useState(false);
 
+    // 현재 모델 포커싱 초기화
     const initFocused = () => {
       setCarpet1Status({
         ...carpet1Status,
@@ -422,7 +423,7 @@ const MiniHomepage:NextPage = (props) => {
       setGetThreeModels(getThreeModels)
 
 
-        // 저장된 3D 모델 로드 & 배치하기
+        // 방 입장 시 저장된 3D 모델 로드 & 배치하기
         getThreeModels.models.forEach(({installed, id, name, rotateY, scale, position}) => {
           switch(name) {
             case "carpet1":
@@ -677,7 +678,10 @@ const MiniHomepage:NextPage = (props) => {
             
             />
 
-          {isMyRoom ? <button ref={applyInstallBtn} className="z-10 absolute bottom-2 right-2 text-lg bg-green-300" value="설치 적용" 
+          {isMyRoom ? <button ref={applyInstallBtn} 
+          className="
+          bg-black rounded-lg text-white hover:bg-blue-500 w-20 h-10 border-double border-4 font-bold z-30 absolute right-0 top-1" 
+          value="설치 적용" 
           onClick={async () => {
             initFocused()
             await reqSaveModels({
@@ -687,9 +691,10 @@ const MiniHomepage:NextPage = (props) => {
               } 
             },
           })
+            alert("방 상태가 저장되었습니다.")
           }
         }>
-          설치 적용
+          저장
           </button> : null }
 
          { isMyRoom ? <ModelInstallPop 
@@ -720,7 +725,7 @@ const MiniHomepage:NextPage = (props) => {
             
             
             maxScale={0.2}
-            minScale={0.14}
+            minScale={0.1}
             scaleStep={0.005}
             
             backgroundColor="yellow"
