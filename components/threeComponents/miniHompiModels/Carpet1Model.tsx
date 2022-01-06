@@ -19,11 +19,119 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
    
 
     const [carpetsPosition, setCarpetsPosition] = useState({
+      carpet1: [ 0, 0, 0 ],
       carpet2: [ 0, 0, 0 ], 
       carpet3: [ 0, 0, 0 ], 
       carpet4: [ 0, 0, 0 ],
       
     })
+
+    const [modelsStatus, setModelsStatus] = useState({
+      positions: {
+        carpet1: [ 0, 0, 0 ],
+        carpet2: [ 0, 0, 0 ], 
+        carpet3: [ 0, 0, 0 ], 
+        carpet4: [ 0, 0, 0 ],
+      },
+      rotations: {
+        carpet1: [ 0, rotateY, 0 ], 
+        carpet2: [ 0, rotateY, 0 ], 
+        carpet3: [ 0, rotateY, 0 ], 
+        carpet4: [ 0, rotateY, 0 ],
+      },
+      scales: {
+        carpet1: scale, 
+        carpet2: scale, 
+        carpet3: scale, 
+        carpet4: scale,
+      }
+    })
+
+        // 모든 모델들의 상태를 관리
+        const setRotations = () => {
+          switch(focusedCarpet){
+            case 1:
+              
+              setModelsStatus({
+                
+                positions: {
+                  ...modelsStatus.positions
+                },
+                rotations: {
+                  // 카페트 1-2의 회전 상태 최신화
+                  ...modelsStatus.rotations,
+                  carpet1: [ 0, rotateY, 0 ],
+                },
+                scales: {
+                  // 카페트 1-2의 크기 상태 최신화
+                  ...modelsStatus.scales,
+                  carpet1: scale,
+                },
+               
+              }) 
+              break;
+            
+            case 2:
+              
+              setModelsStatus({
+                
+                positions: {
+                  ...modelsStatus.positions
+                },
+                rotations: {
+                  // 카페트 1-2의 회전 상태 최신화
+                  ...modelsStatus.rotations,
+                  carpet2: [ 0, rotateY, 0 ],
+                },
+                scales: {
+                  // 카페트 1-2의 크기 상태 최신화
+                  ...modelsStatus.scales,
+                  carpet2: scale,
+                },
+               
+              }) 
+              break;
+            case 3:
+              setModelsStatus({
+                
+                positions: {
+                  ...modelsStatus.positions
+                },
+                rotations: {
+                  // 카페트 1-3의 회전 상태 최신화
+                  ...modelsStatus.rotations,
+                  carpet3: [ 0, rotateY, 0 ],
+                },
+                scales: {
+                  // 카페트 1-3의 크기 상태 최신화
+                  ...modelsStatus.scales,
+                  carpet3: scale,
+                },
+               
+              }) 
+              break;
+            case 4:
+              setModelsStatus({
+                
+                positions: {
+                  ...modelsStatus.positions
+                },
+                rotations: {
+                  // 카페트 1-4의 회전 상태 최신화
+                  ...modelsStatus.rotations,
+                  carpet4: [ 0, rotateY, 0 ],
+                },
+                scales: {
+                  // 카페트 1-4의 크기 상태 최신화
+                  ...modelsStatus.scales,
+                  carpet4: scale,
+                },
+               
+              }) 
+              break;
+          }
+        }
+        
 
     
     const createModelStatus = async () => {
@@ -58,44 +166,41 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
 
         switch(focusedCarpet){
           case 1:
-            setPosition(position => position = {x: closedObjPosition.x, y: 0, z: closedObjPosition.z});
+            setCarpetsPosition({
+              ...carpetsPosition,
+              carpet1: [closedObjPosition.x, 0, closedObjPosition.z],
+            }) 
             
             break;
           case 2:
             setCarpetsPosition({
               ...carpetsPosition,
               carpet2: [closedObjPosition.x, 0, closedObjPosition.z],
-
-              
             }) 
             break;
           case 3:
             setCarpetsPosition({
-              
               ...carpetsPosition,
               carpet3: [closedObjPosition.x, 0, closedObjPosition.z], 
-
-              
             }) 
             break;
           case 4:
             setCarpetsPosition({
-              
               ...carpetsPosition,
               carpet4: [closedObjPosition.x, 0, closedObjPosition.z]
-              
             }) 
             break;
         }
 
       }
     };
-    
+
+
     
     
     
     useEffect(() => {
-    
+      setRotations()
       window.addEventListener("click", installModel);
       createModelStatus()
         return () => window.removeEventListener("click", installModel);
@@ -105,7 +210,8 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
         scale,
         rotateY,
         position,
-        carpetsPosition
+        
+        
     ])
 
     if(installed === true){
@@ -117,9 +223,9 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
                 isFocused = false;
                 setFocusedCarpet(1)
               }} 
-                position={[position.x-0.5, position.y, position.z-0.5]} 
-                scale={scale} 
-                rotation={[0, rotateY, 0]}
+              position={carpetsPosition.carpet1} 
+              scale={modelsStatus.scales.carpet1} 
+              rotation={modelsStatus.rotations.carpet1}
                 object={gltf.scene} 
             />
             { installNum >= 2  ? <primitive 
@@ -127,8 +233,8 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
                 setFocusedCarpet(2)
               }} 
                 position={carpetsPosition.carpet2} 
-                scale={scale} 
-                rotation={[0, rotateY, 0]}
+                scale={modelsStatus.scales.carpet2} 
+                rotation={modelsStatus.rotations.carpet2}
                 object={cloned} 
             />: null }
              { installNum >= 3  ? <primitive 
@@ -136,8 +242,8 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
                 setFocusedCarpet(3)
               }} 
                 position={carpetsPosition.carpet3} 
-                scale={scale} 
-                rotation={[0, rotateY, 0]}
+                scale={modelsStatus.scales.carpet3} 
+                rotation={modelsStatus.rotations.carpet3}
                 object={cloned2} 
             />: null }
              { installNum >= 4  ? <primitive 
@@ -145,8 +251,8 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
                 setFocusedCarpet(4)
               }} 
                 position={carpetsPosition.carpet4} 
-                scale={scale} 
-                rotation={[0, rotateY, 0]}
+                scale={modelsStatus.scales.carpet4} 
+                rotation={modelsStatus.rotations.carpet4}
                 object={cloned3} 
             />: null }
             

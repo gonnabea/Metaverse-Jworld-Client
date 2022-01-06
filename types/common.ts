@@ -8,7 +8,7 @@ export interface XYZType {
 
 export interface ThreeModelOpts {
     installed: boolean;
-    scale: XYZType;
+    scale: number;
     isFocused:  boolean;
     rotateY: string;
     position: XYZType;
