@@ -497,7 +497,7 @@ const MiniHomepage:NextPage = (props) => {
               <EffectComposer>
               <Physics gravity= {[0, -1000, 0]} >
                   <RoomModel roomScale={roomScale}  />
-                  <Carpet1Model installNum={carpet1Num} setInstallNum={setCarpet1Num} rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position}  />
+                  <Carpet1Model threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num} rotateY={carpet1RotateY} installed={installCarpet1} scale={carpet1Scale} isFocused={carpet1Focused} position={carpet1Position} setPosition={setCarpet1Position}  />
                   <Carpet2Model position={carpet2Position} setPosition={setCarpet2Position} rotateY={carpet2RotateY} installed={installCarpet2} scale={carpet2Scale} isFocused={carpet2Focused}  />
                   <TvModel position={tvPosition} setPosition={setTvPosition} installed={installTv} scale={tvScale} rotateY={tvRotateY} isFocused={tvFocused}  />
                   <StandingLampModel position={standingLampPosition} setPosition={setStandingLampPosition} installed={installStandingLamp} rotateY={standingLampRotateY} scale={standingLampScale}  isFocused={standingLampFocused} />

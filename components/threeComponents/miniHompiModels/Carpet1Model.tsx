@@ -7,38 +7,70 @@ import { ThreeModelOpts, XYZType } from '../../../types/common';
 
 
 import {clone} from "../../../config/skeletonUtils";
+import gql from 'graphql-tag';
+import { useLazyQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+
+const GET_THREE_MODELS = gql`
+query getThreeModels($id: Float!) {
+  getThreeModels(input: {
+    id: $id
+  }) {
+    ok
+    error
+    models{
+      name
+      id
+      installed
+      scale
+      rotateY
+      position
+    }
+  }
+}
+`
+
+interface CarpetModelOpts extends ThreeModelOpts {
+  threeModels: any;
+}
 
 
 
-
-const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPosition, installNum, setInstallNum}:ThreeModelOpts) => {
+const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPosition, installNum, setInstallNum, threeModels}:CarpetModelOpts) => {
 
     
-    const [focusedCarpet, setFocusedCarpet] = useState(1);
+  const [focusedCarpet, setFocusedCarpet] = useState(1);
+    
+   console.log(threeModels)
 
-   
+   const carpet1_2 = threeModels?.models.find(model => model.name === "carpet1-2")
+   const carpet1_3 = threeModels?.models.find(model => model.name === "carpet1-3")
+   const carpet1_4 = threeModels?.models.find(model => model.name === "carpet1-4")
 
+
+  // 카페트들의 위치 초기값
     const [carpetsPosition, setCarpetsPosition] = useState({
-      carpet1: [ 0, 0, 0 ],
-      carpet2: [ 0, 0, 0 ], 
-      carpet3: [ 0, 0, 0 ], 
-      carpet4: [ 0, 0, 0 ],
+      carpet1: [ position.x, position.y, position.z ],
+      carpet2: [ carpet1_2?.position.x, carpet1_2?.position.y, carpet1_2?.position.z ], 
+      carpet3: [ carpet1_3?.position.x, carpet1_3?.position.y, carpet1_3?.position.z ], 
+      carpet4: [ carpet1_4?.position.x, carpet1_4?.position.y, carpet1_4?.position.z ],
       
     })
 
+    // 카페트들의 로테이션, 스케일 초기값
     const [modelsStatus, setModelsStatus] = useState({
     
       rotations: {
         carpet1: [ 0, rotateY, 0 ], 
-        carpet2: [ 0, rotateY, 0 ], 
-        carpet3: [ 0, rotateY, 0 ], 
-        carpet4: [ 0, rotateY, 0 ],
+        carpet2: [ 0, parseInt(carpet1_2?.rotateY), 0 ], 
+        carpet3: [ 0, parseInt(carpet1_3?.rotateY), 0 ], 
+        carpet4: [ 0, parseInt(carpet1_4?.rotateY), 0 ],
       },
       scales: {
         carpet1: scale, 
-        carpet2: scale, 
-        carpet3: scale, 
-        carpet4: scale,
+        carpet2: carpet1_2?.scale.x, 
+        carpet3: carpet1_3?.scale.x, 
+        carpet4: carpet1_4?.scale.x,
       }
     })
 
@@ -185,6 +217,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
               ...carpetsPosition,
               carpet1: [closedObjPosition.x, 0, closedObjPosition.z],
             }) 
+            setPosition({x: closedObjPosition.x, y: 0, z: closedObjPosition.z})
             
             break;
           case 2:
@@ -215,6 +248,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
     
     
     useEffect(() => {
+   
       manageStatus()
       window.addEventListener("click", installModel);
       createModelStatus()
