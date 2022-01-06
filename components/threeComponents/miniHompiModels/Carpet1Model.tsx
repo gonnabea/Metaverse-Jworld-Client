@@ -47,6 +47,8 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
    const carpet1_3 = threeModels?.models.find(model => model.name === "carpet1-3")
    const carpet1_4 = threeModels?.models.find(model => model.name === "carpet1-4")
 
+   
+
 
   // 카페트들의 위치 초기값
     const [carpetsPosition, setCarpetsPosition] = useState({

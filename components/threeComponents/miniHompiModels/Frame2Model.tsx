@@ -64,7 +64,7 @@ const Frame2Model = ({installed, scale, rotateY, isFocused, imageUrl, position, 
             <>
             <primitive 
                 onClick={() => console.log("액자1 클릭")} 
-                position={position} scale={scale} rotation={[0, rotateY, 0]}
+                position={[position.x, position.y, position.z]} scale={scale} rotation={[0, rotateY, 0]}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
                 }}

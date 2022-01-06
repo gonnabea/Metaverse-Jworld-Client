@@ -6,13 +6,14 @@ import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 import { ThreeModelOpts } from '../../../types/common';
 
-interface FrameModelOpts extends ThreeModelOpts {
-    imageUrl: string;
+interface FrameModelOpts {
+    frame1Status: any;
+    setFrame1Status: Function;
 }
 
-const FrameModel = ({installed, scale, rotateY, isFocused, imageUrl, position, setPosition}:FrameModelOpts) => {
- 
-
+const FrameModel = ({frame1Status, setFrame1Status}:FrameModelOpts) => {
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = frame1Status
+    
     
     const createModelStatus = async () => {
         const modelStatus = {
@@ -40,7 +41,11 @@ const FrameModel = ({installed, scale, rotateY, isFocused, imageUrl, position, s
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setPosition(position => position = {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z});
+          
+          setFrame1Status({
+              ...frame1Status,
+              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+          });
           
       }
   };
@@ -66,7 +71,7 @@ const FrameModel = ({installed, scale, rotateY, isFocused, imageUrl, position, s
             <>
             <primitive 
                 onClick={() => console.log("액자1 클릭")} 
-                position={position} scale={scale} rotation={[0, rotateY, 0]}
+                position={[position.x, position.y, position.z]} scale={scale} rotation={[0, rotateY, 0]}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
                 }}
