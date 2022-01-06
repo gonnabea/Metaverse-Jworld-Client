@@ -27,12 +27,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
     })
 
     const [modelsStatus, setModelsStatus] = useState({
-      positions: {
-        carpet1: [ 0, 0, 0 ],
-        carpet2: [ 0, 0, 0 ], 
-        carpet3: [ 0, 0, 0 ], 
-        carpet4: [ 0, 0, 0 ],
-      },
+    
       rotations: {
         carpet1: [ 0, rotateY, 0 ], 
         carpet2: [ 0, rotateY, 0 ], 
@@ -48,15 +43,13 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
     })
 
         // 모든 모델들의 상태를 관리
-        const setRotations = () => {
+        const manageStatus = () => {
           switch(focusedCarpet){
             case 1:
               
               setModelsStatus({
                 
-                positions: {
-                  ...modelsStatus.positions
-                },
+             
                 rotations: {
                   // 카페트 1-2의 회전 상태 최신화
                   ...modelsStatus.rotations,
@@ -75,9 +68,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
               
               setModelsStatus({
                 
-                positions: {
-                  ...modelsStatus.positions
-                },
+              
                 rotations: {
                   // 카페트 1-2의 회전 상태 최신화
                   ...modelsStatus.rotations,
@@ -94,9 +85,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
             case 3:
               setModelsStatus({
                 
-                positions: {
-                  ...modelsStatus.positions
-                },
+            
                 rotations: {
                   // 카페트 1-3의 회전 상태 최신화
                   ...modelsStatus.rotations,
@@ -113,9 +102,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
             case 4:
               setModelsStatus({
                 
-                positions: {
-                  ...modelsStatus.positions
-                },
+             
                 rotations: {
                   // 카페트 1-4의 회전 상태 최신화
                   ...modelsStatus.rotations,
@@ -133,7 +120,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
         }
         
 
-    
+    // 서버에 모델 상태 저장을 위함
     const createModelStatus = async () => {
         const modelStatus = {
           name: "carpet1",
@@ -142,7 +129,35 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
           scale: {x: scale, y: scale, z: scale},
           rotateY
         }
+        console.log(modelsStatus.rotations.carpet2[1])
+        const model2Status = {
+          name: "carpet1-2",
+          position: {x:carpetsPosition.carpet2[0], y:carpetsPosition.carpet2[1], z: carpetsPosition.carpet2[2]},
+          installed,
+          scale: {x: modelsStatus.scales.carpet2, y: modelsStatus.scales.carpet2, z: modelsStatus.scales.carpet2},
+          rotateY: modelsStatus.rotations.carpet2[1].toString()
+        }
+
+        const model3Status = {
+          name: "carpet1-3",
+          position: {x:carpetsPosition.carpet3[0], y:carpetsPosition.carpet3[1], z: carpetsPosition.carpet3[2]},
+          installed,
+          scale: {x: modelsStatus.scales.carpet3, y: modelsStatus.scales.carpet3, z: modelsStatus.scales.carpet3},
+          rotateY: modelsStatus.rotations.carpet3[1].toString()
+        }
+
+        const model4Status = {
+          name: "carpet1-4",
+          position: {x:carpetsPosition.carpet4[0], y:carpetsPosition.carpet4[1], z: carpetsPosition.carpet4[2]},
+          installed,
+          scale: {x: modelsStatus.scales.carpet4, y: modelsStatus.scales.carpet4, z: modelsStatus.scales.carpet4},
+          rotateY: modelsStatus.rotations.carpet4[1].toString()
+        }
         addModel(modelStatus)
+        addModel(model2Status)
+        addModel(model3Status)
+        addModel(model4Status)
+
       }
     
       console.log(clone)
@@ -200,7 +215,7 @@ const Carpet1Model = ({installed, scale, isFocused, rotateY, position, setPositi
     
     
     useEffect(() => {
-      setRotations()
+      manageStatus()
       window.addEventListener("click", installModel);
       createModelStatus()
         return () => window.removeEventListener("click", installModel);

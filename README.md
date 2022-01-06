@@ -16,6 +16,7 @@
 - [ ] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
 - [x] Socket.io
 - [ ] WebRTC
+- [ ] Docker
 
 
 ## 기능
