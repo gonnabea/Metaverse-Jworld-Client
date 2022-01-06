@@ -33,7 +33,7 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
 
 
     const size = useAspect(18 * scale, 10 * scale);
-    const [video, setVideo] = useState(() => {
+    const [video] = useState(() => {
       const vid = document.createElement("video");
       vid.src = videoUrl;
       vid.crossOrigin = "Anonymous";
@@ -68,20 +68,27 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
   
     useEffect(() => {
         window.addEventListener("click", installModel)
-        video.pause()
+        void video.play()
+        if(!installed) {
+            video.pause()
+        }
         createModelStatus()
-        return () => window.removeEventListener("click", installModel);
+        return () => {
+            video.pause()
+            window.removeEventListener("click", installModel)
+        };
     }, [
         isFocused, 
-        video, 
-        video.paused, 
-        video.src,        
-        modelStatus
+        // video, 
+        // video.paused, 
+        // video.src,        
+        modelStatus,
+        installed
        
     ])
 
     if(installed === true){
-        video.play()
+        
         return (
             <>
                 <primitive 
@@ -110,7 +117,7 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
         )
     }
     else{
-        video.pause()
+        video?.pause()
         return <></>
     }
   }

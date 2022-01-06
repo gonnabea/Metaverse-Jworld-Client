@@ -5,7 +5,7 @@ interface props {
 const PageTitle = ({title}:props) => {
     return (
         <header className="w-screen">
-        <h2 className="py-10 px-10 text-black font-semibold text-6xl w-screen text-center">{title}</h2>
+        <h2 className="py-16 px-10 text-black font-semibold text-6xl w-screen text-center">{title}</h2>
         </header>
     )
 }

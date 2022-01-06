@@ -235,13 +235,13 @@ const Lobby:NextPage = () => {
                 {activeRooms ? activeRooms.map(
                     (room, key) => {
                         return(
-                            <a key={key} onClick={() => joinRoom(room.id)} className="bg-white p-6 w-10/12 text-black flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white" >
+                            <a key={key} onClick={() => joinRoom(room.id)} className="bg-white p-6 w-10/12 text-black flex justify-left align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer" >
                                 {console.log(room)}
-                            <div className="flex flex-col">
+                            <div className="flex flex-col ">
                             <cite className="text-6xl w-full">{room.roomName}</cite>
                             <span className="text-2xl"><span className="text-blue-500">{room.userList.length}</span> / {room.maxPeopleNum} 명</span>
-                            <span className="text-2xl">생성자: {room.creator}</span>
-                            <span className="text-2xl">생성일시: {room.createdAt}</span>
+                            <span className="text-2xl">{room.creator}</span>
+                            <span className="text-2xl">{room.createdAt}</span>
                             </div>
                             {/* <span className="text-6xl">{`ㅇ`}</span> */}
                             </a>

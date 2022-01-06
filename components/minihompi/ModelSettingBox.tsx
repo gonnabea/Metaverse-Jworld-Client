@@ -148,6 +148,7 @@ const ModelSettingBox = ({
                         ...modelStatus,
                         rotateY: e.target.value
                     })
+                    console.log(e.target.value)
                 }} />
               </div>
         </div> : null
@@ -170,7 +171,7 @@ const ModelSettingBox = ({
                     ...modelStatus,
                     isFocused: true
                 }) }}  
-                className="text-lg w-20 r-0 h-20" 
+                className="text-lg w-24 r-0 h-24" 
             />
         : null
         }

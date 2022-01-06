@@ -680,8 +680,8 @@ const MiniHomepage:NextPage = (props) => {
 
           {isMyRoom ? <button ref={applyInstallBtn} 
           className="
-          bg-black rounded-lg text-white hover:bg-blue-500 w-20 h-10 border-double border-4 font-bold z-30 absolute right-0 top-1" 
-          value="설치 적용" 
+          bg-black rounded-lg text-white hover:bg-blue-500 w-20 h-10 border-double border-4 font-bold z-30 absolute right-2 top-1" 
+          value="저장" 
           onClick={async () => {
             initFocused()
             await reqSaveModels({
@@ -712,7 +712,7 @@ const MiniHomepage:NextPage = (props) => {
             scaleStep={0.04}
             installNum={carpet1Num}
             setInstallNum={setCarpet1Num}
-            backgroundColor="blue"
+            backgroundColor="emerald"
           />
 
 
@@ -742,7 +742,7 @@ const MiniHomepage:NextPage = (props) => {
               modelStatus={standingLampStatus}
               setModelStatus={setStandingLampStatus}
               initFocused={initFocused}
-              backgroundColor="red"
+              backgroundColor="yellow"
               modelImgUrl="/model_images/standing_lamp.png"
               maxScale={0.4}
               minScale={0.2}
@@ -756,7 +756,7 @@ const MiniHomepage:NextPage = (props) => {
               modelStatus={tableLampStatus}
               setModelStatus={setTableLampStatus}
               initFocused={initFocused}
-              backgroundColor="red"
+              backgroundColor="yellow"
               modelImgUrl="/model_images/standing_lamp.png"
               maxScale={0.2}
               minScale={0.1}

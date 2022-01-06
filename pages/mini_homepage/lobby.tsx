@@ -69,10 +69,10 @@ const MiniHompiLobby:NextPage = () => {
     
     return(
         <section className="w-screen h-screen overflow-x-hidden">
-            <SiteMark/>
+            <SiteMark bgColor={"bg-green-500"}/>
             <PageTitle title="Rooms" />
 
-            <div className="grid lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4">
+            <div className="grid justify-items-center lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4 content-center">
                 {data ? JSON.parse(data.getAllMiniHompis.hompisWithOwners).map(
                     ({miniHompi, owner}, key) => {
                         console.log(JSON.parse(data.getAllMiniHompis.hompisWithOwners))
@@ -80,14 +80,14 @@ const MiniHompiLobby:NextPage = () => {
                             <a key={key} onClick={() => router.push({
                                 pathname: `/mini_homepage/room/${miniHompi.id}`, 
                                 query: {owner: owner?.nickname}})}  
-                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white`} >
+                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer`} >
                             {console.log(data)}
                             <div className="flex flex-col">
 
-                            {miniHompi.ownerId === userId ? <span className="text-yellow-500">★ MyRoom</span> : null}
                             <cite className="text-2xl">{owner?.nickname}'s Room</cite>
-                            <span className="text-2xl">생성일시: {miniHompi.createdAt}</span>
+                            <span className="text-2xl">{miniHompi.createdAt}</span>
                             </div>
+                            {miniHompi.ownerId === userId ? <span className="text-white text-bold bg-green-500 rounded text-center w-4/12 h-6 relative right-0">★ MyRoom</span> : null}
                             
                             </a>
                         )
