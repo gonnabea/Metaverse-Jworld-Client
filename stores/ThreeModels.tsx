@@ -17,9 +17,9 @@ export const addModel = (newModel: ThreeModelInput) => {
     applyModels({ modelsStatus: [...originalModelsList, newModel]})
 }
 
-export const setModels = async(modelsStatus: ThreeModelInput[]) => {
+export const setModels = (modelsStatus: ThreeModelInput[]) => {
 
-  await applyModels({ modelsStatus })
+  applyModels({ modelsStatus })
 
 
 }

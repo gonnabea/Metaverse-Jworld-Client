@@ -15,12 +15,15 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
 import { GETME } from './gql-queries/user';
+import { applyChatStatus, setChatStatus } from '../stores/chatStatus';
 
 
 
 
 const Lobby:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
+    const chatStatus = useReactiveVar(applyChatStatus);
+  
     
     
     const clientId = useRef<string | null>()
@@ -85,6 +88,8 @@ const Lobby:NextPage = () => {
             
             clientId.current = data.clientId;
             setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
+
+           
         })
 
         // 채팅 받았을 때
@@ -94,6 +99,8 @@ const Lobby:NextPage = () => {
             setNewMsgCount(newMsgCount => newMsgCount + 1);
             playChatSoundEffect()
         })
+
+       
 
         socketIoClient.on("create-room", (data) => {
             
@@ -109,6 +116,8 @@ const Lobby:NextPage = () => {
     }
 
 
+
+
     // 로비 채팅 전송
     const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -121,6 +130,8 @@ const Lobby:NextPage = () => {
             });
             
             setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: e.target[0].value}]);
+           
+            
             playChatSoundEffect()
             // 채팅 전송 후 다시 포커스 해주기 위함.
             setTimeout(() => {
@@ -191,20 +202,25 @@ const Lobby:NextPage = () => {
     }
 
 
-
+    
       
     
     useEffect(() => {
+
         
         createConnection();
         
         handleSocketListeners();
+
+
         
-        console.log(applyStore);
         
-        startBgm()
+        
+        
 
         getMe()
+
+      
         
     }, [])
     

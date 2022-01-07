@@ -1,5 +1,7 @@
+import { useReactiveVar } from "@apollo/client";
 import { useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
+import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
 
 interface props {
     chatContents: Array<any>
@@ -13,6 +15,9 @@ interface props {
 
 
 const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createRoom, startBgm }:props) => {
+
+    const applyStore = useReactiveVar(applyChatStatus);
+
     
     const [showChats, setShowChats] = useState(false);
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
@@ -30,8 +35,17 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
     useEffect(() => {
         setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`));
         chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
+
+        // 채팅 전역 상태관리
+        setChatStatus({
+            chatContents,
+            newMsgCount,
+            sendBroadChat,
+            chatInput,
+            startBgm
+        })
         
-    },[showChats])
+    },[showChats, chatContents])
 
     return <div className="absolute bottom-0 left-4 w-72 h-12 flex justify-around">
         {/* 채팅 버튼 */}
@@ -72,6 +86,17 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             : null
         }
 
+        {/* 방만들기 모달 */}
+        {showRoomModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
+        {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
+        <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)}>
+            <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
+            <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
+            <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
+        </form>
+
+        </div> : null }
+
         {/* 설정 버튼 */}
         <button onClick={() => { 
             setShowChats(false);
@@ -81,22 +106,15 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             onMouseOver={() => playBtnSoundEffect()} 
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >설정</button>
 
-        {/* 방만들기 모달 */}
-        {showRoomModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
-            {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
-            <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)}>
-                <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
-                <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
-                <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
-            </form>
 
-        </div> : null }
 
         {/* 설정 모달 */}
         {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
             <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
-                <input onClick={() => {playBtnSoundEffect(); startBgm();}} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
-                <input onClick={() => {playBtnSoundEffect()}} className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
+                <input name="bgm" onClick={() => {playBtnSoundEffect(); startBgm();}} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
+                <label htmlFor="bgm">배경음 ON / OFF</label>
+                <input name="effect_sound" onClick={() => {playBtnSoundEffect()}} className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
+                <label htmlFor="effect_sound">효과음 ON / OFF</label>
                 <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" />
             </form>
         </div> : null }

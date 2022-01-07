@@ -294,6 +294,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
             <>
             <primitive 
                 
+                
                 onClick={() => {
                   console.log("카페트1-1 클릭됨")
                   setFocusedCarpet(1)

@@ -10,6 +10,11 @@ import SiteMark from '../../components/SiteMark';
 import { applyMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
 import { GETME } from '../gql-queries/user';
+import BottomUI from '../../components/common/BottomUI';
+import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
+import socketIoClient from '../../multiplay/wsConnection';
+
+
 
 
 
@@ -45,8 +50,10 @@ const GETROOMS = gql`
 
 
 const MiniHompiLobby:NextPage = () => {
+    const { chatContents, newMsgCount, chatInput, startBgm } = useReactiveVar(applyChatStatus);
     const {me} = useReactiveVar(applyMe);
     const [userId, setUserId] = useState();
+    const [localChats, setLocalChats] = useState([]);
     
     const router = useRouter()
     const [jwtToken, setJwtToken] = useState<string | null>()
@@ -79,10 +86,52 @@ const MiniHompiLobby:NextPage = () => {
     }
 
     
-    
+    socketIoClient.on("chat", (data) => {
+        console.log(data)
+        // setLocalChats([data])
+        // setChatContents(chatContents => [...chatContents, data]);
+        // setNewMsgCount(newMsgCount => newMsgCount + 1);
+        // playChatSoundEffect()
+    })
+
+        // 로비 채팅 전송
+        const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            
+            
+            if(e.target[0].value.length > 0){
+                socketIoClient.emit("chat", {
+                    nickname: me.nickname,
+                    text: e.target[0].value
+                });
+                
+              
+               
+                setChatStatus({
+                    chatContents: [...chatContents, {client: me.nickname, msg: e.target[0].value}],
+                    newMsgCount,
+                    sendBroadChat,
+                    chatInput,
+                    startBgm
+                })
+                
+                // 채팅 전송 후 다시 포커스 해주기 위함.
+                setTimeout(() => {
+                    chatInput.current?.focus();
+                    chatInput.current.value = ""
+                    const chatScreen = document.getElementById("chatScreen");
+                    chatScreen?.scrollTo({
+                        top: chatScreen.scrollHeight,
+                        left: 0,
+                        
+                      })
+                }, 0)
+            }
+        }
     
     
     useEffect(() => {
+        
         setJwtToken(localStorage.getItem("jwt_token"));
         if(!me) {
             getUserFromToken()
@@ -90,7 +139,14 @@ const MiniHompiLobby:NextPage = () => {
         else {
             setUserId(me.id)
         }
-    }, [])
+        console.log(chatContents)
+            console.log(newMsgCount)
+            console.log(sendBroadChat)
+            console.log(chatInput)
+            console.log(startBgm)
+            
+        
+    }, [chatContents])
     
     return(
         <section className="w-screen h-screen overflow-x-hidden">
@@ -119,9 +175,21 @@ const MiniHompiLobby:NextPage = () => {
                     }
                 ): null}
                 </div>
+            {
+                console.log(chatContents)}
+                {console.log(newMsgCount)}
+                {console.log(sendBroadChat)}
+                {console.log(chatInput)}
+                {console.log(startBgm)}
             
-            
-            
+                <BottomUI 
+            chatContents={chatContents} 
+            newMsgCount={newMsgCount}
+            sendBroadChat={sendBroadChat}
+            chatInput={chatInput}
+            startBgm={startBgm}
+         
+            />
             
         </section>
     )
