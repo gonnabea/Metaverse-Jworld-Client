@@ -10,7 +10,7 @@ import {clone} from "../../../config/skeletonUtils";
 import gql from 'graphql-tag';
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import SphereIndicator from '../indicator';
+import Indicator from '../indicator';
 
 const GET_THREE_MODELS = gql`
 query getThreeModels($id: Float!) {
@@ -211,15 +211,15 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         
         // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
-      console.log(raycaster.intersectObjects(scene.children)[0])
+      console.log(raycaster.intersectObjects(scene.children)[0].object.name)
+      const modelName = raycaster.intersectObjects(scene.children)[0].object.name
 
-      if(!isFocused) {
-        setFocusedCarpet(0)
-      }
+      if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS")
+        setFocusedPosition([closedObjPosition.x, 2, closedObjPosition.z])
       
       // 모델 설치
-      if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
-        setFocusedPosition([closedObjPosition.x, 2, closedObjPosition.z])
+      // 포커싱 상태, 캔버스 클릭, 같은 모델과 겹침 설치 못하도록.
+      if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS" && modelName !== "tapi_tapi001_0"){
         
         console.log("카페트 포커싱 상태");
         switch(focusedCarpet){
@@ -259,15 +259,20 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         
         
       }
+      
      
     };
 
+    const initFocusedCarpet = () => {
+      if(!isFocused)
+      setFocusedCarpet(0)
+    }
 
     
     
     
     useEffect(() => {
-      
+      initFocusedCarpet()
       manageStatus()
       window.addEventListener("click", installModel);
       createModelStatus()
@@ -345,7 +350,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 object={cloned3} 
             />: null }
             
-            <SphereIndicator position={focusedPostion} visible={isFocused} />
+            <Indicator position={focusedPostion} visible={isFocused} />
           </>
         )
     }

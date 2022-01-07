@@ -92,9 +92,9 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
         return (
             <>
                 <primitive 
-                    onClick={() => {
-                        video.paused ? video.play() : video.pause()
-                    }} 
+                    // onClick={() => {
+                    //     video.paused ? video.play() : video.pause()
+                    // }} 
                     
                     position={[position.x, 0.4, position.z]} scale={scale} 
                     object={gltf.scene} 

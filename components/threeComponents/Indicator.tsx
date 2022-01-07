@@ -6,7 +6,7 @@ interface props {
     visible: boolean;
 }
 
-const SphereIndicator = ({position, visible}: props) => {
+const Indicator = ({position, visible}: props) => {
 
     const meshRef = useRef();
 
@@ -24,4 +24,4 @@ const SphereIndicator = ({position, visible}: props) => {
     );
   };
 
-export default SphereIndicator;
+export default Indicator;
