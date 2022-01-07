@@ -10,6 +10,7 @@ import {clone} from "../../../config/skeletonUtils";
 import gql from 'graphql-tag';
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import SphereIndicator from '../indicator';
 
 const GET_THREE_MODELS = gql`
 query getThreeModels($id: Float!) {
@@ -41,6 +42,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
   const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
     
   const [focusedCarpet, setFocusedCarpet] = useState(1);
+  const [focusedPostion, setFocusedPosition] = useState<[x:0,y:0,z:0]>([0,0,0]);
     
    console.log(threeModels)
 
@@ -209,12 +211,19 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         
         // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
+      console.log(raycaster.intersectObjects(scene.children)[0])
+
+      if(!isFocused) {
+        setFocusedCarpet(0)
+      }
       
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
+        setFocusedPosition([closedObjPosition.x, 2, closedObjPosition.z])
+        
         console.log("카페트 포커싱 상태");
-
         switch(focusedCarpet){
+          
           case 1:
             setCarpetsPosition({
               ...carpetsPosition,
@@ -224,6 +233,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
               ...modelStatus,
               position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
           });
+          
             
             break;
           case 2:
@@ -244,9 +254,12 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
               carpet4: [closedObjPosition.x, 0, closedObjPosition.z]
             }) 
             break;
+          
         }
-
+        
+        
       }
+     
     };
 
 
@@ -254,10 +267,11 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
     
     
     useEffect(() => {
-   
+      
       manageStatus()
       window.addEventListener("click", installModel);
       createModelStatus()
+      
         return () => window.removeEventListener("click", installModel);
     }, [
         isFocused, 
@@ -265,8 +279,8 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
         scale,
         rotateY,
         position,
-        focusedCarpet
-        
+        focusedCarpet,
+        focusedPostion
     ])
 
     if(installed === true){
@@ -277,11 +291,11 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 
                 onClick={() => {
                   console.log("카페트1-1 클릭됨")
+                  setFocusedCarpet(1)
                 setModelStatus({
                   ...modelStatus,
                   isFocused: true
                 })
-                setFocusedCarpet(1)
               }} 
               position={carpetsPosition.carpet1} 
               scale={modelsStatus.scales.carpet1} 
@@ -291,11 +305,11 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
             { installNum >= 2  ? <primitive 
                 onClick={() => {
                   console.log("카페트1-2 클릭됨")
+                  setFocusedCarpet(2)
                   setModelStatus({
                     ...modelStatus,
                     isFocused: true
                   })
-                setFocusedCarpet(2)
               }} 
                 position={carpetsPosition.carpet2} 
                 scale={modelsStatus.scales.carpet2} 
@@ -305,11 +319,11 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
              { installNum >= 3  ? <primitive 
                 onClick={() => {
                   console.log("카페트1-3 클릭됨")
+                  setFocusedCarpet(3)
                   setModelStatus({
                     ...modelStatus,
                     isFocused: true
                   })
-                setFocusedCarpet(3)
               }} 
                 position={carpetsPosition.carpet3} 
                 scale={modelsStatus.scales.carpet3} 
@@ -319,11 +333,11 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
              { installNum >= 4  ? <primitive 
                 onClick={() => {
                   console.log("카페트1-4 클릭됨")
+                  setFocusedCarpet(4)
                   setModelStatus({
                     ...modelStatus,
                     isFocused: true
                   })
-                setFocusedCarpet(4)
               }} 
                 position={carpetsPosition.carpet4} 
                 scale={modelsStatus.scales.carpet4} 
@@ -331,7 +345,7 @@ const Carpet1Model = ({modelStatus, setModelStatus, installNum, setInstallNum, t
                 object={cloned3} 
             />: null }
             
-
+            <SphereIndicator position={focusedPostion} visible={isFocused} />
           </>
         )
     }

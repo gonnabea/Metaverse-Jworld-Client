@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import SiteMark from '../../components/SiteMark';
 import { applyMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
+import { GETME } from '../gql-queries/user';
 
 
 
@@ -44,8 +45,11 @@ const GETROOMS = gql`
 
 
 const MiniHompiLobby:NextPage = () => {
-    const {me: { id: userId, nickname}} = useReactiveVar(applyMe);
+    const {me} = useReactiveVar(applyMe);
+    const [userId, setUserId] = useState();
+    
     const router = useRouter()
+    const [jwtToken, setJwtToken] = useState<string | null>()
     
  
     // const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
@@ -59,12 +63,33 @@ const MiniHompiLobby:NextPage = () => {
 
     const {data, loading, error} = useQuery(GETROOMS)
     
+    // 로비 입장 시 로그인 된 유저 정보 가져오기
+    const [reqGetMe, {loading: getUserLoading, error: getUserErr}] = useLazyQuery(GETME, {
+        context: {
+            headers: {
+                "Authorization":  "Bearer " + jwtToken
+            }
+        }
+        
+    })
 
-      
-  
+    const getUserFromToken = async() => {
+        const {data: {getMe: {user}} } = await reqGetMe()
+        setUserId(user.id)
+    }
+
+    
+    
+    
     
     useEffect(() => {
-        
+        setJwtToken(localStorage.getItem("jwt_token"));
+        if(!me) {
+            getUserFromToken()
+        }
+        else {
+            setUserId(me.id)
+        }
     }, [])
     
     return(
@@ -80,7 +105,7 @@ const MiniHompiLobby:NextPage = () => {
                             <a key={key} onClick={() => router.push({
                                 pathname: `/mini_homepage/room/${miniHompi.id}`, 
                                 query: {owner: owner?.nickname}})}  
-                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-around align-middle rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer`} >
+                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-left align-middle text-left rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer`} >
                             {console.log(data)}
                             <div className="flex flex-col">
 

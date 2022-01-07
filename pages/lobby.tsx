@@ -14,24 +14,7 @@ import { applyMe, setMe } from '../stores/loggedUser';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
-
-
-
-
-export const GETME = gql`
-query getMe {
-    getMe {
-      ok
-      error
-      user {
-          id
-          email
-          nickname
-          miniHompiId
-      }
-    }
-  }
-`
+import { GETME } from './gql-queries/user';
 
 
 

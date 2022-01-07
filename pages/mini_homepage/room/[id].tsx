@@ -33,6 +33,7 @@ import PageTitle from '../../../components/common/PageTItle';
 import gql from 'graphql-tag';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
+import SphereIndicator from '../../../components/threeComponents/indicator';
 
 
 
@@ -647,6 +648,7 @@ const MiniHomepage:NextPage = (props) => {
             />
               <Suspense fallback={null}>
               <EffectComposer>
+              
               <Physics gravity= {[0, -1000, 0]} >
                   <RoomModel roomScale={roomScale}  />
                   <FrameModel modelStatus={frame1Status} setModelStatus={setFrame1Status} />

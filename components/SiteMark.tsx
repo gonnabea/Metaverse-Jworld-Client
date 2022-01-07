@@ -77,7 +77,10 @@ const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
         onClick={async() => {
             const confirm = window.confirm("방을 생성하거나 초기화합니다. 계속하시겠습니까?")
             
-            confirm ? await reqCreateHompi() : null
+            if(confirm) {
+              await reqCreateHompi()
+              window.location.replace("/mini_homepage/lobby")
+            }
 
            
 
