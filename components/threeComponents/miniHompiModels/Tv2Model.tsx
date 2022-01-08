@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
@@ -15,7 +15,7 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = () => {
+const TV2Model = ({rerender, setRerender,}: RerenderType) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
 
@@ -78,6 +78,7 @@ const TV2Model = () => {
                 
                     }
                 })
+                setRerender(value => value + 1)
             }
         
   };

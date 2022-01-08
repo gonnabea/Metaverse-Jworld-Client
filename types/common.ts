@@ -32,3 +32,8 @@ export enum modelNameTypes {
     tv2 = "tv2"
   
   }
+
+  export interface RerenderType {
+      rerender: number;
+      setRerender: Function;
+  }

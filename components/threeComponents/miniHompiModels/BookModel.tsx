@@ -4,18 +4,21 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts, XYZType } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts, XYZType } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from '@apollo/react-hooks';
 
 
-interface BookModelOpts {
+interface BookModelOpts extends RerenderType {
     setCss3dBookVisible: any
+    rerender: number;
+    setRerender: Function;
 }
 
-const BookModel = ({ setCss3dBookVisible }:BookModelOpts) => {
+const BookModel = ({ rerender, setRerender, setCss3dBookVisible }:BookModelOpts) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const { installed, scale, rotateY, isFocused, position, imageUrl} = allModelsStatus.book[0]
+    
     
     const createModelStatus = async () => {
         const modelStatus = {
@@ -61,7 +64,7 @@ const BookModel = ({ setCss3dBookVisible }:BookModelOpts) => {
                 imageUrl
             }
         })
-        
+        setRerender(value => value + 1)
       }
 
     };
@@ -79,7 +82,7 @@ const BookModel = ({ setCss3dBookVisible }:BookModelOpts) => {
         
         return () => window.removeEventListener("click", installModel);
     }, [
-        allModelsStatus.book[0]
+        allModelsStatus
     ])
 
     if(installed === true){

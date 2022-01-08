@@ -3,12 +3,12 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
 
-const SofaModel = () => {
+const SofaModel = ({rerender, setRerender}: RerenderType) => {
   const allModelsStatus = useReactiveVar(applyThreeModels);
   const { installed, scale, rotateY, isFocused, position } = allModelsStatus.sofa[0]
 
@@ -54,6 +54,7 @@ const SofaModel = () => {
       
           }
       })
+        setRerender(value => value + 1)
       }
   };
 
@@ -69,7 +70,8 @@ const SofaModel = () => {
         installed,
         scale,
         rotateY,
-        position
+        position,
+        rerender
     ])
 
     if(installed === true){

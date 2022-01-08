@@ -3,13 +3,13 @@ import { useGraph, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { SkeletonUtils } from "three/examples/jsm/utils/SkeletonUtils"
 import * as THREE from "three"
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
-const Chair2Model = () => {
+const Chair2Model = ({rerender, setRerender,}: RerenderType) => {
   const allModelsStatus = useReactiveVar(applyThreeModels);
 
   const { installed, scale, rotateY, isFocused, position } = allModelsStatus.chair2[0]
@@ -57,6 +57,7 @@ const Chair2Model = () => {
               
           }
       })
+      setRerender(value => value + 1)
 
       }
   };

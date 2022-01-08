@@ -4,7 +4,7 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
@@ -12,7 +12,7 @@ interface FrameModelOpts extends ThreeModelOpts {
     imageUrl: string;
 }
 
-const Frame2Model = () => {
+const Frame2Model = ({rerender, setRerender,}: RerenderType) => {
 
   const allModelsStatus = useReactiveVar(applyThreeModels);
 
@@ -63,7 +63,7 @@ const Frame2Model = () => {
                 
             }
         })
-          
+        setRerender(value => value + 1)
       }
   };
 

@@ -16,7 +16,8 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { applyMe } from '../../stores/loggedUser';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router'
-import { GETME } from '../lobby';
+import { GETME } from '../../config/gql-queries/user';
+
 
 
 // const GETME = gql`

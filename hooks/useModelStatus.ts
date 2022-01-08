@@ -1,35 +1,30 @@
 import gql from 'graphql-tag';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { AllModelsStatus } from '../data/modelList';
+import { modelNameTypes } from '../types/common';
 
 const SAVETHREEMODEL = gql`
 
 `
 
-interface SaveModelProps {
-    name: string;
-    installed: boolean;
-    scale: {x: number, y: number, z:number};
-    rotateY: number;
-    price?: number;
+interface UseModelProps {
+    name: modelNameTypes;
+    index: number;
 }
 
-function useModelStatus({installed, scale, rotateY, name, price}: SaveModelProps) {
-    // const [installed, setInstalled] = useState()
-    // const [scale, setScale] = useState()
-    // const [rotateY, setRotateY] = useState()
+function useModelStatus({name, index=0}: UseModelProps) {
+    
 
-    const modelStatus = {
-        installed,
-        scale,
-        rotateY,
-        name,
-        
-    }
+    const [modelStatus, setModelStatus] = useState(AllModelsStatus[name][index])
+
+    useEffect(() => {
+       
+    }, [])
 
     
 
 
-    
+    return [modelStatus, setModelStatus]
 
     
 }

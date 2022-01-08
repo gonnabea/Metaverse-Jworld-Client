@@ -4,11 +4,11 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
-const FrameModel = () => {
+const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
 
@@ -58,7 +58,7 @@ const FrameModel = () => {
                   imageUrl
               }
           })
-
+          setRerender(value => value + 1)
           
           
       }

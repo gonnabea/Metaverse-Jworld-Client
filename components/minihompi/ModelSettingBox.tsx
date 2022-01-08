@@ -1,5 +1,5 @@
 import { useReactiveVar } from "@apollo/client";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { applyThreeModels, setAllModelsStatus } from "../../stores/setAllThreeModels";
 import { modelNameTypes } from "../../types/common";
 
@@ -15,6 +15,8 @@ interface props {
     scaleStep?: number;
     installNum?: number;
     setInstallNum?: Function;
+    rerender?: any, 
+    setRerender?: any
 }
 
 
@@ -27,7 +29,9 @@ const ModelSettingBox = ({
     minScale = 0.1,
     scaleStep = 0.1,
     installNum,
+    rerender, 
     setInstallNum,
+    setRerender
 }:props
 ) => {
 
@@ -51,12 +55,13 @@ const ModelSettingBox = ({
     // scaleStep={0.1}
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
+    const [checkStatusChanged, setCheckStatusChanged] = useState(0)
     
     const {installed, scale, rotateY, isFocused, position } = allModelsStatus[modelName][0];
 
     useEffect(() => {
 
-    }, [applyThreeModels])
+    }, [checkStatusChanged])
 
    return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex items-center justify-between`}>
 
@@ -93,6 +98,7 @@ const ModelSettingBox = ({
                                 }
                             })
                             
+                            setRerender(value => value +1)
                         }
                         else{
                             // setModelStatus({
@@ -112,6 +118,8 @@ const ModelSettingBox = ({
                                     
                                 }
                             })
+                           
+                            setRerender(value => value +1)
                         }
 
                         
@@ -145,7 +153,9 @@ const ModelSettingBox = ({
                         
                     }
                 })
-                 
+               
+                setRerender(value => value +1)
+
                 }}
                   
                   />
@@ -188,6 +198,8 @@ const ModelSettingBox = ({
                             
                         }
                     })
+
+                setRerender(value => value +1)
                     console.log(e.target.value)
                 }} />
               </div>
@@ -215,6 +227,8 @@ const ModelSettingBox = ({
                                         
                                     }
                                 })
+                                setRerender(value => value +1)
+
                             }} 
                             className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
             : <img 
@@ -236,6 +250,8 @@ const ModelSettingBox = ({
                         
                     }
                 })
+                setRerender(value => value +1)
+
             
             }}  
                 className="text-lg w-24 r-0 h-24" 

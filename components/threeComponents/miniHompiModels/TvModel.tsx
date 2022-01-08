@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { useReactiveVar } from '@apollo/client';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 
@@ -15,7 +15,7 @@ interface tvModelOpts extends ThreeModelOpts {
 
 }
 
-const TvModel = () => {
+const TvModel = ({rerender, setRerender,}: RerenderType) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const { installed, scale, rotateY, isFocused, position, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" } = allModelsStatus.tv[0]
@@ -74,6 +74,7 @@ const TvModel = () => {
                 
                     }
                 })
+                setRerender(value => value + 1)
             }
         
   };

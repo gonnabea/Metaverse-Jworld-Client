@@ -8,12 +8,12 @@ import { BlurPass, Resizer, KernelSize, BlendFunction  } from 'postprocessing'
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import RoomModel from './RoomModel';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
 
-const TableLampModel = () => {
+const TableLampModel = ({rerender, setRerender,}: RerenderType) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
 
   const { installed, scale, rotateY, isFocused, position } = allModelsStatus.tableLamp[0]
@@ -67,6 +67,7 @@ const TableLampModel = () => {
             
                 }
             })
+            setRerender(value => value + 1)
       }
   };
 
