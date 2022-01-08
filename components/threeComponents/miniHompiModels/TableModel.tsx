@@ -3,14 +3,17 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 
 
+const TableModel = () => {
 
-const TableModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
+  const allModelsStatus = useReactiveVar(applyThreeModels);
 
-  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+  const { installed, scale, rotateY, isFocused, position } = allModelsStatus.table1[0]
 
 
     const createModelStatus = async () => {
@@ -38,10 +41,22 @@ const TableModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("TableModel 포커싱 상태");
-          setModelStatus({
-            ...modelStatus,
-            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
-        });
+        //   setModelStatus({
+        //     ...modelStatus,
+        //     position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        // });
+        setAllModelsStatus({
+          modelName: modelNameTypes.table1,
+          index: 0,
+          status: {
+              installed,
+              scale,
+              rotateY,
+              isFocused,
+              position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+      
+          }
+      })
       }
   };
 

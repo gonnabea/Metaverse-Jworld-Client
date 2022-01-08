@@ -12,7 +12,7 @@
 - [x] Tailwind CSS
 - [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
 - [x] GraphQL
-- [x] GraphQL-Apollo
+- [x] GraphQL-Apollo - (전역 상태관리, API 요청)
 - [ ] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
 - [x] Socket.io
 - [ ] WebRTC

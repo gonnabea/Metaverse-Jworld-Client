@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import SiteMark from '../../components/SiteMark';
 import { applyMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
-import { GETME } from '../gql-queries/user';
+import { GETME } from '../../config/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
 import socketIoClient from '../../multiplay/wsConnection';

@@ -14,7 +14,7 @@ import { applyMe, setMe } from '../stores/loggedUser';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
-import { GETME } from './gql-queries/user';
+import { GETME } from '../config/gql-queries/user';
 import { applyChatStatus, setChatStatus } from '../stores/chatStatus';
 
 

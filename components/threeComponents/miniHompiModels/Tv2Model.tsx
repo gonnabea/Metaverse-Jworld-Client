@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
-
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 interface TV2ModelOpts extends ThreeModelOpts {
 
@@ -14,9 +15,11 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}:TV2ModelOpts) => {
+const TV2Model = () => {
 
-    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+    const allModelsStatus = useReactiveVar(applyThreeModels);
+
+    const { installed, scale, rotateY, isFocused, position, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" } = allModelsStatus.tv2[0]
 
 
     const createModelStatus = async () => {
@@ -57,10 +60,24 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
             // 모델 설치
             if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
                   console.log("tv 포커싱 상태");
-                  setModelStatus({
-                    ...modelStatus,
-                    position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
-                });
+                //   setModelStatus({
+                //     ...modelStatus,
+                //     position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+                // });
+
+
+                setAllModelsStatus({
+                    modelName: modelNameTypes.tv2,
+                    index: 0,
+                    status: {
+                        installed,
+                        scale,
+                        rotateY,
+                        isFocused,
+                        position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                
+                    }
+                })
             }
         
   };
@@ -82,7 +99,7 @@ const TV2Model = ({modelStatus, setModelStatus, videoUrl="http://commondatastora
         // video, 
         // video.paused, 
         // video.src,        
-        modelStatus,
+        allModelsStatus,
         installed
        
     ])

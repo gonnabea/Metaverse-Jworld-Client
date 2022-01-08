@@ -8,13 +8,15 @@ import { BlurPass, Resizer, KernelSize, BlendFunction  } from 'postprocessing'
 import { BufferGeometry, Material, Mesh, Vector3 } from 'three';
 import RoomModel from './RoomModel';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 
+const TableLampModel = () => {
+    const allModelsStatus = useReactiveVar(applyThreeModels);
 
-const TableLampModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
-
-  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+  const { installed, scale, rotateY, isFocused, position } = allModelsStatus.tableLamp[0]
 
 
     const createModelStatus = async () => {
@@ -49,10 +51,22 @@ const TableLampModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("스탠딩램프 포커싱 상태");
-          setModelStatus({
-            ...modelStatus,
-            position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
-        });
+        //   setModelStatus({
+        //     ...modelStatus,
+        //     position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+        // });
+            setAllModelsStatus({
+                modelName: modelNameTypes.tableLamp,
+                index: 0,
+                status: {
+                    installed,
+                    scale,
+                    rotateY,
+                    isFocused,
+                    position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
+            
+                }
+            })
       }
   };
 

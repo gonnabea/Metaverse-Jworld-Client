@@ -3,14 +3,16 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 
 
-
-const ChairModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
+const ChairModel = () => {
+  const allModelsStatus = useReactiveVar(applyThreeModels);
   
-  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+  const { installed, scale, rotateY, isFocused, position } = allModelsStatus.chair[0]
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -36,10 +38,23 @@ const ChairModel = ({modelStatus, setModelStatus,}:ThreeModelOpts) => {
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setModelStatus({
-            ...modelStatus,
-            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
-        });
+        //   setModelStatus({
+        //     ...modelStatus,
+        //     position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        // });
+
+          setAllModelsStatus({
+            modelName: modelNameTypes.chair,
+            index: 0,
+            status: {
+                installed,
+                scale,
+                rotateY,
+                isFocused,
+                position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                
+            }
+        })
       }
   };
 

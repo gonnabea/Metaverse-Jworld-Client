@@ -4,17 +4,18 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts, XYZType } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts, XYZType } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 
-
-interface BookModelOpts extends ThreeModelOpts {
+interface BookModelOpts {
     setCss3dBookVisible: any
 }
 
-const BookModel = ({modelStatus, setModelStatus, setCss3dBookVisible}:BookModelOpts) => {
-
-    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+const BookModel = ({ setCss3dBookVisible }:BookModelOpts) => {
+    const allModelsStatus = useReactiveVar(applyThreeModels);
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = allModelsStatus.book[0]
     
     const createModelStatus = async () => {
         const modelStatus = {
@@ -42,11 +43,25 @@ const BookModel = ({modelStatus, setModelStatus, setCss3dBookVisible}:BookModelO
 
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
-          console.log("카페트 포커싱 상태");
-          setModelStatus({
-              ...modelStatus,
-              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
-          });
+          console.log("Book 포커싱 상태");
+        //   setModelStatus({
+        //       ...modelStatus,
+        //       position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+        //   });
+
+          setAllModelsStatus({
+            modelName: modelNameTypes.book,
+            index: 0,
+            status: {
+                installed,
+                scale,
+                rotateY,
+                isFocused,
+                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
+                imageUrl
+            }
+        })
+        
       }
 
     };
@@ -64,7 +79,7 @@ const BookModel = ({modelStatus, setModelStatus, setCss3dBookVisible}:BookModelO
         
         return () => window.removeEventListener("click", installModel);
     }, [
-        modelStatus
+        allModelsStatus.book[0]
     ])
 
     if(installed === true){

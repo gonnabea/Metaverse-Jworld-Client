@@ -4,10 +4,14 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
-const FrameModel = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
-    const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+const FrameModel = () => {
+    const allModelsStatus = useReactiveVar(applyThreeModels);
+    const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
+
     
     
     const createModelStatus = async () => {
@@ -37,10 +41,25 @@ const FrameModel = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
           
-          setModelStatus({
-              ...modelStatus,
-              position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
-          });
+        //   setModelStatus({
+        //       ...modelStatus,
+        //       position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
+        //   });
+
+          setAllModelsStatus({
+              modelName: modelNameTypes.frame1,
+              index: 0,
+              status: {
+                  installed,
+                  scale,
+                  rotateY,
+                  isFocused,
+                  position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
+                  imageUrl
+              }
+          })
+
+          
           
       }
   };
@@ -66,7 +85,7 @@ const FrameModel = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
             <>
             <primitive 
                 onClick={() => console.log("액자1 클릭")} 
-                position={[position.x, position.y, position.z]} scale={scale} rotation={[0, rotateY, 0]}
+                position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
                 }}
@@ -77,7 +96,7 @@ const FrameModel = ({modelStatus, setModelStatus}:ThreeModelOpts) => {
                 object={gltf.scene} 
             />
             <mesh position={[position.x, position.y, position.z + 0.8]} scale={scale}
-            rotation={[0, rotateY, 0]}>
+            rotation={[0, parseFloat(rotateY), 0]}>
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />
             </mesh>

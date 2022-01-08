@@ -6,7 +6,7 @@ import {
   ApolloProvider,
   useQuery,
   gql
-} from "@apollo/client";
+} from "@apollo/react-hooks";
 import { persistCache } from 'apollo-cache-persist';
 
 const cache = new InMemoryCache()

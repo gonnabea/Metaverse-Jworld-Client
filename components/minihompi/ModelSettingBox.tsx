@@ -1,41 +1,26 @@
-import { ReactElement } from "react";
+import { useReactiveVar } from "@apollo/client";
+import { ReactElement, useEffect } from "react";
+import { applyThreeModels, setAllModelsStatus } from "../../stores/setAllThreeModels";
+import { modelNameTypes } from "../../types/common";
 
 
 
 interface props {
-    modelName: string;
-
-    // sizeControlUI?: ReactElement;
-    // rotationControlUI?: ReactElement
-    // installUI?: ReactElement;
-    // modelImgUI?: ReactElement;
-
+    modelName: modelNameTypes;
     modelImgUrl?: string;
-    
-
-
-
-
-
-
     backgroundColor?: string;
-    
     initFocused?: any;
     maxScale?: number;
     minScale?: number;
     scaleStep?: number;
     installNum?: number;
     setInstallNum?: Function;
-    modelStatus: any;
-    setModelStatus: Function;
 }
 
 
 const ModelSettingBox = ({
     modelName, 
     backgroundColor, 
-
-
     initFocused,
     modelImgUrl,
     maxScale = 5,
@@ -43,8 +28,6 @@ const ModelSettingBox = ({
     scaleStep = 0.1,
     installNum,
     setInstallNum,
-    modelStatus,
-    setModelStatus,
 }:props
 ) => {
 
@@ -66,8 +49,14 @@ const ModelSettingBox = ({
     // maxScale={2.5}
     // minScale={0.8}
     // scaleStep={0.1}
+
+    const allModelsStatus = useReactiveVar(applyThreeModels);
     
-    const {installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus;
+    const {installed, scale, rotateY, isFocused, position } = allModelsStatus[modelName][0];
+
+    useEffect(() => {
+
+    }, [applyThreeModels])
 
    return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex items-center justify-between`}>
 
@@ -85,19 +74,44 @@ const ModelSettingBox = ({
 
                   
                         if(!installed){
-                            setModelStatus({
-                                ...modelStatus,
-                                installed: true,
-                                isFocused: true
-                            });
+                            // setModelStatus({
+                            //     ...modelStatus,
+                            //     installed: true,
+                            //     isFocused: true
+                            // });
+
+                            setAllModelsStatus({
+                                modelName,
+                                index: 0,
+                                status: {
+                                    installed: true,
+                                    scale,
+                                    rotateY,
+                                    isFocused: true,
+                                    position,
+                                    
+                                }
+                            })
                             
                         }
                         else{
-                            setModelStatus({
-                                ...modelStatus,
-                                installed: false,
-                                isFocused: false
-                            });
+                            // setModelStatus({
+                            //     ...modelStatus,
+                            //     installed: false,
+                            //     isFocused: false
+                            // });
+                            setAllModelsStatus({
+                                modelName,
+                                index: 0,
+                                status: {
+                                    installed: false,
+                                    scale,
+                                    rotateY,
+                                    isFocused: false,
+                                    position,
+                                    
+                                }
+                            })
                         }
 
                         
@@ -114,10 +128,23 @@ const ModelSettingBox = ({
              <div>
             
              <input type="range" value={scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
-                 setModelStatus({
-                    ...modelStatus,
-                    scale: e.target.value
-                 });
+                //  setModelStatus({
+                //     ...modelStatus,
+                //     scale: e.target.value
+                //  });
+
+                 setAllModelsStatus({
+                    modelName,
+                    index: 0,
+                    status: {
+                        installed,
+                        scale: parseFloat(e.target.value),
+                        rotateY,
+                        isFocused,
+                        position,
+                        
+                    }
+                })
                  
                 }}
                   
@@ -144,9 +171,22 @@ const ModelSettingBox = ({
              <div>
                 <input type="range" value={rotateY} max="7" min="0"  step="0.1" 
                 onChange={(e) =>{
-                    setModelStatus({
-                        ...modelStatus,
-                        rotateY: e.target.value
+                    // setModelStatus({
+                    //     ...modelStatus,
+                    //     rotateY: e.target.value
+                    // })
+
+                    setAllModelsStatus({
+                        modelName,
+                        index: 0,
+                        status: {
+                            installed,
+                            scale,
+                            rotateY: e.target.value,
+                            isFocused,
+                            position,
+                            
+                        }
                     })
                     console.log(e.target.value)
                 }} />
@@ -159,18 +199,45 @@ const ModelSettingBox = ({
          isFocused ? <img 
                             src={modelImgUrl}
                             onClick={() => {
-                                setModelStatus({
-                                    ...modelStatus,
-                                    isFocused: false
+                                // setModelStatus({
+                                //     ...modelStatus,
+                                //     isFocused: false
+                                // })
+                                setAllModelsStatus({
+                                    modelName,
+                                    index: 0,
+                                    status: {
+                                        installed,
+                                        scale,
+                                        rotateY,
+                                        isFocused: false,
+                                        position,
+                                        
+                                    }
                                 })
                             }} 
                             className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
             : <img 
                 src={modelImgUrl} 
-                onClick={() => { initFocused(); setModelStatus({
-                    ...modelStatus,
-                    isFocused: true
-                }) }}  
+                onClick={() => { initFocused(); 
+                //     setModelStatus({
+                //     ...modelStatus,
+                //     isFocused: true
+                // }) 
+                setAllModelsStatus({
+                    modelName,
+                    index: 0,
+                    status: {
+                        installed,
+                        scale,
+                        rotateY,
+                        isFocused: true,
+                        position,
+                        
+                    }
+                })
+            
+            }}  
                 className="text-lg w-24 r-0 h-24" 
             />
         : null

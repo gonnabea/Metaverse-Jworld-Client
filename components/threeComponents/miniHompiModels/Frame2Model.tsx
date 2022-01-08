@@ -4,15 +4,20 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { ThreeModelOpts } from '../../../types/common';
+import { modelNameTypes, ThreeModelOpts } from '../../../types/common';
+import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
+import { useReactiveVar } from '@apollo/client';
 
 interface FrameModelOpts extends ThreeModelOpts {
     imageUrl: string;
 }
 
-const Frame2Model = ({modelStatus, setModelStatus,}:FrameModelOpts) => {
+const Frame2Model = () => {
 
-  const { installed, scale, rotateY, isFocused, position, imageUrl} = modelStatus
+  const allModelsStatus = useReactiveVar(applyThreeModels);
+
+  const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame2[0]
+
 
 
     const createModelStatus = async () => {
@@ -41,10 +46,23 @@ const Frame2Model = ({modelStatus, setModelStatus,}:FrameModelOpts) => {
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
           console.log("의자 포커싱 상태");
-          setModelStatus({
-            ...modelStatus,
-            position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
-        });
+        //   setModelStatus({
+        //     ...modelStatus,
+        //     position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z}
+        // });
+
+        setAllModelsStatus({
+            modelName: modelNameTypes.frame2,
+            index: 0,
+            status: {
+                installed,
+                scale,
+                rotateY,
+                isFocused,
+                position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                
+            }
+        })
           
       }
   };

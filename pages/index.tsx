@@ -8,7 +8,7 @@ import WsConnect from '../multiplay/wsConnection';
 import PageTitle from '../components/common/PageTItle';
 import SiteMark from '../components/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useRouter } from 'next/dist/client/router';
 import { applyMe, setMe } from '../stores/loggedUser';
 
@@ -42,17 +42,18 @@ const Login: NextPage = () => {
   
   const { email, password } = inputs;
 
-  const { data, loading, error } = useQuery(LOGIN, {
+  const [reqLogin, { data, loading, error }] = useLazyQuery(LOGIN, {
     variables:{loginInput: {email, password}}
   })
 
 
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
+    const data = await reqLogin()
     console.log(data)
     if(data) {
-      const {login:{ ok, token }} = data;
+      const { data: {login:{ ok, token }}} = data;
 
       if(ok === true) {
         localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)

@@ -49,3 +49,147 @@ export const modelListArr = [
     `${roomModelsUrl}/vase_1.glb`,
 ]
 
+
+export const AllModelsStatus = {
+    carpet1: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    carpet2: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    tv: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        }
+    ],
+    standingLamp: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    vase: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    book: [
+        {
+            index: 0,
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+            imageUrl: ""
+        }
+    ],
+    chair: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    curtain: [
+        {
+            installed: false,
+            scale: 0.5,
+            rotateY: "1",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    frame1: [
+        {
+            installed: false,
+            scale: 1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+        }
+    ],
+    frame2: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+        }
+    ],
+    table1: [
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    tableLamp: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    sofa: [
+        {
+            installed: false,
+            scale: 1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    chair2: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    tv2: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        }
+    ]
+}
