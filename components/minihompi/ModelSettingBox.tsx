@@ -67,8 +67,14 @@ const ModelSettingBox = ({
 
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus[modelName].findIndex(model => model.isFocused === true);
+        console.log(findFocusedIndex)
+        if(findFocusedIndex === -1)
+            return 0
+
         return findFocusedIndex
     }
+
+    
 
     useEffect(() => {
 
@@ -146,7 +152,7 @@ const ModelSettingBox = ({
         </span>
              <div>
             
-             <input type="range" value={allModelsStatus.frame1[findFocusedIndex()].scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
+             <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
                 //  setModelStatus({
                 //     ...modelStatus,
                 //     scale: e.target.value
@@ -156,7 +162,7 @@ const ModelSettingBox = ({
                     modelName,
                     index: findFocusedIndex(),
                     status: {
-                        ...allModelsStatus.frame1[findFocusedIndex()],
+                        ...allModelsStatus[modelName][findFocusedIndex()],
                         scale: parseFloat(e.target.value),
                       
                         
@@ -188,7 +194,7 @@ const ModelSettingBox = ({
                 {"회전"}
             </span>
              <div>
-                <input type="range" value={allModelsStatus.frame1[findFocusedIndex()].rotateY} max="7" min="0"  step="0.1" 
+                <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].rotateY} max="7" min="0"  step="0.1" 
                 onChange={(e) =>{
                     // setModelStatus({
                     //     ...modelStatus,
@@ -199,7 +205,7 @@ const ModelSettingBox = ({
                         modelName,
                         index: findFocusedIndex(),
                         status: {
-                            ...allModelsStatus.frame1[findFocusedIndex()],
+                            ...allModelsStatus.[modelName][findFocusedIndex()],
                             rotateY: e.target.value,
                             
                             
@@ -213,49 +219,51 @@ const ModelSettingBox = ({
         </div> : null
         }
         </div>
-         { // 포커싱 됐을 때
+         { // 포커싱 ON인 경우
          modelImgUrl ?
          checkFocused() ? <img 
                             src={modelImgUrl}
                             onClick={() => {
-                                // setModelStatus({
-                                //     ...modelStatus,
-                                //     isFocused: false
-                                // })
-                                setAllModelsStatus({
-                                    modelName,
-                                    index: 0,
-                                    status: {
-                                        installed,
-                                        scale,
-                                        rotateY,
-                                        isFocused: false,
-                                        position,
-                                        
-                                    }
+                                // 포커싱 OFF 설정
+                                allModelsStatus[modelName].map((model, index) => {
+                                    setAllModelsStatus({
+                                        modelName,
+                                        index,
+                                        status: {
+                                            ...model,
+                                            isFocused: false,
+                                            
+                                            
+                                        }
+                                    })
+
                                 })
                                 setRerender(value => value +1)
 
                             }} 
                             className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
+            // 포커싱 OFF인 경우
             : <img 
                 src={modelImgUrl} 
-                onClick={() => { initFocused(); 
+                onClick={() => { 
+                    initFocused(); 
                 //     setModelStatus({
                 //     ...modelStatus,
                 //     isFocused: true
                 // }) 
-                setAllModelsStatus({
-                    modelName,
-                    index: 0,
-                    status: {
-                        installed,
-                        scale,
-                        rotateY,
-                        isFocused: true,
-                        position,
-                        
-                    }
+                // 포커싱 ON 설정
+                allModelsStatus[modelName].map((model, index) => {
+                    setAllModelsStatus({
+                        modelName,
+                        index,
+                        status: {
+                            ...model,
+                            isFocused: true,
+                            
+                            
+                        }
+                    })
+
                 })
                 setRerender(value => value +1)
 

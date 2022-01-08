@@ -168,10 +168,10 @@ const MiniHomepage:NextPage = (props) => {
         const modelsStatus = allModelsStatus[modelName];
 
         // 같은 모델 클론 포커싱 상태도 지워주기
-        modelsStatus.forEach(status => {
+        modelsStatus.map((status, index) => {
           setAllModelsStatus({
             modelName,
-            index: 0,
+            index,
             status: {...status, isFocused: false}
           })
         })

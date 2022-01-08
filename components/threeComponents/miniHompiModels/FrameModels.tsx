@@ -20,7 +20,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     const frame1_6 = allModelsStatus.frame1[5]
     const frame1_7 = allModelsStatus.frame1[6]
     const frame1_8 = allModelsStatus.frame1[7]
-    const [focusedIndex, setFocusedIndex] = useState(0)
+    
 
     
     
@@ -78,9 +78,9 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
 
           setAllModelsStatus({
               modelName: modelNameTypes.frame1,
-              index: focusedIndex,
+              index: findFocusedIndex(),
               status: {
-                ...allModelsStatus.frame1[focusedIndex],
+                ...allModelsStatus.frame1[findFocusedIndex()],
                 position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
               }
           })
@@ -110,6 +110,15 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
         
     }
 
+    const findFocusedIndex = () => {
+        const findFocusedIndex = allModelsStatus.frame1.findIndex(model => model.isFocused === true);
+        
+        if(findFocusedIndex === -1)
+            return 0
+
+        return findFocusedIndex
+    }
+
 
 
   
@@ -123,7 +132,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
         scale,
         rotateY,
         position,
-        focusedIndex
+        findFocusedIndex()
     ])
 
     if(installed === true){
@@ -144,7 +153,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                         }
                     })
                     
-                    setFocusedIndex(0)
+                   
                     setRerender(value => value + 1)
             }} 
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
@@ -170,7 +179,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                           isFocused: true
                         }
                     })
-                    setFocusedIndex(1)
+                  
                     setRerender(value => value + 1)
                     
                 }} 
@@ -194,9 +203,9 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
             <Indicator 
                 
                 position={[
-                    allModelsStatus.frame1[focusedIndex].position.x, 
-                    allModelsStatus.frame1[focusedIndex].position.y +4 * allModelsStatus.frame1[focusedIndex].scale,
-                    allModelsStatus.frame1[focusedIndex].position.z
+                    allModelsStatus.frame1[findFocusedIndex()].position.x, 
+                    allModelsStatus.frame1[findFocusedIndex()].position.y +4 * allModelsStatus.frame1[findFocusedIndex()].scale,
+                    allModelsStatus.frame1[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 
             />
