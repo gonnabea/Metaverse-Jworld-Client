@@ -52,6 +52,7 @@ export const modelListArr = [
 
 export const AllModelsStatus = {
     carpet1: [
+        
         {
             installed: false,
             scale: 0.3,

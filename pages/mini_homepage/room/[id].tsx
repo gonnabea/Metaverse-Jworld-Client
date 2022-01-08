@@ -152,6 +152,7 @@ const MiniHomepage:NextPage = (props) => {
     // 카페트1 관련 state
     const [carpet1Num, setCarpet1Num] = useState(1);
 
+
     
 
   

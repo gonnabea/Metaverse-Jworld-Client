@@ -27,7 +27,7 @@ export const setAllModelsStatus = async({modelName, index, status}: UpdateModelS
 
   // 해당되는 상태 찾기
   originalModelsList[modelName][index] = status;
-  console.log(originalModelsList[modelName][index])
+  
   applyThreeModels(originalModelsList)
 
  

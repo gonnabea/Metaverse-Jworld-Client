@@ -13,7 +13,6 @@ interface props {
     maxScale?: number;
     minScale?: number;
     scaleStep?: number;
-    installNum?: number;
     setInstallNum?: Function;
     rerender?: any, 
     setRerender?: any
@@ -28,7 +27,6 @@ const ModelSettingBox = ({
     maxScale = 5,
     minScale = 0.1,
     scaleStep = 0.1,
-    installNum,
     rerender, 
     setInstallNum,
     setRerender
@@ -58,6 +56,9 @@ const ModelSettingBox = ({
    
     
     const {installed, scale, rotateY, isFocused, position } = allModelsStatus[modelName][0];
+
+    const maxInstallNum = allModelsStatus[modelName].length
+    let installedNum = allModelsStatus[modelName].filter(model => model.installed === true).length
 
     const checkFocused = () => {
         const findFocused = allModelsStatus[modelName].find(model => model.isFocused === true);
@@ -157,7 +158,7 @@ const ModelSettingBox = ({
                 //     ...modelStatus,
                 //     scale: e.target.value
                 //  });
-                
+                console.log(findFocusedIndex())
                  setAllModelsStatus({
                     modelName,
                     index: findFocusedIndex(),
@@ -178,13 +179,41 @@ const ModelSettingBox = ({
                   </div>
         </div> : null }
 
-        { installNum !== undefined ? <div className="">
+        { maxInstallNum > 1 ? <div className="">
         <span className="">
             {"개수"}
         </span>
              <div>
             
-             <input type="range" value={installNum} max={4} min={1}  step={1} onChange={(e) =>{{setInstallNum(e.target.value)}; console.log(e.target.value)}} />
+             <input type="range" value={installedNum} max={maxInstallNum} min={1} step={1} onChange={(e) =>{
+                 const value = parseInt(e.target.value)
+                 for(let i = 0 ; i <= maxInstallNum-1; i++) {
+                     if(i < value){
+                         setAllModelsStatus({
+                             modelName,
+                             index: i,
+                             status: {
+                                ...allModelsStatus[modelName][i],
+                                installed: true
+                             }
+                         })
+                     }
+                     else {
+                        setAllModelsStatus({
+                            modelName,
+                            index: i,
+                            status: {
+                               ...allModelsStatus[modelName][i],
+                               installed: false
+                            }
+                        })
+                     }
+
+                 }
+               
+                setRerender(value => value +1)
+                 
+             }} />
  
                   </div>
         </div> : null }
@@ -205,7 +234,7 @@ const ModelSettingBox = ({
                         modelName,
                         index: findFocusedIndex(),
                         status: {
-                            ...allModelsStatus.[modelName][findFocusedIndex()],
+                            ...allModelsStatus[modelName][findFocusedIndex()],
                             rotateY: e.target.value,
                             
                             

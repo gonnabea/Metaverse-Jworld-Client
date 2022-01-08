@@ -37,12 +37,33 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     
     const gltf = useLoader(GLTFLoader, modelList.frame1);
     const texture = useLoader(TextureLoader, imageUrl); // 이미지 텍스쳐
+   
+
 
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
 
     const cloned = useMemo(() => clone(gltf.scene), [scene])
+    const cloned2 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned3 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned4 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned5 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned6 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned7 = useMemo(() => clone(gltf.scene), [scene])
+
+    
+
+    const clonedArr = [
+        cloned,
+        cloned2,
+        cloned3,
+        cloned4,
+        cloned5,
+        cloned6,
+        cloned7,
+    ]
+
 
     const checkFocused = () => {
         const findFocused = allModelsStatus.frame1.find(model => model.isFocused === true);
@@ -134,15 +155,16 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
         position,
         findFocusedIndex()
     ])
-
+// 첫번쨰 모델은 무조건 installed === true인 상태에만 복제 모델도 생성되는 구조
     if(installed === true){
 
         return (
             <>
+            {/* 첫번째 액자 모델 */}
             <primitive 
-                onClick={async() => {
+                onClick={() => {
                     console.log("액자1 클릭")
-                    await initFocused()
+                    initFocused()
 
                     setAllModelsStatus({
                         modelName: modelNameTypes.frame1,
@@ -167,41 +189,71 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                 object={gltf.scene} 
             />
 
-            <primitive 
-                onClick={async() => {
-                    console.log("액자1_2 클릭")
-                    await initFocused()
-                    setAllModelsStatus({
-                        modelName: modelNameTypes.frame1,
-                        index: 1,
-                        status: {
-                          ...allModelsStatus.frame1[1],
-                          isFocused: true
-                        }
-                    })
-                  
-                    setRerender(value => value + 1)
-                    
-                }} 
-                position={[frame1_2.position.x, frame1_2.position.y, frame1_2.position.z]} 
-                scale={frame1_2.scale} 
-                rotation={[0, parseFloat(frame1_2.rotateY), 0]}
-                onPointerOver={() => {
-                    document.body.style.cursor = "pointer"
-                }}
-                onPointerOut={() => {
-                    document.body.style.cursor = "default"
-
-                }}
-                object={cloned} 
-            />
+            {/* 이미지 텍스쳐 */}
             <mesh position={[position.x, position.y, position.z + 0.8]} scale={scale}
             rotation={[0, parseFloat(rotateY), 0]}>
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />
             </mesh>
-            <Indicator 
+          
+          {/* 복제 모델 (같은 모델 다수 생성용) */}
+            {allModelsStatus.frame1.map((model, index) => {
                 
+                if(index > 0 && model.installed === true) {
+                    return (
+                        <>
+                        <primitive 
+                            onClick={() => {
+                                console.log(`액자1_${index} 클릭`)
+                                initFocused()
+                                setAllModelsStatus({
+                                    modelName: modelNameTypes.frame1,
+                                    index,
+                                    status: {
+                                    ...allModelsStatus.frame1[index],
+                                    isFocused: true
+                                    }
+                                })
+                            
+                                setRerender(value => value + 1)
+                                
+                            }} 
+                            position={[
+                                allModelsStatus.frame1[index].position.x, 
+                                allModelsStatus.frame1[index].position.y, 
+                                allModelsStatus.frame1[index].position.z
+                            ]} 
+                            scale={allModelsStatus.frame1[index].scale} 
+                            rotation={[0, parseFloat(allModelsStatus.frame1[index].rotateY), 0]}
+                            onPointerOver={() => {
+                                document.body.style.cursor = "pointer"
+                            }}
+                            onPointerOut={() => {
+                                document.body.style.cursor = "default"
+
+                            }}
+                            object={clonedArr[index-1]} 
+                        />
+                        {/* 이미지 텍스쳐 */}
+                        <mesh position={[
+                                allModelsStatus.frame1[index].position.x, 
+                                allModelsStatus.frame1[index].position.y, 
+                                allModelsStatus.frame1[index].position.z + 0.8
+                            ]}
+                            scale={allModelsStatus.frame1[index].scale}
+                            rotation={[0, parseFloat(allModelsStatus.frame1[index].rotateY), 0]}>
+                                <planeBufferGeometry attach="geometry" args={[3, 3]} />
+                                <meshBasicMaterial attach="material" map={texture} />
+                        </mesh>
+                        </>
+                    )
+                }
+            })}
+
+
+
+
+            <Indicator 
                 position={[
                     allModelsStatus.frame1[findFocusedIndex()].position.x, 
                     allModelsStatus.frame1[findFocusedIndex()].position.y +4 * allModelsStatus.frame1[findFocusedIndex()].scale,
