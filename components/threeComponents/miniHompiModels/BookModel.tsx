@@ -82,7 +82,7 @@ const BookModel = ({ rerender, setRerender, setCss3dBookVisible }:BookModelOpts)
         
         return () => window.removeEventListener("click", installModel);
     }, [
-        allModelsStatus
+      installed, scale, rotateY, isFocused, position, imageUrl
     ])
 
     if(installed === true){

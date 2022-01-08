@@ -1,16 +1,26 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
 import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
+import { clone } from "../../../config/skeletonUtils";
+import Indicator from '../indicator';
 
 const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
+    const frame1_2 = allModelsStatus.frame1[1]
+    const frame1_3 = allModelsStatus.frame1[2]
+    const frame1_4 = allModelsStatus.frame1[3]
+    const frame1_5 = allModelsStatus.frame1[4]
+    const frame1_6 = allModelsStatus.frame1[5]
+    const frame1_7 = allModelsStatus.frame1[6]
+    const frame1_8 = allModelsStatus.frame1[7]
+
 
     
     
@@ -31,6 +41,9 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
+
+    const cloned = useMemo(() => clone(gltf.scene), [scene])
+
     
     const installModel = (e) => {
 
@@ -39,7 +52,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
 
       // 모델 설치
       if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
-          console.log("의자 포커싱 상태");
+          console.log("액자 포커싱 상태");
           
         //   setModelStatus({
         //       ...modelStatus,
@@ -50,12 +63,8 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
               modelName: modelNameTypes.frame1,
               index: 0,
               status: {
-                  installed,
-                  scale,
-                  rotateY,
-                  isFocused,
-                  position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
-                  imageUrl
+                ...allModelsStatus.frame1[0],
+                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
               }
           })
           setRerender(value => value + 1)
@@ -95,11 +104,25 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                 }}
                 object={gltf.scene} 
             />
+
+            <primitive 
+                onClick={() => console.log("액자1-2 클릭")} 
+                position={[position.x+1, position.y+1, position.z+1]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
+                onPointerOver={() => {
+                    document.body.style.cursor = "pointer"
+                }}
+                onPointerOut={() => {
+                    document.body.style.cursor = "default"
+
+                }}
+                object={cloned} 
+            />
             <mesh position={[position.x, position.y, position.z + 0.8]} scale={scale}
             rotation={[0, parseFloat(rotateY), 0]}>
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />
             </mesh>
+            <Indicator position={[position.x+1, position.y+5, position.z+1]} visible={isFocused} />
 
           </>
         )

@@ -236,7 +236,7 @@ const MiniHomepage:NextPage = (props) => {
 
      
         })
-
+        setRerender(value => value +1)
       
     }
 
@@ -320,7 +320,7 @@ const MiniHomepage:NextPage = (props) => {
               
               <Physics gravity= {[0, -1000, 0]} >
                   <RoomModel roomScale={roomScale}  />
-                  <FrameModel />
+                  <FrameModel rerender={rerender} setRerender={setRerender} />
                   {/* <Carpet1Model modelStatus={allModelsStatus.carpet1} threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num}   /> */}
                   <Carpet2Model rerender={rerender} setRerender={setRerender} />
                   <TvModel rerender={rerender} setRerender={setRerender} />
@@ -516,6 +516,7 @@ const MiniHomepage:NextPage = (props) => {
         maxScale={2.5}
         minScale={0.8}
         scaleStep={0.1}
+        initFocused={initFocused}
 
     />   
 

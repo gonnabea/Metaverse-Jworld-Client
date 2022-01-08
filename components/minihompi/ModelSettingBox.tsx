@@ -55,13 +55,13 @@ const ModelSettingBox = ({
     // scaleStep={0.1}
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
-    const [checkStatusChanged, setCheckStatusChanged] = useState(0)
+   
     
     const {installed, scale, rotateY, isFocused, position } = allModelsStatus[modelName][0];
 
     useEffect(() => {
 
-    }, [checkStatusChanged])
+    }, [])
 
    return <div className={`bg-${backgroundColor}-200 border-4 border-light-blue-500 flex items-center justify-between`}>
 

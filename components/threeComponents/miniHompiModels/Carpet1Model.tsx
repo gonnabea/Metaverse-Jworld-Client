@@ -10,7 +10,6 @@ import {clone} from "../../../config/skeletonUtils";
 import gql from 'graphql-tag';
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import Indicator from '../indicator';
 
 const GET_THREE_MODELS = gql`
 query getThreeModels($id: Float!) {

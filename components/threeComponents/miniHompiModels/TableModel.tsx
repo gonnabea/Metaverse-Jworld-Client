@@ -18,7 +18,7 @@ const TableModel = ({rerender, setRerender,}: RerenderType) => {
 
     const createModelStatus = async () => {
         const modelStatus = {
-          name: "table",
+          name: "table1",
           position,
           installed,
           scale: {x: scale, y: scale, z: scale},
