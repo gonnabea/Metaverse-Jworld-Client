@@ -20,7 +20,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
     const frame1_6 = allModelsStatus.frame1[5]
     const frame1_7 = allModelsStatus.frame1[6]
     const frame1_8 = allModelsStatus.frame1[7]
-
+    const [focusedIndex, setFocusedIndex] = useState(0)
 
     
     
@@ -44,14 +44,31 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
 
     const cloned = useMemo(() => clone(gltf.scene), [scene])
 
+    const checkFocused = () => {
+        const findFocused = allModelsStatus.frame1.find(model => model.isFocused === true);
+        if(findFocused !== undefined)
+            return true
+        else
+            return false
+    }
+
     
     const installModel = (e) => {
-
+        
       // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
+      let checkIsWall;
+      if(
+        raycaster.intersectObjects(scene.children)[0] !== undefined &&
+        raycaster.intersectObjects(scene.children)[0].object.name === "living_room_Material015_0"
+      )
+        checkIsWall = true
+      else
+        checkIsWall = false
 
+    console.log(raycaster.intersectObjects(scene.children)[0]?.object.name)
       // 모델 설치
-      if(closedObjPosition && isFocused === true && e.target.tagName === "CANVAS"){
+      if(closedObjPosition && checkFocused() === true && e.target.tagName === "CANVAS" && checkIsWall){
           console.log("액자 포커싱 상태");
           
         //   setModelStatus({
@@ -61,9 +78,9 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
 
           setAllModelsStatus({
               modelName: modelNameTypes.frame1,
-              index: 0,
+              index: focusedIndex,
               status: {
-                ...allModelsStatus.frame1[0],
+                ...allModelsStatus.frame1[focusedIndex],
                 position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
               }
           })
@@ -72,6 +89,26 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
           
       }
   };
+
+
+
+    const initFocused = () => {
+        let index = 0
+        allModelsStatus.frame1.forEach( async model => {
+            await setAllModelsStatus({
+                modelName: modelNameTypes.frame1,
+                index,
+                status: {
+                  ...allModelsStatus.frame1[index],
+                  isFocused: false
+                }
+            })
+            index ++;
+        })
+        
+       
+        
+    }
 
 
 
@@ -85,7 +122,8 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
         installed,
         scale,
         rotateY,
-        position
+        position,
+        focusedIndex
     ])
 
     if(installed === true){
@@ -93,7 +131,22 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
         return (
             <>
             <primitive 
-                onClick={() => console.log("액자1 클릭")} 
+                onClick={async() => {
+                    console.log("액자1 클릭")
+                    await initFocused()
+
+                    setAllModelsStatus({
+                        modelName: modelNameTypes.frame1,
+                        index: 0,
+                        status: {
+                          ...allModelsStatus.frame1[0],
+                          isFocused: true
+                        }
+                    })
+                    
+                    setFocusedIndex(0)
+                    setRerender(value => value + 1)
+            }} 
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
@@ -106,8 +159,24 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
             />
 
             <primitive 
-                onClick={() => console.log("액자1-2 클릭")} 
-                position={[position.x+1, position.y+1, position.z+1]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
+                onClick={async() => {
+                    console.log("액자1_2 클릭")
+                    await initFocused()
+                    setAllModelsStatus({
+                        modelName: modelNameTypes.frame1,
+                        index: 1,
+                        status: {
+                          ...allModelsStatus.frame1[1],
+                          isFocused: true
+                        }
+                    })
+                    setFocusedIndex(1)
+                    setRerender(value => value + 1)
+                    
+                }} 
+                position={[frame1_2.position.x, frame1_2.position.y, frame1_2.position.z]} 
+                scale={frame1_2.scale} 
+                rotation={[0, parseFloat(frame1_2.rotateY), 0]}
                 onPointerOver={() => {
                     document.body.style.cursor = "pointer"
                 }}
@@ -122,7 +191,15 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />
             </mesh>
-            <Indicator position={[position.x+1, position.y+5, position.z+1]} visible={isFocused} />
+            <Indicator 
+                
+                position={[
+                    allModelsStatus.frame1[focusedIndex].position.x, 
+                    allModelsStatus.frame1[focusedIndex].position.y +4 * allModelsStatus.frame1[focusedIndex].scale,
+                    allModelsStatus.frame1[focusedIndex].position.z
+                ]} 
+                visible={checkFocused()} 
+            />
 
           </>
         )

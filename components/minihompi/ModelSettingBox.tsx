@@ -59,6 +59,17 @@ const ModelSettingBox = ({
     
     const {installed, scale, rotateY, isFocused, position } = allModelsStatus[modelName][0];
 
+    const checkFocused = () => {
+        const findFocused = allModelsStatus[modelName].find(model => model.isFocused === true);
+        if(findFocused !== undefined)
+            return true
+    }
+
+    const findFocusedIndex = () => {
+        const findFocusedIndex = allModelsStatus[modelName].findIndex(model => model.isFocused === true);
+        return findFocusedIndex
+    }
+
     useEffect(() => {
 
     }, [])
@@ -135,21 +146,19 @@ const ModelSettingBox = ({
         </span>
              <div>
             
-             <input type="range" value={scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
+             <input type="range" value={allModelsStatus.frame1[findFocusedIndex()].scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
                 //  setModelStatus({
                 //     ...modelStatus,
                 //     scale: e.target.value
                 //  });
-
+                
                  setAllModelsStatus({
                     modelName,
-                    index: 0,
+                    index: findFocusedIndex(),
                     status: {
-                        installed,
+                        ...allModelsStatus.frame1[findFocusedIndex()],
                         scale: parseFloat(e.target.value),
-                        rotateY,
-                        isFocused,
-                        position,
+                      
                         
                     }
                 })
@@ -179,7 +188,7 @@ const ModelSettingBox = ({
                 {"회전"}
             </span>
              <div>
-                <input type="range" value={rotateY} max="7" min="0"  step="0.1" 
+                <input type="range" value={allModelsStatus.frame1[findFocusedIndex()].rotateY} max="7" min="0"  step="0.1" 
                 onChange={(e) =>{
                     // setModelStatus({
                     //     ...modelStatus,
@@ -188,13 +197,11 @@ const ModelSettingBox = ({
 
                     setAllModelsStatus({
                         modelName,
-                        index: 0,
+                        index: findFocusedIndex(),
                         status: {
-                            installed,
-                            scale,
+                            ...allModelsStatus.frame1[findFocusedIndex()],
                             rotateY: e.target.value,
-                            isFocused,
-                            position,
+                            
                             
                         }
                     })
@@ -206,9 +213,9 @@ const ModelSettingBox = ({
         </div> : null
         }
         </div>
-         {
+         { // 포커싱 됐을 때
          modelImgUrl ?
-         isFocused ? <img 
+         checkFocused() ? <img 
                             src={modelImgUrl}
                             onClick={() => {
                                 // setModelStatus({
