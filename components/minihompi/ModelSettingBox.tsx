@@ -179,7 +179,8 @@ const ModelSettingBox = ({
         </span>
              <div>
             
-             <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].scale} max={maxScale} min={minScale}  step={scaleStep} onChange={(e) =>{
+             <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].scale} max={maxScale} min={minScale}  step={scaleStep} 
+             onChange={(e) =>{
                 //  setModelStatus({
                 //     ...modelStatus,
                 //     scale: e.target.value
@@ -195,7 +196,7 @@ const ModelSettingBox = ({
                         
                     }
                 })
-               
+                createModelStatus()
                 setRerender(value => value +1)
 
                 }}
@@ -268,7 +269,7 @@ const ModelSettingBox = ({
                             
                         }
                     })
-
+                    createModelStatus()
                 setRerender(value => value +1)
                     console.log(e.target.value)
                 }} />
