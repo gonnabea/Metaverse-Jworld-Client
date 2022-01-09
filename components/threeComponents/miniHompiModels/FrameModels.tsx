@@ -12,27 +12,29 @@ import Indicator from '../indicator';
 
 const FrameModel = ({rerender, setRerender, initFocused}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
-    const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
-    const frame1_2 = allModelsStatus.frame1[1]
-    const frame1_3 = allModelsStatus.frame1[2]
-    const frame1_4 = allModelsStatus.frame1[3]
-    const frame1_5 = allModelsStatus.frame1[4]
-    const frame1_6 = allModelsStatus.frame1[5]
-    const frame1_7 = allModelsStatus.frame1[6]
-    const frame1_8 = allModelsStatus.frame1[7]
+    const { installed, scale, rotateY, isFocused, position, 
+        imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
+
     
 
     
     
     const createModelStatus = async () => {
-        const modelStatus = {
-          name: "frame",
-          position,
-          installed,
-          scale: {x: scale, y: scale, z: scale},
-          rotateY
-        }
-        addModel(modelStatus)
+
+        allModelsStatus.frame1.map(({ position, installed, scale, rotateY }, index) => {
+            
+            const modelStatus = {
+              name: "frame1",
+              position,
+              installed,
+              scale: {x: scale, y: scale, z: scale},
+              rotateY,
+              index
+            }
+            addModel(modelStatus)
+
+        }) 
+        
       }
     
     const gltf = useLoader(GLTFLoader, modelList.frame1);

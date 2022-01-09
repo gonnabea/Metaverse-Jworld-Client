@@ -8,13 +8,24 @@ export const addModel = (newModel: ThreeModelInput) => {
   
 
     if(originalModelsList.length > 0) {
-      const removeDuplicated = originalModelsList.filter(model => model.name !== newModel.name)
+      // const removeDuplicated = originalModelsList.filter(model => model.name !== newModel.name)
+
+      const removeDuplicated:ThreeModelInput[] | [] = []
+      originalModelsList.forEach(model => {
+        // 새로운 모델과 중복되는 모델은 비우기
+        if(model.name !== newModel.name || model.index !== newModel.index) {
+          removeDuplicated.push(model)
+        }
+        
+      })
+
+      // 중복되는 모델 비운 리스트와 새로운 모델 합치고 저장하기
       applyModels({ modelsStatus: [...removeDuplicated, newModel]})
       
       return null
     }
-
-    applyModels({ modelsStatus: [...originalModelsList, newModel]})
+    // 첫 모델 적용
+    applyModels({ modelsStatus: [newModel]})
 }
 
 export const setModels = (modelsStatus: ThreeModelInput[]) => {

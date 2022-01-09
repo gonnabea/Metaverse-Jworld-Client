@@ -10,26 +10,6 @@ import {clone} from "../../../config/skeletonUtils";
 import gql from 'graphql-tag';
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import Indicator from '../indicator';
-
-const GET_THREE_MODELS = gql`
-query getThreeModels($id: Float!) {
-  getThreeModels(input: {
-    id: $id
-  }) {
-    ok
-    error
-    models{
-      name
-      id
-      installed
-      scale
-      rotateY
-      position
-    }
-  }
-}
-`
 
 interface CarpetModelOpts extends ThreeModelOpts {
   threeModels: any;

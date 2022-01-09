@@ -59,7 +59,7 @@ const Frame2Model = ({rerender, setRerender,}: RerenderType) => {
                 scale,
                 rotateY,
                 isFocused,
-                position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
                 
             }
         })

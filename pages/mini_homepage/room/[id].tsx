@@ -356,13 +356,18 @@ const MiniHomepage:NextPage = (props) => {
           value="저장" 
           onClick={async () => {
             initFocused()
-            await reqSaveModels({
+            console.log(getModels())
+            
+            const result = await reqSaveModels({
               variables: {
-              saveThreeModelInput: {
-                models: getModels()
-              } 
-            },
-          })
+                saveThreeModelInput: {
+                  models: getModels()
+                } 
+              },
+            })
+            console.log(data)
+            console.log(error)
+            console.log(result)
             alert("방 상태가 저장되었습니다.")
           }
         }>

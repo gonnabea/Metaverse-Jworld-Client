@@ -12,6 +12,7 @@ export interface getMe_getMe_user {
   id: number;
   email: string;
   nickname: string;
+  miniHompiId: number | null;
 }
 
 export interface getMe_getMe {

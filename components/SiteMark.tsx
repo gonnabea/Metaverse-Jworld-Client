@@ -8,14 +8,6 @@ interface props {
     bgColor?: string;
 }
 
-const SAVE_MODELS = gql`
-
-mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
-  saveThreeModels(input:$saveThreeModelInput) {
-    ok
-  }
-}
-`
 
 const CREATEHOMPI = gql`
 mutation createMiniHompi($createMiniHompiInput: CreateMiniHompiInput!) {
@@ -27,14 +19,7 @@ mutation createMiniHompi($createMiniHompiInput: CreateMiniHompiInput!) {
   }
 `
 
-const JOIN = gql`
-mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
-  join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
-    ok,
-    error
-  }
-}
-`
+
 
 const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
 

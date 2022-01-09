@@ -6,16 +6,9 @@ import SiteMark from "../components/SiteMark"
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
 import { useRouter } from "next/dist/client/router"
+import { JOIN } from "../config/gql-queries/user"
 
 
-const JOIN = gql`
-mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
-  join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
-    ok,
-    error
-  }
-}
-`
 
 const Join: NextPage = () => {
 
