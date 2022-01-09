@@ -34,24 +34,7 @@ const ModelSettingBox = ({
 }:props
 ) => {
 
-    // modelName={"액자1"} 
-    // installState={frame1Status.installed}
-    // setInstallState={setInstallFrame1}
-    // scaleState={frame1Status.scale}
-    // setScaleState={setFrame1Scale}
-    // rotateYState={frame1Status.rotateY}
-    // setRotateYState={setFrame1RotateY}
-    // focusState={frame1Status.isFocused}
-    // setFocusState={setFrame1Focused}
-    // initFocused={initFocused}
-    // frame1Status={frame1Status}
-    // setFrame1Status={setFrame1Status}
-
-    // backgroundColor="black"
-    // modelImgUrl="/model_images/frame1.png"
-    // maxScale={2.5}
-    // minScale={0.8}
-    // scaleStep={0.1}
+   
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
    
@@ -166,6 +149,7 @@ const ModelSettingBox = ({
                             setRerender(value => value +1)
                         }
 
+                    createModelStatus()
                         
                       
                     }}>{installed ? "ON" : "OFF"}</button>

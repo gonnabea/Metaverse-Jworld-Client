@@ -9,9 +9,11 @@ import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThre
 import { useReactiveVar } from '@apollo/client';
 import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../indicator';
+import { applyIsMyRoom } from '../../../stores/loggedUser';
 
 const FrameModel = ({rerender, setRerender, initFocused}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
+    const isMyRoom = useReactiveVar(applyIsMyRoom)
     const { installed, scale, rotateY, isFocused, position, 
         imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
 
@@ -166,19 +168,21 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
             <primitive 
                 onClick={() => {
                     console.log("액자1 클릭")
-                    initFocused()
-
-                    setAllModelsStatus({
-                        modelName: modelNameTypes.frame1,
-                        index: 0,
-                        status: {
-                          ...allModelsStatus.frame1[0],
-                          isFocused: true
-                        }
-                    })
-                    
-                   
-                    setRerender(value => value + 1)
+                    if(isMyRoom) {
+                        initFocused()
+    
+                        setAllModelsStatus({
+                            modelName: modelNameTypes.frame1,
+                            index: 0,
+                            status: {
+                              ...allModelsStatus.frame1[0],
+                              isFocused: true
+                            }
+                        })
+                        
+                       
+                        setRerender(value => value + 1)
+                    }
             }} 
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
                 onPointerOver={() => {
@@ -206,19 +210,22 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                         <>
                         <primitive 
                             onClick={() => {
+
                                 console.log(`액자1_${index} 클릭`)
-                                initFocused()
-                                console.log(model.position,model.isFocused)
-                                setAllModelsStatus({
-                                    modelName: modelNameTypes.frame1,
-                                    index,
-                                    status: {
-                                    ...allModelsStatus.frame1[index],
-                                    isFocused: true
-                                    }
-                                })
-                            
-                                setRerender(value => value + 1)
+                                if(isMyRoom) {
+                                    initFocused()
+                                    console.log(model.position,model.isFocused)
+                                    setAllModelsStatus({
+                                        modelName: modelNameTypes.frame1,
+                                        index,
+                                        status: {
+                                        ...allModelsStatus.frame1[index],
+                                        isFocused: true
+                                        }
+                                    })
+                                
+                                    setRerender(value => value + 1)
+                                }
                                 
                             }} 
                             position={[

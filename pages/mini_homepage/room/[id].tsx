@@ -37,6 +37,7 @@ import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
 import SphereIndicator from '../../../components/threeComponents/indicator';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { modelNameTypes } from '../../../types/common';
+import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
 
 
 
@@ -110,6 +111,7 @@ mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
 const MiniHomepage:NextPage = (props) => {
     
     const {me} = useReactiveVar(applyMe);
+    
     // carpet1, carpet2, tv, tv2, standingLamp, tableLamp, vase, book, frame1, frame2, chair, chair2, table1, sofa
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const [rerender, setRerender] = useState(0)
@@ -209,7 +211,11 @@ const MiniHomepage:NextPage = (props) => {
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
 
-
+      if(getThreeModels.models.length === 0) {
+        alert("Dasf")
+        applyThreeModels(defaultModelList)
+      }
+        
         // 방 입장 시 저장된 3D 모델 로드 & 배치하기
         getThreeModels.models.forEach(({installed, name: modelName, rotateY, scale, position, index}: {
           name: modelNameTypes;
@@ -223,10 +229,10 @@ const MiniHomepage:NextPage = (props) => {
           textContents?: string;
           index?: number;
         }) => {
-
+          
             
         
-        // 디폴트 상태의 모델 상태 가져오기
+          // 디폴트 상태의 모델 상태 가져오기
         const modelsStatus = allModelsStatus[modelName];
         
         
@@ -234,20 +240,22 @@ const MiniHomepage:NextPage = (props) => {
         modelsStatus.forEach(status => {
           setAllModelsStatus({
             modelName,
-            index,
+            index: index ? index : 0,
             status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false}
           })
         })
-
-     
-        })
+        
+        
+      })
+    
         setRerender(value => value +1)
       
     }
 
     useEffect(() => {
-
+      
       getInfos()
+      setIsMyRoom(isMyRoom)
       
     }, [applyThreeModels()])
 
