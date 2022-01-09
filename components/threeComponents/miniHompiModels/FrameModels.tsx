@@ -10,7 +10,7 @@ import { useReactiveVar } from '@apollo/client';
 import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../indicator';
 
-const FrameModel = ({rerender, setRerender,}: RerenderType) => {
+const FrameModel = ({rerender, setRerender, initFocused}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
     const frame1_2 = allModelsStatus.frame1[1]
@@ -113,23 +113,23 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
 
 
 
-    const initFocused = () => {
-        let index = 0
-        allModelsStatus.frame1.forEach( async model => {
-            await setAllModelsStatus({
-                modelName: modelNameTypes.frame1,
-                index,
-                status: {
-                  ...allModelsStatus.frame1[index],
-                  isFocused: false
-                }
-            })
-            index ++;
-        })
+    // const initFocused = () => {
+    //     let index = 0
+    //     allModelsStatus.frame1.forEach( async model => {
+    //         await setAllModelsStatus({
+    //             modelName: modelNameTypes.frame1,
+    //             index,
+    //             status: {
+    //               ...allModelsStatus.frame1[index],
+    //               isFocused: false
+    //             }
+    //         })
+    //         index ++;
+    //     })
         
        
         
-    }
+    // }
 
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus.frame1.findIndex(model => model.isFocused === true);
@@ -206,6 +206,7 @@ const FrameModel = ({rerender, setRerender,}: RerenderType) => {
                             onClick={() => {
                                 console.log(`액자1_${index} 클릭`)
                                 initFocused()
+                                console.log(model.position,model.isFocused)
                                 setAllModelsStatus({
                                     modelName: modelNameTypes.frame1,
                                     index,

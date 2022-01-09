@@ -68,7 +68,14 @@ const ModelSettingBox = ({
 
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus[modelName].findIndex(model => model.isFocused === true);
-        console.log(findFocusedIndex)
+        console.log(allModelsStatus[modelName])
+        let testIndex = 0
+        allModelsStatus[modelName].forEach(model => {
+            if(model.isFocused){
+                console.log(testIndex)
+            }
+            testIndex +=1;
+        })
         if(findFocusedIndex === -1)
             return 0
 
