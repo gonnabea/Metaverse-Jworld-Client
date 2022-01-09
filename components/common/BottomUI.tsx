@@ -110,13 +110,32 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
         {/* 설정 모달 */}
         {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
-            <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action="">
-                <input name="bgm" onClick={() => {playBtnSoundEffect(); startBgm();}} className="text-center h-1/6 text-lg font-bold" type="checkbox" maxLength={10} placeholder="배경음 ON" />
-                <label htmlFor="bgm">배경음 ON / OFF</label>
-                <input name="effect_sound" onClick={() => {playBtnSoundEffect()}} className="text-center h-1/6 text-lg font-bold pl-4" type="checkbox" maxLength={1} placeholder="효과음 ON" />
-                <label htmlFor="effect_sound">효과음 ON / OFF</label>
-                <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" />
+            <form method="post" action="" encType="multipart/form-data" >
+                <label htmlFor="imgFile" className="p-1">이미지 파일</label>
+                <input type="file" name="imgFile" />
+                <input type="submit" value="업로드" />
             </form>
+
+            <form method="post" action="" encType="multipart/form-data" >
+                <label htmlFor="videoFile" className="p-1">비디오 파일</label>
+                <input type="file" name="videoFile" />
+                <input type="submit" value="업로드" />
+            </form>
+            
+            {/* <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action=""> */}
+                <div className="flex justify-center items-center">
+                    <label className="p-1" htmlFor="bgm">배경음 ON / OFF</label>
+                    <input name="bgm" className="" type="checkbox" 
+                    onClick={() => {playBtnSoundEffect(); startBgm();}}   />
+                </div>
+                
+                <div className="flex justify-center items-center">
+                    <label className="p-1" htmlFor="bgm">효과음 ON / OFF</label>
+                    <input name="bgm" className="" type="checkbox" 
+                    onClick={() => {playBtnSoundEffect();}}   />
+                </div>
+                {/* <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" /> */}
+            {/* </form> */}
         </div> : null }
                
     </div>

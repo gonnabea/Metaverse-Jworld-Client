@@ -8,7 +8,7 @@ import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/com
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 import { clone } from "../../../config/skeletonUtils";
-import Indicator from '../indicator';
+import Indicator from '../../common/Indicator';
 import { applyIsMyRoom } from '../../../stores/loggedUser';
 
 const FrameModel = ({rerender, setRerender, initFocused}) => {
@@ -20,7 +20,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
     
 
     
-    
+    // 모델 상태 저장을 위한 함수
     const createModelStatus = async () => {
         console.log(allModelsStatus.frame1)
         allModelsStatus.frame1.map(({ position, installed, scale, rotateY }, index) => {

@@ -70,10 +70,7 @@ const TV2Model = ({rerender, setRerender,}: RerenderType) => {
                     modelName: modelNameTypes.tv2,
                     index: 0,
                     status: {
-                        installed,
-                        scale,
-                        rotateY,
-                        isFocused,
+                        ...allModelsStatus.tv2[0],
                         position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
                 
                     }

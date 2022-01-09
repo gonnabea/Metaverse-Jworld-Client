@@ -25,7 +25,7 @@ import SofaModel from '../../../components/threeComponents/miniHompiModels/SofaM
 import Chair2Model from '../../../components/threeComponents/miniHompiModels/Chair2Model';
 import TableLampModel from '../../../components/threeComponents/miniHompiModels/TableLampModel';
 import TV2Model from '../../../components/threeComponents/miniHompiModels/Tv2Model';
-import SiteMark from '../../../components/SiteMark';
+import SiteMark from '../../../components/common/SiteMark';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { useReactiveVar } from '@apollo/react-hooks';
 import { applyMe } from '../../../stores/loggedUser';
@@ -34,7 +34,7 @@ import PageTitle from '../../../components/common/PageTItle';
 import gql from 'graphql-tag';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
-import SphereIndicator from '../../../components/threeComponents/indicator';
+import SphereIndicator from '../../../components/common/Indicator';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { modelNameTypes } from '../../../types/common';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
@@ -364,7 +364,7 @@ const MiniHomepage:NextPage = (props) => {
 
           {isMyRoom ? <button ref={applyInstallBtn} 
           className="
-          bg-black rounded-lg text-white hover:bg-blue-500 w-20 h-10 border-double border-4 font-bold z-30 absolute right-2 top-1" 
+          bg-black rounded-lg text-white hover:bg-blue-500 w-20 h-10 border-double border-4 font-bold z-30 absolute right-1 top-1" 
           value="저장" 
           onClick={async () => {
             initFocused()

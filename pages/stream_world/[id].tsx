@@ -11,7 +11,7 @@ import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, use
 import Amy from '../../components/threeComponents/streamWorldModels/Amy';
 import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamera';
 import PageTitle from '../../components/common/PageTItle';
-import SiteMark from '../../components/SiteMark';
+import SiteMark from '../../components/common/SiteMark';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { applyMe } from '../../stores/loggedUser';
 import gql from 'graphql-tag';

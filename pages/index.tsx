@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import WsConnect from '../multiplay/wsConnection';
 import PageTitle from '../components/common/PageTItle';
-import SiteMark from '../components/SiteMark';
+import SiteMark from '../components/common/SiteMark';
 import { validateEmail, validatePw } from '../config/regexChecks';
 import { gql, useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useRouter } from 'next/dist/client/router';

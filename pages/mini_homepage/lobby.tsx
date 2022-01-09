@@ -6,7 +6,7 @@ import { Cache, useQuery, Resolver, makeVar, useReactiveVar, useLazyQuery } from
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
-import SiteMark from '../../components/SiteMark';
+import SiteMark from '../../components/common/SiteMark';
 import { applyMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
 import { GETME } from '../../config/gql-queries/user';

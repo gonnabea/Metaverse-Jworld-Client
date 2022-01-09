@@ -2,7 +2,7 @@ import { NextPage } from "next"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import PageTitle from "../components/common/PageTItle"
-import SiteMark from "../components/SiteMark"
+import SiteMark from "../components/common/SiteMark"
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
 import { useRouter } from "next/dist/client/router"
