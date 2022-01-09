@@ -20,7 +20,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
     
     
     const createModelStatus = async () => {
-
+        console.log(allModelsStatus.frame1)
         allModelsStatus.frame1.map(({ position, installed, scale, rotateY }, index) => {
             
             const modelStatus = {

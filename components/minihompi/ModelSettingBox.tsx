@@ -1,6 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { ReactElement, useEffect, useState } from "react";
 import { applyThreeModels, setAllModelsStatus } from "../../stores/setAllThreeModels";
+import { addModel } from "../../stores/ThreeModels";
 import { modelNameTypes } from "../../types/common";
 
 
@@ -81,6 +82,24 @@ const ModelSettingBox = ({
 
         return findFocusedIndex
     }
+
+    const createModelStatus = async () => {
+        console.log(allModelsStatus[modelName])
+        allModelsStatus[modelName].map(({ position, installed, scale, rotateY }, index) => {
+            
+            const modelStatus = {
+              name: modelName,
+              position,
+              installed,
+              scale: {x: scale, y: scale, z: scale},
+              rotateY,
+              index
+            }
+            addModel(modelStatus)
+
+        }) 
+        
+      }
 
     
 
@@ -217,6 +236,8 @@ const ModelSettingBox = ({
                      }
 
                  }
+
+                 createModelStatus()
                
                 setRerender(value => value +1)
                  
