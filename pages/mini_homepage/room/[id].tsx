@@ -81,6 +81,7 @@ query getThreeModels($id: Float!) {
       scale
       rotateY
       position
+      index
     }
   }
 }
@@ -167,6 +168,7 @@ const MiniHomepage:NextPage = (props) => {
       Object.values(modelNameTypes).forEach(modelName => {
         
         const modelsStatus = allModelsStatus[modelName];
+        
 
         // 같은 모델 클론 포커싱 상태도 지워주기
         modelsStatus.map((status, index) => {
@@ -184,6 +186,7 @@ const MiniHomepage:NextPage = (props) => {
     }
 
 
+    // 서버에 요청 후 데이터 불러오기 & 배치
     const getInfos = async() => {
       
 
@@ -208,7 +211,7 @@ const MiniHomepage:NextPage = (props) => {
 
 
         // 방 입장 시 저장된 3D 모델 로드 & 배치하기
-        getThreeModels.models.forEach(({installed, name: modelName, rotateY, scale, position}: {
+        getThreeModels.models.forEach(({installed, name: modelName, rotateY, scale, position, index}: {
           name: modelNameTypes;
           installed: boolean;
           scale: { x: string, y: string, z:string };
@@ -218,19 +221,20 @@ const MiniHomepage:NextPage = (props) => {
           videoUrl?: string;
           imageUrl?: string;
           textContents?: string;
+          index?: number;
         }) => {
 
             
-     
         
+        // 디폴트 상태의 모델 상태 가져오기
         const modelsStatus = allModelsStatus[modelName];
-
-        // 같은 모델 클론 포커싱 상태도 지워주기
+        
+        
         if(modelsStatus)
         modelsStatus.forEach(status => {
           setAllModelsStatus({
             modelName,
-            index: 0,
+            index,
             status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false}
           })
         })

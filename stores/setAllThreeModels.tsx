@@ -6,7 +6,7 @@ import { modelNameTypes } from "../types/common";
 
 interface UpdateModelStatusInput {
   modelName: modelNameTypes;
-  index: number;
+  index?: number;
   status: {
     installed: boolean;
     scale: number;
