@@ -16,6 +16,7 @@ import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
 import { GETME } from '../config/gql-queries/user';
 import { applyChatStatus, setChatStatus } from '../stores/chatStatus';
+import useGetMe from '../hooks/useGetMe';
 
 
 
@@ -30,7 +31,6 @@ const Lobby:NextPage = () => {
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
     const [chatContents, setChatContents] = useState<any>([]);
     const [newMsgCount, setNewMsgCount] = useState<number>(0);
-    const [jwtToken, setJwtToken] = useState<string | null>()
     const [nickname, setNickname] = useState();
     const [userId, setUserId] = useState(); 
     const chatInput = useRef<HTMLInputElement>();
@@ -39,24 +39,17 @@ const Lobby:NextPage = () => {
 
   
     // 로비 입장 시 로그인 된 유저 정보 가져오기
-    const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
-        context: {
-            headers: {
-                "Authorization":  "Bearer " + jwtToken
-            }
-        }
-        
-    })
+    const [reqGetMe, getMeLoading] = useGetMe()
+
+    
     
     const getMe = async() => {
-        setJwtToken(localStorage.getItem("jwt_token"));
-        console.log(jwtToken)
-        
-            // 회원일 시
-            const {data: {getMe: {user}} } = await reqGetMe()
-            console.log(user)
-            setNickname(user.nickname);
-            setUserId(user.id);
+  
+        // 회원일 시
+        const {data: {getMe: {user}} } = await reqGetMe()
+        console.log(user)
+        setNickname(user.nickname);
+        setUserId(user.id);
             
         
         

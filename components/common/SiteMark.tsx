@@ -7,7 +7,7 @@ import { CREATEHOMPI } from "../../config/gql-queries/miniHompi";
 interface props {
     title?: string;
     bgColor?: string;
-    handleLeave: Function;
+    handleLeave?: Function;
 }
 
 

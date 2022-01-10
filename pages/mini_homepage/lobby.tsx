@@ -14,6 +14,7 @@ import BottomUI from '../../components/common/BottomUI';
 import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
 import socketIoClient from '../../multiplay/wsConnection';
 import { GETROOMS } from '../../config/gql-queries/miniHompi';
+import useGetMe from '../../hooks/useGetMe';
 
 
 
@@ -29,7 +30,7 @@ const MiniHompiLobby:NextPage = () => {
     const [localChats, setLocalChats] = useState([]);
     
     const router = useRouter()
-    const [jwtToken, setJwtToken] = useState<string | null>()
+
     
  
     // const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
@@ -42,19 +43,14 @@ const MiniHompiLobby:NextPage = () => {
     // })
 
     const {data, loading, error} = useQuery(GETROOMS)
+    const [reqGetMe, getMeLoading] = useGetMe()
     
     // 로비 입장 시 로그인 된 유저 정보 가져오기
-    const [reqGetMe, {loading: getUserLoading, error: getUserErr}] = useLazyQuery(GETME, {
-        context: {
-            headers: {
-                "Authorization":  "Bearer " + jwtToken
-            }
-        }
+    
+    const getUserFromToken = async() => {      
         
-    })
-
-    const getUserFromToken = async() => {
-        const {data: {getMe: {user}} } = await reqGetMe()
+        const { data: {getMe: {user}} } = await reqGetMe()
+        console.log(user)
         setUserId(user.id)
     }
 
@@ -105,7 +101,7 @@ const MiniHompiLobby:NextPage = () => {
     
     useEffect(() => {
         
-        setJwtToken(localStorage.getItem("jwt_token"));
+        console.log(me)
         if(!me) {
             getUserFromToken()
         }
