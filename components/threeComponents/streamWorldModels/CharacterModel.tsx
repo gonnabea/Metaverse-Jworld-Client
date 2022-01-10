@@ -22,19 +22,16 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
 
     const characterRef = useRef();
 
-
-
-
-    
-    
-    
-    
-    
     const gltf = useLoader(GLTFLoader, modelList.character);
     const { nodes, materials, animations } = useGLTF(modelList.character) as GLTFResult;
     const group = useRef<THREE.Group>()
-    console.log(animations)
+
     const { actions } = useAnimations<GLTFActions>(animations, group)
+
+    const [positionX, setPositionX] = useState(1);
+    const [positionY, setPositionY] = useState(0);
+    const [positionZ, setPositionZ] = useState(1);
+    const [rotationZ, setRotationZ] = useState([0,0,0]);
 
     // const mixer = new THREE.AnimationMixer(gltf.scene);
     // const {clips} = useAnimations(gltf.animations, characterRef);
@@ -61,9 +58,10 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     
     let MOVESPEED = 3
       const [mesh, api] = useSphere(() => ({ 
-          mass:10, 
-          type: 'Dynamic',
-          args: [0.5],
+          mass:1, 
+          type: "Dynamic",
+          args: [0.2],
+          
           
           onCollideBegin: (e) => { 
           
@@ -75,7 +73,9 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
               }
               else if(e.body.name === "stair") {
                   console.log("계단과 충돌")
-                    
+                  console.log(Number(forward), Number(backward))
+                  if(Number(forward) === 0 && Number(backward) === 0)
+                    api.velocity.set(0,0,0)
               }
               else {
                   console.log("물체와 충돌")
@@ -105,16 +105,18 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
               .multiplyScalar(MOVESPEED) // 이동 속도
         
             api.velocity.set(direction.x, 0, direction.z)
-
-            mesh.current.getWorldPosition(characterRef.current.position) // mesh와 캐릭터의 위치 동기화
-            console.log(Number(right))
-            console.log(characterRef.current.rotation.z)
-
+            
+            mesh.current.getWorldPosition(characterRef.current.position) // mesh와 캐릭터의 위치 동기화 - 캐릭터의 위치를 mesh의 위치로
+   
+            // characterRef.current.rotation.z = direction.x + direction.z
             characterRef.current.rotation.z < 1.7 ? characterRef.current.rotation.z += Number(right) / 5 : null;
             characterRef.current.rotation.z > -1.7 ? characterRef.current.rotation.z -= Number(left) / 5 : null;
             characterRef.current.rotation.z > -3.4 ? characterRef.current.rotation.z -= Number(backward) / 5 : null;
             characterRef.current.rotation.z < 0 ? characterRef.current.rotation.z += Number(forward) / 5 : null;
 
+            setPositionX(characterRef.current.position.x)
+            setPositionY(characterRef.current.position.y)
+            setPositionZ(characterRef.current.position.z)
 
 
 
@@ -173,13 +175,10 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                         document.body.style.cursor = "default"
                     }}> 
                         <ThirdPersonCamera 
-                            positionX={0} 
-                            positionY={0} 
-                            positionZ={0} 
-                            moveNumX={0} 
-                            moveNumZ={0} 
-                            prevPositionX={0}
-                            prevPositionZ={0}
+                            positionX={positionX} 
+                            positionY={positionY} 
+                            positionZ={positionZ} 
+                            rotationZ={rotationZ}
                         />
 
                         <primitive 
@@ -191,7 +190,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             </group>
 
             <mesh ref={mesh}>
-          <sphereGeometry args={[0.2,0.1,0.2]} />
+          <sphereGeometry args={[0.1]} />
           <meshStandardMaterial color="orange" />
           
         </mesh>

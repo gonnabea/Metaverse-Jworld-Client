@@ -146,7 +146,7 @@ const World:NextPage = () => {
         
         if(props.isGround === true){
           return (
-              <mesh ref={ref} name={"ground1"} visible={false} >
+              <mesh ref={ref} name={"ground1"} visible={true} >
                 <boxGeometry args={props.args}  />
                 <meshStandardMaterial color="orange"  />
               </mesh>
@@ -155,7 +155,7 @@ const World:NextPage = () => {
         }
         else if(props.isStair === true) {
           return (
-            <mesh ref={ref} name={"stair"} visible={false}   >
+            <mesh ref={ref} name={"stair"} visible={true}   >
               <boxGeometry args={props.args}  />
               <meshStandardMaterial color="orange"  />
             </mesh>
@@ -164,7 +164,7 @@ const World:NextPage = () => {
         }
         else {
           return (
-          <mesh ref={ref} visible={false}   >
+          <mesh ref={ref} visible={true}   >
           <boxGeometry args={props.args}  />
           <meshStandardMaterial color="orange"  />
         </mesh>
@@ -202,7 +202,7 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
           <SiteMark title={"Stream World"} bgColor={"bg-black"} handleLeave={leaveRoom} />
-          <BottomUI />
+         
           <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />
@@ -219,7 +219,7 @@ const World:NextPage = () => {
           {/* <Box position={[-1.2, 0, 0]} />
           <Box position={[1.2, 0, 0]} /> */}
 
-          <Physics gravity= {[0, -1000, 0]} >
+          <Physics gravity= {[0, -100, 0]} >
             <Suspense fallback={null}>
               <StreamWorldModel />
               <CharacterModel 
@@ -243,7 +243,7 @@ const World:NextPage = () => {
               <ObstacleBox position={[0,2,-7.5]} args= {[21, 4, 0.1]} />
 
               {/* 계단 위 바닥 */}
-              <ObstacleBox position={[0,-0.1,0]} args= {[21, 0.1, 15]} isGround={true} />
+              <ObstacleBox position={[0,-0.3,0]} args= {[20, 0.1, 15]} isGround={true} />
 
               {/* 계단 아래 바닥 */}
               <ObstacleBox position={[15,-2.2,0]} args= {[10, 0.1, 15]} isGround={true} />
