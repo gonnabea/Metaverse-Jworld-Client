@@ -38,6 +38,7 @@ import SphereIndicator from '../../../components/common/Indicator';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { modelNameTypes } from '../../../types/common';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
+import RoomController from '../../../components/minihompi/RoomController';
 
 
 
@@ -150,7 +151,7 @@ const MiniHomepage:NextPage = (props) => {
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
 
     // 방 크기 조절 state
-    const [roomScale, setRoomScale] = useState(0.3);
+    const [roomScale, setRoomScale] = useState(0.4);
 
     // 카페트1 관련 state
     const [carpet1Num, setCarpet1Num] = useState(1);
@@ -229,6 +230,11 @@ const MiniHomepage:NextPage = (props) => {
           textContents?: string;
           index?: number;
         }) => {
+
+          // 저장된 방 크기 불러오기
+          if(modelName === modelNameTypes.room) {
+            setRoomScale(0.4)
+          }
           
             
         
@@ -269,12 +275,11 @@ const MiniHomepage:NextPage = (props) => {
           
           <div className="z-10 absolute">
 
-              {/* {isMyRoom ? <ModelSettingBox 
-                modelName={"방"} 
-                scaleState={roomScale}
-                setScaleState={setRoomScale}
+              {/* {isMyRoom ? <RoomController 
+                roomScale={roomScale}
+                setRoomScale={setRoomScale}
                 
-                backgroundColor="green"
+                
               /> : null} */}
 
               {/* CSS 3D 메모장*/}

@@ -6,6 +6,7 @@ import { modelNameTypes } from "../../types/common";
 
 
 
+
 interface props {
     modelName: modelNameTypes;
     modelImgUrl?: string;
@@ -236,7 +237,7 @@ const ModelSettingBox = ({
                 {"회전"}
             </span>
              <div>
-                <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].rotateY} max="7" min="0"  step="0.1" 
+                <input type="range" value={allModelsStatus[modelName][findFocusedIndex()].rotateY} max="6.28" min="0"  step="0.02" 
                 onChange={(e) =>{
                     // setModelStatus({
                     //     ...modelStatus,

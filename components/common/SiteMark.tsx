@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 interface props {
     title?: string;
     bgColor?: string;
+    handleLeave: Function;
 }
 
 
@@ -21,7 +22,7 @@ mutation createMiniHompi($createMiniHompiInput: CreateMiniHompiInput!) {
 
 
 
-const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
+const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500", handleLeave}: props) => {
 
     const [jwtToken, setJwtToken] = useState()
     const [reqCreateHompi, {data, error, loading}] = useMutation(CREATEHOMPI, {
@@ -47,7 +48,7 @@ const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500"}: props) => {
         {/* 스트림월드일 경우 */}
         {router.pathname === "/stream_world/[id]" ? 
         <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic z-10" 
-        onClick={() => {router.push("/lobby");}}>EXIT</button> : null}
+        onClick={() => {handleLeave(); router.push("/lobby");}}>EXIT</button> : null}
 
         {/* 스트림월드 로비일 경우 */}
         {router.pathname ==="/lobby" || router.pathname === "/mini_homepage/room/[id]" ?  <button className="z-10 absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 

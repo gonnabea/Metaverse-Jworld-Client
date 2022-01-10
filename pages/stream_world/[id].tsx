@@ -17,6 +17,7 @@ import { applyMe } from '../../stores/loggedUser';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router'
 import { GETME } from '../../config/gql-queries/user';
+import BottomUI from '../../components/common/BottomUI';
 
 
 
@@ -84,7 +85,7 @@ const World:NextPage = () => {
     })
 
     socketIoClient.on("disconnect", (data) => {
-      
+      leaveLobby()
     })
 
 
@@ -163,7 +164,7 @@ const World:NextPage = () => {
         }
         else {
           return (
-          <mesh ref={ref} visible={true}   >
+          <mesh ref={ref} visible={false}   >
           <boxGeometry args={props.args}  />
           <meshStandardMaterial color="orange"  />
         </mesh>
@@ -192,6 +193,8 @@ const World:NextPage = () => {
         getRoomId()
         getMe()
 
+       
+
         
         
       }, [])
@@ -199,6 +202,7 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
           <SiteMark title={"Stream World"} bgColor={"bg-black"} handleLeave={leaveRoom} />
+          <BottomUI />
           <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />

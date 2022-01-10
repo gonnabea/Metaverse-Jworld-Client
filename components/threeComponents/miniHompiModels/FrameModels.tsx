@@ -166,9 +166,9 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
             <>
             {/* 첫번째 액자 모델 */}
             <primitive 
-                onClick={() => {
+                onClick={(e) => {
                     console.log("액자1 클릭")
-                    if(isMyRoom) {
+                    console.log(e)
                         initFocused()
     
                         setAllModelsStatus({
@@ -182,7 +182,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                         
                        
                         setRerender(value => value + 1)
-                    }
+                    
             }} 
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
                 onPointerOver={() => {
@@ -209,10 +209,10 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                     return (
                         <>
                         <primitive 
-                            onClick={() => {
-
+                            onClick={(e) => {
+                                console.log(e)
                                 console.log(`액자1_${index} 클릭`)
-                                if(isMyRoom) {
+                                
                                     initFocused()
                                     console.log(model.position,model.isFocused)
                                     setAllModelsStatus({
@@ -225,7 +225,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                                     })
                                 
                                     setRerender(value => value + 1)
-                                }
+                                
                                 
                             }} 
                             position={[
@@ -248,7 +248,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                         <mesh position={[
                                 allModelsStatus.frame1[index].position.x, 
                                 allModelsStatus.frame1[index].position.y, 
-                                allModelsStatus.frame1[index].position.z + 0.8
+                                allModelsStatus.frame1[index].position.z+1
                             ]}
                             scale={allModelsStatus.frame1[index].scale}
                             rotation={[0, parseFloat(allModelsStatus.frame1[index].rotateY), 0]}>

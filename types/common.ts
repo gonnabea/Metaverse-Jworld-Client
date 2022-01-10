@@ -15,7 +15,8 @@ export interface ThreeModelOpts {
 
 
 export enum modelNameTypes {
-    carpet1 = 'carpet1',
+    room = 'room',
+    carpet1 = 'carpet1',    
     carpet2 = 'carpet2',
     tv = 'tv',
     standingLamp = 'standingLamp',
@@ -29,7 +30,7 @@ export enum modelNameTypes {
     tableLamp = "tableLamp",
     sofa = "sofa",
     chair2 = "chair2",
-    tv2 = "tv2"
+    tv2 = "tv2",
   
   }
 
