@@ -106,7 +106,18 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
             api.velocity.set(direction.x, 0, direction.z)
 
-            mesh.current.getWorldPosition(characterRef.current.position)
+            mesh.current.getWorldPosition(characterRef.current.position) // mesh와 캐릭터의 위치 동기화
+            console.log(Number(right))
+            console.log(characterRef.current.rotation.z)
+
+            characterRef.current.rotation.z < 1.7 ? characterRef.current.rotation.z += Number(right) / 5 : null;
+            characterRef.current.rotation.z > -1.7 ? characterRef.current.rotation.z -= Number(left) / 5 : null;
+            characterRef.current.rotation.z > -3.4 ? characterRef.current.rotation.z -= Number(backward) / 5 : null;
+            characterRef.current.rotation.z < 0 ? characterRef.current.rotation.z += Number(forward) / 5 : null;
+
+
+
+
           })
       
       
