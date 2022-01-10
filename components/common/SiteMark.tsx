@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
+import { CREATEHOMPI } from "../../config/gql-queries/miniHompi";
 
 interface props {
     title?: string;
@@ -9,16 +10,6 @@ interface props {
     handleLeave: Function;
 }
 
-
-const CREATEHOMPI = gql`
-mutation createMiniHompi($createMiniHompiInput: CreateMiniHompiInput!) {
-    createMiniHompi(input: $createMiniHompiInput) {
-      ok
-      error
-      
-    }
-  }
-`
 
 
 

@@ -13,39 +13,12 @@ import { GETME } from '../../config/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
 import socketIoClient from '../../multiplay/wsConnection';
+import { GETROOMS } from '../../config/gql-queries/miniHompi';
 
 
 
 
 
-//   const GETME = gql`
-//   query getMe {
-//       getMe {
-//         ok
-//         error
-//         user {
-//             id
-//             email
-//             nickname
-//         }
-//       }
-//     }
-//   `
-
-const GETROOMS = gql`
-  query getAllMiniHompis {
-    getAllMiniHompis {
-          ok
-          error
-          miniHompis {
-              id
-              createdAt
-              ownerId
-          }
-          hompisWithOwners
-      }
-  }
-`
 
 
 

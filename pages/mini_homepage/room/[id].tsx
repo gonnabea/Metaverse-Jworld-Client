@@ -39,73 +39,10 @@ import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThre
 import { modelNameTypes } from '../../../types/common';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
 import RoomController from '../../../components/minihompi/RoomController';
+import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../config/gql-queries/miniHompi';
 
 
 
-// gql`
-// query articlesByCategory($id: String!) {
-//   postsByCategory(id: $id) {
-//     id
-//   }
-// }
-// `
-
-const GET_ROOMSTATUS = gql`
-query getMiniHompi($id: Float!){
-  getMiniHompi(input: {
-    id: $id
-  }) {
-    ok
-    error
-    miniHompi{
-      ownerId
-      id
-      scale
-    }
-  }
-}
-`
-
-
-
-
-const GET_THREE_MODELS = gql`
-query getThreeModels($id: Float!) {
-  getThreeModels(input: {
-    id: $id
-  }) {
-    ok
-    error
-    models{
-      name
-      id
-      installed
-      scale
-      rotateY
-      position
-      index
-    }
-  }
-}
-`
-
-const SAVE_MODELS = gql`
-
-mutation saveThreeModels($saveThreeModelInput: SaveThreeModelInput!) {
-  saveThreeModels(input:$saveThreeModelInput) {
-    ok
-  }
-}
-`
-
-// const JOIN = gql`
-// mutation join($email: String!, $nickname: String!, $password: String!, $password2: String!) {
-//   join(input:{email: $email, nickname: $nickname, password: $password, password2: $password2}) {
-//     ok,
-//     error
-//   }
-// }
-// `
 
 
 

@@ -11,6 +11,7 @@ import { validateEmail, validatePw } from '../config/regexChecks';
 import { gql, useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useRouter } from 'next/dist/client/router';
 import { applyMe, setMe } from '../stores/loggedUser';
+import { LOGIN } from '../config/gql-queries/user';
 
 // query dog($breed:String!){ // query = dog($breed:String!) 선택
 //   dog(breed:$breed){	// query 사용
@@ -19,15 +20,7 @@ import { applyMe, setMe } from '../stores/loggedUser';
 //   }
 // }
 
-const LOGIN = gql`
-query login($loginInput: LoginInput!){
-  login(input:$loginInput) {
-    ok
-    token
-    error
-  }
-}
-`
+
 
 const Login: NextPage = () => {
 

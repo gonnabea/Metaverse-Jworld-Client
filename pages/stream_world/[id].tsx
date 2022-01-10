@@ -20,21 +20,6 @@ import { GETME } from '../../config/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 
 
-
-// const GETME = gql`
-// query getMe {
-//     getMe {
-//       ok
-//       error
-//       user {
-//           id
-//           email
-//           nickname
-//       }
-//     }
-//   }
-// `
-
 const World:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
 

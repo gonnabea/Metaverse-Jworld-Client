@@ -23,3 +23,13 @@ mutation join($email: String!, $nickname: String!, $password: String!, $password
   }
 }
 `
+
+export const LOGIN = gql`
+query login($loginInput: LoginInput!){
+  login(input:$loginInput) {
+    ok
+    token
+    error
+  }
+}
+`
