@@ -14,6 +14,7 @@ import usePersonControls from '../../../hooks/usePersonControl';
 interface CharacterModelOpts {
     scale: number[]
     rotation: number[]
+    position?: number[]
 }
 
 // let moveNum = 0
@@ -73,9 +74,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
               }
               else if(e.body.name === "stair") {
                   console.log("계단과 충돌")
-                  console.log(Number(forward), Number(backward))
-                  if(Number(forward) === 0 && Number(backward) === 0)
-                    api.velocity.set(0,0,0)
+                  
               }
               else {
                   console.log("물체와 충돌")
@@ -168,6 +167,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                     
                     scale={scale} 
                     rotation={rotation}
+                   
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
                     }}

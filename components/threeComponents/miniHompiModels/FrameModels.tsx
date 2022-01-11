@@ -209,6 +209,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                     return (
                         <>
                         <primitive 
+                            
                             onClick={(e) => {
                                 console.log(e)
                                 console.log(`액자1_${index} 클릭`)

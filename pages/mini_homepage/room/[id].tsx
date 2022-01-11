@@ -17,7 +17,7 @@ import BookModel from '../../../components/threeComponents/miniHompiModels/BookM
 import Book3D from '../../../components/Book3d';
 import ChairModel from '../../../components/threeComponents/miniHompiModels/ChairModel';
 import CurtainModel from '../../../components/threeComponents/miniHompiModels/CurtainModel';
-import { Physics } from '@react-three/cannon';
+import { Physics, useBox, usePlane } from '@react-three/cannon';
 import FrameModel from '../../../components/threeComponents/miniHompiModels/FrameModels';
 import Frame2Model from '../../../components/threeComponents/miniHompiModels/Frame2Model';
 import TableModel from '../../../components/threeComponents/miniHompiModels/TableModel';
@@ -40,6 +40,7 @@ import { modelNameTypes } from '../../../types/common';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
 import RoomController from '../../../components/minihompi/RoomController';
 import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../config/gql-queries/miniHompi';
+import CharacterModel from '../../../components/threeComponents/streamWorldModels/CharacterModel';
 
 
 
@@ -195,6 +196,39 @@ const MiniHomepage:NextPage = (props) => {
       
     }
 
+    function ObstacleBox(props) {
+      const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
+        
+      }  }))
+      
+      if(props.isGround === true){
+        return (
+            <mesh ref={ref} name={"ground1"} visible={true} >
+              <boxGeometry args={props.args}  />
+              <meshStandardMaterial color="orange"  />
+            </mesh>
+
+        )
+      }
+      else if(props.isStair === true) {
+        return (
+          <mesh ref={ref} name={"stair"} visible={true}   >
+            <boxGeometry args={props.args}  />
+            <meshStandardMaterial color="orange"  />
+          </mesh>
+
+      )
+      }
+      else {
+        return (
+        <mesh ref={ref} visible={true}   >
+        <boxGeometry args={props.args}  />
+        <meshStandardMaterial color="orange"  />
+      </mesh>
+        )
+      }
+    }
+
     useEffect(() => {
       
       getInfos()
@@ -273,7 +307,13 @@ const MiniHomepage:NextPage = (props) => {
               <Suspense fallback={null}>
               <EffectComposer>
               
-              <Physics gravity= {[0, -1000, 0]} >
+              <Physics gravity= {[0, -10, 0]} >
+              {/* <ObstacleBox position={[0,-0.3,0]} args= {[100, 0.1, 100]} isGround={true} /> */}
+              {/* <CharacterModel 
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.1,0.1,0.1]} 
+              position={[0,10,0]}
+              />   */}
                   <RoomModel roomScale={roomScale}  />
                   <FrameModel rerender={rerender} setRerender={setRerender} initFocused={initFocused} />
                   {/* <Carpet1Model modelStatus={allModelsStatus.carpet1} threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num}   /> */}
