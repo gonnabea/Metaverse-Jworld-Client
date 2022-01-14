@@ -1,7 +1,9 @@
 import { useReactiveVar } from "@apollo/client";
 import { useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
+import fileApi from "../../apis/axios/fileUpload";
 import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
+import fs from "fs"
 
 interface props {
     chatContents: Array<any>
@@ -139,14 +141,48 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
         {/* 설정 모달 */}
         {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
-            <form method="post" action="" encType="multipart/form-data" >
+            <form 
+                method="post" 
+                onSubmit={(e) => {
+                    e.preventDefault()
+ 
+                    const file = e.target["imgFile"].files[0];
+                    const imgForm = new FormData();
+                    
+                    imgForm.append("file", file)
+                    imgForm.append("title", e.target["title"].value)
+                    imgForm.append("description",e.target["description"].value)
+
+                    fileApi.uploadImg({
+                        fileForm: imgForm
+                })}} 
+                encType="multipart/form-data" 
+                >
                 <label htmlFor="imgFile" className="p-1">이미지 파일</label>
+                <input type="text" required={true} name="title" placeholder="이미지 제목" />
+                <input type="text" required={true} name="description" placeholder="이미지 설명 / 소개"/>
                 <input type="file" name="imgFile" onChange={(e) => checkFile(e, "image")} />
                 <input type="submit" value="업로드" />
             </form>
 
-            <form method="post" action="" encType="multipart/form-data" >
+            <form method="post"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    const videoForm = new FormData();
+
+                    videoForm.append("file", e.target.files[0])
+                    videoForm.append("title", e.target["title"].value)
+                    videoForm.append("description",e.target["description"].value)
+
+                    fileApi.uploadVideo({
+                        fileForm: videoForm,
+                })
+                }
+            }
+                action="" encType="multipart/form-data" >
                 <label htmlFor="videoFile" className="p-1">비디오 파일</label>
+                <input type="text" required={true} name="title" placeholder="비디오 제목" />
+                <input type="text" required={true} name="description" placeholder="비디오 설명 / 소개"/>
                 <input type="file" name="videoFile" onChange={(e) => checkFile(e, "video")} />
                 <input type="submit" value="업로드" />
             </form>

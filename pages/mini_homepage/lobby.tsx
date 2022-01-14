@@ -9,11 +9,11 @@ import { useRouter } from 'next/router';
 import SiteMark from '../../components/common/SiteMark';
 import { applyMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
-import { GETME } from '../../config/gql-queries/user';
+import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
 import socketIoClient from '../../multiplay/wsConnection';
-import { GETROOMS } from '../../config/gql-queries/miniHompi';
+import { GETROOMS } from '../../apis/gql-queries/miniHompi';
 import useGetMe from '../../hooks/useGetMe';
 
 

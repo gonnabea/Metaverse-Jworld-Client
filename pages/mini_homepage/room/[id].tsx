@@ -39,7 +39,7 @@ import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThre
 import { modelNameTypes } from '../../../types/common';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
 import RoomController from '../../../components/minihompi/RoomController';
-import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../config/gql-queries/miniHompi';
+import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../apis/gql-queries/miniHompi';
 import CharacterModel from '../../../components/threeComponents/streamWorldModels/CharacterModel';
 
 

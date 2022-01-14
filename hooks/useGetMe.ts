@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { GETME } from "../config/gql-queries/user";
+import { GETME } from "../apis/gql-queries/user";
 
     
 // 로그인 된 유저 정보 가져오기

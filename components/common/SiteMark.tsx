@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
-import { CREATEHOMPI } from "../../config/gql-queries/miniHompi";
+import { CREATEHOMPI } from "../../apis/gql-queries/miniHompi";
 
 interface props {
     title?: string;

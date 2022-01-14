@@ -6,7 +6,7 @@ import SiteMark from "../components/common/SiteMark"
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { validateEmail, validatePw } from "../config/regexChecks"
 import { useRouter } from "next/dist/client/router"
-import { JOIN } from "../config/gql-queries/user"
+import { JOIN } from "../apis/gql-queries/user"
 
 
 
