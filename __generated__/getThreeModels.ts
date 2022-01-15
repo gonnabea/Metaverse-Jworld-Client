@@ -15,6 +15,7 @@ export interface getThreeModels_getThreeModels_models {
   scale: any;
   rotateY: string;
   position: any;
+  index: number | null;
 }
 
 export interface getThreeModels_getThreeModels {

@@ -3,7 +3,10 @@ import { useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
 import fileApi from "../../apis/axios/fileUpload";
 import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
-import fs from "fs"
+import { applyMe } from "../../stores/loggedUser";
+import useGetMe from "../../hooks/useGetMe"
+
+
 
 interface props {
     chatContents: Array<any>
@@ -48,6 +51,9 @@ function checkFile(el, fileType){
 const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createRoom, startBgm }:props) => {
 
     const applyStore = useReactiveVar(applyChatStatus);
+    const [reqGetMe, loading] = useGetMe();
+    const [images, setImages] = useState([]);
+   
 
     
     const [showChats, setShowChats] = useState(false);
@@ -56,17 +62,34 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
     const [btnSoundEffect, setBtnSoundEffect] = useState();
     const chattingPop = useRef();
 
+    const getMe = async() => {
+  
+        // 회원일 시
+        const {data: {getMe: {user}} } = await reqGetMe()
+        console.log(user.id)
    
+        const imageData = await getImages(user.id);
+        setImages(imageData)
+    }
+      
     const playBtnSoundEffect = () => {
         btnSoundEffect.volume = 0.3
         btnSoundEffect.play()
+    }
+
+    const getImages = async(userId: number) => {
+        if(userId) {
+            const images = await fileApi.getImages({ ownerId: userId });
+            console.log(images)
+            return images.data
+        }
     }
 
   
     useEffect(() => {
         setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`));
         chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
-
+        getMe()
         // 채팅 전역 상태관리
         setChatStatus({
             chatContents,
@@ -141,6 +164,16 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
         {/* 설정 모달 */}
         {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
+            {/* 이미지 모델 리스트 */}
+            <div>
+                {images.map((image) => {
+                    return (
+                        <img src={image.imageUrl}></img>
+                    )
+                })}
+            </div>
+            
+            
             <form 
                 method="post" 
                 onSubmit={(e) => {
@@ -170,7 +203,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                     e.preventDefault()
                     const videoForm = new FormData();
 
-                    videoForm.append("file", e.target.files[0])
+                    videoForm.append("file", e.target["videoFile"].files[0])
                     videoForm.append("title", e.target["title"].value)
                     videoForm.append("description",e.target["description"].value)
 
