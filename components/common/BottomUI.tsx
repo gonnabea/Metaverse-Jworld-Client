@@ -5,6 +5,7 @@ import fileApi from "../../apis/axios/fileUpload";
 import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
 import { applyMe } from "../../stores/loggedUser";
 import useGetMe from "../../hooks/useGetMe"
+import ImageList from "../ImageList";
 
 
 
@@ -47,12 +48,17 @@ function checkFile(el, fileType){
 }
 
 
+interface image {
+    title: string;
+    description: string;
+    imageUrl: string;
+}
 
 const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createRoom, startBgm }:props) => {
 
     const applyStore = useReactiveVar(applyChatStatus);
     const [reqGetMe, loading] = useGetMe();
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState<[] | image[]>([]);
    
 
     
@@ -69,6 +75,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         console.log(user.id)
    
         const imageData = await getImages(user.id);
+        console.log(imageData)
         setImages(imageData)
     }
       
@@ -162,17 +169,13 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
 
 
+            
         {/* 설정 모달 */}
         {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
             {/* 이미지 모델 리스트 */}
-            <div>
-                {images.map((image) => {
-                    return (
-                        <img src={image.imageUrl}></img>
-                    )
-                })}
-            </div>
-            
+         
+        
+            <ImageList images={images} />
             
             <form 
                 method="post" 
