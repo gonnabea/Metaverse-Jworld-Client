@@ -155,7 +155,7 @@ const ScrollMenu = ({
               {rating ? `${rating} / 10` : ""}
             </Rating>
             <Year>{year}</Year> */}
-            <Overview>{overview ? overview.substring(80, 0) + "..." : ""}</Overview>
+            <Overview>{overview ? overview.substring(80, 0) : ""}</Overview>
           </Infos>
         </ImageContainer>
       </Container>

@@ -15,7 +15,7 @@ const Title = styled.cite`
   font-size: 24px;
   font-weight: 700;
   color: black;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+
 `
 
 const Flex = styled.div`
@@ -80,6 +80,7 @@ const Slider = ({ title, children }) => {
       <Flex>
         <SlideBtn onClick={leftSliding}>{`<`}</SlideBtn>
         {children}
+        <EmptySpace />
         <EmptySpace />
         <EmptySpace />
         <EmptySpace />

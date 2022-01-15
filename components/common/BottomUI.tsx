@@ -121,7 +121,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         
         {/* 채팅 팝업 */}
         {showChats ? <>
-            <div ref={chattingPop} id="chatScreen" className="absolute bg-blue-200 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
+            <div ref={chattingPop} id="chatScreen" className="absolute bg-black bg-opacity-10 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
                 {chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold">{content.client}: </span>
                     <span className="">{content.msg}</span>
@@ -148,7 +148,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         }
 
         {/* 방만들기 모달 */}
-        {showRoomModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
+        {showRoomModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-10 flex-col">
         {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
         <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)}>
             <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
@@ -171,7 +171,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
             
         {/* 설정 모달 */}
-        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-blue-500 bg-opacity-25 flex-col">
+        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-20 flex-col z-20">
             {/* 이미지 모델 리스트 */}
          
         
@@ -179,6 +179,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             
             <form 
                 method="post" 
+                className="w-full flex h-20 items-center justify-center"
                 onSubmit={(e) => {
                     e.preventDefault()
  
@@ -194,14 +195,25 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                 })}} 
                 encType="multipart/form-data" 
                 >
-                <label htmlFor="imgFile" className="p-1">이미지 파일</label>
-                <input type="text" required={true} name="title" placeholder="이미지 제목" />
-                <input type="text" required={true} name="description" placeholder="이미지 설명 / 소개"/>
-                <input type="file" name="imgFile" onChange={(e) => checkFile(e, "image")} />
-                <input type="submit" value="업로드" />
+                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="이미지 제목" />
+                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="description" autoComplete="off" placeholder="이미지 설명 / 소개"/>
+
+                
+                <div className="overflow-hidden relative w-64 mt-2 mb-2 p-3">
+                    <span className="bg-blue-500 text-white font-bold h-10 px-4 w-full inline-flex items-center relative top-3.5 rounded">
+                        <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                        </svg>
+                        <span className="ml-2">이미지 파일 선택하기</span>
+                    </span>
+                    <input className="cursor-pointer pin-r pin-t block relative bottom-5 opacity-0" type="file" name="imgFile" onChange={(e) => checkFile(e, "image")} multiple />
+                </div>
+                <input className="bg-black rounded text-white hover:bg-blue-500 w-32 h-11 border-double border-4 font-bold z-30 m-2" type="submit" value="이미지 업로드" />
             </form>
 
             <form method="post"
+                className="w-full flex h-20 items-center justify-center"
                 onSubmit={(e) => {
                     e.preventDefault()
                     const videoForm = new FormData();
@@ -216,11 +228,20 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                 }
             }
                 action="" encType="multipart/form-data" >
-                <label htmlFor="videoFile" className="p-1">비디오 파일</label>
-                <input type="text" required={true} name="title" placeholder="비디오 제목" />
-                <input type="text" required={true} name="description" placeholder="비디오 설명 / 소개"/>
-                <input type="file" name="videoFile" onChange={(e) => checkFile(e, "video")} />
-                <input type="submit" value="업로드" />
+                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="비디오 제목" />
+                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2 active:w-full" type="text" required={true} name="description" autoComplete="off" placeholder="비디오 설명 / 소개"/>
+
+                <div className="overflow-hidden relative w-64 mt-2 mb-2 p-3">
+                    <span className="bg-blue-500 text-white font-bold h-10 px-4 w-full inline-flex items-center relative top-3.5 rounded">
+                        <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                        </svg>
+                        <span className="ml-2">비디오 파일 선택하기</span>
+                    </span>
+                    <input className="cursor-pointer pin-r pin-t block relative bottom-5 opacity-0" type="file" name="videoFile" onChange={(e) => checkFile(e, "video")} multiple />
+                </div>
+                <input className="bg-black rounded text-white hover:bg-blue-500 w-32 h-11 border-double border-4 font-bold z-30 m-2" type="submit" value="비디오 업로드" />
             </form>
             
             {/* <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action=""> */}
