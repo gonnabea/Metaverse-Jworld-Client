@@ -6,6 +6,7 @@ import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
 import { applyMe } from "../../stores/loggedUser";
 import useGetMe from "../../hooks/useGetMe"
 import ImageList from "../ImageList";
+import VideoList from "../videoList";
 
 
 
@@ -54,11 +55,18 @@ interface image {
     imageUrl: string;
 }
 
+interface video {
+    title: string;
+    description: string;
+    videoUrl: string;
+}
+
 const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createRoom, startBgm }:props) => {
 
     const applyStore = useReactiveVar(applyChatStatus);
     const [reqGetMe, loading] = useGetMe();
     const [images, setImages] = useState<[] | image[]>([]);
+    const [videos, setVideos] = useState<[] | video[]>([])
    
 
     
@@ -75,8 +83,11 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         console.log(user.id)
    
         const imageData = await getImages(user.id);
-        console.log(imageData)
+        const videoData = await getVideos(user.id);
         setImages(imageData)
+        setVideos(videoData)
+        console.log(imageData)
+        console.log(videoData)
     }
       
     const playBtnSoundEffect = () => {
@@ -89,6 +100,14 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             const images = await fileApi.getImages({ ownerId: userId });
             console.log(images)
             return images.data
+        }
+    }
+
+    const getVideos = async(userId: number) => {
+        if(userId) {
+            const videos = await fileApi.getVideos({ ownerId: userId });
+            console.log(videos)
+            return videos.data
         }
     }
 
@@ -171,11 +190,13 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
             
         {/* 설정 모달 */}
-        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-20 flex-col z-20">
-            {/* 이미지 모델 리스트 */}
+        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-20 flex-col z-20 pt-20 overflow-y-auto overflow-x-hidden">
          
-        
+            {/* 이미지 모델 리스트 */}
             <ImageList images={images} />
+
+            {/* 비디오 모델 리스트 */}
+            <VideoList videos={videos} />
             
             <form 
                 method="post" 
@@ -192,11 +213,14 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
                     fileApi.uploadImg({
                         fileForm: imgForm
-                })}} 
+                        })
+            
+                    window.location.replace("/lobby")
+            }} 
                 encType="multipart/form-data" 
                 >
-                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="이미지 제목" />
-                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="description" autoComplete="off" placeholder="이미지 설명 / 소개"/>
+                <input className="bg-gray-400 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="이미지 제목" />
+                <input className="bg-gray-400 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="description" autoComplete="off" placeholder="이미지 설명 / 소개"/>
 
                 
                 <div className="overflow-hidden relative w-64 mt-2 mb-2 p-3">
@@ -224,12 +248,14 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
                     fileApi.uploadVideo({
                         fileForm: videoForm,
-                })
+                    })
+                
+                    // window.location.replace("/lobby")
                 }
             }
                 action="" encType="multipart/form-data" >
-                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="비디오 제목" />
-                <input className="bg-blue-300 placeholder-white border-solid p-2 border-2 border-white rounded m-2 active:w-full" type="text" required={true} name="description" autoComplete="off" placeholder="비디오 설명 / 소개"/>
+                <input className="bg-gray-400 placeholder-white border-solid p-2 border-2 border-white rounded m-2" type="text" required={true} name="title" placeholder="비디오 제목" />
+                <input className="bg-gray-400 placeholder-white border-solid p-2 border-2 border-white rounded m-2 active:w-full" type="text" required={true} name="description" autoComplete="off" placeholder="비디오 설명 / 소개"/>
 
                 <div className="overflow-hidden relative w-64 mt-2 mb-2 p-3">
                     <span className="bg-blue-500 text-white font-bold h-10 px-4 w-full inline-flex items-center relative top-3.5 rounded">

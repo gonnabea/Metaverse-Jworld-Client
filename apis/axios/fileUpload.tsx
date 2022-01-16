@@ -56,12 +56,14 @@ const fileApi = {
         return data
     },
 
-    getVideos: async ({ ownerId }:GetFileInput) => 
-    await api.get("file/video_get", {
-        params: {
-            ownerId
-        }
-    }),
+    getVideos: async ({ ownerId }:GetFileInput) => {
+        const {data} = await api.get("file/video_get", {
+            params: {
+                ownerId
+            }
+        })
+        return data
+    }
 }
 
 export default fileApi;

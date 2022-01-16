@@ -6,7 +6,7 @@ const Container = styled.div`
   font-size: 12px;
   
 `
-const ImageContainer = styled.div`
+const FileContainer = styled.div`
   margin-bottom: 5px;
   height: 250px;
   
@@ -75,6 +75,7 @@ const Image = styled.img`
   }
 `
 
+
 const Infos = styled.div`
   position: relative;
   bottom: 200px;
@@ -132,32 +133,46 @@ const Overview = styled.p`
   line-height: 150%;
 `
 
+const Video = styled.video`
+  height: 190px;
+  max-width: none !important;
+`
+
 const ScrollMenu = ({
-  imageUrl,
+  imageUrl="",
+  videoUrl="",
   title,
   overview,
 }) => {
 
   return (
       <Container>
-        <ImageContainer>
+        <FileContainer>
+          {imageUrl !== "" ?
+          <>
           <Image
             onMouseEnter={(e) => mouseOn(e)}
             onMouseLeave={(e) => mouseOut(e)}
             bgUrl={imageUrl ? imageUrl : "No_Image.jpg"}
-          />
+          /> 
+
           <Infos>
             <Title>{title}</Title>
-            {/* <Rating>
-              <span role="img" aria-label="rating">
-                {rating ? "★" : ""}
-              </span>{" "}
-              {rating ? `${rating} / 10` : ""}
-            </Rating>
-            <Year>{year}</Year> */}
+
             <Overview>{overview ? overview.substring(80, 0) : ""}</Overview>
           </Infos>
-        </ImageContainer>
+          </>
+            : null}
+          {/* 비디오 컨텐츠인 경우에만 생성 */}
+            {videoUrl !== "" ?
+            <div className="text-center">
+                <Video src={videoUrl} controls={true} /> 
+                <Title>{title}</Title>
+                <Overview>{overview ? overview.substring(80, 0) : ""}</Overview>
+
+            </div>
+            : null}
+        </FileContainer>
       </Container>
     
   )
