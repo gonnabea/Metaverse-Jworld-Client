@@ -265,6 +265,48 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
         }
     ],
     tv2: [

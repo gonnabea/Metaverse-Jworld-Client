@@ -328,7 +328,7 @@ const MiniHomepage:NextPage = (props) => {
                   <Frame2Model rerender={rerender} setRerender={setRerender}/>
                   <TableModel rerender={rerender} setRerender={setRerender}/>
                   <SofaModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
-                  <Chair2Model rerender={rerender} setRerender={setRerender} />
+                  <Chair2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <TableLampModel rerender={rerender} setRerender={setRerender}  />
 
                   <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom}  />
