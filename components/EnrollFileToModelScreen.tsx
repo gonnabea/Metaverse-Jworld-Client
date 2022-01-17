@@ -34,7 +34,7 @@ interface focusedModelType {
     videoUrl?: string;
 }
 
-// 액자, tv 등에 파일 등록
+// 액자, tv 등에 파일 등록을 위한 UI
 const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
 
     const [images, setImages] = useState<[] | image[]>([]);
@@ -118,7 +118,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
 // 유저가 업로드한 이미지, 동영상 파일 리스트 UI
     return (
         show ? 
-        <div className="w-screen h-1/6 bg-gray-300 z-20 fixed bottom-0">
+        <div className="w-screen h-1/6 bg-gray-300 z-20 fixed bottom-0 flex">
             {console.log(images)}
         {images.map(image => {
            return <div onClick={async() => {
@@ -138,7 +138,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
                         return null
                     }
                 })
-
+                
                    
         setRerender((rerender:number) => rerender + 1)
                    

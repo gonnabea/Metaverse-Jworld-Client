@@ -45,7 +45,7 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
 
     const gltf = useLoader(GLTFLoader, modelList.frame1);
     const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ? imageUrl : defaultImgUrl); // 이미지 텍스쳐
-    const texture2 = useLoader(TextureLoader, allModelsStatus.frame1[3].imageUrl && allModelsStatus.frame1[3].imageUrl !=="false" ? allModelsStatus.frame1[3].imageUrl : defaultImgUrl); // 이미지 텍스쳐
+    
 
     const imgTextures = [];
 
@@ -110,7 +110,7 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
               index: findFocusedIndex(),
               status: {
                 ...allModelsStatus.frame1[findFocusedIndex()],
-                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
+                position: {x: closedObjPosition.x + 1, y: closedObjPosition.y, z: closedObjPosition.z + 1},
               }
           })
           setRerender(value => value + 1)
@@ -119,7 +119,7 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
       }
   };
 
-
+    // 현재 포커싱된 액자 찾기
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus.frame1.findIndex(model => model.isFocused === true);
         
@@ -182,7 +182,7 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
             />
 
             {/* 이미지 텍스쳐 */}
-            <mesh position={[position.x, position.y, position.z + 0.8]} scale={scale}
+            <mesh position={[position.x, position.y +0.35, position.z]} scale={scale}
             rotation={[0, parseFloat(rotateY), 0]}>
                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
                 <meshBasicMaterial attach="material" map={texture} />
@@ -196,13 +196,13 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
                         <>
                         <primitive 
                             
-                            onClick={(e) => {
+                            onClick={async(e) => {
                                 console.log(e)
                                 console.log(`액자1_${index} 클릭`)
                                     setShowUpdateUrlUI(true)
                                     initFocused()
                                     console.log(model.position,model.isFocused)
-                                    setAllModelsStatus({
+                                    await setAllModelsStatus({
                                         modelName: modelNameTypes.frame1,
                                         index,
                                         status: {
@@ -234,8 +234,8 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
                         {/* 이미지 텍스쳐 */}
                         <mesh position={[
                                 allModelsStatus.frame1[index].position.x, 
-                                allModelsStatus.frame1[index].position.y, 
-                                allModelsStatus.frame1[index].position.z+1
+                                allModelsStatus.frame1[index].position.y +0.35, 
+                                allModelsStatus.frame1[index].position.z
                             ]}
                             scale={allModelsStatus.frame1[index].scale}
                             rotation={[0, parseFloat(allModelsStatus.frame1[index].rotateY), 0]}>
