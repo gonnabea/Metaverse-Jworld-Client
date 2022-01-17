@@ -1,7 +1,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
@@ -11,6 +11,7 @@ import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 import Indicator from '../../common/Indicator';
+import { clone } from '../../../config/skeletonUtils';
 
 interface TV2ModelOpts extends ThreeModelOpts {
 
@@ -65,6 +66,14 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
 
+    const cloned = useMemo(() => clone(gltf.scene), [scene])
+    const cloned2 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned3 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned4 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned5 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned6 = useMemo(() => clone(gltf.scene), [scene])
+    const cloned7 = useMemo(() => clone(gltf.scene), [scene])
+
 
 
     const installModel = (e) => {
@@ -99,7 +108,10 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
     useEffect(() => {
         window.addEventListener("click", installModel)
      
+        // 비디오 변경 시 실시간 반영 위함
+        video.src= allModelsStatus.tv2[0].videoUrl
         void video.play()
+
         if(!installed) {
             video.pause()
         }
@@ -110,10 +122,7 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
         };
     }, [
         isFocused, 
-        // video, 
-        // video.paused, 
-        // video.src,        
-        allModelsStatus,
+         
         installed,
         video,
         videoUrl,

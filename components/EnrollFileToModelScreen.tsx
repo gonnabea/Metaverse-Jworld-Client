@@ -189,11 +189,11 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
                     }
                 })
                 
-        setRerender((rerender:number) => rerender + 1)
+                setRerender((rerender:number) => rerender + 1)
                    
                
             }}>
-            <video className="w-12 h-12" src={video.videoUrl} controls={true} />
+            <video className="w-30 h-20" src={video.videoUrl} controls={true} />
             <span>{video.title}</span>
             <p>{video.description}</p>
             </div>
