@@ -69,7 +69,7 @@ const ModelSettingBox = ({
 
     const createModelStatus = async () => {
         console.log(allModelsStatus[modelName])
-        allModelsStatus[modelName].map(({ position, installed, scale, rotateY }, index) => {
+        allModelsStatus[modelName].map(({ position, installed, scale, rotateY, imageUrl, videoUrl, textContents }, index) => {
             
             const modelStatus = {
               name: modelName,
@@ -77,7 +77,10 @@ const ModelSettingBox = ({
               installed,
               scale: {x: scale, y: scale, z: scale},
               rotateY,
-              index
+              index,
+              imageUrl,
+              videoUrl,
+              textContents
             }
             addModel(modelStatus)
 

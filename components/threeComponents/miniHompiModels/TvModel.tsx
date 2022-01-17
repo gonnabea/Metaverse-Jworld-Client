@@ -19,7 +19,7 @@ interface tvModelOpts extends ThreeModelOpts {
 const TvModel = ({rerender, setRerender,}: RerenderType) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
-    const { installed, scale, rotateY, isFocused, position, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" } = allModelsStatus.tv[0]
+    const { installed, scale, rotateY, isFocused, position, videoUrl } = allModelsStatus.tv[0]
 
 
     const createModelStatus = async () => {

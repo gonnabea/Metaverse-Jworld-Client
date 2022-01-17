@@ -184,7 +184,7 @@ const MiniHomepage:NextPage = (props) => {
             setAllModelsStatus({
               modelName,
             index: index ? index : 0,
-            status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false, imageUrl}
+            status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false, imageUrl, videoUrl}
           })
         })
         
@@ -316,7 +316,7 @@ const MiniHomepage:NextPage = (props) => {
               position={[0,10,0]}
               />   */}
                   <RoomModel roomScale={roomScale}  />
-                  <FrameModel rerender={rerender} setRerender={setRerender} initFocused={initFocused} showUpdateUrlUI={showUpdateUrlUI} setShowUpdateUrlUI={setShowUpdateUrlUI} />
+                  <FrameModel isMyRoom={isMyRoom} rerender={rerender} setRerender={setRerender} initFocused={initFocused} showUpdateUrlUI={showUpdateUrlUI} setShowUpdateUrlUI={setShowUpdateUrlUI} />
                   {/* <Carpet1Model modelStatus={allModelsStatus.carpet1} threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num}   /> */}
                   <Carpet2Model rerender={rerender} setRerender={setRerender} />
                   <TvModel rerender={rerender} setRerender={setRerender} />
@@ -331,7 +331,7 @@ const MiniHomepage:NextPage = (props) => {
                   <Chair2Model rerender={rerender} setRerender={setRerender} />
                   <TableLampModel rerender={rerender} setRerender={setRerender}  />
 
-                  <TV2Model rerender={rerender} setRerender={setRerender}  />
+                  <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom}  />
 
               </Physics>
               </EffectComposer>

@@ -12,10 +12,10 @@ import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../../common/Indicator';
 import { applyIsMyRoom } from '../../../stores/loggedUser';
 
-const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setShowUpdateUrlUI}) => {
+const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrlUI, setShowUpdateUrlUI}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     console.log(allModelsStatus.frame1)
-    const isMyRoom = useReactiveVar(applyIsMyRoom)
+
     const { installed, scale, rotateY, isFocused, position, imageUrl} = allModelsStatus.frame1[0]
     
     
@@ -153,22 +153,24 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
             {/* 첫번째 액자 모델 */}
             <primitive 
                 onClick={(e) => {
-                    console.log("액자1 클릭")
-                    console.log(e)
-                        initFocused()
-    
-                        setAllModelsStatus({
-                            modelName: modelNameTypes.frame1,
-                            index: 0,
-                            status: {
-                              ...allModelsStatus.frame1[0],
-                              isFocused: true
-                            }
-                        })
+                    if(isMyRoom) {
+                        console.log("액자1 클릭")
+               
+                            initFocused()
+                            setShowUpdateUrlUI(true)
+                            setAllModelsStatus({
+                                modelName: modelNameTypes.frame1,
+                                index: 0,
+                                status: {
+                                  ...allModelsStatus.frame1[0],
+                                  isFocused: true
+                                }
+                            })
+                            
+                            createModelStatus()
+                            setRerender(value => value + 1)
                         
-                       
-                        setRerender(value => value + 1)
-                    
+                    }
             }} 
                 position={[position.x, position.y, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
                 onPointerOver={() => {
@@ -197,8 +199,9 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
                         <primitive 
                             
                             onClick={async(e) => {
-                                console.log(e)
+                                
                                 console.log(`액자1_${index} 클릭`)
+                                if(isMyRoom){
                                     setShowUpdateUrlUI(true)
                                     initFocused()
                                     console.log(model.position,model.isFocused)
@@ -210,8 +213,9 @@ const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setSho
                                         isFocused: true
                                         }
                                     })
-                                
+                                    createModelStatus()
                                     setRerender(value => value + 1)
+                                }
                                 
                                 
                             }} 

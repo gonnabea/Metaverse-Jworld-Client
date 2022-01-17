@@ -6,7 +6,7 @@ import { AllModelsStatus } from "../data/modelList";
 import useGetMe from "../hooks/useGetMe";
 import useUpdateFileUrl from "../hooks/useUpdateFileUrl";
 import { applyThreeModels, setAllModelsStatus } from "../stores/setAllThreeModels";
-import { applyModels } from "../stores/ThreeModels";
+import { addModel, applyModels } from "../stores/ThreeModels";
 import { modelNameTypes } from "../types/threeModelTypes";
 import ImageList from "./ImageList";
 
@@ -54,7 +54,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
     
     const setMyInfo = async() => {
         const {data: {getMe: {user}} } = await reqGetMe();
-        setUser(user);
+   
         const images = await fileApi.getImages({ownerId: user.id});
         const videos = await fileApi.getVideos({ownerId: user.id});
 
@@ -99,14 +99,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
         
     }
     
-    // 모델에 이미지 붙이기
-    const updateImageUrl = async(imageUrl: string) => {
- 
-        setNewImgUrl(imageUrl)
 
-    
-        
-    }
     
     
     
@@ -119,7 +112,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
     return (
         show ? 
         <div className="w-screen h-1/6 bg-gray-300 z-20 fixed bottom-0 flex">
-            {console.log(images)}
+           
         {images.map(image => {
            return <div onClick={async() => {
                
@@ -127,6 +120,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
                 // 포커싱된 액자 찾고 업로드한 이미지 클릭 시 fileUrl 등록해주기 
                 applyThreeModels().frame1.map((frame, index: number) => {
                     if(frame.isFocused === true) {
+                        // 실시간 화면 표시를 위한 상태관리
                         setAllModelsStatus({
                             modelName: modelNameTypes.frame1,
                             index,
@@ -135,11 +129,22 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
                                 imageUrl: image.imageUrl
                             }
                        })
+                       // 저장을 위한 상태관리
+                       const modelStatus = {
+                           name: modelNameTypes.frame1,
+                           position: frame.position,
+                           installed: frame.installed,
+                           scale: {x: frame.scale, y: frame.scale, z: frame.scale},
+                           rotateY: frame.rotateY,
+                           index,
+                           imageUrl: image.imageUrl,
+                
+                         }
+                         addModel(modelStatus)
                         return null
                     }
                 })
                 
-                   
         setRerender((rerender:number) => rerender + 1)
                    
                
@@ -149,7 +154,50 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
             <p>{image.description}</p>
             </div>
         })}
-        {/* <ImageList images={images} /> */}
+
+
+          {videos.map(video => {
+           return <div onClick={async() => {
+               
+                   
+                // 포커싱된 tv 찾고 업로드한 동영상 클릭 시 fileUrl 등록해주기 
+                applyThreeModels().tv2.map((tv, index: number) => {
+               
+                    if(tv.isFocused === true) {
+                        // 실시간 화면 표시를 위한 상태관리
+                        setAllModelsStatus({
+                            modelName: modelNameTypes.tv2,
+                            index: 0,
+                            status:{
+                                ...tv,
+                                videoUrl: video.videoUrl
+                            }
+                       })
+                       // 저장을 위한 상태관리
+                       const modelStatus = {
+                           name: modelNameTypes.tv2,
+                           position: tv.position,
+                           installed: tv.installed,
+                           scale: {x: tv.scale, y: tv.scale, z: tv.scale},
+                           rotateY: tv.rotateY,
+                           index,
+                           videoUrl: video.videoUrl,
+                
+                         }
+                         addModel(modelStatus)
+                        return null
+                    }
+                })
+                
+        setRerender((rerender:number) => rerender + 1)
+                   
+               
+            }}>
+            <video className="w-12 h-12" src={video.videoUrl} controls={true} />
+            <span>{video.title}</span>
+            <p>{video.description}</p>
+            </div>
+        })}
         </div> : null
     )
 }

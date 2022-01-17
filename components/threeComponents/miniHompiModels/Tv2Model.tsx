@@ -10,6 +10,7 @@ import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
+import Indicator from '../../common/Indicator';
 
 interface TV2ModelOpts extends ThreeModelOpts {
 
@@ -17,12 +18,13 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({rerender, setRerender,}: RerenderType) => {
+const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
 
-    const { installed, scale, rotateY, isFocused, position, videoUrl="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" } = allModelsStatus.tv2[0]
+    const { installed, scale, rotateY, isFocused, position, videoUrl } = allModelsStatus.tv2[0]
 
+    const defaultVideoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -31,16 +33,27 @@ const TV2Model = ({rerender, setRerender,}: RerenderType) => {
           installed,
           scale: {x: scale, y: scale, z: scale},
           rotateY,
-          videoUrl
+          videoUrl,
+          index:0
         }
         addModel(modelStatus)
       }
 
+      // tv가 포커싱 되었는 지 확인해주는 함수
+      const checkFocused = () => {
+        const findFocused = allModelsStatus.tv2.find(model => model.isFocused === true);
+        console.log(findFocused)
+        if(findFocused !== undefined)
+            return true
+        else
+            return false
+    }
+
 
     const size = useAspect(18 * scale, 10 * scale);
-    const [video] = useState(() => {
+    const [video, setVideo] = useState(() => {
       const vid = document.createElement("video");
-      vid.src = videoUrl;
+      vid.src = videoUrl ? videoUrl : defaultVideoUrl;
       vid.crossOrigin = "Anonymous";
       vid.loop = true;
       return vid;
@@ -85,6 +98,7 @@ const TV2Model = ({rerender, setRerender,}: RerenderType) => {
   
     useEffect(() => {
         window.addEventListener("click", installModel)
+     
         void video.play()
         if(!installed) {
             video.pause()
@@ -100,36 +114,68 @@ const TV2Model = ({rerender, setRerender,}: RerenderType) => {
         // video.paused, 
         // video.src,        
         allModelsStatus,
-        installed
-       
+        installed,
+        video,
+        videoUrl,
     ])
 
     if(installed === true){
         
         return (
             <>
+
                 <primitive 
-                    // onClick={() => {
-                    //     video.paused ? video.play() : video.pause()
-                    // }} 
+                onClick={(e) => {
+                    console.log("tv2 클릭")
+                    if(isMyRoom) {
+               
+                            initFocused()
+        
+                            setAllModelsStatus({
+                                modelName: modelNameTypes.tv2,
+                                index: 0,
+                                status: {
+                                  ...allModelsStatus.tv2[0],
+                                  isFocused: true
+                                }
+                            })
+
                     
-                    position={[position.x, 0.4, position.z]} scale={scale} 
-                    object={gltf.scene} 
-                    rotation={[0, rotateY, 0]}
-                    onPointerOver={() => {
-                        document.body.style.cursor = "pointer"
-                    }}
-                    onPointerOut={() => {
-                        document.body.style.cursor = "default"
-    
-                    }}
-                />
-                    <mesh onClick={() => video.paused ? video.play() : video.pause()} scale={new Vector3(scale*1.8, scale, scale)} rotation={[0,rotateY,0]} position={new Vector3(position.x,0.65 * scale, position.z)}>
-                        <planeBufferGeometry />
-                        <meshBasicMaterial>
-                            <videoTexture attach="map" args={[video]} />
-                        </meshBasicMaterial>
-                    </mesh>
+                            createModelStatus()
+                            setRerender(value => value + 1)
+                        
+                    }
+            }} 
+                position={[position.x, 0.4, position.z]} scale={scale} rotation={[0, parseFloat(rotateY), 0]}
+                onPointerOver={() => {
+                    document.body.style.cursor = "pointer"
+                }}
+                onPointerOut={() => {
+                    document.body.style.cursor = "default"
+
+                }}
+                object={gltf.scene} 
+            />
+
+                
+                <mesh onClick={() => video.paused ? video.play() : video.pause()} 
+                    scale={new Vector3(scale*1.8, scale, scale)} rotation={[0,rotateY,0]} 
+                    position={new Vector3(position.x,0.65 * scale, position.z)}>
+                    <planeBufferGeometry />
+                    <meshBasicMaterial>
+                        <videoTexture attach="map" args={[video]} />
+                    </meshBasicMaterial>
+                </mesh>
+
+                <Indicator 
+                position={[
+                    allModelsStatus.tv2[0].position.x, 
+                    allModelsStatus.tv2[0].position.y +4 * allModelsStatus.tv2[0].scale / 2.5,
+                    allModelsStatus.tv2[0].position.z
+                ]} 
+                visible={checkFocused()} 
+            />
+
             </>
         )
     }
