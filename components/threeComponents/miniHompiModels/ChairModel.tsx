@@ -9,7 +9,7 @@ import { modelNameTypes } from '../../../types/threeModelTypes';
 
 
 
-const ChairModel = ({rerender, setRerender,}: RerenderType) => {
+const ChairModel = ({rerender, setRerender}) => {
   const allModelsStatus = useReactiveVar(applyThreeModels);
   
   const { installed, scale, rotateY, isFocused, position } = allModelsStatus.chair[0]

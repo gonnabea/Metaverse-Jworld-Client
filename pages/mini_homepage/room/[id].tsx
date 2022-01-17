@@ -284,7 +284,7 @@ const MiniHomepage:NextPage = (props) => {
               />
           
           {/* 액자, tv 등의 모델에 이미지, 영상등을 등록하기 위한 UI */}
-          <EnrollFileToModelScreen show={showUpdateUrlUI} setRerender={setRerender} rerender={rerender} />
+          <EnrollFileToModelScreen show={showUpdateUrlUI} setRerender={setRerender} rerender={rerender} initFocused={initFocused} />
               
           </div>
 
@@ -327,7 +327,7 @@ const MiniHomepage:NextPage = (props) => {
                   <BookModel rerender={rerender} setRerender={setRerender} setCss3dBookVisible={setCss3dBookVisible} />
                   <Frame2Model rerender={rerender} setRerender={setRerender}/>
                   <TableModel rerender={rerender} setRerender={setRerender}/>
-                  <SofaModel rerender={rerender} setRerender={setRerender}/>
+                  <SofaModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <Chair2Model rerender={rerender} setRerender={setRerender} />
                   <TableLampModel rerender={rerender} setRerender={setRerender}  />
 

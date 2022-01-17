@@ -2,7 +2,8 @@ import { useReactiveVar } from "@apollo/client";
 import { ReactElement, useEffect, useState } from "react";
 import { applyThreeModels, setAllModelsStatus } from "../../stores/setAllThreeModels";
 import { addModel } from "../../stores/ThreeModels";
-import { modelNameTypes } from "../../types/common";
+import { modelNameTypes } from "../../types/threeModelTypes";
+
 
 
 

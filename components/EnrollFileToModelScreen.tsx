@@ -35,7 +35,7 @@ interface focusedModelType {
 }
 
 // 액자, tv 등에 파일 등록을 위한 UI
-const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
+const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => {
 
     const [images, setImages] = useState<[] | image[]>([]);
     const [videos, setVideos] = useState<[] | video[]>([]);
@@ -188,7 +188,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender}) => {
                         return null
                     }
                 })
-                
+                initFocused()
                 setRerender((rerender:number) => rerender + 1)
                    
                
