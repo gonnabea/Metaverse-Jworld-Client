@@ -3,7 +3,8 @@ import { useGraph, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { addModel } from '../../../stores/ThreeModels';
-import { ThreeModelOpts, XYZType } from '../../../types/common';
+import { ThreeModelOpts } from '../../../types/threeModelTypes';
+
 
 
 import {clone} from "../../../config/skeletonUtils";

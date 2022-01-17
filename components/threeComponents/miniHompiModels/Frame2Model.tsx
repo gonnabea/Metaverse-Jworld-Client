@@ -4,7 +4,8 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
+import { RerenderType } from '../../../types/common';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 
@@ -16,9 +17,9 @@ const Frame2Model = ({rerender, setRerender,}: RerenderType) => {
 
   const allModelsStatus = useReactiveVar(applyThreeModels);
 
-  const { installed, scale, rotateY, isFocused, position, imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame2[0]
+  const { installed, scale, rotateY, isFocused, position, imageUrl } = allModelsStatus.frame2[0]
 
-
+    const defaultImgUrl = "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
 
     const createModelStatus = async () => {
         const modelStatus = {
@@ -32,7 +33,8 @@ const Frame2Model = ({rerender, setRerender,}: RerenderType) => {
       }
     
     const gltf = useLoader(GLTFLoader, modelList.frame_2);
-    const texture = useLoader(TextureLoader, imageUrl); // 이미지 텍스쳐
+    
+    const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ? imageUrl : defaultImgUrl); // 이미지 텍스쳐
 
     
     const raycaster = useThree((state) => state.raycaster);

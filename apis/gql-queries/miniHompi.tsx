@@ -34,6 +34,9 @@ query getThreeModels($id: Float!) {
       rotateY
       position
       index
+      imageUrl
+      videoUrl
+      textContents
     }
   }
 }

@@ -1,23 +1,7 @@
 import { makeVar } from "@apollo/client";
 import { AllModelsStatus } from "../data/modelList";
-import { modelNameTypes } from "../types/common";
+import { UpdateModelStatusInput } from "../types/threeModelTypes";
 
-
-
-interface UpdateModelStatusInput {
-  modelName: modelNameTypes;
-  index?: number;
-  status: {
-    installed: boolean;
-    scale: number;
-    rotateY: string;
-    isFocused: boolean;
-    position: { x: number, y: number, z:number },
-    videoUrl?: string;
-    imageUrl?: string;
-    textContents?: string;
-  }
-}
 
 export const applyThreeModels = makeVar(AllModelsStatus);
 

@@ -4,9 +4,10 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { ThreeModelInput } from '../../../__generated__/globalTypes';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts, XYZType } from '../../../types/common';
+import { RerenderType, XYZType } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/react-hooks';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 
 
 interface BookModelOpts extends RerenderType {

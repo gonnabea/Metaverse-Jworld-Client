@@ -30,17 +30,14 @@ import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { useReactiveVar } from '@apollo/react-hooks';
 import { applyMe } from '../../../stores/loggedUser';
 import { useRouter } from 'next/router';
-import PageTitle from '../../../components/common/PageTItle';
-import gql from 'graphql-tag';
-import { ThreeModelInput } from '../../../__generated__/globalTypes';
+
 import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
-import SphereIndicator from '../../../components/common/Indicator';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
-import { modelNameTypes } from '../../../types/common';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
+
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
-import RoomController from '../../../components/minihompi/RoomController';
 import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../apis/gql-queries/miniHompi';
-import CharacterModel from '../../../components/threeComponents/streamWorldModels/CharacterModel';
+import EnrollFileToModelScreen from '../../../components/EnrollFileToModelScreen';
 
 
 
@@ -58,6 +55,18 @@ const MiniHomepage:NextPage = (props) => {
     const router = useRouter();
     const { id: roomId, owner } = router.query
     const [isMyRoom, setIsMyRoom] = useState(false);
+    const [showUpdateUrlUI, setShowUpdateUrlUI] = useState(false);
+    const [getMiniHompi, setGetMiniHompi] = useState()
+    const [getThreeModels, setGetThreeModels] = useState()
+
+
+    const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
+
+    // 방 크기 조절 state
+    const [roomScale, setRoomScale] = useState(0.4);
+
+    // 카페트1 관련 state
+    const [carpet1Num, setCarpet1Num] = useState(1);
     
 
     const parsedRoomId = parseFloat(roomId)
@@ -82,17 +91,7 @@ const MiniHomepage:NextPage = (props) => {
     }
     })
 
-    const [getMiniHompi, setGetMiniHompi] = useState()
-    const [getThreeModels, setGetThreeModels] = useState()
 
-
-    const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
-
-    // 방 크기 조절 state
-    const [roomScale, setRoomScale] = useState(0.4);
-
-    // 카페트1 관련 state
-    const [carpet1Num, setCarpet1Num] = useState(1);
 
 
     
@@ -134,29 +133,29 @@ const MiniHomepage:NextPage = (props) => {
       const {data: { getMiniHompi } } = await reqRoomInfo();
 
       const {data: { getThreeModels } } = await reqModels();
-
+      
       console.log(getMiniHompi)
-      console.log(getThreeModels)
-
+      
+      
       console.log(me)
-
+      
       if(me.id === getMiniHompi.miniHompi.ownerId) {
         setIsMyRoom(true)
       }
       else {
         setIsMyRoom(false)
       }
-
+      
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
-
+      
       if(getThreeModels.models.length === 0) {
         alert("Dasf")
         applyThreeModels(defaultModelList)
       }
-        
-        // 방 입장 시 저장된 3D 모델 로드 & 배치하기
-        getThreeModels.models.forEach(({installed, name: modelName, rotateY, scale, position, index}: {
+      
+      // 방 입장 시 저장된 3D 모델 로드 & 배치하기
+      getThreeModels.models.forEach(({installed, name: modelName, rotateY, scale, position, index, imageUrl, videoUrl, textContents}: {
           name: modelNameTypes;
           installed: boolean;
           scale: { x: string, y: string, z:string };
@@ -168,24 +167,24 @@ const MiniHomepage:NextPage = (props) => {
           textContents?: string;
           index?: number;
         }) => {
-
+          
           // 저장된 방 크기 불러오기
           if(modelName === modelNameTypes.room) {
             setRoomScale(0.4)
           }
           
-            
-        
+
+          
           // 디폴트 상태의 모델 상태 가져오기
-        const modelsStatus = allModelsStatus[modelName];
-        
-        
-        if(modelsStatus)
-        modelsStatus.forEach(status => {
-          setAllModelsStatus({
-            modelName,
+          const modelsStatus = allModelsStatus[modelName];
+          
+          
+          if(modelsStatus)
+          modelsStatus.forEach(status => {
+            setAllModelsStatus({
+              modelName,
             index: index ? index : 0,
-            status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false}
+            status: {installed, scale: parseFloat(scale.x), rotateY, position, isFocused: false, imageUrl}
           })
         })
         
@@ -284,9 +283,11 @@ const MiniHomepage:NextPage = (props) => {
               
               />
           
-              
+          {/* 액자, tv 등의 모델에 이미지, 영상등을 등록하기 위한 UI */}
+          <EnrollFileToModelScreen show={showUpdateUrlUI} setRerender={setRerender} rerender={rerender} />
               
           </div>
+
 
             <Canvas className="w-screen h-screen" camera={{ position: [0, -40, 20] }} >
               <OrbitCameraController />
@@ -315,7 +316,7 @@ const MiniHomepage:NextPage = (props) => {
               position={[0,10,0]}
               />   */}
                   <RoomModel roomScale={roomScale}  />
-                  <FrameModel rerender={rerender} setRerender={setRerender} initFocused={initFocused} />
+                  <FrameModel rerender={rerender} setRerender={setRerender} initFocused={initFocused} showUpdateUrlUI={showUpdateUrlUI} setShowUpdateUrlUI={setShowUpdateUrlUI} />
                   {/* <Carpet1Model modelStatus={allModelsStatus.carpet1} threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num}   /> */}
                   <Carpet2Model rerender={rerender} setRerender={setRerender} />
                   <TvModel rerender={rerender} setRerender={setRerender} />

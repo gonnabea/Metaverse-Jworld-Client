@@ -3,7 +3,8 @@ import { useGraph, useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
+import { RerenderType } from '../../../types/common';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { SkeletonUtils } from "three/examples/jsm/utils/SkeletonUtils"
 import * as THREE from "three"
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';

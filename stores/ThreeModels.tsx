@@ -1,6 +1,8 @@
 import { makeVar } from "@apollo/client";
 import { ThreeModelInput } from "../__generated__/globalTypes";
 
+// 3D 모델 현재 상태관리
+
 export const applyModels = makeVar({ modelsStatus: [] });
 
 export const addModel = (newModel: ThreeModelInput) => {

@@ -201,7 +201,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
             <form 
                 method="post" 
                 className="w-full flex h-20 items-center justify-center"
-                onSubmit={(e) => {
+                onSubmit={async(e) => {
                     e.preventDefault()
  
                     const file = e.target["imgFile"].files[0];
@@ -211,7 +211,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                     imgForm.append("title", e.target["title"].value)
                     imgForm.append("description",e.target["description"].value)
 
-                    fileApi.uploadImg({
+                    await fileApi.uploadImg({
                         fileForm: imgForm
                         })
             
@@ -238,7 +238,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
 
             <form method="post"
                 className="w-full flex h-20 items-center justify-center"
-                onSubmit={(e) => {
+                onSubmit={async(e) => {
                     e.preventDefault()
                     const videoForm = new FormData();
 
@@ -246,11 +246,11 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
                     videoForm.append("title", e.target["title"].value)
                     videoForm.append("description",e.target["description"].value)
 
-                    fileApi.uploadVideo({
+                    await fileApi.uploadVideo({
                         fileForm: videoForm,
                     })
                 
-                    // window.location.replace("/lobby")
+                    window.location.replace("/lobby")
                 }
             }
                 action="" encType="multipart/form-data" >

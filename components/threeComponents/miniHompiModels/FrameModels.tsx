@@ -4,26 +4,29 @@ import { modelList } from '../../../data/modelList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { TextureLoader, Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
+import { RerenderType } from '../../../types/common';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/client';
 import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../../common/Indicator';
 import { applyIsMyRoom } from '../../../stores/loggedUser';
 
-const FrameModel = ({rerender, setRerender, initFocused}) => {
+const FrameModel = ({rerender, setRerender, initFocused, showUpdateUrlUI, setShowUpdateUrlUI}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
+    console.log(allModelsStatus.frame1)
     const isMyRoom = useReactiveVar(applyIsMyRoom)
-    const { installed, scale, rotateY, isFocused, position, 
-        imageUrl="https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=" } = allModelsStatus.frame1[0]
-
+    const { installed, scale, rotateY, isFocused, position, imageUrl} = allModelsStatus.frame1[0]
+    
+    
+    const defaultImgUrl = "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
     
 
     
     // 모델 상태 저장을 위한 함수
     const createModelStatus = async () => {
         console.log(allModelsStatus.frame1)
-        allModelsStatus.frame1.map(({ position, installed, scale, rotateY }, index) => {
+        allModelsStatus.frame1.map(({ position, installed, scale, rotateY, imageUrl }, index) => {
             
             const modelStatus = {
               name: "frame1",
@@ -31,19 +34,25 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
               installed,
               scale: {x: scale, y: scale, z: scale},
               rotateY,
-              index
+              index,
+              imageUrl
             }
             addModel(modelStatus)
 
         }) 
         
       }
-    
+
     const gltf = useLoader(GLTFLoader, modelList.frame1);
-    const texture = useLoader(TextureLoader, imageUrl); // 이미지 텍스쳐
-   
+    const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ? imageUrl : defaultImgUrl); // 이미지 텍스쳐
+    const texture2 = useLoader(TextureLoader, allModelsStatus.frame1[3].imageUrl && allModelsStatus.frame1[3].imageUrl !=="false" ? allModelsStatus.frame1[3].imageUrl : defaultImgUrl); // 이미지 텍스쳐
 
+    const imgTextures = [];
 
+    allModelsStatus.frame1.map(frame => {
+        imgTextures.push(useLoader(TextureLoader, frame.imageUrl && frame.imageUrl !=="false" ? frame.imageUrl : defaultImgUrl)) // 이미지 텍스쳐
+
+    })
     
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
@@ -95,11 +104,6 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
       // 모델 설치
       if(closedObjPosition && checkFocused() === true && e.target.tagName === "CANVAS" && checkIsWall){
           console.log("액자 포커싱 상태");
-          
-        //   setModelStatus({
-        //       ...modelStatus,
-        //       position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z}
-        //   });
 
           setAllModelsStatus({
               modelName: modelNameTypes.frame1,
@@ -115,25 +119,6 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
       }
   };
 
-
-
-    // const initFocused = () => {
-    //     let index = 0
-    //     allModelsStatus.frame1.forEach( async model => {
-    //         await setAllModelsStatus({
-    //             modelName: modelNameTypes.frame1,
-    //             index,
-    //             status: {
-    //               ...allModelsStatus.frame1[index],
-    //               isFocused: false
-    //             }
-    //         })
-    //         index ++;
-    //     })
-        
-       
-        
-    // }
 
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus.frame1.findIndex(model => model.isFocused === true);
@@ -164,6 +149,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
 
         return (
             <>
+            
             {/* 첫번째 액자 모델 */}
             <primitive 
                 onClick={(e) => {
@@ -213,7 +199,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                             onClick={(e) => {
                                 console.log(e)
                                 console.log(`액자1_${index} 클릭`)
-                                
+                                    setShowUpdateUrlUI(true)
                                     initFocused()
                                     console.log(model.position,model.isFocused)
                                     setAllModelsStatus({
@@ -254,7 +240,7 @@ const FrameModel = ({rerender, setRerender, initFocused}) => {
                             scale={allModelsStatus.frame1[index].scale}
                             rotation={[0, parseFloat(allModelsStatus.frame1[index].rotateY), 0]}>
                                 <planeBufferGeometry attach="geometry" args={[3, 3]} />
-                                <meshBasicMaterial attach="material" map={texture} />
+                                <meshBasicMaterial attach="material" map={imgTextures[index]} />
                         </mesh>
                         </>
                     )

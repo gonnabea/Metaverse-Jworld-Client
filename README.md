@@ -12,7 +12,7 @@
 - [x] Tailwind CSS
 - [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
 - [x] GraphQL
-- [x] GraphQL-Apollo - (전역 상태관리, API 요청)
+- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
 - [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
 - [x] Socket.io
 - [ ] WebRTC
@@ -52,7 +52,7 @@
 - [x] 3D 오브젝트 (가구) 적용 & 커스텀 배치 기능 (회전, 크기, 위치 지정)
 - [x] 특정 오브젝트 여러개 생성 가능하게 하기
 - [x] 미니홈피 저장
-- [ ] 게시글 등록
+- [x] 액자에 이미지 등록
 - [ ] 방명록 작성 (책 3d 오브젝트 + CSS3D)
 - [ ] 미니홈피 TV에 영상 목록 커스텀 기능 등록
 - [x] 미니홈피 TV에 비디오 텍스처 입히기

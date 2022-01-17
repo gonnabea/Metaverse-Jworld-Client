@@ -3,9 +3,9 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { modelList } from '../../../data/modelList';
 import { useEffect, useRef, useState } from 'react';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { useReactiveVar } from '@apollo/react-hooks';
+import { modelNameTypes } from '../../../types/threeModelTypes';
 
 
 

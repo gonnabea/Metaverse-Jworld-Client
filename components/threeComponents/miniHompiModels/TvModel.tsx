@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useAspect } from "@react-three/drei";
 import { Vector3 } from 'three';
 import { addModel, applyModels, setModels } from '../../../stores/ThreeModels';
-import { modelNameTypes, RerenderType, ThreeModelOpts } from '../../../types/common';
+import { RerenderType } from '../../../types/common';
+import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { useReactiveVar } from '@apollo/client';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 

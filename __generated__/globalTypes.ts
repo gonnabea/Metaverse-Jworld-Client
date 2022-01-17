@@ -33,6 +33,13 @@ export interface ThreeModelInput {
   textContents?: string | null;
 }
 
+export interface UpdateUrlsInput {
+  name: string;
+  index?: number | null;
+  videoUrl?: string | null;
+  imageUrl?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
