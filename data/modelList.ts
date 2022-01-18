@@ -6,7 +6,7 @@ const miniHompiModelsUrl = "/3d_models/mini_hompi"
 export const modelList = {
     book1: `${roomModelsUrl}/book_1.glb`,
     opened_book: `${roomModelsUrl}/opened_book.glb`,
-    carpet_1: `${roomModelsUrl}/carpet_1.glb`,
+    carpet_1: `${miniHompiModelsUrl}/carpet.glb`,
     carpet_2: `${roomModelsUrl}/carpet_2.glb`,
     sofa: `${roomModelsUrl}/sofa.glb`,
     standing_lamp: `${roomModelsUrl}/standing_lamp.glb`,
@@ -26,12 +26,15 @@ export const modelList = {
     tv_2: `${miniHompiModelsUrl}/tv2.glb`,
     sofa_1: `${miniHompiModelsUrl}/sofa.glb`,
     table_1: `${miniHompiModelsUrl}/table_ronde/scene.gltf`,
-    table_2: `${miniHompiModelsUrl}/table/scene.gltf`,
-    table_3: `${miniHompiModelsUrl}/miniHompiModelsUrl/scene.gltf`,
+    table_2: `${miniHompiModelsUrl}/table2.glb`,
+    table_3: `${miniHompiModelsUrl}/table3.glb`,
     chair: `${modelsUrl}/chair.glb`,
-    chair_2: `${miniHompiModelsUrl}/vitra_eames_plastic_chair/scene.gltf`,
+    chair_2: `${miniHompiModelsUrl}/chair2.glb`,
+    chair_3: `${miniHompiModelsUrl}/chair3.glb`,
     frame_2:`${miniHompiModelsUrl}/3d_architecture__photo_frame/scene.gltf`,
     tablelamp: `${miniHompiModelsUrl}/table_lamp/scene.gltf`,
+    tablelamp2: `${miniHompiModelsUrl}/table_lamp2.glb`,
+
 }
 
 export const modelListArr = [
@@ -59,6 +62,48 @@ export const AllModelsStatus = {
 
     carpet1: [
         
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
         {
             installed: false,
             scale: 0.3,
@@ -116,6 +161,33 @@ export const AllModelsStatus = {
         }
     ],
     chair: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
         {
             installed: false,
             scale: 0.1,
@@ -216,6 +288,87 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    table2: [
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.05,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    table3: [
+        {
+            installed: false,
+            scale: 0.5,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.5,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.5,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.5,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
         }
     ],
     tableLamp: [
@@ -261,53 +414,64 @@ export const AllModelsStatus = {
     chair2: [
         {
             installed: false,
-            scale: 0.1,
+            scale: 1,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 1,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 1,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+
+    ],
+    chair3: [
+        {
+            installed: false,
+            scale: 5,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 5,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 5,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
         },
         {
             installed: false,
-            scale: 0.1,
+            scale: 5,
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
-        }
+        },
+
     ],
     tv2: [
         {

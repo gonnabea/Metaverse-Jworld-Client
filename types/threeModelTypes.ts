@@ -11,9 +11,12 @@ export enum modelNameTypes {
     frame1= "frame1",
     frame2 = "frame2",
     table1 = "table1",
+    table2 = "table2",
+    table3 = "table3",
     tableLamp = "tableLamp",
     sofa = "sofa",
     chair2 = "chair2",
+    chair3 = "chair3",
     tv2 = "tv2",
   
   }

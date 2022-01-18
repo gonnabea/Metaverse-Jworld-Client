@@ -147,8 +147,8 @@ const SofaModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
 
                 />
 
-                {allModelsStatus.sofa.map((model, index) => {
-                
+                {allModelsStatus.sofa.map((model, index, key) => {
+                    console.log(key)
                   if(index > 0 && model.installed === true) {
                       return (
                           <>

@@ -50,8 +50,8 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, write
     }
 
     return (
-        <div className="w-7/12 md:w-3/12 h-3/6 bg-black z-10 absolute top-12 right-0 opacity-90">
-            <header className="text-white w-full flex">
+        <div className="w-7/12 md:w-3/12 h-96 bg-black z-10 absolute top-12 right-0 opacity-90 overflow-y-auto">
+            <header className="text-white w-full">
                 <ul className="w-full flex justify-around">
                     {
                         categories.map(category => {

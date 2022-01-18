@@ -38,6 +38,9 @@ import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
 import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../apis/gql-queries/miniHompi';
 import EnrollFileToModelScreen from '../../../components/EnrollFileToModelScreen';
+import Chair3Model from '../../../components/threeComponents/miniHompiModels/Chair3Model';
+import Table2Model from '../../../components/threeComponents/miniHompiModels/Table2Model';
+import Table3Model from '../../../components/threeComponents/miniHompiModels/Table3Model';
 
 
 
@@ -58,6 +61,7 @@ const MiniHomepage:NextPage = (props) => {
     const [showUpdateUrlUI, setShowUpdateUrlUI] = useState(false);
     const [getMiniHompi, setGetMiniHompi] = useState()
     const [getThreeModels, setGetThreeModels] = useState()
+    const [jwtToken, setJwtToken] = useState()
 
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
@@ -86,7 +90,7 @@ const MiniHomepage:NextPage = (props) => {
     const [reqSaveModels, {data, loading, error}] = useMutation(SAVE_MODELS, {
       context: {
         headers: {
-            "Authorization":  "Bearer " + localStorage.getItem("jwt_token")
+            "Authorization":  "Bearer " + jwtToken
         }
     }
     })
@@ -170,7 +174,7 @@ const MiniHomepage:NextPage = (props) => {
           
           // 저장된 방 크기 불러오기
           if(modelName === modelNameTypes.room) {
-            setRoomScale(0.4)
+            setRoomScale(0.7)
           }
           
 
@@ -229,11 +233,11 @@ const MiniHomepage:NextPage = (props) => {
     }
 
     useEffect(() => {
-      
+      setJwtToken(localStorage.getItem("jwt_token"))
       getInfos()
       setIsMyRoom(isMyRoom)
       
-    }, [applyThreeModels()])
+    }, [])
 
     const handleLeave = () => {
       router.push("/lobby")
@@ -317,18 +321,22 @@ const MiniHomepage:NextPage = (props) => {
               />   */}
                   <RoomModel roomScale={roomScale}  />
                   <FrameModel isMyRoom={isMyRoom} rerender={rerender} setRerender={setRerender} initFocused={initFocused} showUpdateUrlUI={showUpdateUrlUI} setShowUpdateUrlUI={setShowUpdateUrlUI} />
-                  {/* <Carpet1Model modelStatus={allModelsStatus.carpet1} threeModels={getThreeModels} installNum={carpet1Num} setInstallNum={setCarpet1Num}   /> */}
+                  <Carpet1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}  />
                   <Carpet2Model rerender={rerender} setRerender={setRerender} />
                   <TvModel rerender={rerender} setRerender={setRerender} />
                   <StandingLampModel rerender={rerender} setRerender={setRerender} />
                   <VaseModel rerender={rerender} setRerender={setRerender} />
-                  <ChairModel rerender={rerender} setRerender={setRerender} />
+                  <ChairModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <CurtainModel rerender={rerender} setRerender={setRerender} />
                   <BookModel rerender={rerender} setRerender={setRerender} setCss3dBookVisible={setCss3dBookVisible} />
                   <Frame2Model rerender={rerender} setRerender={setRerender}/>
-                  <TableModel rerender={rerender} setRerender={setRerender}/>
+                  <TableModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
+                  <Table2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
+                  <Table3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <SofaModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <Chair2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
+                  <Chair3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
+
                   <TableLampModel rerender={rerender} setRerender={setRerender}  />
 
                   <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom}  />
@@ -379,10 +387,9 @@ const MiniHomepage:NextPage = (props) => {
             setRerender={setRerender}
             initFocused={initFocused}
             modelImgUrl="/model_images/carpet1.png"
-            maxScale={0.7}
-            minScale={0.3}
-            scaleStep={0.04}
-            installNum={carpet1Num}
+            maxScale={0.2}
+            minScale={0.05}
+            scaleStep={0.01}
             setInstallNum={setCarpet1Num}
             backgroundColor="emerald"
           />
@@ -558,9 +565,20 @@ const MiniHomepage:NextPage = (props) => {
           initFocused={initFocused}
           modelImgUrl="/model_images/chair1.png"
           backgroundColor="blue"
-          maxScale={0.1}
-          minScale={0.05}
-          scaleStep={0.005}
+          maxScale={6}
+          minScale={4}
+          scaleStep={0.1}
+      />   
+         <ModelSettingBox 
+          modelName={modelNameTypes.chair3} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={7}
+          minScale={5}
+          scaleStep={0.1}
       />   
 
         <ModelSettingBox 
@@ -587,6 +605,29 @@ const MiniHomepage:NextPage = (props) => {
           minScale={0.04}
           scaleStep={0.005}
       />   
+
+        <ModelSettingBox 
+          modelName={modelNameTypes.table2} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={0.2}
+          minScale={0.1}
+          scaleStep={0.005}
+      /> 
+              <ModelSettingBox 
+          modelName={modelNameTypes.table3} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/chair1.png"
+          backgroundColor="blue"
+          maxScale={1}
+          minScale={0.5}
+          scaleStep={0.1}
+      /> 
       </>
         }
 

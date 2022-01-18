@@ -157,7 +157,7 @@ const ModelSettingBox = ({
                     createModelStatus()
                         
                       
-                    }}>{installed ? "ON" : "OFF"}</button>
+                    }}>{installed ? <span className="text-bold text-green-500">ON</span> : "OFF"}</button>
                   </div>
             </div>
 

@@ -17,7 +17,6 @@ const Chair2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
 
 
   const createModelStatus = async () => {
-    console.log(allModelsStatus.chair2)
     allModelsStatus.chair2.map(({ position, installed, scale, rotateY }, index) => {
         
         const modelStatus = {
@@ -200,7 +199,7 @@ const Chair2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus.chair2[findFocusedIndex()].position.x, 
-                    allModelsStatus.chair2[findFocusedIndex()].position.y +4 * allModelsStatus.chair2[findFocusedIndex()].scale * 30,
+                    allModelsStatus.chair2[findFocusedIndex()].position.y +4 * allModelsStatus.chair2[findFocusedIndex()].scale/1.5,
                     allModelsStatus.chair2[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 
