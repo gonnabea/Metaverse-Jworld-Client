@@ -492,8 +492,8 @@ const MiniHomepage:NextPage = (props) => {
             initFocused={initFocused}
             modelImgUrl="/model_images/tv_2.png"
             minScale={5}
-            maxScale={12}
-            scaleStep={0.1}
+            maxScale={15}
+            scaleStep={0.2}
             backgroundColor="purple"
 
         />  
@@ -643,9 +643,9 @@ const MiniHomepage:NextPage = (props) => {
         rerender={rerender}
         setRerender={setRerender}
         initFocused={initFocused}
-        maxScale={0.2}
-        minScale={0.05}
-        scaleStep={0.01}
+        maxScale={2}
+        minScale={1}
+        scaleStep={0.1}
         backgroundColor="black"
         modelImgUrl="/model_images/text_board.png"
 
