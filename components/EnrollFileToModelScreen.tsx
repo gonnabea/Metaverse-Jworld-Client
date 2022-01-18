@@ -41,12 +41,8 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
     const [videos, setVideos] = useState<[] | video[]>([]);
     const [reqGetMe, loading] = useGetMe();
     
-    const [user, setUser] = useState();
     const [focusedFrame, setFocusedFrame] = useState<focusedModelType | null>();
     const [focusedTV, setFocusedTV] = useState<focusedModelType | null>();
-
-    const [newImgUrl, setNewImgUrl] = useState<string>("");
-    const [newVideoUrl, setNewVideoUrl] = useState<string | null>();
 
   
 
@@ -62,6 +58,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
         setVideos(videos.data);
 
 
+        // 액자 or tv 포커싱 시 각각 이미지, 비디오 리스트 보여주기 위함
         applyThreeModels().frame1.map((frame, index: number) => {
             if(frame.isFocused === true) {
                 setFocusedFrame({
@@ -69,7 +66,10 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                     name: modelNameTypes.frame1,
                     ...frame
                 })
-                return null
+                return true
+            }
+            else {
+                return false
             }
         })
         applyThreeModels().frame2.map((frame, index: number) => {
@@ -79,8 +79,11 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                     name: modelNameTypes.frame2,
                     ...frame
                 })
-                return null
+                return true
 
+            }
+            else {
+                return false
             }
         })
         applyThreeModels().tv2.map((tv, index: number) => {
@@ -90,8 +93,11 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                     name: modelNameTypes.tv2,
                     ...tv
                 })
-                return null
+                return true
 
+            }
+            else {
+                return false
             }
         })
         
@@ -106,14 +112,14 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
     useEffect(() => {
         setMyInfo()
 
-    }, [show])
+    }, [show, rerender])
 
 // 유저가 업로드한 이미지, 동영상 파일 리스트 UI
     return (
         show ? 
         <div className="w-screen h-1/6 bg-gray-300 z-20 fixed bottom-0 flex">
            
-        {images.map(image => {
+        {focusedFrame ? images.map(image => {
            return <div onClick={async() => {
                
                    
@@ -153,10 +159,10 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
             <span>{image.title}</span>
             <p>{image.description}</p>
             </div>
-        })}
+        }) : null}
 
 
-          {videos.map(video => {
+          {focusedTV ? videos.map(video => {
            return <div onClick={async() => {
                
                    
@@ -197,7 +203,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
             <span>{video.title}</span>
             <p>{video.description}</p>
             </div>
-        })}
+        }) : null}
         </div> : null
     )
 }

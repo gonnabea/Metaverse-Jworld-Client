@@ -41,6 +41,17 @@ import EnrollFileToModelScreen from '../../../components/EnrollFileToModelScreen
 import Chair3Model from '../../../components/threeComponents/miniHompiModels/Chair3Model';
 import Table2Model from '../../../components/threeComponents/miniHompiModels/Table2Model';
 import Table3Model from '../../../components/threeComponents/miniHompiModels/Table3Model';
+import Bed1Model from '../../../components/threeComponents/miniHompiModels/Bed1Model';
+import Bed2Model from '../../../components/threeComponents/miniHompiModels/Bed2Model';
+import Bed3Model from '../../../components/threeComponents/miniHompiModels/Bed3Model';
+import Carpet3Model from '../../../components/threeComponents/miniHompiModels/Carpet3Model';
+import Clock1Model from '../../../components/threeComponents/miniHompiModels/Clock1Model';
+import Clock2Model from '../../../components/threeComponents/miniHompiModels/Clock2Model';
+import Refrigerator1Model from '../../../components/threeComponents/miniHompiModels/Refrigerator1Model';
+import Refrigerator2Model from '../../../components/threeComponents/miniHompiModels/Refrigerator2Model';
+import Closet1Model from '../../../components/threeComponents/miniHompiModels/Closet1Model';
+import TextBoardModel from '../../../components/threeComponents/miniHompiModels/TextBoardModel';
+import Vase2Model from '../../../components/threeComponents/miniHompiModels/Vase2Model';
 
 
 
@@ -110,7 +121,7 @@ const MiniHomepage:NextPage = (props) => {
 
       // 모든 3d 모델 불러오기
       Object.values(modelNameTypes).forEach(modelName => {
-        
+       
         const modelsStatus = allModelsStatus[modelName];
         
 
@@ -322,7 +333,8 @@ const MiniHomepage:NextPage = (props) => {
                   <RoomModel roomScale={roomScale}  />
                   <FrameModel isMyRoom={isMyRoom} rerender={rerender} setRerender={setRerender} initFocused={initFocused} showUpdateUrlUI={showUpdateUrlUI} setShowUpdateUrlUI={setShowUpdateUrlUI} />
                   <Carpet1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}  />
-                  <Carpet2Model rerender={rerender} setRerender={setRerender} />
+                  <Carpet2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Carpet3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <TvModel rerender={rerender} setRerender={setRerender} />
                   <StandingLampModel rerender={rerender} setRerender={setRerender} />
                   <VaseModel rerender={rerender} setRerender={setRerender} />
@@ -336,10 +348,21 @@ const MiniHomepage:NextPage = (props) => {
                   <SofaModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <Chair2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
                   <Chair3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}/>
+                  <Bed1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Bed2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Bed3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Clock1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Clock2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Closet1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Refrigerator1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Refrigerator2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <TextBoardModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  <Vase2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
+                  
 
                   <TableLampModel rerender={rerender} setRerender={setRerender}  />
 
-                  <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom}  />
+                  <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom} setShowUpdateUrlUI={setShowUpdateUrlUI}  />
 
               </Physics>
               </EffectComposer>
@@ -386,7 +409,7 @@ const MiniHomepage:NextPage = (props) => {
             rerender={rerender}
             setRerender={setRerender}
             initFocused={initFocused}
-            modelImgUrl="/model_images/carpet1.png"
+            modelImgUrl="/model_images/carpet_1.png"
             maxScale={0.2}
             minScale={0.05}
             scaleStep={0.01}
@@ -400,7 +423,22 @@ const MiniHomepage:NextPage = (props) => {
             rerender={rerender}
             setRerender={setRerender}
             initFocused={initFocused}
-            modelImgUrl="/model_images/carpet2.png"
+            modelImgUrl="/model_images/carpet_2.png"
+            
+            
+            maxScale={0.2}
+            minScale={0.1}
+            scaleStep={0.005}
+            
+            backgroundColor="yellow"
+          />
+
+          <ModelSettingBox 
+            modelName={modelNameTypes.carpet3} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/carpet_3.png"
             
             
             maxScale={0.2}
@@ -435,7 +473,7 @@ const MiniHomepage:NextPage = (props) => {
     
                 initFocused={initFocused}
                 backgroundColor="yellow"
-                modelImgUrl="/model_images/standing_lamp.png"
+                modelImgUrl="/model_images/standing_lamp_2.png"
                 maxScale={0.2}
                 minScale={0.1}
                 scaleStep={0.01}
@@ -446,26 +484,42 @@ const MiniHomepage:NextPage = (props) => {
 
         electronics={
           <>
-          <ModelSettingBox 
-            modelName={modelNameTypes.tv} 
-            rerender={rerender}
-            setRerender={setRerender}
-            initFocused={initFocused}
-            modelImgUrl="/model_images/tv.png"
-
-
-            backgroundColor="purple"
-
-        />       
+   
           <ModelSettingBox 
             modelName={modelNameTypes.tv2} 
             rerender={rerender}
             setRerender={setRerender}
             initFocused={initFocused}
-            modelImgUrl="/model_images/tv.png"
+            modelImgUrl="/model_images/tv_2.png"
             minScale={5}
             maxScale={12}
             scaleStep={0.1}
+            backgroundColor="purple"
+
+        />  
+
+        <ModelSettingBox 
+            modelName={modelNameTypes.refrigerator_1} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/refrigerator_1.png"
+            minScale={1}
+            maxScale={2}
+            scaleStep={0.2}
+            backgroundColor="purple"
+
+        />  
+
+        <ModelSettingBox 
+            modelName={modelNameTypes.refrigerator_2} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/refrigerator_2.png"
+            minScale={2}
+            maxScale={4}
+            scaleStep={0.2}
             backgroundColor="purple"
 
         />  
@@ -479,10 +533,52 @@ const MiniHomepage:NextPage = (props) => {
             rerender={rerender}
             setRerender={setRerender}
             initFocused={initFocused}
-            modelImgUrl="/model_images/vase.png"
+            modelImgUrl="/model_images/vase_1.png"
             maxScale={0.2}
-            minScale={0.05}
+            minScale={0.1}
             scaleStep={0.01}
+
+            backgroundColor="green"
+
+        />   
+
+          <ModelSettingBox 
+            modelName={modelNameTypes.vase_2} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/vase_2.png"
+            maxScale={2}
+            minScale={1}
+            scaleStep={0.05}
+
+            backgroundColor="green"
+
+        />   
+
+          <ModelSettingBox 
+            modelName={modelNameTypes.clock_1} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/clock_1.png"
+            maxScale={1}
+            minScale={0.3}
+            scaleStep={0.05}
+
+            backgroundColor="green"
+
+        />   
+
+          <ModelSettingBox 
+            modelName={modelNameTypes.clock_2} 
+            rerender={rerender}
+            setRerender={setRerender}
+            initFocused={initFocused}
+            modelImgUrl="/model_images/clock_2.png"
+            maxScale={2.5}
+            minScale={1}
+            scaleStep={0.1}
 
             backgroundColor="green"
 
@@ -541,6 +637,20 @@ const MiniHomepage:NextPage = (props) => {
 
 
     />   
+
+      <ModelSettingBox 
+        modelName={modelNameTypes.text_board} 
+        rerender={rerender}
+        setRerender={setRerender}
+        initFocused={initFocused}
+        maxScale={0.2}
+        minScale={0.05}
+        scaleStep={0.01}
+        backgroundColor="black"
+        modelImgUrl="/model_images/text_board.png"
+
+
+        />
     </>
         }
         
@@ -551,7 +661,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/chair_1.png"
           backgroundColor="blue"
           maxScale={0.1}
           minScale={0.05}
@@ -563,7 +673,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/chair_2.png"
           backgroundColor="blue"
           maxScale={6}
           minScale={4}
@@ -574,7 +684,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/chair_3.png"
           backgroundColor="blue"
           maxScale={7}
           minScale={5}
@@ -586,7 +696,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/sofa_1.png"
           backgroundColor="blue"
           maxScale={6}
           minScale={4}
@@ -611,7 +721,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/table_2.png"
           backgroundColor="blue"
           maxScale={0.2}
           minScale={0.1}
@@ -622,11 +732,56 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/table_3.png"
           backgroundColor="blue"
           maxScale={1}
           minScale={0.5}
           scaleStep={0.1}
+      /> 
+      <ModelSettingBox 
+          modelName={modelNameTypes.bed_1} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/bed_1.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.05}
+          scaleStep={0.01}
+      /> 
+      <ModelSettingBox 
+          modelName={modelNameTypes.bed_2} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/bed_2.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.05}
+          scaleStep={0.01}
+      /> 
+      <ModelSettingBox 
+          modelName={modelNameTypes.bed_3} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/bed_3.png"
+          backgroundColor="blue"
+          maxScale={0.1}
+          minScale={0.05}
+          scaleStep={0.01}
+      /> 
+
+      <ModelSettingBox 
+          modelName={modelNameTypes.closet_1} 
+          rerender={rerender}
+          setRerender={setRerender}
+          initFocused={initFocused}
+          modelImgUrl="/model_images/closet_1.png"
+          backgroundColor="blue"
+          maxScale={0.5}
+          minScale={0.2}
+          scaleStep={0.05}
       /> 
       </>
         }

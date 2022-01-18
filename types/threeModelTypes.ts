@@ -18,6 +18,17 @@ export enum modelNameTypes {
     chair2 = "chair2",
     chair3 = "chair3",
     tv2 = "tv2",
+    carpet3 = "carpet3",
+    bed_1 = "bed1",
+    bed_2 = "bed2",
+    bed_3 = "bed3",
+    vase_2 = "vase2",
+    closet_1 = "closet1",
+    clock_1 = "clock1",
+    clock_2 = "clock2",
+    text_board = "text_board",
+    refrigerator_1 = "refrigerator1",
+    refrigerator_2 = "refrigerator2",
   
   }
 

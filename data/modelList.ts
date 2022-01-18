@@ -8,6 +8,19 @@ export const modelList = {
     opened_book: `${roomModelsUrl}/opened_book.glb`,
     carpet_1: `${miniHompiModelsUrl}/carpet.glb`,
     carpet_2: `${roomModelsUrl}/carpet_2.glb`,
+
+    carpet_3: `${miniHompiModelsUrl}/carpet3.glb`,
+    bed_1: `${miniHompiModelsUrl}/bed1.glb`,
+    bed_2: `${miniHompiModelsUrl}/bed2.glb`,
+    bed_3: `${miniHompiModelsUrl}/bed3.glb`,
+    vase_2: `${miniHompiModelsUrl}/vase2.glb`,
+    closet_1: `${miniHompiModelsUrl}/closet.glb`,
+    clock_1: `${miniHompiModelsUrl}/clock1.glb`,
+    clock_2: `${miniHompiModelsUrl}/clock2.glb`,
+    text_board: `${miniHompiModelsUrl}/text_board.glb`,
+    refrigerator: `${miniHompiModelsUrl}/refrigerator1.glb`,
+    refrigerator_2: `${miniHompiModelsUrl}/refrigerator2.glb`,
+
     sofa: `${roomModelsUrl}/sofa.glb`,
     standing_lamp: `${roomModelsUrl}/standing_lamp.glb`,
     tv: `${roomModelsUrl}/tv.glb`,
@@ -119,6 +132,109 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    carpet3: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
         }
     ],
     tv: [
@@ -141,6 +257,27 @@ export const AllModelsStatus = {
         }
     ],
     vase: [
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
         {
             installed: false,
             scale: 0.1,
@@ -378,6 +515,27 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.1,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
         }
     ],
     sofa: [
@@ -482,5 +640,277 @@ export const AllModelsStatus = {
             position: { x: 0, y: 0, z:0 },
             videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         }
-    ]
+    ],
+    bed1: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    bed2: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    bed3: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    vase2: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    closet1: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    clock1: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    clock2: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    text_board: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    refrigerator1: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
+    refrigerator2: [
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 10,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        }
+    ],
 }

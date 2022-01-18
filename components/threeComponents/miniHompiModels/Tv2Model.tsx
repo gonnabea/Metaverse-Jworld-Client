@@ -19,7 +19,7 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
+const TV2Model = ({rerender, setRerender, initFocused, isMyRoom, setShowUpdateUrlUI}) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
 
@@ -149,6 +149,7 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
                                 }
                             })
 
+                            setShowUpdateUrlUI(true)
                     
                             createModelStatus()
                             setRerender(value => value + 1)

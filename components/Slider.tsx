@@ -9,6 +9,12 @@ const Container = styled.div`
   :not(:last-child) {
     margin-bottom: 50px;
   }
+  position: relative;
+  top: 10%;
+  @media only screen and (max-height: 700px) {
+    padding-top: 300px;
+    
+  }
 `
 
 const Title = styled.cite`
