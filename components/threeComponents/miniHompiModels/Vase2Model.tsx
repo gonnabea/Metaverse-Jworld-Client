@@ -201,7 +201,7 @@ const Vase2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus[modelName][findFocusedIndex()].position.x, 
-                    allModelsStatus[modelName][findFocusedIndex()].position.y +4 * allModelsStatus[modelName][findFocusedIndex()].scale * 30,
+                    allModelsStatus[modelName][findFocusedIndex()].position.y +4 * allModelsStatus[modelName][findFocusedIndex()].scale * 2,
                     allModelsStatus[modelName][findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 

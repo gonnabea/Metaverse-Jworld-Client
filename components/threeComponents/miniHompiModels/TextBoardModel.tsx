@@ -90,7 +90,7 @@ const TextBoardModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
             index: findFocusedIndex(),
             status: {
                 ...allModelsStatus[modelName][findFocusedIndex()],
-                position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
         
             }
       })
@@ -201,7 +201,7 @@ const TextBoardModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus[modelName][findFocusedIndex()].position.x, 
-                    allModelsStatus[modelName][findFocusedIndex()].position.y +4 * allModelsStatus[modelName][findFocusedIndex()].scale * 30,
+                    allModelsStatus[modelName][findFocusedIndex()].position.y +4 * allModelsStatus[modelName][findFocusedIndex()].scale * 4,
                     allModelsStatus[modelName][findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 

@@ -69,7 +69,7 @@ export const modelListArr = [
 export const AllModelsStatus = {
     room: [
         {
-            scale: 0.3
+            scale: 0.5
         }
     ],
 

@@ -643,9 +643,9 @@ const MiniHomepage:NextPage = (props) => {
         rerender={rerender}
         setRerender={setRerender}
         initFocused={initFocused}
-        maxScale={2}
-        minScale={1}
-        scaleStep={0.1}
+        maxScale={1}
+        minScale={0.5}
+        scaleStep={0.05}
         backgroundColor="black"
         modelImgUrl="/model_images/text_board.png"
 

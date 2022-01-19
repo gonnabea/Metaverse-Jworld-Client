@@ -199,7 +199,7 @@ const Chair3Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus.chair3[findFocusedIndex()].position.x, 
-                    allModelsStatus.chair3[findFocusedIndex()].position.y +4 * allModelsStatus.chair3[findFocusedIndex()].scale * 30,
+                    allModelsStatus.chair3[findFocusedIndex()].position.y +3 * allModelsStatus.chair3[findFocusedIndex()].scale ,
                     allModelsStatus.chair3[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 
