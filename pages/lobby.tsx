@@ -15,12 +15,12 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
 import { GETME } from '../apis/gql-queries/user';
-import { applyChatStatus, setChatStatus } from '../stores/chatStatus';
+import { addChat, applyChatStatus, setChatStatus } from '../stores/chatStatus';
 import useGetMe from '../hooks/useGetMe';
+import useWebsocket from '../hooks/useWebsocket';
 
 
-
-
+// 스트림월드 로비
 const Lobby:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
     const chatStatus = useReactiveVar(applyChatStatus);
@@ -29,13 +29,12 @@ const Lobby:NextPage = () => {
     
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
-    const [chatContents, setChatContents] = useState<any>([]);
-    const [newMsgCount, setNewMsgCount] = useState<number>(0);
-    const [nickname, setNickname] = useState();
-    const [userId, setUserId] = useState(); 
-    const chatInput = useRef<HTMLInputElement>();
+    const [nickname, setNickname] = useState<string>();
+    const [userId, setUserId] = useState<number | string | null>(); 
     const [bgm, setBgm] = useState();
     const router = useRouter()
+
+    const [socketIoClient] = useWebsocket();
 
   
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -46,14 +45,23 @@ const Lobby:NextPage = () => {
     const getMe = async() => {
   
         // 회원일 시
-        const {data: {getMe: {user}} } = await reqGetMe()
-        console.log(user)
-        setNickname(user.nickname);
-        setUserId(user.id);
+        const data = await reqGetMe();
+        if(data.data){
+            const user = data.data.getMe.user;
+            setNickname(user.nickname);
+            setUserId(user.id);
+            setMe({id: user.id, nickname: user.nickname})
             
-        
-        
-        setMe({id: user.id, nickname: user.nickname})
+        }
+        // 비회원일 시
+        else {
+            const customerId = Math.random();
+            setNickname("손님 - " + customerId);
+            setUserId(customerId)
+            setMe({id: customerId, nickname: "손님 - " + customerId})
+        }
+
+
         
     }
       
@@ -86,12 +94,12 @@ const Lobby:NextPage = () => {
         })
 
         // 채팅 받았을 때
-        socketIoClient.on("chat", (data) => {
-            console.log(data)
-            setChatContents(chatContents => [...chatContents, data]);
-            setNewMsgCount(newMsgCount => newMsgCount + 1);
-            playChatSoundEffect()
-        })
+        // socketIoClient.on("chat", (data) => {
+        //     console.log(data)
+        //     setChatContents(chatContents => [...chatContents, data]);
+        //     setNewMsgCount(newMsgCount => newMsgCount + 1);
+        //     playChatSoundEffect()
+        // })
 
        
 
@@ -111,34 +119,7 @@ const Lobby:NextPage = () => {
 
 
 
-    // 로비 채팅 전송
-    const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        
-        if(e.target[0].value.length > 0){
-            socketIoClient.emit("chat", {
-                nickname,
-                text: e.target[0].value
-            });
-            
-            setChatContents((chatContents:Chat[]) => [...chatContents, {client: nickname, msg: e.target[0].value}]);
-           
-            
-            playChatSoundEffect()
-            // 채팅 전송 후 다시 포커스 해주기 위함.
-            setTimeout(() => {
-                chatInput.current?.focus();
-                chatInput.current.value = ""
-                const chatScreen = document.getElementById("chatScreen");
-                chatScreen?.scrollTo({
-                    top: chatScreen.scrollHeight,
-                    left: 0,
-                    
-                  })
-            }, 0)
-        }
-    }
+
 
     
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
@@ -242,14 +223,11 @@ const Lobby:NextPage = () => {
                 ): null}
             </div>
            
-            <BottomUI 
-            chatContents={chatContents} 
-            newMsgCount={newMsgCount}
-            sendBroadChat={sendBroadChat}
-            chatInput={chatInput}
-            createRoom={createRoom}
-            startBgm={startBgm}
-         
+            <BottomUI
+                nickname={nickname}
+                createRoom={createRoom}
+                startBgm={startBgm}
+                socketIoClient={socketIoClient}
             />
             
             

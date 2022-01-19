@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import WsConnect from '../multiplay/wsConnection';
 import PageTitle from '../components/common/PageTItle';
@@ -12,13 +12,6 @@ import { gql, useLazyQuery, useMutation, useQuery, useReactiveVar } from "@apoll
 import { useRouter } from 'next/dist/client/router';
 import { applyMe, setMe } from '../stores/loggedUser';
 import { LOGIN } from '../apis/gql-queries/user';
-
-// query dog($breed:String!){ // query = dog($breed:String!) 선택
-//   dog(breed:$breed){	// query 사용
-//     id	// 반환받을 객체
-//     displayImage
-//   }
-// }
 
 
 
@@ -41,12 +34,16 @@ const Login: NextPage = () => {
 
 
 
-  const handleLogin = async(e) => {
+  const handleLogin = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!validateEmail(email) || !validatePw(password)) {
+      alert("이메일, 비밀번호를 형식에 맞게 입력해주세요.")
+      return null
+    }
     const data = await reqLogin()
     console.log(data)
-    if(data) {
-      const { data: {login:{ ok, token }}} = data;
+    if(data && data.data) {
+      const { data: {login:{ ok, token, error }}} = data;
 
       if(ok === true) {
         localStorage.setItem("jwt_token", token ); // 로컬 스토리지에 jwt 토큰 담기 (CSRF 공격에는 안전하고 XSS에는 취약)
@@ -55,11 +52,11 @@ const Login: NextPage = () => {
         router.push("/lobby")
       }
       else {
-        alert("로그인 실패")
+        alert(`로그인 실패: ${error.message}`)
       }
     }
     else {
-        alert("로그인 실패.")
+        alert("로그인 실패, 이메일 또는 비밀번호를 다시 확인해주세요.")
     }
   }
 
@@ -81,6 +78,8 @@ const Login: NextPage = () => {
       loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-gray-400 text-white text-2xl"
     }
 
+    
+
   }
 
 
@@ -101,11 +100,11 @@ const Login: NextPage = () => {
         </ul>
     </nav>
     
-    <form onSubmit={handleLogin} className="flex flex-col p-6" id="loginForm">
+    <form onSubmit={(e) => {handleLogin(e)}} className="flex flex-col p-6" id="loginForm">
         <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="이메일" />
-        <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호" />
+        <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 (영문, 숫자, 특수문자 포함)" />
         <div className="self-center p-6">
-        <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" checked={false} /> <span className="self-center">로그인 상태 유지</span>
+        {/* <input onChange={onChange} name="remember_user" className="self-center" type="checkbox" checked={false} /> <span className="self-center">로그인 상태 유지</span> */}
         </div>
         <input ref={loginSubmitBtn} className="w-4/6 self-center p-10 bg-gray-400 text-white text-2xl" type="submit" value="LOGIN" />
     </form>

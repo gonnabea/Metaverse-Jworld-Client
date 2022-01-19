@@ -1,22 +1,21 @@
 import { useReactiveVar } from "@apollo/client";
-import { useEffect, useRef, useState } from "react"
+import { FormEvent, useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
 import fileApi from "../../apis/axios/fileUpload";
-import { applyChatStatus, setChatStatus } from "../../stores/chatStatus";
+import { addChat, addNewMsgCount, applyChatStatus, setChatStatus } from "../../stores/chatStatus";
 import { applyMe } from "../../stores/loggedUser";
 import useGetMe from "../../hooks/useGetMe"
 import ImageList from "../ImageList";
 import VideoList from "../videoList";
+import { Chat } from "../threeComponents/streamWorldModels/wsPayloads";
 
 
 
 interface props {
-    chatContents: Array<any>
-    newMsgCount?: number;
-    sendBroadChat: any;
-    chatInput: any;
     createRoom?: any; // 웹소켓 룸 만들기 함수
     startBgm: any;
+    nickname?: string;
+    socketIoClient: any;
 }
 
 function checkFile(el, fileType){
@@ -61,33 +60,36 @@ interface video {
     videoUrl: string;
 }
 
-const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createRoom, startBgm }:props) => {
+const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
 
-    const applyStore = useReactiveVar(applyChatStatus);
     const [reqGetMe, loading] = useGetMe();
     const [images, setImages] = useState<[] | image[]>([]);
-    const [videos, setVideos] = useState<[] | video[]>([])
-   
-
+    const [videos, setVideos] = useState<[] | video[]>([]);
+    
+    
+    
     
     const [showChats, setShowChats] = useState(false);
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
     const [showSettingModal, setShowSettingModal] = useState(false);
     const [btnSoundEffect, setBtnSoundEffect] = useState();
     const chattingPop = useRef();
+    const chatInput = useRef<HTMLInputElement>();
+
 
     const getMe = async() => {
-  
+        const data = await reqGetMe()
         // 회원일 시
-        const {data: {getMe: {user}} } = await reqGetMe()
-        console.log(user.id)
-   
-        const imageData = await getImages(user.id);
-        const videoData = await getVideos(user.id);
-        setImages(imageData)
-        setVideos(videoData)
-        console.log(imageData)
-        console.log(videoData)
+        if(data.data) {
+            const user = data.data.getMe.user;
+            console.log(user.id)
+       
+            const imageData = await getImages(user.id);
+            const videoData = await getVideos(user.id);
+            setImages(imageData)
+            setVideos(videoData)
+        }
+        
     }
       
     const playBtnSoundEffect = () => {
@@ -111,21 +113,55 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         }
     }
 
+    const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        if(e.target[0].value.length > 0) {
+            socketIoClient.emit("chat", {
+                nickname,
+                text: e.target[0].value
+            });
+            
+            
+            const newChat:Chat = {client: nickname, msg: e.target[0].value}
+            addChat(newChat)
+            
+            // playChatSoundEffect()
+            // 채팅 전송 후 다시 포커스 해주기 위함.
+            setTimeout(() => {
+                chatInput.current?.focus();
+                chatInput.current.value = ""
+                const chatScreen = document.getElementById("chatScreen");
+                chatScreen?.scrollTo({
+                    top: chatScreen.scrollHeight,
+                    left: 0,
+                    
+                  })
+            }, 0)
+        }
+
+    }
+
+    
+
   
     useEffect(() => {
         setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`));
         chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
         getMe()
-        // 채팅 전역 상태관리
-        setChatStatus({
-            chatContents,
-            newMsgCount,
-            sendBroadChat,
-            chatInput,
-            startBgm
+
+        // 전체 채팅 받았을 때
+        socketIoClient.on("chat", (data) => {
+            console.log(data)
+
+            addChat(data);
+            addNewMsgCount()
         })
         
-    },[showChats, chatContents])
+        return () => { socketIoClient.off('chat'); }
+
+        
+    }, [showChats, applyChatStatus()])
 
     return <div className="absolute bottom-0 left-4 w-72 h-12 flex justify-around">
         {/* 채팅 버튼 */}
@@ -141,7 +177,7 @@ const BottomUI = ({ chatContents, newMsgCount, sendBroadChat, chatInput, createR
         {/* 채팅 팝업 */}
         {showChats ? <>
             <div ref={chattingPop} id="chatScreen" className="absolute bg-black bg-opacity-10 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
-                {chatContents.map((content, key) => <div key={key}>
+                {applyChatStatus().chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold">{content.client}: </span>
                     <span className="">{content.msg}</span>
                     </div>

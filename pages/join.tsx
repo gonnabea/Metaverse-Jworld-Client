@@ -85,7 +85,7 @@ const Join: NextPage = () => {
       <form onSubmit={(e) => handleJoinSubmit(e, {email, password, password2, nickname})} className="flex flex-col p-6" id="joinForm">
           <input onChange={onChange} name="email" className="border-2 w-4/6 p-6 self-center" type="email" required placeholder="이메일" />
           <input onChange={onChange} name="nickname" className="border-2 w-4/6 p-6 self-center" type="string" required placeholder="닉네임 (2 ~ 10자)" />
-          <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 (영문, 숫자 , 특수문자 포함)" />
+          <input onChange={onChange} name="password" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 (영문, 숫자, 특수문자 포함)" />
           <input onChange={onChange} name="password2" className="border-2 w-4/6 p-6 self-center" type="password" required placeholder="비밀번호 확인" />
 
           <div className="self-center p-6">

@@ -12,9 +12,9 @@ import PageTitle from '../../components/common/PageTItle';
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
-import socketIoClient from '../../multiplay/wsConnection';
 import { GETROOMS } from '../../apis/gql-queries/miniHompi';
 import useGetMe from '../../hooks/useGetMe';
+import useWebsocket from '../../hooks/useWebsocket';
 
 
 
@@ -24,11 +24,12 @@ import useGetMe from '../../hooks/useGetMe';
 
 
 const MiniHompiLobby:NextPage = () => {
-    const { chatContents, newMsgCount, chatInput, startBgm } = useReactiveVar(applyChatStatus);
+    const { chatInput, startBgm } = useReactiveVar(applyChatStatus);
     const {me} = useReactiveVar(applyMe);
     const [userId, setUserId] = useState();
     const [localChats, setLocalChats] = useState([]);
-    
+    const [socketIoClient, chatContents, setChatContents, newMsgCount, setNewMsgCount] = useWebsocket();
+
     const router = useRouter()
 
     
@@ -55,13 +56,7 @@ const MiniHompiLobby:NextPage = () => {
     }
 
     
-    socketIoClient.on("chat", (data) => {
-        console.log(data)
-        // setLocalChats([data])
-        // setChatContents(chatContents => [...chatContents, data]);
-        // setNewMsgCount(newMsgCount => newMsgCount + 1);
-        // playChatSoundEffect()
-    })
+
 
         // 로비 채팅 전송
         const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
@@ -115,7 +110,7 @@ const MiniHompiLobby:NextPage = () => {
             console.log(startBgm)
             
         
-    }, [chatContents])
+    }, [])
     
     return(
         <section className="w-screen h-screen overflow-x-hidden">

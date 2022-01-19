@@ -4,6 +4,6 @@ export interface broadcastPayload {
 }
 
 export interface Chat {
-    client: string,
+    client?: string,
     msg: string
 }

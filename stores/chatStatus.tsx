@@ -1,27 +1,39 @@
 import { makeVar } from "@apollo/client";
+import { Chat } from "../components/threeComponents/streamWorldModels/wsPayloads";
 
-export const applyChatStatus = makeVar({  
+interface chatStatus {
+    chatContents: Chat[];
+    newMsgCount: number;
+}
+
+export const applyChatStatus = makeVar<chatStatus>({  
     chatContents: [],
     newMsgCount: 0,
-    sendBroadChat: null,
-    chatInput: null,
-    startBgm: null,
-
 });
 
-export const setChatStatus = ({
-    chatContents,
-    newMsgCount,
-    sendBroadChat,
-    chatInput,
-    startBgm,
+// 새로운 채팅 내용 추가
+export const addChat = ( chatContents: Chat ) => {
+    const originalChats = applyChatStatus().chatContents;
+    originalChats.push(chatContents)
+    applyChatStatus({
+        ...applyChatStatus(),
+        chatContents: originalChats
+    })
+}
 
-}) => {
-    applyChatStatus({ 
-        chatContents,
-        newMsgCount,
-        sendBroadChat,
-        chatInput,
-        startBgm
-    });
-};
+// 새 메세지 수 up
+export const addNewMsgCount = () => {
+    const originalCount = applyChatStatus().newMsgCount;
+    applyChatStatus({
+        ...applyChatStatus(),
+        newMsgCount: originalCount + 1
+    })
+}
+
+// 새 메세지 수 초기화
+export const initMsgCount = () => {
+    applyChatStatus({
+        ...applyChatStatus(),
+        newMsgCount: 0
+    })
+}
