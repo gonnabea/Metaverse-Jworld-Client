@@ -90,7 +90,7 @@ const Vase2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
             index: findFocusedIndex(),
             status: {
                 ...allModelsStatus[modelName][findFocusedIndex()],
-                position: {x: closedObjPosition.x, y: 0, z: closedObjPosition.z},
+                position: {x: closedObjPosition.x, y: closedObjPosition.y, z: closedObjPosition.z},
         
             }
       })

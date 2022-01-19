@@ -687,7 +687,7 @@ const MiniHomepage:NextPage = (props) => {
           modelImgUrl="/model_images/chair_3.png"
           backgroundColor="blue"
           maxScale={7}
-          minScale={5}
+          minScale={4}
           scaleStep={0.1}
       />   
 
@@ -709,7 +709,7 @@ const MiniHomepage:NextPage = (props) => {
           rerender={rerender}
           setRerender={setRerender}
           initFocused={initFocused}
-          modelImgUrl="/model_images/chair1.png"
+          modelImgUrl="/model_images/table_1.png"
           backgroundColor="blue"
           maxScale={0.1}
           minScale={0.04}
