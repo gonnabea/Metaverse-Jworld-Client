@@ -2,7 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { FormEvent, useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
 import fileApi from "../../apis/axios/fileUpload";
-import { addChat, addNewMsgCount, applyChatStatus, setChatStatus } from "../../stores/chatStatus";
+import { addChat, addNewMsgCount, applyChatStatus } from "../../stores/chatStatus";
 import { applyMe } from "../../stores/loggedUser";
 import useGetMe from "../../hooks/useGetMe"
 import ImageList from "../ImageList";
@@ -13,7 +13,6 @@ import { Chat } from "../threeComponents/streamWorldModels/wsPayloads";
 
 interface props {
     createRoom?: any; // 웹소켓 룸 만들기 함수
-    startBgm: any;
     nickname?: string;
     socketIoClient: any;
 }
@@ -24,18 +23,19 @@ function checkFile(el, fileType){
 	var file = el.target.files;
 
 	// file[0].size 는 파일 용량 정보입니다.
-    if(fileType === "image")
-        if(file[0]?.size > 1024 * 1024 * 2){
-            // 용량 초과시 경고후 해당 파일의 용량도 보여줌
-            alert('2MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
-            
-        }
+   
+    if(fileType === "image" && file[0]?.size > 1024 * 1024 * 2){
+        // 용량 초과시 경고후 해당 파일의 용량도 보여줌
+        alert('2MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+        return;
+    }
 
-    if(fileType === "video")
-        if(file[0]?.size > 1024 * 1024 * 100){
-            // 용량 초과시 경고후 해당 파일의 용량도 보여줌
-            alert('100MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
-        }
+    
+    if(fileType === "video" && file[0]?.size > 1024 * 1024 * 100){
+        // 용량 초과시 경고후 해당 파일의 용량도 보여줌
+        alert('100MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+        return;
+    }
 
 	// 체크를 통과했다면 종료.
 	else return;
@@ -65,6 +65,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
     const [reqGetMe, loading] = useGetMe();
     const [images, setImages] = useState<[] | image[]>([]);
     const [videos, setVideos] = useState<[] | video[]>([]);
+    const [_, forceRerender] = useState(0) // 컴포넌트 강제 리렌더링을 위함 - 채팅 상태 업데이트 시 리렌더링이 안됨.
     
     
     
@@ -138,6 +139,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
                     
                   })
             }, 0)
+            forceRerender(num => num +1)
         }
 
     }
@@ -156,6 +158,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
 
             addChat(data);
             addNewMsgCount()
+            forceRenrender(num => num +1)
         })
         
         return () => { socketIoClient.off('chat'); }

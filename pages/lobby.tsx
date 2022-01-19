@@ -93,16 +93,6 @@ const Lobby:NextPage = () => {
            
         })
 
-        // 채팅 받았을 때
-        // socketIoClient.on("chat", (data) => {
-        //     console.log(data)
-        //     setChatContents(chatContents => [...chatContents, data]);
-        //     setNewMsgCount(newMsgCount => newMsgCount + 1);
-        //     playChatSoundEffect()
-        // })
-
-       
-
         socketIoClient.on("create-room", (data) => {
             
             
@@ -116,12 +106,6 @@ const Lobby:NextPage = () => {
         
     }
 
-
-
-
-
-
-    
     const createRoom = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const roomName = e.target[0].value;
@@ -181,21 +165,12 @@ const Lobby:NextPage = () => {
     
     useEffect(() => {
 
-        
         createConnection();
         
         handleSocketListeners();
 
-
-        
-        
-        
-        
-
         getMe()
 
-      
-        
     }, [])
     
     return(
@@ -226,7 +201,6 @@ const Lobby:NextPage = () => {
             <BottomUI
                 nickname={nickname}
                 createRoom={createRoom}
-                startBgm={startBgm}
                 socketIoClient={socketIoClient}
             />
             

@@ -7,7 +7,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
 import SiteMark from '../../components/common/SiteMark';
-import { applyMe } from '../../stores/loggedUser';
+import { applyMe, setMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
@@ -24,92 +24,46 @@ import useWebsocket from '../../hooks/useWebsocket';
 
 
 const MiniHompiLobby:NextPage = () => {
-    const { chatInput, startBgm } = useReactiveVar(applyChatStatus);
     const {me} = useReactiveVar(applyMe);
-    const [userId, setUserId] = useState();
+    const [nickname, setNickname] = useState<string>();
+    const [userId, setUserId] = useState<number | string | null>(); 
     const [localChats, setLocalChats] = useState([]);
-    const [socketIoClient, chatContents, setChatContents, newMsgCount, setNewMsgCount] = useWebsocket();
+    const [socketIoClient] = useWebsocket();
+
 
     const router = useRouter()
 
-    
- 
-    // const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
-    //     context: {
-    //         headers: {
-    //             "Authorization":  "Bearer " + jwtToken
-    //         }
-    //     }
-        
-    // })
-
     const {data, loading, error} = useQuery(GETROOMS)
     const [reqGetMe, getMeLoading] = useGetMe()
-    
-    // 로비 입장 시 로그인 된 유저 정보 가져오기
-    
-    const getUserFromToken = async() => {      
+
+    const getMe = async() => {
+  
+        // 회원일 시
+        const data = await reqGetMe();
+        if(data.data){
+            const user = data.data.getMe.user;
+            setNickname(user.nickname);
+            setUserId(user.id);
+            setMe({id: user.id, nickname: user.nickname})
+            
+        }
+        // 비회원일 시
+        else {
+            const customerId = Math.random();
+            setNickname("손님 - " + customerId);
+            setUserId(customerId)
+            setMe({id: customerId, nickname: "손님 - " + customerId})
+        }
+
+
         
-        const { data: {getMe: {user}} } = await reqGetMe()
-        console.log(user)
-        setUserId(user.id)
     }
 
     
-
-
-        // 로비 채팅 전송
-        const sendBroadChat = (e: FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            
-            
-            if(e.target[0].value.length > 0){
-                socketIoClient.emit("chat", {
-                    nickname: me.nickname,
-                    text: e.target[0].value
-                });
-                
-              
-               
-                setChatStatus({
-                    chatContents: [...chatContents, {client: me.nickname, msg: e.target[0].value}],
-                    newMsgCount,
-                    sendBroadChat,
-                    chatInput,
-                    startBgm
-                })
-                
-                // 채팅 전송 후 다시 포커스 해주기 위함.
-                setTimeout(() => {
-                    chatInput.current?.focus();
-                    chatInput.current.value = ""
-                    const chatScreen = document.getElementById("chatScreen");
-                    chatScreen?.scrollTo({
-                        top: chatScreen.scrollHeight,
-                        left: 0,
-                        
-                      })
-                }, 0)
-            }
-        }
-    
-    
     useEffect(() => {
-        
-        console.log(me)
-        if(!me) {
-            getUserFromToken()
-        }
-        else {
-            setUserId(me.id)
-        }
-        console.log(chatContents)
-            console.log(newMsgCount)
-            console.log(sendBroadChat)
-            console.log(chatInput)
-            console.log(startBgm)
-            
-        
+    
+        getMe()
+
     }, [])
     
     return(
@@ -139,21 +93,12 @@ const MiniHompiLobby:NextPage = () => {
                     }
                 ): null}
                 </div>
-            {
-                console.log(chatContents)}
-                {console.log(newMsgCount)}
-                {console.log(sendBroadChat)}
-                {console.log(chatInput)}
-                {console.log(startBgm)}
+
             
                 <BottomUI 
-            chatContents={chatContents} 
-            newMsgCount={newMsgCount}
-            sendBroadChat={sendBroadChat}
-            chatInput={chatInput}
-            startBgm={startBgm}
-         
-            />
+                    nickname={nickname}
+                    socketIoClient={socketIoClient} 
+                />
             
         </section>
     )
