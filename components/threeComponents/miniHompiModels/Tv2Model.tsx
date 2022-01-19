@@ -136,7 +136,7 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom, setShowUpdateUr
                 <primitive 
                 onClick={(e) => {
                     console.log("tv2 클릭")
-                    if(isMyRoom) {
+                    if(isMyRoom && checkFocused()) {
                
                             initFocused()
         

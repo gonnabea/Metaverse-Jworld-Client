@@ -83,7 +83,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
 
       // 모델 설치
       if(closedObjPosition && checkFocused() === true && e.target.tagName === "CANVAS"){
-          console.log("ChairModel 포커싱 상태");
+    
 
           setAllModelsStatus({
             modelName: modelNameTypes[snake_case_name],
@@ -124,7 +124,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
 
                 }}
                  onClick={(e) => {
-                  if(isMyRoom) {
+                  if(isMyRoom && checkFocused()) {
                       console.log("의자 클릭")
              
                           initFocused()
@@ -158,7 +158,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                               onClick={async(e) => {
                                   
                                   console.log(`의자_${index} 클릭`)
-                                  if(isMyRoom){
+                                  if(isMyRoom && checkFocused()){
                                       
                                       initFocused()
                                       console.log(model.position,model.isFocused)

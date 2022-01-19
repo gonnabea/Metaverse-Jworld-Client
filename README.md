@@ -3,21 +3,6 @@
 - 메타버스 SNS 클라이언트사이드 만들기
 - 싸이월드 모티브
 
-### 클라이언트사이드 기술스택
-
-- [x] Next.js
-- [x] TypeScript
-- [x] Three.js (React-Three-Fiber)
-- [x] Cannon.js
-- [x] Tailwind CSS
-- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
-- [x] GraphQL
-- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
-- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
-- [x] Socket.io
-- [ ] WebRTC
-- [x] Docker
-
 
 ## 주요 기능
 
@@ -40,12 +25,12 @@
 ### Rooms
 
 - 방 만들기 / 방 저장하기
-- 3d 모델 설치, 이동 / 크기 조절 / 회전 조절 / 개수 조절 / 제거
+- 3d 모델 설치, 이동 / 크기 조절 / 회전 조절 / 개수 조절 / 수정 / 제거
 - 내가 꾸민 방 타 유저에게 공개됨 (게시판 형태)
 - 유저가 업로드한 동영상 / 이미지를 각각 tv 모델, 액자 모델에 전시
 - 기타 3d 모델들의 인터랙션
 
-### 초기 출시
+## 초기 출시 (2022.01)
 
 - 공통
 
@@ -83,7 +68,7 @@
 - [x] 액자 생성 기능
 - [x] 미니홈피 로비 페이지 구현 
 
-### 1차 대규모 업데이트
+## 1차 대규모 업데이트
 
 - 공통
 
@@ -118,7 +103,7 @@
 
 - [ ] 3D 모델
 
-### 2차 대규모 업데이트 (부분 유료화 - 수익 모델)
+## 2차 대규모 업데이트 (부분 유료화 - 수익 모델)
 
 - 아바타
 
@@ -148,6 +133,21 @@
 
 - [ ] 아이템 구매 기능
 - [ ] 가구 구매 기능
+
+### 클라이언트사이드 기술스택
+
+- [x] Next.js
+- [x] TypeScript
+- [x] Three.js (React-Three-Fiber)
+- [x] Cannon.js
+- [x] Tailwind CSS
+- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
+- [x] GraphQL
+- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
+- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
+- [x] Socket.io
+- [ ] WebRTC
+- [x] Docker
 
 ### 기획 Figma
 

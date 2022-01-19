@@ -153,7 +153,7 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrl
             {/* 첫번째 액자 모델 */}
             <primitive 
                 onClick={(e) => {
-                    if(isMyRoom) {
+                    if(isMyRoom && checkFocused()) {
                         console.log("액자1 클릭")
                
                             initFocused()
@@ -201,7 +201,7 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrl
                             onClick={async(e) => {
                                 
                                 console.log(`액자1_${index} 클릭`)
-                                if(isMyRoom){
+                                if(isMyRoom && checkFocused()){
                                     setShowUpdateUrlUI(true)
                                     initFocused()
                                     console.log(model.position,model.isFocused)

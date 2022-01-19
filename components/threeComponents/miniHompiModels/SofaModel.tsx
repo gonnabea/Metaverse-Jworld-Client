@@ -123,7 +123,7 @@ const SofaModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
 
                 }}
                  onClick={(e) => {
-                  if(isMyRoom) {
+                  if(isMyRoom && checkFocused()) {
                       console.log("소파 클릭")
              
                           initFocused()
@@ -157,7 +157,7 @@ const SofaModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                               onClick={async(e) => {
                                   
                                   console.log(`소파1_${index} 클릭`)
-                                  if(isMyRoom){
+                                  if(isMyRoom && checkFocused()){
                                       
                                       initFocused()
                                       console.log(model.position,model.isFocused)
