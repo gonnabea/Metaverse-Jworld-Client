@@ -158,7 +158,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
 
             addChat(data);
             addNewMsgCount()
-            forceRenrender(num => num +1)
+            forceRerender(num => num +1)
         })
         
         return () => { socketIoClient.off('chat'); }
@@ -179,10 +179,10 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
         
         {/* 채팅 팝업 */}
         {showChats ? <>
-            <div ref={chattingPop} id="chatScreen" className="absolute bg-black bg-opacity-10 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto">
+            <div ref={chattingPop} id="chatScreen" className="absolute bg-black bg-opacity-40 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto z-30">
                 {applyChatStatus().chatContents.map((content, key) => <div key={key}>
-                    <span className="font-bold">{content.client}: </span>
-                    <span className="">{content.msg}</span>
+                    <span className="font-bold text-white">{content.client}: </span>
+                    <span className="text-white">{content.msg}</span>
                     </div>
                 )}
                

@@ -28,7 +28,7 @@ import TV2Model from '../../../components/threeComponents/miniHompiModels/Tv2Mod
 import SiteMark from '../../../components/common/SiteMark';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { useReactiveVar } from '@apollo/react-hooks';
-import { applyMe } from '../../../stores/loggedUser';
+import { applyMe, setMe } from '../../../stores/loggedUser';
 import { useRouter } from 'next/router';
 
 import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
@@ -52,6 +52,8 @@ import Refrigerator2Model from '../../../components/threeComponents/miniHompiMod
 import Closet1Model from '../../../components/threeComponents/miniHompiModels/Closet1Model';
 import TextBoardModel from '../../../components/threeComponents/miniHompiModels/TextBoardModel';
 import Vase2Model from '../../../components/threeComponents/miniHompiModels/Vase2Model';
+import useWebsocket from '../../../hooks/useWebsocket';
+import useGetMe from '../../../hooks/useGetMe';
 
 
 
@@ -73,6 +75,11 @@ const MiniHomepage:NextPage = (props) => {
     const [getMiniHompi, setGetMiniHompi] = useState()
     const [getThreeModels, setGetThreeModels] = useState()
     const [jwtToken, setJwtToken] = useState()
+    const [reqGetMe, getMeLoading] = useGetMe()
+    const [nickname, setNickname] = useState<string>();
+    const [userId, setUserId] = useState<number | string | null>(); 
+    const [socketIoClient] = useWebsocket();
+    
 
 
     const [editBook, setEditBook] = useState(false); // 책 내용 수정 모드 진입 on / off
@@ -106,13 +113,6 @@ const MiniHomepage:NextPage = (props) => {
     }
     })
 
-
-
-
-    
-
-  
-
     const applyInstallBtn = useRef();
     const [css3dBookVisible, setCss3dBookVisible] = useState(false);
 
@@ -140,6 +140,30 @@ const MiniHomepage:NextPage = (props) => {
      
     }
 
+    const getMe = async() => {
+  
+      // 회원일 시
+      const data = await reqGetMe();
+      if(data.data){
+          const user = data.data.getMe.user;
+          setNickname(user.nickname);
+          setUserId(user.id);
+          setMe({id: user.id, nickname: user.nickname})
+          
+      }
+      // 비회원일 시
+      else {
+          const customerId = Math.random();
+          setNickname("손님 - " + customerId);
+          setUserId(customerId)
+          setMe({id: customerId, nickname: "손님 - " + customerId})
+      }
+
+
+      
+  }
+    
+
 
     // 서버에 요청 후 데이터 불러오기 & 배치
     const getInfos = async() => {
@@ -148,11 +172,6 @@ const MiniHomepage:NextPage = (props) => {
       const {data: { getMiniHompi } } = await reqRoomInfo();
 
       const {data: { getThreeModels } } = await reqModels();
-      
-      console.log(getMiniHompi)
-      
-      
-      console.log(me)
       
       if(me.id === getMiniHompi.miniHompi.ownerId) {
         setIsMyRoom(true)
@@ -163,6 +182,7 @@ const MiniHomepage:NextPage = (props) => {
       
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
+      getMe()
       
       if(getThreeModels.models.length === 0) {
         alert("Dasf")
@@ -210,38 +230,38 @@ const MiniHomepage:NextPage = (props) => {
       
     }
 
-    function ObstacleBox(props) {
-      const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
+    // function ObstacleBox(props) {
+    //   const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
         
-      }  }))
+    //   }  }))
       
-      if(props.isGround === true){
-        return (
-            <mesh ref={ref} name={"ground1"} visible={true} >
-              <boxGeometry args={props.args}  />
-              <meshStandardMaterial color="orange"  />
-            </mesh>
+    //   if(props.isGround === true){
+    //     return (
+    //         <mesh ref={ref} name={"ground1"} visible={true} >
+    //           <boxGeometry args={props.args}  />
+    //           <meshStandardMaterial color="orange"  />
+    //         </mesh>
 
-        )
-      }
-      else if(props.isStair === true) {
-        return (
-          <mesh ref={ref} name={"stair"} visible={true}   >
-            <boxGeometry args={props.args}  />
-            <meshStandardMaterial color="orange"  />
-          </mesh>
+    //     )
+    //   }
+    //   else if(props.isStair === true) {
+    //     return (
+    //       <mesh ref={ref} name={"stair"} visible={true}   >
+    //         <boxGeometry args={props.args}  />
+    //         <meshStandardMaterial color="orange"  />
+    //       </mesh>
 
-      )
-      }
-      else {
-        return (
-        <mesh ref={ref} visible={true}   >
-        <boxGeometry args={props.args}  />
-        <meshStandardMaterial color="orange"  />
-      </mesh>
-        )
-      }
-    }
+    //   )
+    //   }
+    //   else {
+    //     return (
+    //     <mesh ref={ref} visible={true}   >
+    //     <boxGeometry args={props.args}  />
+    //     <meshStandardMaterial color="orange"  />
+    //   </mesh>
+    //     )
+    //   }
+    // }
 
     useEffect(() => {
       setJwtToken(localStorage.getItem("jwt_token"))
@@ -372,8 +392,8 @@ const MiniHomepage:NextPage = (props) => {
           </Canvas>,
 
           <BottomUI 
-            chatContents={["Asdasd"]}
-            
+            nickname={nickname}
+            socketIoClient={socketIoClient}
             />
 
           {isMyRoom ? <button ref={applyInstallBtn} 

@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import socketIoClient from '../../multiplay/wsConnection';
 import { Socket } from 'socket.io-client';
 import StreamWorldModel from '../../components/threeComponents/streamWorldModels/StreamWorldModel';
 import OrbitCameraController from '../../components/threeComponents/OrbitController';
@@ -13,11 +12,12 @@ import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamer
 import PageTitle from '../../components/common/PageTItle';
 import SiteMark from '../../components/common/SiteMark';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { applyMe } from '../../stores/loggedUser';
+import { applyMe, setMe } from '../../stores/loggedUser';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router'
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
+import useWebsocket from '../../hooks/useWebsocket';
 
 
 const World:NextPage = () => {
@@ -30,6 +30,8 @@ const World:NextPage = () => {
     const [nickname, setNickname] = useState("손님");
     const [userId, setUserId] = useState(JSON.stringify(Math.random()))
     const router = useRouter()
+    const [socketIoClient] = useWebsocket();
+
 
     // 로비 입장 시 로그인 된 유저 정보 가져오기
     const [reqGetMe, {loading, error}] = useLazyQuery(GETME, {
@@ -42,15 +44,26 @@ const World:NextPage = () => {
   })
       
   const getMe = async() => {
-
-    setJwtToken(localStorage.getItem("jwt_token"));
   
-    const {data: {getMe: {user}} } = await reqGetMe()
-    console.log(user)
-    setNickname(user.nickname);
-    setUserId(user.id);
+    // 회원일 시
+    const data = await reqGetMe();
+    if(data.data){
+        const user = data.data.getMe.user;
+        setNickname(user.nickname);
+        setUserId(user.id);
+        setMe({id: user.id, nickname: user.nickname})
+        
+    }
+    // 비회원일 시
+    else {
+        const customerId = Math.random();
+        setNickname("손님 - " + customerId);
+        setUserId(customerId)
+        setMe({id: customerId, nickname: "손님 - " + customerId})
+    }
+
+
     
-   
 }
 
 
@@ -187,7 +200,7 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
           <SiteMark title={"Stream World"} bgColor={"bg-black"} handleLeave={leaveRoom} />
-         
+          <BottomUI socketIoClient={socketIoClient} nickname={nickname} />
           <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />
