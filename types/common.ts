@@ -10,3 +10,9 @@ export interface XYZType {
       rerender: number;
       setRerender: Function;
   }
+
+  export interface XYZType {
+      x: number;
+      y: number;
+      z: number;
+  }

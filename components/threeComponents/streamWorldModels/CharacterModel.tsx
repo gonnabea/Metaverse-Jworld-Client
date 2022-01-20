@@ -10,6 +10,7 @@ import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
 import ThirdPersonCamera from '../thirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
+import { setCharacterPosition, setCharacterRotateZ } from '../../../stores/character';
 
 interface CharacterModelOpts {
     scale: number[]
@@ -26,6 +27,8 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
     const gltf = useLoader(GLTFLoader, modelList.character);
     const { nodes, materials, animations } = useGLTF(modelList.character) as GLTFResult;
     const group = useRef<THREE.Group>()
+
+    
 
     const { actions } = useAnimations<GLTFActions>(animations, group)
 
@@ -117,6 +120,14 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
             setPositionY(characterRef.current.position.y)
             setPositionZ(characterRef.current.position.z)
 
+            // 캐릭터 위치 전역 상태관리 (웹소켓 통신을 위함)
+            setCharacterPosition({
+                x: characterRef.current.position.x,
+                y: characterRef.current.position.y,
+                z: characterRef.current.position.z
+            })
+
+            setCharacterRotateZ(characterRef.current.rotation.z)
 
 
           })

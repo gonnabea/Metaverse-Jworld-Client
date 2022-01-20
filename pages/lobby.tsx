@@ -51,7 +51,7 @@ const Lobby:NextPage = () => {
             setNickname(user.nickname);
             setUserId(user.id);
             setMe({id: user.id, nickname: user.nickname})
-            
+            socketIoClient.emit("enter-lobby", {nickname: user.nickname, userId: user.id})
         }
         // 비회원일 시
         else {
@@ -59,10 +59,11 @@ const Lobby:NextPage = () => {
             setNickname("손님 - " + customerId);
             setUserId(customerId)
             setMe({id: customerId, nickname: "손님 - " + customerId})
+            socketIoClient.emit("enter-lobby", {nickname: "손님 - " + customerId, customerId})
+
         }
 
-
-        
+     
     }
       
     
@@ -139,10 +140,7 @@ const Lobby:NextPage = () => {
         
     }
 
-    const createConnection = () => {
-        socketIoClient.emit("enter-lobby", {nickname, userId})
-        
-    }
+
 
     
     // 배경음 시작
@@ -164,8 +162,6 @@ const Lobby:NextPage = () => {
       
     
     useEffect(() => {
-
-        createConnection();
         
         handleSocketListeners();
 

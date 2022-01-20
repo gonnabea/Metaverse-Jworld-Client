@@ -34,6 +34,15 @@ export const modelList = {
     lobby: `${modelsUrl}/streamWorld.glb`,
     screen: `${modelsUrl}/tv2.glb`,
     character: `${characterModelsUrl}/amy.glb`,
+    character2: `${characterModelsUrl}/amy2.glb`,
+    character3: `${characterModelsUrl}/amy3.glb`,
+    character4: `${characterModelsUrl}/amy4.glb`,
+    character5: `${characterModelsUrl}/amy5.glb`,
+    character6: `${characterModelsUrl}/amy6.glb`,
+    character7: `${characterModelsUrl}/amy7.glb`,
+    character8: `${characterModelsUrl}/amy8.glb`,
+
+
     amy: `${characterModelsUrl}/amy.glb`,
     frame1: `${miniHompiModelsUrl}/frame1.glb`,
     tv_2: `${miniHompiModelsUrl}/tv2.glb`,

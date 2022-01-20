@@ -18,6 +18,14 @@ import { useRouter } from 'next/router'
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import useWebsocket from '../../hooks/useWebsocket';
+import { applyCharacterStatus, setOthersPosition, setOthersRotateZ } from '../../stores/character';
+import CharacterModel2 from '../../components/threeComponents/streamWorldModels/CharacterModel2';
+import CharacterModel7 from '../../components/threeComponents/streamWorldModels/CharacterModel7';
+import CharacterModel8 from '../../components/threeComponents/streamWorldModels/CharacterModel8';
+import CharacterModel6 from '../../components/threeComponents/streamWorldModels/CharacterModel6';
+import CharacterModel5 from '../../components/threeComponents/streamWorldModels/CharacterModel5';
+import CharacterModel4 from '../../components/threeComponents/streamWorldModels/CharacterModel4';
+import CharacterModel3 from '../../components/threeComponents/streamWorldModels/CharacterModel3';
 
 
 const World:NextPage = () => {
@@ -31,6 +39,7 @@ const World:NextPage = () => {
     const [userId, setUserId] = useState(JSON.stringify(Math.random()))
     const router = useRouter()
     const [socketIoClient] = useWebsocket();
+    const [_, forceRerender] = useState(0)
 
 
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -61,8 +70,6 @@ const World:NextPage = () => {
         setUserId(customerId)
         setMe({id: customerId, nickname: "손님 - " + customerId})
     }
-
-
     
 }
 
@@ -84,6 +91,21 @@ const World:NextPage = () => {
 
     socketIoClient.on("disconnect", (data) => {
       leaveLobby()
+    })
+
+   
+    
+
+    
+    
+    socketIoClient.on("avatar-move", ({roomId, userId, position, rotateZ}) => {
+      if(roomId === roomId) {
+        console.log(userId)
+        console.log(position)
+        setOthersPosition({position, index: 0})
+        setOthersRotateZ({rotateZ, index: 0})
+        // setOthersRotateZ()
+      }
     })
 
 
@@ -192,10 +214,16 @@ const World:NextPage = () => {
         getMe()
 
        
-
+      // 서버에 캐릭터 위치 실시간 전송
+        const sendCharacterPosition = setInterval(() => {
+          socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
+        }, 0)
         
-        
-      }, [])
+        return () => {
+          
+          clearInterval(sendCharacterPosition)
+        }
+      }, [_])
 
     return(
         <section className="w-screen h-screen overflow-hidden">
@@ -220,10 +248,42 @@ const World:NextPage = () => {
           <Physics gravity= {[0, -100, 0]} >
             <Suspense fallback={null}>
               <StreamWorldModel />
+              
               <CharacterModel 
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
               />
+
+              {/* 타인 캐릭터 */}
+              <CharacterModel2
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />
+              {/* <CharacterModel3
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />            
+              <CharacterModel4
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />            
+              <CharacterModel5
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />            
+              <CharacterModel6
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />            
+              <CharacterModel7
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />            
+              <CharacterModel8
+              rotation={[Math.PI / 2,0,0]} 
+              scale={[0.01,0.01,0.01]} 
+              />
+               */}
               
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
