@@ -2,6 +2,7 @@ import { makeVar } from "@apollo/client";
 import { Chat } from "../components/threeComponents/streamWorldModels/wsPayloads";
 import { characterStatus } from "../types/character";
 import { XYZType } from "../types/common";
+import { wsUser } from "../types/wsRoom";
 
 
 export const applyCharacterStatus = makeVar<characterStatus>({  
@@ -65,5 +66,20 @@ export const setOthersPosition = ({position, index}: {position: XYZType, index: 
 
 export const setOthersRotateZ = ({rotateZ, index}: {rotateZ: number, index: number}) => {
     applyOthersStatus()[index].rotateZ = rotateZ;
+
+}
+
+export const applyConnectedUser = makeVar<wsUser[]>([])
+
+export const addConnectedUser = ({id, connectedRoomId}: wsUser) => {
+    applyConnectedUser().push({id, connectedRoomId})
+}
+
+export const removeConnectedUser = (userId: number) => {
+    alert(JSON.stringify(applyConnectedUser()))
+    alert(userId)
+    const removeUser = applyConnectedUser().filter(user => user.id != userId)
+
+    applyConnectedUser(removeUser)
 
 }

@@ -20,6 +20,7 @@ import useGetMe from '../hooks/useGetMe';
 import useWebsocket from '../hooks/useWebsocket';
 
 
+
 // 스트림월드 로비
 const Lobby:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
@@ -133,7 +134,7 @@ const Lobby:NextPage = () => {
         
         console.log("Dsfasfadsfadsf")
         socketIoClient.emit("join-room", {roomId, userId} )
-
+        
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
         // window.location.replace(`/stream_world/${roomId}`)
         router.push(`/stream_world/${roomId}`)

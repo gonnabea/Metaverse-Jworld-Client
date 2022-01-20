@@ -10,7 +10,7 @@ import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
 import ThirdPersonCamera from '../thirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
-import { applyOthersStatus, setCharacterPosition } from '../../../stores/character';
+import { applyConnectedUser, applyOthersStatus, setCharacterPosition } from '../../../stores/character';
 
 interface CharacterModelOpts {
     scale: number[]
@@ -121,7 +121,7 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
             <>
        
 
-            <group ref={group}>
+            <group ref={group} visible={applyConnectedUser().length >= 1 ? true : false}>
                 <group  
                     
                     ref={characterRef}

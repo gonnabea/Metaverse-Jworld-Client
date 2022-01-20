@@ -6,3 +6,8 @@ export interface wsRoom {
     userList: Array<any>;
     maxPeopleNum: number;
 }
+
+export interface wsUser {
+    id: string | number;
+    connectedRoomId: string | number;
+}

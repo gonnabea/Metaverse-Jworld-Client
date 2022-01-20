@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import useWebsocket from '../../hooks/useWebsocket';
-import { applyCharacterStatus, setOthersPosition, setOthersRotateZ } from '../../stores/character';
+import { applyCharacterStatus, applyConnectedUser, removeConnectedUser, setOthersPosition, setOthersRotateZ } from '../../stores/character';
 import CharacterModel2 from '../../components/threeComponents/streamWorldModels/CharacterModel2';
 import CharacterModel7 from '../../components/threeComponents/streamWorldModels/CharacterModel7';
 import CharacterModel8 from '../../components/threeComponents/streamWorldModels/CharacterModel8';
@@ -26,7 +26,7 @@ import CharacterModel6 from '../../components/threeComponents/streamWorldModels/
 import CharacterModel5 from '../../components/threeComponents/streamWorldModels/CharacterModel5';
 import CharacterModel4 from '../../components/threeComponents/streamWorldModels/CharacterModel4';
 import CharacterModel3 from '../../components/threeComponents/streamWorldModels/CharacterModel3';
-
+import { addConnectedUser } from '../../stores/character';
 
 const World:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
@@ -36,7 +36,7 @@ const World:NextPage = () => {
     const cubeRef = useRef();
     const [jwtToken, setJwtToken] = useState();
     const [nickname, setNickname] = useState("손님");
-    const [userId, setUserId] = useState(JSON.stringify(Math.random()))
+    const [userId, setUserId] = useState<number>()
     const router = useRouter()
     const [socketIoClient] = useWebsocket();
     const [_, forceRerender] = useState(0)
@@ -86,11 +86,13 @@ const World:NextPage = () => {
 
 
     socketIoClient.on("broadcast", (data) => {
-      console.log(data)
+      // console.log(data)
     })
 
     socketIoClient.on("disconnect", (data) => {
       leaveLobby()
+      removeConnectedUser(userId)
+
     })
 
    
@@ -98,25 +100,18 @@ const World:NextPage = () => {
 
     
     
-    socketIoClient.on("avatar-move", ({roomId, userId, position, rotateZ}) => {
-      if(roomId === roomId) {
-        console.log(userId)
-        console.log(position)
-        setOthersPosition({position, index: 0})
-        setOthersRotateZ({rotateZ, index: 0})
-        // setOthersRotateZ()
-      }
-    })
+
 
 
     const leaveRoom = () => {
       
       socketIoClient.emit("leave-room", { roomId: roomId.current, userId });
+      
+
     }
 
     const leaveLobby = () => {
            
-     
       socketIoClient.emit("leave-lobby", { roomId: roomId.current, userId });
       
     }
@@ -212,18 +207,47 @@ const World:NextPage = () => {
         
         getRoomId()
         getMe()
-
        
       // 서버에 캐릭터 위치 실시간 전송
         const sendCharacterPosition = setInterval(() => {
           socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
         }, 0)
+
+        // 타 유저 캐릭터 위치 실시간 송신
+        socketIoClient.on("avatar-move", ({roomId, userId, position, rotateZ}) => {
+          if(roomId === roomId) {
+            setOthersPosition({position, index: 0})
+            setOthersRotateZ({rotateZ, index: 0})
+            // setOthersRotateZ()
+          }
+        })
+
+        socketIoClient.on("disconnect", (data) => {
+          leaveLobby()
+          removeConnectedUser(userId)
+        })
+        socketIoClient.on("leave-room", ({userId}) => {
+          leaveLobby()
+          removeConnectedUser(userId)
+        })
+
+        socketIoClient.on("leave-lobby", (data) => {
+          leaveLobby()
+          removeConnectedUser(userId)
+        })
+
+        socketIoClient.on("join-room", ({roomId, userId}) => {
+          if(roomId === roomId)
+            addConnectedUser({id: userId , connectedRoomId: roomId })
+          
+        })
         
         return () => {
-          
+          socketIoClient.off("avatar-move")
+          socketIoClient.off("join-room")
           clearInterval(sendCharacterPosition)
         }
-      }, [_])
+      }, [])
 
     return(
         <section className="w-screen h-screen overflow-hidden">
@@ -256,18 +280,19 @@ const World:NextPage = () => {
 
               {/* 타인 캐릭터 */}
               <CharacterModel2
+           
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
               />
-              {/* <CharacterModel3
+              {applyConnectedUser().length >= 2 ? <CharacterModel3
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
-              />            
-              <CharacterModel4
+              /> : null}       
+              {applyConnectedUser().length >= 3 ? <CharacterModel4
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
-              />            
-              <CharacterModel5
+              /> : null}  
+              {/* <CharacterModel5
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
               />            
@@ -282,8 +307,8 @@ const World:NextPage = () => {
               <CharacterModel8
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
-              />
-               */}
+              /> */}
+              
               
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />
               {/* <ScreenModel2 position={[-2,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} /> */}
