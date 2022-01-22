@@ -7,8 +7,10 @@ const OrbitCameraController = () => {
    useEffect(
       () => {
          const controls = new OrbitControls(camera, gl.domElement);
-         camera.position.set(0,10,10)
+         camera.position.set(20,20,20)
+         camera.lookAt(0,0,0)
       
+   
          controls.minDistance = 2;
          controls.maxDistance = 40;
          

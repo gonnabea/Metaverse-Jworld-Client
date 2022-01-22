@@ -76,15 +76,20 @@ const MiniHompiLobby:NextPage = () => {
                     ({miniHompi, owner}, key) => {
                         console.log(JSON.parse(data.getAllMiniHompis.hompisWithOwners))
                         return(
-                            <a key={key} onClick={() => router.push({
-                                pathname: `/mini_homepage/room/${miniHompi.id}`, 
-                                query: {owner: owner?.nickname}})}  
-                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-left align-middle text-left rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer`} >
-                            {console.log(data)}
+                            <a key={key} onClick={() => {
+                                window.location.replace(`/mini_homepage/room/${miniHompi.id}?ownerName=${owner?.nickname}`)
+                            }}
+                                // router.push({
+                                // pathname: `/mini_homepage/room/${miniHompi.id}`, 
+                                // query: {owner: owner?.nickname}})}  
+                                className={`${miniHompi.ownerId === userId ? " text-black" : "bg-white text-black"} p-6 w-10/12 flex justify-between align-middle text-left rounded-xl border-2 border-black hover:bg-black hover:text-white cursor-pointer`
+                                
+                            } >
+                         
                             <div className="flex flex-col">
 
                             <cite className="text-2xl">{owner?.nickname}'s Room</cite>
-                            <span className="text-2xl">{miniHompi.createdAt}</span>
+                            <span className="text-2xl">{miniHompi.createdAt.split("T")[0]}</span>
                             </div>
                             {miniHompi.ownerId === userId ? <span className="text-white text-bold bg-green-500 rounded text-center w-4/12 h-6 relative right-0">★ MyRoom</span> : null}
                             

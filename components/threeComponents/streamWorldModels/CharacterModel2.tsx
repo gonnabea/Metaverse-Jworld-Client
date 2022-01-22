@@ -58,39 +58,39 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
 
     // 캐릭터 충돌처리를 위한 안보이는 박스
     
-    let MOVESPEED = 3
-      const [mesh, api] = useSphere(() => ({ 
-          mass:1, 
-          type: "Dynamic",
-          args: [0.2],
+    // let MOVESPEED = 3
+    //   const [mesh, api] = useSphere(() => ({ 
+    //       mass:1, 
+    //       type: "Dynamic",
+    //       args: [0.2],
           
           
-          onCollideBegin: (e) => { 
+    //       onCollideBegin: (e) => { 
           
               
-              if(e.body.name === "ground1") {
-                  console.log("바닥과 충돌")
+    //           if(e.body.name === "ground1") {
+    //               console.log("바닥과 충돌")
            
                   
-              }
-              else if(e.body.name === "stair") {
-                  console.log("계단과 충돌")
+    //           }
+    //           else if(e.body.name === "stair") {
+    //               console.log("계단과 충돌")
                   
-              }
-              else {
-                  console.log("물체와 충돌")
+    //           }
+    //           else {
+    //               console.log("물체와 충돌")
                  
                 
             
 
                  
-              }
-          }
+    //           }
+    //       }
           
          
 
           
-          }))
+    //       }))
           
 
 
@@ -117,11 +117,10 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-        return (
+        return applyConnectedUser().length > 1 ? (
             <>
-       
 
-            <group ref={group} visible={applyConnectedUser().length >= 1 ? true : false}>
+            <group ref={group}>
                 <group  
                     
                     ref={characterRef}
@@ -131,7 +130,7 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
                         applyOthersStatus()[0].position.z
                     ]}
                     scale={scale} 
-                    rotation={[Math.PI / 2, 0 ,applyOthersStatus()[0].rotateZ]}
+                    rotation={[Math.PI / 2, 0, applyOthersStatus()[0].rotateZ]}
                    
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
@@ -154,7 +153,7 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
           
         </mesh> */}
           </>
-        )
+        ) : null
         
     
     }

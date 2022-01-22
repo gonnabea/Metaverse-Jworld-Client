@@ -39,7 +39,8 @@ const World:NextPage = () => {
     const [userId, setUserId] = useState<number>()
     const router = useRouter()
     const [socketIoClient] = useWebsocket();
-    const [_, forceRerender] = useState(0)
+    const [_, forceRerender] = useState(0);
+    const [userIndex , setUserIndex] = useState(0); // 방에 입장한 유저 상태관리를 위함
 
 
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -61,7 +62,8 @@ const World:NextPage = () => {
         setNickname(user.nickname);
         setUserId(user.id);
         setMe({id: user.id, nickname: user.nickname})
-        
+        const url = window.location.href;
+
     }
     // 비회원일 시
     else {
@@ -69,6 +71,8 @@ const World:NextPage = () => {
         setNickname("손님 - " + customerId);
         setUserId(customerId)
         setMe({id: customerId, nickname: "손님 - " + customerId})
+        const url = window.location.href;
+
     }
     
 }
@@ -80,6 +84,8 @@ const World:NextPage = () => {
     const getRoomId = () => {
       const url = window.location.href;
       roomId.current = url.split("world/")[1];
+
+      socketIoClient.emit("get-user-list", { roomId: url.split("world/")[1] })
       
     }
 
@@ -115,45 +121,6 @@ const World:NextPage = () => {
       socketIoClient.emit("leave-lobby", { roomId: roomId.current, userId });
       
     }
-    
-
-    function Box(props) {
-        // This reference will give us direct access to the THREE.Mesh object
-        const ref = useRef()
-        
-        // Set up state for the hovered and active state
-        const [hovered, setHover] = useState(false)
-        const [active, setActive] = useState(false)
-        // Subscribe this component to the render-loop, rotate the mesh every frame
-        useFrame((state, delta) => (ref.current.rotation.x += 0.01))
-        // Return the view, these are regular Threejs elements expressed in JSX
-        return (
-
-          <mesh
-            {...props}
-            ref={ref}
-            scale={active ? 1.5 : 1}
-            onClick={(event) => setActive(!active)}
-            onDoubleClick={() => leaveLobby()}
-            onPointerOver={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-          </mesh>
-        )
-      }
-
-      function Ground1(props) {
-        const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
-
-        return (
-          <mesh ref={ref} name="ground1">
-            <planeGeometry args={[20, 15]}  />
-            <meshStandardMaterial color="#f0f0f0" />
-          </mesh>
-        )
-      }
-
       function ObstacleBox(props) {
         const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
           
@@ -187,66 +154,76 @@ const World:NextPage = () => {
         }
       }
 
-      function ObstaclePlane(props) {
-        const [ref] = usePlane(() => ({ rotation: [0, 0, 0], ...props }))
-        
-        return (
-          <mesh castShadow ref={ref} >
-            <planeGeometry args={[10, 10]} />
-            <meshStandardMaterial color="orange"  />
-          </mesh>
-        )
+      const handleSocketListeners = () => {
+
+        // 타 유저 캐릭터 위치 실시간 수신
+        socketIoClient.on("avatar-move", ({roomId: senderRoomId, userId, position, rotateZ}) => {
+          console.log(position)
+          if(senderRoomId === roomId.current) {
+            setOthersPosition({position, index: userIndex})
+            setOthersRotateZ({rotateZ, index: userIndex})
+            
+          }
+        })
+
+     
+
+        // 본인 룸에 입장 시 룸의 유저리스트 얻기
+        socketIoClient.on('get-user-list', ({ userList }) => {
+          console.log(userList)
+          userList.map(user => {
+            addConnectedUser({ id: user.id, connectedRoomId: user.connectedRoomId })
+            setUserIndex(index => index + 1)
+          })
+        })
+
+
+        // 타 유저 룸에서 퇴장 시
+        socketIoClient.on("leave-room", ({userId}) => {
+          removeConnectedUser(userId)
+          setUserIndex(index => index - 1)
+
+        })
+
+        // 타 유저 룸에 입장 시
+        socketIoClient.on("join-room", ({roomId, userId}) => {
+          if(roomId === roomId)
+            addConnectedUser({id: userId , connectedRoomId: roomId })
+          
+        })
       }
+
+
+      
 
 
       
       
       useEffect(() => {
         
-    
-        
         getRoomId()
         getMe()
-       
+        handleSocketListeners()
+        
       // 서버에 캐릭터 위치 실시간 전송
-        const sendCharacterPosition = setInterval(() => {
-          socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
-        }, 0)
+      const sendCharacterPosition = setInterval(() => {
+        socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
+      }, 100)
 
-        // 타 유저 캐릭터 위치 실시간 송신
-        socketIoClient.on("avatar-move", ({roomId, userId, position, rotateZ}) => {
-          if(roomId === roomId) {
-            setOthersPosition({position, index: 0})
-            setOthersRotateZ({rotateZ, index: 0})
-            // setOthersRotateZ()
-          }
-        })
-
-        socketIoClient.on("disconnect", (data) => {
-          leaveLobby()
-          removeConnectedUser(userId)
-        })
-        socketIoClient.on("leave-room", ({userId}) => {
-          leaveLobby()
-          removeConnectedUser(userId)
-        })
-
-        socketIoClient.on("leave-lobby", (data) => {
-          leaveLobby()
-          removeConnectedUser(userId)
-        })
-
-        socketIoClient.on("join-room", ({roomId, userId}) => {
-          if(roomId === roomId)
-            addConnectedUser({id: userId , connectedRoomId: roomId })
-          
-        })
+        console.log("리렌더링 발생")
         
         return () => {
+          
+          clearInterval(sendCharacterPosition)
           socketIoClient.off("avatar-move")
           socketIoClient.off("join-room")
-          clearInterval(sendCharacterPosition)
+          socketIoClient.off("leave-room")
+          socketIoClient.off("get-user-list")
+
+
+          // clearInterval(sendCharacterPosition)
         }
+        
       }, [])
 
     return(
@@ -284,18 +261,21 @@ const World:NextPage = () => {
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
               />
-              {applyConnectedUser().length >= 2 ? <CharacterModel3
-              rotation={[Math.PI / 2,0,0]} 
-              scale={[0.01,0.01,0.01]} 
-              /> : null}       
-              {applyConnectedUser().length >= 3 ? <CharacterModel4
-              rotation={[Math.PI / 2,0,0]} 
-              scale={[0.01,0.01,0.01]} 
-              /> : null}  
-              {/* <CharacterModel5
-              rotation={[Math.PI / 2,0,0]} 
-              scale={[0.01,0.01,0.01]} 
-              />            
+               <CharacterModel3
+           
+           rotation={[Math.PI / 2,0,0]} 
+           scale={[0.01,0.01,0.01]} 
+           />      
+               <CharacterModel4
+           
+           rotation={[Math.PI / 2,0,0]} 
+           scale={[0.01,0.01,0.01]} 
+           />
+            <CharacterModel5
+           
+           rotation={[Math.PI / 2,0,0]} 
+           scale={[0.01,0.01,0.01]} 
+           />      
               <CharacterModel6
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
@@ -307,7 +287,7 @@ const World:NextPage = () => {
               <CharacterModel8
               rotation={[Math.PI / 2,0,0]} 
               scale={[0.01,0.01,0.01]} 
-              /> */}
+              />
               
               
               <ScreenModel position={[-0.4,0,0]} scale={[5.5,4.5,5]} rotation={[0, 1.57, 0]} />

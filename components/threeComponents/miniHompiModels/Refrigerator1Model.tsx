@@ -11,7 +11,7 @@ import { clone } from '../../../config/skeletonUtils';
 import Indicator from '../../common/Indicator';
 
 const modelName = "refrigerator1"
-const snake_case_name = "refrigerator"
+const snake_case_name = "refrigerator_1"
 
 const Refrigerator1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
   const allModelsStatus = useReactiveVar(applyThreeModels);
@@ -157,7 +157,7 @@ const Refrigerator1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                               
                               onClick={async(e) => {
                                   
-                                  console.log(`의자_${index} 클릭`)
+                                
                                   if(isMyRoom && checkFocused()){
                                       
                                       initFocused()

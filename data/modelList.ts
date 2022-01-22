@@ -18,7 +18,7 @@ export const modelList = {
     clock_1: `${miniHompiModelsUrl}/clock1.glb`,
     clock_2: `${miniHompiModelsUrl}/clock2.glb`,
     text_board: `${miniHompiModelsUrl}/text_board.glb`,
-    refrigerator: `${miniHompiModelsUrl}/refrigerator1.glb`,
+    refrigerator_1: `${miniHompiModelsUrl}/refrigerator1.glb`,
     refrigerator_2: `${miniHompiModelsUrl}/refrigerator2.glb`,
 
     sofa: `${roomModelsUrl}/sofa.glb`,
@@ -257,6 +257,48 @@ export const AllModelsStatus = {
         }
     ],
     standingLamp: [
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
+        {
+            installed: false,
+            scale: 0.3,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z:0 },
+        },
         {
             installed: false,
             scale: 0.3,

@@ -10,7 +10,8 @@ import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
 import ThirdPersonCamera from '../thirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
-import { setCharacterPosition } from '../../../stores/character';
+import { applyConnectedUser, applyOthersStatus, setCharacterPosition } from '../../../stores/character';
+
 
 interface CharacterModelOpts {
     scale: number[]
@@ -117,7 +118,7 @@ const CharacterModel8 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-        return (
+        return applyConnectedUser().length > 7 ? (
             <>
                 {/* <primitive 
                     ref={characterRef}
@@ -140,9 +141,13 @@ const CharacterModel8 = ({ scale, rotation }: CharacterModelOpts) => {
                 <group  
                     
                     ref={characterRef}
-                    position={[0,0,0]}
+                    position={[
+                        applyOthersStatus()[6].position.x,
+                        applyOthersStatus()[6].position.y,
+                        applyOthersStatus()[6].position.z
+                    ]}
                     scale={scale} 
-                    rotation={rotation}
+                    rotation={[Math.PI / 2, 0, applyOthersStatus()[6].rotateZ]}
                    
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
@@ -158,14 +163,14 @@ const CharacterModel8 = ({ scale, rotation }: CharacterModelOpts) => {
                         <skinnedMesh geometry={nodes.Ch46.geometry} material={materials.Ch46_body} skeleton={nodes.Ch46.skeleton} />
                 </group>
             </group>
-{/* 
-            <mesh ref={mesh}>
+
+            {/* <mesh ref={mesh}>
           <sphereGeometry args={[0.1]} />
           <meshStandardMaterial color="orange" />
           
         </mesh> */}
           </>
-        )
+        ) : null
         
     
     }

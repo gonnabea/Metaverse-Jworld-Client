@@ -35,7 +35,7 @@ import { addModel, getModels, setModels } from '../../../stores/ThreeModels';
 import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThreeModels';
 import { ThreeModelOpts, modelNameTypes } from '../../../types/threeModelTypes';
 
-import { AllModelsStatus as defaultModelList } from "../../../data/modelList";
+import { AllModelsStatus, AllModelsStatus as defaultModelList } from "../../../data/modelList";
 import { GET_ROOMSTATUS, GET_THREE_MODELS, SAVE_MODELS } from '../../../apis/gql-queries/miniHompi';
 import EnrollFileToModelScreen from '../../../components/EnrollFileToModelScreen';
 import Chair3Model from '../../../components/threeComponents/miniHompiModels/Chair3Model';
@@ -61,15 +61,14 @@ import useGetMe from '../../../hooks/useGetMe';
 
 
 const MiniHomepage:NextPage = (props) => {
-    
-    const {me} = useReactiveVar(applyMe);
+  
     
     // carpet1, carpet2, tv, tv2, standingLamp, tableLamp, vase, book, frame1, frame2, chair, chair2, table1, sofa
     const allModelsStatus = useReactiveVar(applyThreeModels);
     const [rerender, setRerender] = useState(0)
 
     const router = useRouter();
-    const { id: roomId, owner } = router.query
+    const { id: roomId } = router.query
     const [isMyRoom, setIsMyRoom] = useState(false);
     const [showUpdateUrlUI, setShowUpdateUrlUI] = useState(false);
     const [getMiniHompi, setGetMiniHompi] = useState()
@@ -142,6 +141,21 @@ const MiniHomepage:NextPage = (props) => {
 
     const getMe = async() => {
   
+
+
+
+      
+  }
+    
+
+
+    // 서버에 요청 후 데이터 불러오기 & 배치
+    const getInfos = async() => {
+
+      const {data: { getMiniHompi } } = await reqRoomInfo();
+
+      const {data: { getThreeModels } } = await reqModels();
+      
       // 회원일 시
       const data = await reqGetMe();
       if(data.data){
@@ -150,6 +164,13 @@ const MiniHomepage:NextPage = (props) => {
           setUserId(user.id);
           setMe({id: user.id, nickname: user.nickname})
           
+          if(user.id === getMiniHompi.miniHompi.ownerId) {
+            setIsMyRoom(true)
+          }
+          else {
+            setIsMyRoom(false)
+          }
+
       }
       // 비회원일 시
       else {
@@ -160,29 +181,11 @@ const MiniHomepage:NextPage = (props) => {
       }
 
 
-      
-  }
-    
 
 
-    // 서버에 요청 후 데이터 불러오기 & 배치
-    const getInfos = async() => {
-      
-
-      const {data: { getMiniHompi } } = await reqRoomInfo();
-
-      const {data: { getThreeModels } } = await reqModels();
-      
-      if(me.id === getMiniHompi.miniHompi.ownerId) {
-        setIsMyRoom(true)
-      }
-      else {
-        setIsMyRoom(false)
-      }
-      
+      console.log(getMiniHompi)
       setGetMiniHompi(getMiniHompi)
       setGetThreeModels(getThreeModels)
-      getMe()
       
       if(getThreeModels.models.length === 0) {
         alert("Dasf")
@@ -230,44 +233,13 @@ const MiniHomepage:NextPage = (props) => {
       
     }
 
-    // function ObstacleBox(props) {
-    //   const [ref, api] = useBox(() => ({ rotation: [0, 0, 0], ...props, onCollide: () => {
-        
-    //   }  }))
-      
-    //   if(props.isGround === true){
-    //     return (
-    //         <mesh ref={ref} name={"ground1"} visible={true} >
-    //           <boxGeometry args={props.args}  />
-    //           <meshStandardMaterial color="orange"  />
-    //         </mesh>
-
-    //     )
-    //   }
-    //   else if(props.isStair === true) {
-    //     return (
-    //       <mesh ref={ref} name={"stair"} visible={true}   >
-    //         <boxGeometry args={props.args}  />
-    //         <meshStandardMaterial color="orange"  />
-    //       </mesh>
-
-    //   )
-    //   }
-    //   else {
-    //     return (
-    //     <mesh ref={ref} visible={true}   >
-    //     <boxGeometry args={props.args}  />
-    //     <meshStandardMaterial color="orange"  />
-    //   </mesh>
-    //     )
-    //   }
-    // }
 
     useEffect(() => {
       setJwtToken(localStorage.getItem("jwt_token"))
       getInfos()
       setIsMyRoom(isMyRoom)
       
+   
     }, [])
 
     const handleLeave = () => {
@@ -276,7 +248,7 @@ const MiniHomepage:NextPage = (props) => {
 
     return(
         <section className="w-screen h-screen overflow-hidden">
-          <SiteMark title={`${owner ? owner + "'s Room" : "Room"}`} bgColor={"bg-green-400"} />
+          <SiteMark title={`${router.query.ownerName ? router.query.ownerName + "'s Room" : "Room"}`} bgColor={"bg-green-400"} />
           
           <div className="z-10 absolute">
 
@@ -291,28 +263,8 @@ const MiniHomepage:NextPage = (props) => {
               <Book3D 
               visible={css3dBookVisible} setVisible={setCss3dBookVisible} 
               front={
-                <section className="w-full h-full bg-blue-300 text-black">
-                  <button value="수정" onClick={() => setEditBook(!editBook)} >책 수정하기</button>
-                  <form className="w-full h-full flex flex-col justify-around">
-                    
-                    <h2>책 제목</h2>
-                    {editBook ? <input type="text" name="bookTitle" placeholder="책 제목 입력"  /> : null}
-                    <cite>작가명</cite>
-                    
-                    <p>소개글</p>
-                    {editBook ? <input type="text" name="bookIntro" placeholder="책 소개글 입력" /> : null}
-                    {editBook ? <input 
-                    onClick={(e) => {e.target.style.height="100%"; e.target.style.width="100%"; e.target.style.position="absolute"}} 
-                    onMouseLeave={(e) => {e.target.style.height="10%"; e.target.style.width="100%"; e.target.style.position="block" }}
-                    type="text" 
-                    name="bookContent"
-                     placeholder="책 내용 입력" /> : null}
-                    {editBook ? <>
-                    <label htmlFor={"bookImg"}>책 표지 등록</label>
-                    <input type="file" name="bookImg" /> 
-                    </> : null}
-                    {editBook ? <input type="submit" value="등록" />  : null }
-                  </form>
+                <section className="w-full h-full bg-green-300 text-black text-xl">
+        
                 </section>
               }
               
@@ -356,7 +308,7 @@ const MiniHomepage:NextPage = (props) => {
                   <Carpet2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <Carpet3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <TvModel rerender={rerender} setRerender={setRerender} />
-                  <StandingLampModel rerender={rerender} setRerender={setRerender} />
+                  <StandingLampModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <VaseModel rerender={rerender} setRerender={setRerender} />
                   <ChairModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   <CurtainModel rerender={rerender} setRerender={setRerender} />
@@ -380,7 +332,7 @@ const MiniHomepage:NextPage = (props) => {
                   <Vase2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
                   
 
-                  <TableLampModel rerender={rerender} setRerender={setRerender}  />
+                  <TableLampModel rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused}  />
 
                   <TV2Model rerender={rerender} setRerender={setRerender} initFocused={initFocused} isMyRoom={isMyRoom} setShowUpdateUrlUI={setShowUpdateUrlUI}  />
 
@@ -744,7 +696,7 @@ const MiniHomepage:NextPage = (props) => {
           modelImgUrl="/model_images/table_2.png"
           backgroundColor="blue"
           maxScale={0.2}
-          minScale={0.1}
+          minScale={0.05}
           scaleStep={0.005}
       /> 
               <ModelSettingBox 

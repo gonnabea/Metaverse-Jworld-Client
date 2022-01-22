@@ -15,7 +15,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useRouter } from 'next/router';
 import { GETME } from '../apis/gql-queries/user';
-import { addChat, applyChatStatus, setChatStatus } from '../stores/chatStatus';
+import { addChat, applyChatStatus } from '../stores/chatStatus';
 import useGetMe from '../hooks/useGetMe';
 import useWebsocket from '../hooks/useWebsocket';
 
@@ -23,8 +23,6 @@ import useWebsocket from '../hooks/useWebsocket';
 
 // 스트림월드 로비
 const Lobby:NextPage = () => {
-    const applyStore = useReactiveVar(applyMe);
-    const chatStatus = useReactiveVar(applyChatStatus);
   
     
     
@@ -102,7 +100,8 @@ const Lobby:NextPage = () => {
             router.push(`/stream_world/${data.roomId}`)
         })
 
-        socketIoClient.on("reloadLobby", ({activeRooms}) => {
+        // 로비 상태 변경됐을 경우
+        socketIoClient.on("reload-lobby", ({activeRooms}) => {
             setActiveRooms(activeRooms)
         })
         
@@ -167,6 +166,8 @@ const Lobby:NextPage = () => {
         handleSocketListeners();
 
         getMe()
+
+        console.log("리렌더링")
 
     }, [])
     

@@ -76,10 +76,15 @@ export const addConnectedUser = ({id, connectedRoomId}: wsUser) => {
 }
 
 export const removeConnectedUser = (userId: number) => {
-    alert(JSON.stringify(applyConnectedUser()))
-    alert(userId)
-    const removeUser = applyConnectedUser().filter(user => user.id != userId)
 
-    applyConnectedUser(removeUser)
+    // const removeUser = applyConnectedUser().filter(user => user.id != userId)
+    applyConnectedUser().map((user, index) => {
+        if(user.id === userId) {
+            applyConnectedUser().splice(index, 1)
+            
+        }
+    })
+
+    applyConnectedUser(applyConnectedUser())
 
 }

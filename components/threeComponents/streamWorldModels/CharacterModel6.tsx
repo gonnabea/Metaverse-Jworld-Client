@@ -10,7 +10,8 @@ import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
 import ThirdPersonCamera from '../thirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
-import { setCharacterPosition } from '../../../stores/character';
+import { applyConnectedUser, applyOthersStatus, setCharacterPosition } from '../../../stores/character';
+
 
 interface CharacterModelOpts {
     scale: number[]
@@ -109,7 +110,7 @@ const CharacterModel6 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-        return (
+        return applyConnectedUser().length > 5 ? (
             <>
                 {/* <primitive 
                     ref={characterRef}
@@ -132,9 +133,13 @@ const CharacterModel6 = ({ scale, rotation }: CharacterModelOpts) => {
                 <group  
                     
                     ref={characterRef}
-                    position={[0,0,0]}
+                    position={[
+                        applyOthersStatus()[4].position.x,
+                        applyOthersStatus()[4].position.y,
+                        applyOthersStatus()[4].position.z
+                    ]}
                     scale={scale} 
-                    rotation={rotation}
+                    rotation={[Math.PI / 2, 0, applyOthersStatus()[4].rotateZ]}
                    
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
@@ -142,7 +147,6 @@ const CharacterModel6 = ({ scale, rotation }: CharacterModelOpts) => {
                     onPointerOut={() => {
                         document.body.style.cursor = "default"
                     }}> 
-
 
                         <primitive 
                             object={nodes.mixamorigHips}
@@ -158,7 +162,7 @@ const CharacterModel6 = ({ scale, rotation }: CharacterModelOpts) => {
           
         </mesh> */}
           </>
-        )
+        ) : null
         
     
     }

@@ -10,7 +10,8 @@ import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
 import ThirdPersonCamera from '../thirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
-import { setCharacterPosition } from '../../../stores/character';
+
+import { applyConnectedUser, applyOthersStatus, setCharacterPosition } from '../../../stores/character';
 
 interface CharacterModelOpts {
     scale: number[]
@@ -117,7 +118,7 @@ const CharacterModel4 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-        return (
+        return applyConnectedUser().length > 3 ? (
             <>
                 {/* <primitive 
                     ref={characterRef}
@@ -140,9 +141,13 @@ const CharacterModel4 = ({ scale, rotation }: CharacterModelOpts) => {
                 <group  
                     
                     ref={characterRef}
-                    position={[0,0,0]}
+                    position={[
+                        applyOthersStatus()[2].position.x,
+                        applyOthersStatus()[2].position.y,
+                        applyOthersStatus()[2].position.z
+                    ]}
                     scale={scale} 
-                    rotation={rotation}
+                    rotation={[Math.PI / 2, 0, applyOthersStatus()[2].rotateZ]}
                    
                     onPointerOver={() => {
                         document.body.style.cursor = "pointer"
@@ -165,7 +170,7 @@ const CharacterModel4 = ({ scale, rotation }: CharacterModelOpts) => {
           
         </mesh> */}
           </>
-        )
+        ) : null
         
     
     }

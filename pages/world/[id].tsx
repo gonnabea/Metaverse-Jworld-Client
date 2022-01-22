@@ -17,10 +17,8 @@ const ThreeTest:NextPage = () => {
       wsConnection.onmessage = ({data}) => {
         if(typeof(data) === 'string'){
           const parsedData = JSON.parse(data);
-          console.log(parsedData)
           switch(parsedData.event){
             case "broadcast":
-              console.log(parsedData)
               break;
           }
         }
@@ -36,7 +34,6 @@ const ThreeTest:NextPage = () => {
 
     const leaveLobby = () => {
            
-      alert(roomId.current)
       wsConnection.send(JSON.stringify({
           event: "leave-lobby",
           data: {
@@ -70,7 +67,7 @@ const ThreeTest:NextPage = () => {
       }
 
       useEffect(() => {
-        
+        console.log("리렌더링")
         window.addEventListener("beforeunload", leaveLobby);
         getRoomId();
 

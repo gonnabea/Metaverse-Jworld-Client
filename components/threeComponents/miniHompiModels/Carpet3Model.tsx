@@ -202,7 +202,7 @@ const Carpet3Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus.carpet3[findFocusedIndex()].position.x, 
-                    allModelsStatus.carpet3[findFocusedIndex()].position.y +4 * allModelsStatus.carpet3[findFocusedIndex()].scale * 30,
+                    allModelsStatus.carpet3[findFocusedIndex()].position.y +4,
                     allModelsStatus.carpet3[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 
