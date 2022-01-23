@@ -88,7 +88,7 @@ const MiniHompiLobby:NextPage = () => {
                          
                             <div className="flex flex-col">
 
-                            <cite className="text-2xl">{owner?.nickname}'s Room</cite>
+                            <cite className="text-2xl">{owner?.nickname} Room</cite>
                             <span className="text-2xl">{miniHompi.createdAt.split("T")[0]}</span>
                             </div>
                             {miniHompi.ownerId === userId ? <span className="text-white text-bold bg-green-500 rounded text-center w-4/12 h-6 relative right-0">★ MyRoom</span> : null}

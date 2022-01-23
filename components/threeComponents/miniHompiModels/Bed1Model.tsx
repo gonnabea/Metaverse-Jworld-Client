@@ -76,7 +76,7 @@ const Bed1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
       cloned7,
   ]
     
-    const installModel = (e) => {
+    const installModel = (e: MouseEvent) => {
 
       // 마우스 클릭한 지점 위치 얻기
       const closedObjPosition = raycaster.intersectObjects(scene.children)[0]?.point
@@ -94,15 +94,15 @@ const Bed1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
         
             }
       })
-        setRerender(value => value + 1)
+        setRerender((value: number) => value + 1)
       }
   };
 
   
     useEffect(() => {
-        window.addEventListener("click", installModel);
+        window.addEventListener("click", (e) => installModel(e));
         createModelStatus()
-        return () => window.removeEventListener("click", installModel);
+        return () => window.removeEventListener("click", (e) => installModel(e));
     }, [        
         isFocused, 
         installed,
@@ -138,7 +138,7 @@ const Bed1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                           })
                           
                           createModelStatus()
-                          setRerender(value => value + 1)
+                          setRerender((value: number) => value + 1)
                       
                   }
           }}
@@ -171,7 +171,7 @@ const Bed1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                                           }
                                       })
                                       createModelStatus()
-                                      setRerender(value => value + 1)
+                                      setRerender((value: number) => value + 1)
                                   }
                                   
                                   

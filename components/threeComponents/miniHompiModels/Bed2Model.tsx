@@ -94,7 +94,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
         
             }
       })
-        setRerender(value => value + 1)
+        setRerender((value: number) => value + 1)
       }
   };
 
@@ -138,7 +138,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                           })
                           
                           createModelStatus()
-                          setRerender(value => value + 1)
+                          setRerender((value: number) => value + 1)
                       
                   }
           }}
@@ -171,7 +171,7 @@ const Bed2Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                                           }
                                       })
                                       createModelStatus()
-                                      setRerender(value => value + 1)
+                                      setRerender((value: number) => value + 1)
                                   }
                                   
                                   

@@ -171,7 +171,7 @@ const Bed3Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
                                           }
                                       })
                                       createModelStatus()
-                                      setRerender(value => value + 1)
+                                      setRerender((value: number) => value + 1)
                                   }
                                   
                                   

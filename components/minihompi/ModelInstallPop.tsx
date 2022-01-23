@@ -54,12 +54,12 @@ const ModelInstallPop = ({ carpets, chairs, lights, electronics, beauties, write
             <header className="text-white w-full">
                 <ul className="w-full flex justify-around">
                     {
-                        categories.map(category => {
+                        categories.map((category, key) => {
                             if(category === selectedCategory) {
                                 return <li className="text-lg font-bold cursor-pointer">{selectedCategory}</li>
                             }
                             
-                            return <li onClick={() => setSelectedCategory(category)} className="cursor-pointer">{category}</li>
+                            return <li key={key} onClick={() => setSelectedCategory(category)} className="cursor-pointer">{category}</li>
 
                         })
                     }

@@ -14,10 +14,12 @@ const Text = styled.div`
   font-size: 20px;
 `
 
-export default () => {
+const EmptySpace = () => {
   return (
     <EmptyBox>
       <Text></Text>
     </EmptyBox>
   )
 }
+
+export default EmptySpace;

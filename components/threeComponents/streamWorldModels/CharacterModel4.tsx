@@ -8,7 +8,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Vector3 } from 'three';
 import OrbitCameraController from '../OrbitController';
-import ThirdPersonCamera from '../thirdPersonCamera';
+import ThirdPersonCamera from '../ThirdPersonCamera';
 import usePersonControls from '../../../hooks/usePersonControl';
 
 import { applyConnectedUser, applyOthersStatus, setCharacterPosition } from '../../../stores/character';

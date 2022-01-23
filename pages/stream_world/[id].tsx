@@ -8,7 +8,7 @@ import ScreenModel from '../../components/threeComponents/streamWorldModels/Scre
 import CharacterModel from '../../components/threeComponents/streamWorldModels/CharacterModel';
 import { Physics, useBox, useCompoundBody, useConvexPolyhedron, useCylinder, useHeightfield, usePlane, useSphere } from '@react-three/cannon';
 import Amy from '../../components/threeComponents/streamWorldModels/Amy';
-import ThirdPersonCamera from '../../components/threeComponents/thirdPersonCamera';
+import ThirdPersonCamera from '../../components/threeComponents/ThirdPersonCamera';
 import PageTitle from '../../components/common/PageTItle';
 import SiteMark from '../../components/common/SiteMark';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
@@ -128,7 +128,7 @@ const World:NextPage = () => {
         
         if(props.isGround === true){
           return (
-              <mesh ref={ref} name={"ground1"} visible={true} >
+              <mesh ref={ref} name={"ground1"} visible={false} >
                 <boxGeometry args={props.args}  />
                 <meshStandardMaterial color="orange"  />
               </mesh>
@@ -137,7 +137,7 @@ const World:NextPage = () => {
         }
         else if(props.isStair === true) {
           return (
-            <mesh ref={ref} name={"stair"} visible={true}   >
+            <mesh ref={ref} name={"stair"} visible={false}   >
               <boxGeometry args={props.args}  />
               <meshStandardMaterial color="orange"  />
             </mesh>
@@ -146,7 +146,7 @@ const World:NextPage = () => {
         }
         else {
           return (
-          <mesh ref={ref} visible={true}   >
+          <mesh ref={ref} visible={false}   >
           <boxGeometry args={props.args}  />
           <meshStandardMaterial color="orange"  />
         </mesh>

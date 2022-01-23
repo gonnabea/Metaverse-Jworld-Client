@@ -53,7 +53,7 @@ export const modelList = {
     chair: `${modelsUrl}/chair.glb`,
     chair_2: `${miniHompiModelsUrl}/chair2.glb`,
     chair_3: `${miniHompiModelsUrl}/chair3.glb`,
-    frame_2:`${miniHompiModelsUrl}/3d_architecture__photo_frame/scene.gltf`,
+    frame_2: `${miniHompiModelsUrl}/3d_architecture__photo_frame/scene.gltf`,
     tablelamp: `${miniHompiModelsUrl}/table_lamp/scene.gltf`,
     tablelamp2: `${miniHompiModelsUrl}/table_lamp2.glb`,
 
@@ -78,60 +78,88 @@ export const modelListArr = [
 export const AllModelsStatus = {
     room: [
         {
-            scale: 0.5
+            installed: true,
+            scale: 0.7,
+            rotateY: "0",
+            isFocused: false,
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
 
     carpet1: [
-        
+
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     carpet2: [
@@ -140,54 +168,78 @@ export const AllModelsStatus = {
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-        },        {
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
+        }, {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-        },        {
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
+        }, {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     carpet3: [
@@ -196,54 +248,78 @@ export const AllModelsStatus = {
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-        },        {
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
+        }, {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-        },        {
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
+        }, {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     tv: [
@@ -252,8 +328,10 @@ export const AllModelsStatus = {
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            position: { x: 0, y: 0, z: 0 },
+            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            imageUrl: "",
+            textContents: ""
         }
     ],
     standingLamp: [
@@ -262,49 +340,70 @@ export const AllModelsStatus = {
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     vase: [
@@ -313,28 +412,40 @@ export const AllModelsStatus = {
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.15,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     book: [
@@ -344,8 +455,10 @@ export const AllModelsStatus = {
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: ""
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     chair: [
@@ -354,34 +467,49 @@ export const AllModelsStatus = {
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-        },        {
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
+        }, {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     curtain: [
@@ -390,7 +518,10 @@ export const AllModelsStatus = {
             scale: 0.5,
             rotateY: "1",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     frame1: [
@@ -399,64 +530,80 @@ export const AllModelsStatus = {
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 1, y: 1, z:1 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 1, y: 1, z: 1 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     frame2: [
@@ -465,8 +612,10 @@ export const AllModelsStatus = {
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g="
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     table1: [
@@ -475,28 +624,40 @@ export const AllModelsStatus = {
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     table2: [
@@ -505,28 +666,40 @@ export const AllModelsStatus = {
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     table3: [
@@ -535,28 +708,40 @@ export const AllModelsStatus = {
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     tableLamp: [
@@ -565,28 +750,40 @@ export const AllModelsStatus = {
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.1,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     sofa: [
@@ -595,30 +792,42 @@ export const AllModelsStatus = {
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
-        
+
     ],
     chair2: [
         {
@@ -626,28 +835,40 @@ export const AllModelsStatus = {
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
 
     ],
@@ -657,28 +878,40 @@ export const AllModelsStatus = {
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
 
     ],
@@ -688,8 +921,10 @@ export const AllModelsStatus = {
             scale: 10,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
-            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            position: { x: 0, y: 0, z: 0 },
+            videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            imageUrl: "",
+            textContents: ""
         }
     ],
     bed1: [
@@ -698,28 +933,40 @@ export const AllModelsStatus = {
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     bed2: [
@@ -728,28 +975,40 @@ export const AllModelsStatus = {
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     bed3: [
@@ -758,28 +1017,40 @@ export const AllModelsStatus = {
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.05,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     vase2: [
@@ -788,42 +1059,60 @@ export const AllModelsStatus = {
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     closet1: [
@@ -832,7 +1121,10 @@ export const AllModelsStatus = {
             scale: 0.3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     clock1: [
@@ -841,28 +1133,40 @@ export const AllModelsStatus = {
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 0.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     clock2: [
@@ -871,28 +1175,40 @@ export const AllModelsStatus = {
             scale: 2,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 2,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 2,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 2,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     text_board: [
@@ -901,7 +1217,10 @@ export const AllModelsStatus = {
             scale: 2,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     refrigerator1: [
@@ -910,28 +1229,40 @@ export const AllModelsStatus = {
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 1.5,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
     refrigerator2: [
@@ -940,28 +1271,40 @@ export const AllModelsStatus = {
             scale: 3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         },
         {
             installed: false,
             scale: 3,
             rotateY: "0",
             isFocused: false,
-            position: { x: 0, y: 0, z:0 },
+            position: { x: 0, y: 0, z: 0 },
+            imageUrl: "",
+            videoUrl: "",
+            textContents: ""
         }
     ],
 }

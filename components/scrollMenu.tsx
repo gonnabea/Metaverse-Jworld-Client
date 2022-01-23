@@ -118,6 +118,7 @@ const Title = styled.span`
   margin-bottom: 3px;
   font-weight: 700;
   font-size: 25px;
+  color: white;
 `
 
 const Year = styled.span`
@@ -127,7 +128,7 @@ const Year = styled.span`
 `
 
 const Overview = styled.p`
-  color: gray;
+  color: white;
   font-size: 15px;
   overflow: hidden;
   line-height: 150%;

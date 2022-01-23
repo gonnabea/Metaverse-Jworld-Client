@@ -118,9 +118,11 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
     return (
         show ? 
         <div className="w-screen h-1/6 bg-gray-300 z-20 fixed bottom-0 flex">
-           
-        {focusedFrame ? images.map(image => {
-           return <div onClick={async() => {
+        
+        <div className="w-1/2 flex overflow-auto text-center justify-center">
+        {images.map((image, key) => {
+           return <div key={key} className="flex flex-col min-w-[12.5%] w-1/6 items-center"  
+                       onClick={async() => {
                
                    
                 // 포커싱된 액자 찾고 업로드한 이미지 클릭 시 fileUrl 등록해주기 
@@ -156,18 +158,19 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                
             }}>
             <img className="w-12 h-12" src={image.imageUrl} />
-            <span>{image.title}</span>
-            <p>{image.description}</p>
+            <span className="font-bold">{image.title}</span>
+            {/* <p>{image.description}</p> */}
             </div>
-        }) : null}
-
-
-          {focusedTV ? videos.map(video => {
-           return <div onClick={async() => {
+        })}
+        </div>
+        <div className="w-1/2 flex overflow-x-auto text-center">
+          {videos.map((video, key) => {
+           return <div key={key} className="w-1/6" 
+                       onClick={async() => {
                
                    
                 // 포커싱된 tv 찾고 업로드한 동영상 클릭 시 fileUrl 등록해주기 
-                applyThreeModels().tv2.map((tv, index: number) => {
+                applyThreeModels().tv2.forEach((tv, index: number, key) => {
                
                     if(tv.isFocused === true) {
                         // 실시간 화면 표시를 위한 상태관리
@@ -194,16 +197,17 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                         return null
                     }
                 })
-                initFocused()
+              
                 setRerender((rerender:number) => rerender + 1)
                    
                
             }}>
             <video className="w-30 h-20" src={video.videoUrl} controls={true} />
-            <span>{video.title}</span>
-            <p>{video.description}</p>
+            <span className="font-bold">{video.title}</span>
+            {/* <p>{video.description}</p> */}
             </div>
-        }) : null}
+        })}
+        </div>
         </div> : null
     )
 }

@@ -15,11 +15,11 @@ interface props {
 
 const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500", handleLeave}: props) => {
 
-    const [jwtToken, setJwtToken] = useState()
+    const [jwtToken, setJwtToken] = useState<string | null>(null)
     const [reqCreateHompi, {data, error, loading}] = useMutation(CREATEHOMPI, {
         variables: {
             createMiniHompiInput: {
-                scale: {x:1, y:1, z:1}
+                scale: {x:0.7, y:0.7, z:0.7}
             }},
         context: {
             headers: {
@@ -39,7 +39,7 @@ const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500", handleLeave}:
         {/* 스트림월드일 경우 */}
         {router.pathname === "/stream_world/[id]" ? 
         <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic z-10" 
-        onClick={() => {handleLeave(); router.push("/lobby");}}>EXIT</button> : null}
+        onClick={() => {handleLeave ? handleLeave() : null; router.push("/lobby");}}>EXIT</button> : null}
 
         {/* 스트림월드 로비일 경우 */}
         {router.pathname ==="/lobby" || router.pathname === "/mini_homepage/room/[id]" ?  <button className="z-10 absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic" 

@@ -8,11 +8,14 @@ interface props {
 
 const Indicator = ({position, visible}: props) => {
 
-    const meshRef = useRef();
+    const meshRef = useRef<THREE.Mesh>(null);
 
-    useFrame((state, delta) => (meshRef.current.rotation.y += 0.01))
+    useFrame((state, delta) => {
+      if(meshRef.current)
+        meshRef.current.rotation.y += 0.01
+    })
 
-    function eulerToDegree(euler) {
+    function eulerToDegree(euler: number) {
         return ( (euler) / (2 * Math.PI) ) * 360
     }
 

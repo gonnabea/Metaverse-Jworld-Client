@@ -12,7 +12,7 @@ import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../../common/Indicator';
 import { applyIsMyRoom } from '../../../stores/loggedUser';
 
-const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrlUI, setShowUpdateUrlUI}) => {
+const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     console.log(allModelsStatus.frame1)
 
@@ -44,14 +44,16 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrl
       }
 
     const gltf = useLoader(GLTFLoader, modelList.frame1);
+    
     const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ? imageUrl : defaultImgUrl); // 이미지 텍스쳐
     
 
     const imgTextures = [];
-
+    
     allModelsStatus.frame1.map(frame => {
-        imgTextures.push(useLoader(TextureLoader, frame.imageUrl && frame.imageUrl !=="false" ? frame.imageUrl : defaultImgUrl)) // 이미지 텍스쳐
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        imgTextures.push(new TextureLoader().load(frame.imageUrl && frame.imageUrl !=="false" ? frame.imageUrl : defaultImgUrl)) // 이미지 텍스쳐
+        
     })
     
     const raycaster = useThree((state) => state.raycaster);
@@ -157,7 +159,6 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrl
                         console.log("액자1 클릭")
                
                             initFocused()
-                            setShowUpdateUrlUI(true)
                             setAllModelsStatus({
                                 modelName: modelNameTypes.frame1,
                                 index: 0,
@@ -202,7 +203,6 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, showUpdateUrl
                                 
                                 console.log(`액자1_${index} 클릭`)
                                 if(isMyRoom && checkFocused()){
-                                    setShowUpdateUrlUI(true)
                                     initFocused()
                                     console.log(model.position,model.isFocused)
                                     await setAllModelsStatus({

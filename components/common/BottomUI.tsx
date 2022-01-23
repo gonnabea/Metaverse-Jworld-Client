@@ -1,5 +1,5 @@
 import { useReactiveVar } from "@apollo/client";
-import { FormEvent, useEffect, useRef, useState } from "react"
+import React, { ChangeEvent, FormEvent, InputHTMLAttributes, useEffect, useRef, useState } from "react"
 import { JsxElement } from "typescript";
 import fileApi from "../../apis/axios/fileUpload";
 import { addChat, addNewMsgCount, applyChatStatus } from "../../stores/chatStatus";
@@ -17,21 +17,20 @@ interface props {
     socketIoClient: any;
 }
 
-function checkFile(el, fileType){
-    console.log(el.target)
+function checkFile(el: ChangeEvent<HTMLInputElement>, fileType: string){
 	// files 로 해당 파일 정보 얻기.
-	var file = el.target.files;
+	const file = el.target.files;
 
 	// file[0].size 는 파일 용량 정보입니다.
    
-    if(fileType === "image" && file[0]?.size > 1024 * 1024 * 2){
+    if(fileType === "image" && file && file[0]?.size > 1024 * 1024 * 2){
         // 용량 초과시 경고후 해당 파일의 용량도 보여줌
         alert('2MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
         return;
     }
 
     
-    if(fileType === "video" && file[0]?.size > 1024 * 1024 * 100){
+    if(fileType === "video" && file && file[0]?.size > 1024 * 1024 * 100){
         // 용량 초과시 경고후 해당 파일의 용량도 보여줌
         alert('100MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
         return;
@@ -60,9 +59,11 @@ interface video {
     videoUrl: string;
 }
 
-const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
 
-    const [reqGetMe, loading] = useGetMe();
+
+const BottomUI = ({ createRoom, nickname, socketIoClient }:props) => {
+
+    const [reqGetMe] = useGetMe();
     const [images, setImages] = useState<[] | image[]>([]);
     const [videos, setVideos] = useState<[] | video[]>([]);
     const [_, forceRerender] = useState(0) // 컴포넌트 강제 리렌더링을 위함 - 채팅 상태 업데이트 시 리렌더링이 안됨.
@@ -74,8 +75,8 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
     const [showSettingModal, setShowSettingModal] = useState(false);
     const [btnSoundEffect, setBtnSoundEffect] = useState();
-    const chattingPop = useRef();
-    const chatInput = useRef<HTMLInputElement>();
+    const chattingPop = useRef<HTMLInputElement>(null);
+    const chatInput = useRef<HTMLInputElement>(null);
 
 
     const getMe = async() => {
@@ -91,11 +92,6 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             setVideos(videoData)
         }
         
-    }
-      
-    const playBtnSoundEffect = () => {
-        btnSoundEffect.volume = 0.3
-        btnSoundEffect.play()
     }
 
     const getImages = async(userId: number) => {
@@ -131,7 +127,8 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             // 채팅 전송 후 다시 포커스 해주기 위함.
             setTimeout(() => {
                 chatInput.current?.focus();
-                chatInput.current.value = ""
+                if(chatInput.current)
+                    chatInput.current.value = ""
                 const chatScreen = document.getElementById("chatScreen");
                 chatScreen?.scrollTo({
                     top: chatScreen.scrollHeight,
@@ -148,13 +145,14 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
 
   
     useEffect(() => {
-        setBtnSoundEffect(new Audio(`/sound_effects/btn_click.wav`));
-        chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
+
+        if(chattingPop.current !== null)
+            chattingPop.current.scrollTo(0, chattingPop.current.scrollHeight);
         getMe()
 
         // 전체 채팅 받았을 때
-        socketIoClient.on("chat", (data) => {
-            console.log(data)
+        socketIoClient.on("chat", (data: Chat) => {
+    
 
             addChat(data);
             addNewMsgCount()
@@ -174,7 +172,6 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             setShowRoomModal(false); 
             setShowChats(showChats => !showChats); 
         }} 
-        onMouseOver={() => playBtnSoundEffect()} 
         className="bg-black text-white rounded-lg hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >채팅</button>
         
         {/* 채팅 팝업 */}
@@ -187,7 +184,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
                 )}
                
             </div>
-            <form className="absolute bottom-14 w-96 left-1 z-10" onSubmit={sendBroadChat}>
+            <form className="absolute bottom-14 w-96 left-1 z-10" onSubmit={(e) => sendBroadChat(e)}>
                 <input id="chatInput" autoComplete="off" ref={chatInput} className="w-10/12 pl-2" type="text" min="1" placeholder="채팅 내용 입력" />
                 <input className="w-2/12 bg-black text-white font-bold" type="submit" value="전송" />
             </form>
@@ -200,7 +197,6 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             setShowSettingModal(false)
             setShowRoomModal(showRoomModal => !showRoomModal); 
         }} 
-            onMouseOver={() => playBtnSoundEffect()} 
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >방 만들기</button>
             : null
         }
@@ -209,9 +205,9 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
         {showRoomModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-10 flex-col">
         {/* <button className="absolute top-0 right-2 text-4xl">X</button> */}
         <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)}>
-            <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
-            <input onClick={playBtnSoundEffect} className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
-            <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
+            <input className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
+            <input className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
+            <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
         </form>
 
         </div> : null }
@@ -222,14 +218,14 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             setShowRoomModal(false); 
             setShowSettingModal(showSettingModal => !showSettingModal); 
         }} 
-            onMouseOver={() => playBtnSoundEffect()} 
+            
             className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >설정</button>
 
 
 
             
         {/* 설정 모달 */}
-        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-20 flex-col z-20 pt-20 overflow-y-auto overflow-x-hidden">
+        {showSettingModal ? <div className="fixed border-2 w-screen h-screen left-0 top-0 flex justify-center items-center bg-black bg-opacity-50 flex-col z-20 pt-20 overflow-y-auto overflow-x-hidden">
          
             {/* 이미지 모델 리스트 */}
             <ImageList images={images} />
@@ -239,7 +235,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             
             <form 
                 method="post" 
-                className="w-full flex h-20 items-center justify-center"
+                className="w-full flex h-20 items-center justify-center relative bottom-10"
                 onSubmit={async(e) => {
                     e.preventDefault()
  
@@ -253,7 +249,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
                     await fileApi.uploadImg({
                         fileForm: imgForm
                         })
-            
+                        
                     window.location.replace("/lobby")
             }} 
                 encType="multipart/form-data" 
@@ -276,11 +272,11 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
             </form>
 
             <form method="post"
-                className="w-full flex h-20 items-center justify-center"
+                className="w-full flex h-20 items-center justify-center relative bottom-10"
                 onSubmit={async(e) => {
                     e.preventDefault()
                     const videoForm = new FormData();
-
+                    
                     videoForm.append("file", e.target["videoFile"].files[0])
                     videoForm.append("title", e.target["title"].value)
                     videoForm.append("description",e.target["description"].value)
@@ -308,21 +304,7 @@ const BottomUI = ({ createRoom, startBgm, nickname, socketIoClient }:props) => {
                 </div>
                 <input className="bg-black rounded text-white hover:bg-blue-500 w-32 h-11 border-double border-4 font-bold z-30 m-2" type="submit" value="비디오 업로드" />
             </form>
-            
-            {/* <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)} action=""> */}
-                <div className="flex justify-center items-center">
-                    <label className="p-1" htmlFor="bgm">배경음 ON / OFF</label>
-                    <input name="bgm" className="" type="checkbox" 
-                    onClick={() => {playBtnSoundEffect(); startBgm();}}   />
-                </div>
-                
-                <div className="flex justify-center items-center">
-                    <label className="p-1" htmlFor="bgm">효과음 ON / OFF</label>
-                    <input name="bgm" className="" type="checkbox" 
-                    onClick={() => {playBtnSoundEffect();}}   />
-                </div>
-                {/* <input onMouseOver={playBtnSoundEffect} className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="적용" /> */}
-            {/* </form> */}
+
         </div> : null }
                
     </div>

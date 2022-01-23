@@ -12,20 +12,21 @@ interface props {
 }
 
 const ImageList = ({ images }: props) => {
-    console.log(images)
-    return <Slider title={"업로드한 이미지"} children={
-        images ? images.map((image) => {
+    return <Slider title={"업로드한 이미지"}>{
+        images ? images.map((image, key) => {
             return (
+                <div key={key}>
                 <ScrollMenu 
                     title={image.title} 
                     imageUrl={image.imageUrl}  
                     overview={image.description}    
                 />
+                </div>
             )
-        }) : null}
+        }) : null}</Slider>
 
 
-     />
+     
   
     
     

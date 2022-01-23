@@ -19,7 +19,7 @@ interface TV2ModelOpts extends ThreeModelOpts {
 
 }
 
-const TV2Model = ({rerender, setRerender, initFocused, isMyRoom, setShowUpdateUrlUI}) => {
+const TV2Model = ({rerender, setRerender, initFocused, isMyRoom}) => {
 
     const allModelsStatus = useReactiveVar(applyThreeModels);
 
@@ -54,6 +54,7 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom, setShowUpdateUr
     const size = useAspect(18 * scale, 10 * scale);
     const [video, setVideo] = useState(() => {
       const vid = document.createElement("video");
+      vid.volume = 0.3;
       vid.src = videoUrl ? videoUrl : defaultVideoUrl;
       vid.crossOrigin = "Anonymous";
       vid.loop = true;
@@ -149,7 +150,6 @@ const TV2Model = ({rerender, setRerender, initFocused, isMyRoom, setShowUpdateUr
                                 }
                             })
 
-                            setShowUpdateUrlUI(true)
                     
                             createModelStatus()
                             setRerender(value => value + 1)

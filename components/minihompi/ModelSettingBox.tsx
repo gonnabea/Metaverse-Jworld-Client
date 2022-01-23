@@ -17,8 +17,9 @@ interface props {
     minScale?: number;
     scaleStep?: number;
     setInstallNum?: Function;
-    rerender?: any, 
-    setRerender?: any
+    rerender?: any;
+    setRerender?: any;
+    setShowUpdateUrlUI: Function;
 }
 
 
@@ -32,7 +33,8 @@ const ModelSettingBox = ({
     scaleStep = 0.1,
     rerender, 
     setInstallNum,
-    setRerender
+    setRerender,
+    setShowUpdateUrlUI
 }:props
 ) => {
 
@@ -54,7 +56,7 @@ const ModelSettingBox = ({
 
     const findFocusedIndex = () => {
         const findFocusedIndex = allModelsStatus[modelName].findIndex(model => model.isFocused === true);
-        console.log(allModelsStatus[modelName])
+
         let testIndex = 0
         allModelsStatus[modelName].forEach(model => {
             if(model.isFocused){
@@ -69,7 +71,7 @@ const ModelSettingBox = ({
     }
 
     const createModelStatus = async () => {
-        console.log(allModelsStatus[modelName])
+    
         allModelsStatus[modelName].map(({ position, installed, scale, rotateY, imageUrl, videoUrl, textContents }, index) => {
             
             const modelStatus = {
@@ -130,7 +132,7 @@ const ModelSettingBox = ({
                                 }
                             })
                             
-                            setRerender(value => value +1)
+                            setRerender((value: number) => value +1)
                         }
                         else{
                             // setModelStatus({
@@ -151,7 +153,7 @@ const ModelSettingBox = ({
                                 }
                             })
                            
-                            setRerender(value => value +1)
+                            setRerender((value: number) => value +1)
                         }
 
                     createModelStatus()
@@ -186,7 +188,7 @@ const ModelSettingBox = ({
                     }
                 })
                 createModelStatus()
-                setRerender(value => value +1)
+                setRerender((value: number) => value +1)
 
                 }}
                   
@@ -229,7 +231,7 @@ const ModelSettingBox = ({
 
                  createModelStatus()
                
-                setRerender(value => value +1)
+                setRerender((value: number) => value +1)
                  
              }} />
  
@@ -259,7 +261,7 @@ const ModelSettingBox = ({
                         }
                     })
                     createModelStatus()
-                setRerender(value => value +1)
+                setRerender((value: number) => value +1)
                     console.log(e.target.value)
                 }} />
               </div>
@@ -271,6 +273,12 @@ const ModelSettingBox = ({
          checkFocused() ? <img 
                             src={modelImgUrl}
                             onClick={() => {
+
+                                // 액자나 tv 모델 선택 해제할 경우
+                                if(modelName === modelNameTypes.tv2 || modelName === modelNameTypes.frame1) {
+                                   setShowUpdateUrlUI(false)
+                                }
+                                
                                 // 포커싱 OFF 설정
                                 allModelsStatus[modelName].map((model, index) => {
                                     setAllModelsStatus({
@@ -285,7 +293,7 @@ const ModelSettingBox = ({
                                     })
 
                                 })
-                                setRerender(value => value +1)
+                                setRerender((value: number) => value +1)
 
                             }} 
                             className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
@@ -294,25 +302,29 @@ const ModelSettingBox = ({
                 src={modelImgUrl} 
                 onClick={() => { 
                     initFocused(); 
-                //     setModelStatus({
-                //     ...modelStatus,
-                //     isFocused: true
-                // }) 
-                // 포커싱 ON 설정
-                allModelsStatus[modelName].map((model, index) => {
-                    setAllModelsStatus({
-                        modelName,
-                        index,
-                        status: {
-                            ...model,
-                            isFocused: true,
-                            
-                            
-                        }
-                    })
+           
+                    // 액자나 tv 모델을 선택할 경우 파일 업로드 UI 띄우기
+                    if(modelName === modelNameTypes.tv2 || modelName === modelNameTypes.frame1) {
+                       setShowUpdateUrlUI(true)
+                    }
+                    else {
+                       setShowUpdateUrlUI(false)
+                    }
+                    // 포커싱 ON 설정
+                    allModelsStatus[modelName].map((model, index) => {
+                        setAllModelsStatus({
+                            modelName,
+                            index,
+                            status: {
+                                ...model,
+                                isFocused: true,
+                                
+                                
+                            }
+                        })
 
-                })
-                setRerender(value => value +1)
+                    })
+                setRerender((value: number) => value +1)
 
             
             }}  

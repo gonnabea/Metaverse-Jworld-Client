@@ -10,7 +10,7 @@ const Container = styled.div`
     margin-bottom: 50px;
   }
   position: relative;
-  top: 10%;
+  top: 0%;
   @media only screen and (max-height: 700px) {
     padding-top: 300px;
     
@@ -20,7 +20,7 @@ const Container = styled.div`
 const Title = styled.cite`
   font-size: 24px;
   font-weight: 700;
-  color: black;
+  color: white;
 
 `
 
