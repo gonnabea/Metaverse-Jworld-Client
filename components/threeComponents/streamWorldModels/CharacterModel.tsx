@@ -200,7 +200,7 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
                 </group>
             </group>
 
-            <mesh ref={mesh}>
+            <mesh ref={mesh} visible={false}>
           <sphereGeometry args={[0.1]} />
           <meshStandardMaterial color="orange" />
           
@@ -210,5 +210,5 @@ const CharacterModel = ({ scale, rotation }: CharacterModelOpts) => {
         
     
     }
-    
+
     export default CharacterModel;

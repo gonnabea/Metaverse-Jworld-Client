@@ -208,7 +208,7 @@ const World:NextPage = () => {
       // 서버에 캐릭터 위치 실시간 전송
       const sendCharacterPosition = setInterval(() => {
         socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
-      }, 100)
+      }, 70)
 
         console.log("리렌더링 발생")
         

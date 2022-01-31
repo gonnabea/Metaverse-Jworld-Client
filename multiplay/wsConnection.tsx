@@ -1,7 +1,8 @@
 import { io } from "socket.io-client";
+import { wsServerUrl } from "../config/urls";
 
 
-export const socketIoClient = io('ws://localhost:4001')
+export const socketIoClient = io(wsServerUrl)
 
 
 export default socketIoClient;

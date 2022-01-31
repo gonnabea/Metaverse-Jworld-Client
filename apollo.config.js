@@ -4,7 +4,7 @@ module.exports = {
         tagName: "gql",
         service: {
             name: "jetaverse-backend",
-            url: "http://localhost:4000/graphql"
+            url: `http://152.70.232.36:4000/graphql`
         }
     }
 }

@@ -8,7 +8,7 @@ import {
   gql
 } from "@apollo/react-hooks";
 import { persistCache } from 'apollo-cache-persist';
-import serverUrl from '../config/urls';
+import { serverUrl } from '../config/urls';
 
 const cache = new InMemoryCache()
 
