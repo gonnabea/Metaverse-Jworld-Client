@@ -33,7 +33,7 @@ const Lobby:NextPage = () => {
     const [bgm, setBgm] = useState();
     const router = useRouter()
 
-    const [socketIoClient] = useWebsocket();
+    const [wsClient] = useWebsocket();
 
   
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -50,7 +50,7 @@ const Lobby:NextPage = () => {
             setNickname(user.nickname);
             setUserId(user.id);
             setMe({id: user.id, nickname: user.nickname})
-            socketIoClient.emit("enter-lobby", {nickname: user.nickname, userId: user.id})
+            wsClient.emit("enter-lobby", {nickname: user.nickname, userId: user.id})
         }
         // 비회원일 시
         else {
@@ -58,7 +58,7 @@ const Lobby:NextPage = () => {
             setNickname("손님 - " + customerId);
             setUserId(customerId)
             setMe({id: customerId, nickname: "손님 - " + customerId})
-            socketIoClient.emit("enter-lobby", {nickname: "손님 - " + customerId, customerId})
+            wsClient.emit("enter-lobby", {nickname: "손님 - " + customerId, customerId})
 
         }
 
@@ -85,15 +85,21 @@ const Lobby:NextPage = () => {
 
     // 웹소켓 리스너
     const handleSocketListeners = () => {
-        socketIoClient.on("enter-lobby", (data) => {
-            
-            clientId.current = data.clientId;
-            setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
 
-           
+
+
+        wsClient.addEventListener("message", (evt) => {
+            console.log(evt.data)
+            if(evt.data === "enter-lobby") {
+                clientId.current = evt.data.clientId;
+                setActiveRooms(evt.data.activeRooms) // 로비 방 목록 생성해주기
+            }
         })
 
-        socketIoClient.on("create-room", (data) => {
+
+
+        
+        wsClient.on("create-room", (data) => {
             
             
             // 방 생성 후 리다이렉트 해주기
@@ -101,7 +107,7 @@ const Lobby:NextPage = () => {
         })
 
         // 로비 상태 변경됐을 경우
-        socketIoClient.on("reload-lobby", ({activeRooms}) => {
+        wsClient.on("reload-lobby", ({activeRooms}) => {
             setActiveRooms(activeRooms)
         })
         
@@ -111,7 +117,7 @@ const Lobby:NextPage = () => {
         e.preventDefault()
         const roomName = e.target[0].value;
         const maxPeopleNum = e.target[1].value;
-        socketIoClient.emit(
+        wsClient.emit(
             "create-room", {
                 nickname,
                 roomName,
@@ -125,14 +131,14 @@ const Lobby:NextPage = () => {
     const leaveLobby = async() => {
      
         console.log("로비 나가기");
-        socketIoClient.emit("leave-lobby");
+        wsClient.emit("leave-lobby");
         
     }
 
     const joinRoom = async(roomId) => {
         
         console.log("Dsfasfadsfadsf")
-        socketIoClient.emit("join-room", {roomId, userId} )
+        wsClient.emit("join-room", {roomId, userId} )
         
         // https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage
         // window.location.replace(`/stream_world/${roomId}`)
@@ -199,7 +205,7 @@ const Lobby:NextPage = () => {
             <BottomUI
                 nickname={nickname}
                 createRoom={createRoom}
-                socketIoClient={socketIoClient}
+                wsClient={wsClient}
             />
             
             
