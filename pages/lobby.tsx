@@ -87,16 +87,10 @@ const Lobby:NextPage = () => {
     const handleSocketListeners = () => {
 
 
-
-        wsClient.addEventListener("message", (evt) => {
-            console.log(evt.data)
-            if(evt.data === "enter-lobby") {
-                clientId.current = evt.data.clientId;
-                setActiveRooms(evt.data.activeRooms) // 로비 방 목록 생성해주기
-            }
+        wsClient.on("enter-lobby", (data) => {
+            clientId.current = data.clientId;
+            setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
         })
-
-
 
         
         wsClient.on("create-room", (data) => {

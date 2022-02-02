@@ -27,6 +27,7 @@
     "browserify-zlib": "^0.2.0",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
+    "fs": "^0.0.1-security",
     "graphql": "^15.8.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
@@ -45,6 +46,7 @@
     "three": "^0.133.1",
     "tls": "0.0.1",
     "websocket": "^1.0.34",
+    "ws": "^8.4.2",
     "zlib": "^1.0.5"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ const wsServerUrls = {
 
 
 
-export const serverUrl = serverUrls.local;
+export const serverUrl = serverUrls.server;
 
 export const wsServerUrl = wsServerUrls.local;
 

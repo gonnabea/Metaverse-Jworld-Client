@@ -14,7 +14,7 @@ import { Chat } from "../threeComponents/streamWorldModels/wsPayloads";
 interface props {
     createRoom?: any; // 웹소켓 룸 만들기 함수
     nickname?: string;
-    socketIoClient: any;
+    wsClient: any;
 }
 
 function checkFile(el: ChangeEvent<HTMLInputElement>, fileType: string){
@@ -61,7 +61,7 @@ interface video {
 
 
 
-const BottomUI = ({ createRoom, nickname, socketIoClient }:props) => {
+const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
 
     const [reqGetMe] = useGetMe();
     const [images, setImages] = useState<[] | image[]>([]);
@@ -114,7 +114,7 @@ const BottomUI = ({ createRoom, nickname, socketIoClient }:props) => {
         e.preventDefault();
         
         if(e.target[0].value.length > 0) {
-            socketIoClient.emit("chat", {
+            wsClient.emit("chat", {
                 nickname,
                 text: e.target[0].value
             });
@@ -151,15 +151,13 @@ const BottomUI = ({ createRoom, nickname, socketIoClient }:props) => {
         getMe()
 
         // 전체 채팅 받았을 때
-        socketIoClient.on("chat", (data: Chat) => {
-    
-
+        wsClient.on("chat", (data: Chat) => {
             addChat(data);
             addNewMsgCount()
             forceRerender(num => num +1)
         })
         
-        return () => { socketIoClient.off('chat'); }
+        return () => { wsClient.off('chat'); }
 
         
     }, [showChats, applyChatStatus()])

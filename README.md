@@ -145,7 +145,7 @@
 - [x] GraphQL
 - [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
 - [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
-- [x] Socket.io
+- [x] Websocket
 - [ ] WebRTC
 - [x] Docker
 
