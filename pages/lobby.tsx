@@ -143,19 +143,19 @@ const Lobby:NextPage = () => {
 
 
     
-    // 배경음 시작
-    const startBgm = () => {
+    // // 배경음 시작
+    // const startBgm = () => {
         
-        setBgm(new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`));
+    //     setBgm(new Audio(`/bgms/Funny Dream - Royalty-free Music - Background Music.mp3`));
 
-        if(bgm){
-            if(bgm.paused === false) {
-                bgm.pause();
-            }
-            bgm.play();
-            bgm.loop = true;
-        }
-    }
+    //     if(bgm){
+    //         if(bgm.paused === false) {
+    //             bgm.pause();
+    //         }
+    //         bgm.play();
+    //         bgm.loop = true;
+    //     }
+    // }
 
 
     

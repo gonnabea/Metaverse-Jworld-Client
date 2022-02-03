@@ -158,7 +158,7 @@ const World:NextPage = () => {
 
         // 타 유저 캐릭터 위치 실시간 수신
         socketIoClient.on("avatar-move", ({roomId: senderRoomId, userId, position, rotateZ}) => {
-          console.log(position)
+          console.log(userIndex)
           if(senderRoomId === roomId.current) {
             setOthersPosition({position, index: userIndex})
             setOthersRotateZ({rotateZ, index: userIndex})
@@ -169,9 +169,9 @@ const World:NextPage = () => {
      
 
         // 본인 룸에 입장 시 룸의 유저리스트 얻기
-        socketIoClient.on('get-user-list', ({ userList }) => {
-          console.log(userList)
-          userList.map(user => {
+        socketIoClient.on('get-user-list', (data) => {
+          console.log(data)
+          data.userList?.map(user => {
             addConnectedUser({ id: user.id, connectedRoomId: user.connectedRoomId })
             setUserIndex(index => index + 1)
           })
@@ -189,6 +189,7 @@ const World:NextPage = () => {
         socketIoClient.on("join-room", ({roomId, userId}) => {
           if(roomId === roomId)
             addConnectedUser({id: userId , connectedRoomId: roomId })
+            setUserIndex(index => index + 1)
           
         })
       }
@@ -208,7 +209,7 @@ const World:NextPage = () => {
       // 서버에 캐릭터 위치 실시간 전송
       const sendCharacterPosition = setInterval(() => {
         socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
-      }, 70)
+      }, 30)
 
         console.log("리렌더링 발생")
         
@@ -229,7 +230,7 @@ const World:NextPage = () => {
     return(
         <section className="w-screen h-screen overflow-hidden">
           <SiteMark title={"Stream World"} bgColor={"bg-black"} handleLeave={leaveRoom} />
-          <BottomUI socketIoClient={socketIoClient} nickname={nickname} />
+          <BottomUI wsClient={socketIoClient} nickname={nickname} />
           <Canvas className="w-screen h-screen">
           
           <ambientLight intensity={0.5} />

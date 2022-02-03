@@ -5,8 +5,8 @@ const serverUrls = {
 }
 
 const wsServerUrls = {
-    local: "ws://localhost:4001/",
-    server: "ws://152.70.232.36:4001/",
+    local: "ws://localhost:4000/",
+    server: "ws://152.70.232.36:4000/",
     server_dns: "wss://jetaverse.site/"
 }
 
@@ -14,5 +14,5 @@ const wsServerUrls = {
 
 export const serverUrl = serverUrls.server;
 
-export const wsServerUrl = wsServerUrls.local;
+export const wsServerUrl = wsServerUrls.server;
 

@@ -337,7 +337,7 @@ const MiniHomepage: NextPage = (props) => {
 
       <BottomUI
         nickname={nickname}
-        socketIoClient={socketIoClient}
+        wsClient={socketIoClient}
       />
 
       {isMyRoom ? <button ref={applyInstallBtn}

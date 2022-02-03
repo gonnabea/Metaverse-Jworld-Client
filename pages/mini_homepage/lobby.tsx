@@ -11,7 +11,7 @@ import { applyMe, setMe } from '../../stores/loggedUser';
 import PageTitle from '../../components/common/PageTItle';
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
-import { applyChatStatus, setChatStatus } from '../../stores/chatStatus';
+import { applyChatStatus } from '../../stores/chatStatus';
 import { GETROOMS } from '../../apis/gql-queries/miniHompi';
 import useGetMe from '../../hooks/useGetMe';
 import useWebsocket from '../../hooks/useWebsocket';
@@ -102,7 +102,7 @@ const MiniHompiLobby:NextPage = () => {
             
                 <BottomUI 
                     nickname={nickname}
-                    socketIoClient={socketIoClient} 
+                    wsClient={socketIoClient} 
                 />
             
         </section>
