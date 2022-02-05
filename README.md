@@ -2,7 +2,7 @@
 
 - 메타버스 SNS 클라이언트사이드 만들기
 - 싸이월드 모티브
-- 현재는 Oracle Cloud Free Tier를 사용하여 서버 성능 부족으로  상태입니다
+- 현재는 Oracle Cloud Free Tier를 사용하여 서버 성능 부족으로 이용 불가한 상태입니다
 
 ## 주요 기능
 
