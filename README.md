@@ -2,7 +2,11 @@
 
 - 메타버스 SNS 클라이언트사이드 만들기
 - 싸이월드 모티브
-- 현재는 Oracle Cloud Free Tier를 사용하여 서버 성능 부족으로 이용 불가한 상태입니다
+
+## 프로젝트 설명
+
+
+
 
 ## 주요 기능
 
@@ -149,6 +153,4 @@
 - [ ] WebRTC
 - [x] Docker
 
-### 기획 Figma
 
-- https://www.figma.com/file/8HQy4JpmEwmkXsWAR53sbF/Untitled?node-id=24%3A15
