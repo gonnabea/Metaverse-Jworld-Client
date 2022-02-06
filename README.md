@@ -12,6 +12,9 @@
 - client: https://github.com/gonnabea/Metaverse-Jworld-Client
 - server: https://github.com/gonnabea/Metaverse-Jworld-Server
 
+## 기여도
+- 개인 프로젝트 (100%)
+
 ## 프로젝트 동기 / 설명
 
 웹 위에서 구동되는 메타버스 컨셉의 개인 프로젝트입니다.
