@@ -1,7 +1,4 @@
-# JWorld-Metaverse
-
-- 메타버스 SNS 클라이언트사이드 만들기
-- 싸이월드 모티브
+# Jetaverse-Client
 
 ## Notice
 - 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
