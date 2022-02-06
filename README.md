@@ -2,7 +2,7 @@
 
 ## Notice
 - 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
-- 추후 서버  후 서비스 운영 예정입니다.
+- 추후 서버 업그레이드 시 서비스 운영 예정입니다.
 
 ## 프로젝트 소개 영상
 - https://www.youtube.com/watch?v=clWEnxmigkQ&list=PLEz2cL2r60W_SZVhVsx768-vo7D7Ovwqb&index=1
