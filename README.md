@@ -46,6 +46,8 @@
 
 ### Worlds
 
+![image (21)](https://user-images.githubusercontent.com/48288590/152674788-80c0eb62-e9de-4cfb-8d95-ec22b979be14.png)
+
 - 실시간 로비 (게임 로비 형태)
 - 월드 만들기 (월드 이름, 최대 입장 가능 수 조절)
 - 3D 캐릭터 조작
@@ -53,8 +55,9 @@
 - 충돌 처리
 - 영상 스트리밍 (Preparing...)
 
-
 ### Rooms
+
+![image (19)](https://user-images.githubusercontent.com/48288590/152674099-b20bbb01-538f-4ba7-a981-f351a32652ff.png)
 
 - 방 만들기 / 방 저장하기
 - 3d 모델 설치, 이동 / 크기 조절 / 회전 조절 / 개수 조절 / 수정 / 제거
@@ -76,6 +79,10 @@
 - [x] Websocket
 - [ ] WebRTC
 - [x] Docker
+
+### 프로젝트 전체 구조도
+
+![프로젝트 구조도](https://user-images.githubusercontent.com/48288590/152673864-e99996b6-8b69-4ecd-ae18-ec71142683f3.jpg)
 
 ## 초기 출시 (2022.01)
 
