@@ -3,6 +3,10 @@
 - 메타버스 SNS 클라이언트사이드 만들기
 - 싸이월드 모티브
 
+## Notice
+- 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
+- 추후 서버 구입 후 서비스 운영 예정입니다.
+
 ## Repository
 
 - client: https://github.com/gonnabea/Metaverse-Jworld-Client
@@ -11,14 +15,19 @@
 ## 프로젝트 동기 / 설명
 
 웹 위에서 구동되는 메타버스 컨셉의 개인 프로젝트입니다.
+
 유저가 간편하게 웹 URL을 통해,
+
 3D 공간에 접근하여 마치 3D 온라인 게임 처럼 타 유저와 만나 채팅하고, 
+
 방꾸미기를 할 수 있으며, 전시 작품을 등록, 관람하는 등의
+
 인터랙티브한 경험을 할 수 있는 웹을 만들면 정말 재밌겠다는 생각을 했습니다
 
 ## 개발 기간
 
 11월 ~ 1월: 초기 출시
+
 2월 ~ : 현재 진행형, 1차 업데이트 예정 
 
 ## 주요 기능
@@ -46,6 +55,21 @@
 - 내가 꾸민 방 타 유저에게 공개됨 (게시판 형태)
 - 유저가 업로드한 동영상 / 이미지를 각각 tv 모델, 액자 모델에 전시
 - 기타 3d 모델들의 인터랙션
+
+### 클라이언트사이드 기술스택
+
+- [x] Next.js
+- [x] TypeScript
+- [x] Three.js (React-Three-Fiber)
+- [x] Cannon.js
+- [x] Tailwind CSS
+- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
+- [x] GraphQL
+- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
+- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
+- [x] Websocket
+- [ ] WebRTC
+- [x] Docker
 
 ## 초기 출시 (2022.01)
 
@@ -150,20 +174,5 @@
 
 - [ ] 아이템 구매 기능
 - [ ] 가구 구매 기능
-
-### 클라이언트사이드 기술스택
-
-- [x] Next.js
-- [x] TypeScript
-- [x] Three.js (React-Three-Fiber)
-- [x] Cannon.js
-- [x] Tailwind CSS
-- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
-- [x] GraphQL
-- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
-- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
-- [x] Websocket
-- [ ] WebRTC
-- [x] Docker
 
 
