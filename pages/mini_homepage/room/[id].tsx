@@ -54,6 +54,8 @@ import TextBoardModel from '../../../components/threeComponents/miniHompiModels/
 import Vase2Model from '../../../components/threeComponents/miniHompiModels/Vase2Model';
 import useWebsocket from '../../../hooks/useWebsocket';
 import useGetMe from '../../../hooks/useGetMe';
+import ThreeLoader from '../../../components/common/threeLoader';
+import { Loader } from '@react-three/drei';
 
 
 
@@ -104,7 +106,7 @@ const MiniHomepage: NextPage = (props) => {
     }
   })
 
-  const [reqSaveModels, { data, loading, error }] = useMutation(SAVE_MODELS, {
+  const [reqSaveModels, { data, saveLoading, error }] = useMutation(SAVE_MODELS, {
     context: {
       headers: {
         "Authorization": "Bearer " + jwtToken
@@ -231,7 +233,6 @@ const MiniHomepage: NextPage = (props) => {
     getInfos()
     setIsMyRoom(isMyRoom)
 
-
   }, [])
 
   const handleLeave = () => {
@@ -241,7 +242,6 @@ const MiniHomepage: NextPage = (props) => {
   return (
     <section className="w-screen h-screen overflow-hidden">
       <SiteMark title={`${router.query.ownerName ? router.query.ownerName + "'s Room" : "Room"}`} bgColor={"bg-green-400"} />
-
       <div className="z-10 absolute">
 
         {/* {isMyRoom ? <RoomController 
@@ -267,7 +267,7 @@ const MiniHomepage: NextPage = (props) => {
 
       </div>
 
-
+      
       <Canvas className="w-screen h-screen" camera={{ position: [0, -40, 20] }} >
         <OrbitCameraController />
         <pointLight intensity={1} color={"skyblue"} />
@@ -332,9 +332,9 @@ const MiniHomepage: NextPage = (props) => {
           </EffectComposer>
         </Suspense>
 
-
       </Canvas>,
-
+        <Loader />
+      
       <BottomUI
         nickname={nickname}
         wsClient={socketIoClient}

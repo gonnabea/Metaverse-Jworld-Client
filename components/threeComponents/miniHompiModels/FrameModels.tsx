@@ -45,7 +45,7 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
 
     const gltf = useLoader(GLTFLoader, modelList.frame1);
     
-    const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ? imageUrl : defaultImgUrl); // 이미지 텍스쳐
+    const texture = useLoader(TextureLoader, imageUrl && imageUrl !=="false" ?  imageUrl : defaultImgUrl); // 이미지 텍스쳐
     
 
     const imgTextures = [];

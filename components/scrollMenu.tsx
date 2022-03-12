@@ -151,6 +151,7 @@ const ScrollMenu = ({
         <FileContainer>
           {imageUrl !== "" ?
           <>
+          {console.log(imageUrl)}
           <Image
             onMouseEnter={(e) => mouseOn(e)}
             onMouseLeave={(e) => mouseOut(e)}

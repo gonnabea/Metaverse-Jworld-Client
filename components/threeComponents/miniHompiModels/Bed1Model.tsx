@@ -9,6 +9,7 @@ import { applyThreeModels, setAllModelsStatus } from '../../../stores/setAllThre
 import { useReactiveVar } from '@apollo/client';
 import { clone } from '../../../config/skeletonUtils';
 import Indicator from '../../common/Indicator';
+import useLoadingManager from '../../../hooks/useLoadingManager';
 
 const modelName = "bed1"
 const snake_case_name = "bed_1"
@@ -102,6 +103,7 @@ const Bed1Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
     useEffect(() => {
         window.addEventListener("click", (e) => installModel(e));
         createModelStatus()
+        
         return () => window.removeEventListener("click", (e) => installModel(e));
     }, [        
         isFocused, 

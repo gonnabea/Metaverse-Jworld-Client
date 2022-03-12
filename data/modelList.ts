@@ -531,7 +531,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -541,7 +541,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 1, y: 1, z: 1 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -551,7 +551,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -561,7 +561,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -571,7 +571,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -581,7 +581,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -591,7 +591,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         },
@@ -601,7 +601,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         }
@@ -613,7 +613,7 @@ export const AllModelsStatus = {
             rotateY: "0",
             isFocused: false,
             position: { x: 0, y: 0, z: 0 },
-            imageUrl: "https://media.istockphoto.com/photos/metaverse-concept-metaverse-text-sitting-over-blue-technological-picture-id1352111641?b=1&k=20&m=1352111641&s=170667a&w=0&h=OcbdDklzABPmIV5H8gNUnpiO7QI7dulB3VkvjR4f00g=",
+            imageUrl: "",
             videoUrl: "",
             textContents: ""
         }

@@ -165,7 +165,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
         </div>
         <div className="w-1/2 flex overflow-x-auto text-center">
           {videos.map((video, key) => {
-           return <div key={key} className="w-1/6" 
+           return <div key={key} className="w-1/6 flex flex-col items-center" 
                        onClick={async() => {
                
                    
@@ -202,7 +202,7 @@ const EnrollFileToModelScreen = ({show, setRerender, rerender, initFocused}) => 
                    
                
             }}>
-            <video className="w-30 h-20" src={video.videoUrl} controls={true} />
+            <video className="w-30 h-20" src={video.videoUrl} controls={true} autoPlay muted={true} />
             <span className="font-bold">{video.title}</span>
             {/* <p>{video.description}</p> */}
             </div>

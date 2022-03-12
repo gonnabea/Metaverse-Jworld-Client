@@ -27,6 +27,7 @@ import CharacterModel5 from '../../components/threeComponents/streamWorldModels/
 import CharacterModel4 from '../../components/threeComponents/streamWorldModels/CharacterModel4';
 import CharacterModel3 from '../../components/threeComponents/streamWorldModels/CharacterModel3';
 import { addConnectedUser } from '../../stores/character';
+import { Loader } from '@react-three/drei';
 
 const World:NextPage = () => {
     const applyStore = useReactiveVar(applyMe);
@@ -210,8 +211,6 @@ const World:NextPage = () => {
       const sendCharacterPosition = setInterval(() => {
         socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
       }, 30)
-
-        console.log("리렌더링 발생")
         
         return () => {
           
@@ -328,6 +327,11 @@ const World:NextPage = () => {
             </Suspense>
             </Physics>
         </Canvas>,
+        
+          <Loader
+            dataStyles={"asdsdasd"}
+          />
+        
         </section>
     )
 
