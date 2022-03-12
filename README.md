@@ -1,8 +1,37 @@
-# JWorld-Metaverse
+# Jetaverse-Client
 
-- 메타버스 SNS 클라이언트사이드 만들기
-- 싸이월드 모티브
+## Notice
+- 현재 Oracle Cloud Free Tier의 서버 스펙이 부족하여 서비스 배포를 하지 않고 있는 상태입니다
+- 추후 서버 업그레이드 시 서비스 운영 예정입니다.
 
+## 프로젝트 소개 영상
+- https://www.youtube.com/watch?v=clWEnxmigkQ&list=PLEz2cL2r60W_SZVhVsx768-vo7D7Ovwqb&index=1
+
+## Repository
+
+- client: https://github.com/gonnabea/Metaverse-Jworld-Client
+- server: https://github.com/gonnabea/Metaverse-Jworld-Server
+
+## 기여도
+- 개인 프로젝트 (100%)
+
+## 프로젝트 동기 / 설명
+
+웹 위에서 구동되는 메타버스 컨셉의 개인 프로젝트입니다.
+
+유저가 간편하게 웹 URL을 통해,
+
+3D 공간에 접근하여 마치 3D 온라인 게임 처럼 타 유저와 만나 채팅하고, 
+
+방꾸미기를 할 수 있으며, 전시 작품을 등록, 관람하는 등의
+
+인터랙티브한 경험을 할 수 있는 웹을 만들면 정말 재밌겠다는 생각을 했습니다
+
+## 개발 기간
+
+11월 ~ 1월: 초기 출시
+
+2월 ~ : 현재 진행형, 1차 업데이트 예정 
 
 ## 주요 기능
 
@@ -14,6 +43,8 @@
 
 ### Worlds
 
+![image (21)](https://user-images.githubusercontent.com/48288590/152674788-80c0eb62-e9de-4cfb-8d95-ec22b979be14.png)
+
 - 실시간 로비 (게임 로비 형태)
 - 월드 만들기 (월드 이름, 최대 입장 가능 수 조절)
 - 3D 캐릭터 조작
@@ -21,14 +52,34 @@
 - 충돌 처리
 - 영상 스트리밍 (Preparing...)
 
-
 ### Rooms
+
+![image (19)](https://user-images.githubusercontent.com/48288590/152674099-b20bbb01-538f-4ba7-a981-f351a32652ff.png)
 
 - 방 만들기 / 방 저장하기
 - 3d 모델 설치, 이동 / 크기 조절 / 회전 조절 / 개수 조절 / 수정 / 제거
 - 내가 꾸민 방 타 유저에게 공개됨 (게시판 형태)
 - 유저가 업로드한 동영상 / 이미지를 각각 tv 모델, 액자 모델에 전시
 - 기타 3d 모델들의 인터랙션
+
+### 클라이언트사이드 기술스택
+
+- [x] Next.js
+- [x] TypeScript
+- [x] Three.js (React-Three-Fiber)
+- [x] Cannon.js
+- [x] Tailwind CSS
+- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
+- [x] GraphQL
+- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
+- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
+- [x] Websocket
+- [ ] WebRTC
+- [x] Docker
+
+### 프로젝트 전체 구조도
+
+![프로젝트 구조도](https://user-images.githubusercontent.com/48288590/152673864-e99996b6-8b69-4ecd-ae18-ec71142683f3.jpg)
 
 ## 초기 출시 (2022.01)
 
@@ -134,21 +185,4 @@
 - [ ] 아이템 구매 기능
 - [ ] 가구 구매 기능
 
-### 클라이언트사이드 기술스택
 
-- [x] Next.js
-- [x] TypeScript
-- [x] Three.js (React-Three-Fiber)
-- [x] Cannon.js
-- [x] Tailwind CSS
-- [x] Styled-Components - (기존에 만들어놓은 컴포넌트 활용 위함)
-- [x] GraphQL
-- [x] GraphQL-Apollo - (전역 상태관리, GRAPHQL API 요청)
-- [x] Axios (REST-API) - (파일 전송 용이하게 하기 위함)
-- [x] Websocket
-- [ ] WebRTC
-- [x] Docker
-
-### 기획 Figma
-
-- https://www.figma.com/file/8HQy4JpmEwmkXsWAR53sbF/Untitled?node-id=24%3A15
