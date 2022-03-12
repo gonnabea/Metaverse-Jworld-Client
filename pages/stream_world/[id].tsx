@@ -328,9 +328,7 @@ const World:NextPage = () => {
             </Physics>
         </Canvas>,
         
-          <Loader
-            dataStyles={"asdsdasd"}
-          />
+          <Loader/>
         
         </section>
     )
