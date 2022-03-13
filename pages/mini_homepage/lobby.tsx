@@ -15,6 +15,7 @@ import { applyChatStatus } from '../../stores/chatStatus';
 import { GETROOMS } from '../../apis/gql-queries/miniHompi';
 import useGetMe from '../../hooks/useGetMe';
 import useWebsocket from '../../hooks/useWebsocket';
+import Loader from '../../components/common/Loader';
 
 
 
@@ -28,12 +29,13 @@ const MiniHompiLobby:NextPage = () => {
     const [nickname, setNickname] = useState<string>();
     const [userId, setUserId] = useState<number | string | null>(); 
     const [localChats, setLocalChats] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [socketIoClient] = useWebsocket();
 
 
     const router = useRouter()
 
-    const {data, loading, error} = useQuery(GETROOMS)
+    const {data, loading: roomLoading, error} = useQuery(GETROOMS)
     const [reqGetMe, getMeLoading] = useGetMe()
 
     const getMe = async() => {
@@ -63,13 +65,14 @@ const MiniHompiLobby:NextPage = () => {
     useEffect(() => {
     
         getMe()
-
+        setLoading(false)
     }, [])
     
     return(
         <section className="w-screen h-screen overflow-x-hidden">
             <SiteMark bgColor={"bg-green-500"}/>
             <PageTitle title="Rooms" />
+            <Loader loading={loading} />
 
             <div className="grid justify-items-center lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4 content-center">
                 {data ? JSON.parse(data.getAllMiniHompis.hompisWithOwners).map(

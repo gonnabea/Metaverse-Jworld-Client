@@ -54,7 +54,6 @@ import TextBoardModel from '../../../components/threeComponents/miniHompiModels/
 import Vase2Model from '../../../components/threeComponents/miniHompiModels/Vase2Model';
 import useWebsocket from '../../../hooks/useWebsocket';
 import useGetMe from '../../../hooks/useGetMe';
-import ThreeLoader from '../../../components/common/threeLoader';
 import { Loader } from '@react-three/drei';
 
 

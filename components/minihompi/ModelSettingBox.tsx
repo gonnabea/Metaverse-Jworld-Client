@@ -296,7 +296,7 @@ const ModelSettingBox = ({
                                 setRerender((value: number) => value +1)
 
                             }} 
-                            className="text-lg border-solid border-4 r-0 border-green-400 w-20 h-20" />
+                            className="text-lg border-solid border-4 r-0 border-green-400 w-24 h-24" />
             // 포커싱 OFF인 경우
             : <img 
                 src={modelImgUrl} 

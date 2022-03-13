@@ -174,7 +174,8 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
         
         {/* 채팅 팝업 */}
         {showChats ? <>
-            <div ref={chattingPop} id="chatScreen" className="absolute bg-black bg-opacity-40 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto z-30">
+            <div ref={chattingPop} id="chatScreen" 
+            className="absolute bg-black bg-opacity-40 text-black bottom-20 left-1 w-96 h-60 p-4 overflow-x-hidden overflow-auto z-30">
                 {applyChatStatus().chatContents.map((content, key) => <div key={key}>
                     <span className="font-bold text-white">{content.client}: </span>
                     <span className="text-white">{content.msg}</span>

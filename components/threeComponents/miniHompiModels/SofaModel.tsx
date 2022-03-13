@@ -200,7 +200,7 @@ const SofaModel = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus.sofa[findFocusedIndex()].position.x, 
-                    allModelsStatus.sofa[findFocusedIndex()].position.y +4 * allModelsStatus.sofa[findFocusedIndex()].scale,
+                    allModelsStatus.sofa[findFocusedIndex()].position.y +2 * allModelsStatus.sofa[findFocusedIndex()].scale,
                     allModelsStatus.sofa[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 

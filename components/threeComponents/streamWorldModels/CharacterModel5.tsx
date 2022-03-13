@@ -25,7 +25,6 @@ const CharacterModel5 = ({ scale, rotation }: CharacterModelOpts) => {
 
     const characterRef = useRef();
 
-    const gltf = useLoader(GLTFLoader, modelList.character5);
     const { nodes, materials, animations } = useGLTF(modelList.character5) as GLTFResult;
     const group = useRef<THREE.Group>()
 

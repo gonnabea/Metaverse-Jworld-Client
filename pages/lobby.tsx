@@ -18,6 +18,7 @@ import { GETME } from '../apis/gql-queries/user';
 import { addChat, applyChatStatus } from '../stores/chatStatus';
 import useGetMe from '../hooks/useGetMe';
 import useWebsocket from '../hooks/useWebsocket';
+import Loader from '../components/common/Loader';
 
 
 
@@ -25,7 +26,7 @@ import useWebsocket from '../hooks/useWebsocket';
 const Lobby:NextPage = () => {
   
     
-    
+    const [loading, setLoading] = useState(true);
     const clientId = useRef<string | null>()
     const [activeRooms, setActiveRooms] = useState<Array<wsRoom> | null>()
     const [nickname, setNickname] = useState<string>();
@@ -34,6 +35,7 @@ const Lobby:NextPage = () => {
     const router = useRouter()
 
     const [wsClient] = useWebsocket();
+    
 
   
     // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -167,7 +169,7 @@ const Lobby:NextPage = () => {
 
         getMe()
 
-        console.log("리렌더링")
+        setLoading(false);
 
     }, [])
     
@@ -175,7 +177,7 @@ const Lobby:NextPage = () => {
         <section className="w-screen h-screen overflow-x-hidden">
             <SiteMark/>
             <PageTitle title="Stream Worlds"/>
-            
+            <Loader loading={loading} />
             {/* 스트림 월드 방 UI */}
             <div className="grid lg:grid-cols-3 gap-4 md:grid-cols-2 pl-4">
                 {activeRooms ? activeRooms.map(

@@ -201,7 +201,7 @@ const Table3Model = ({rerender, setRerender ,isMyRoom, initFocused}) => {
            <Indicator 
                 position={[
                     allModelsStatus.table3[findFocusedIndex()].position.x, 
-                    allModelsStatus.table3[findFocusedIndex()].position.y + 4 * allModelsStatus.table3[findFocusedIndex()].scale * 2 ,
+                    allModelsStatus.table3[findFocusedIndex()].position.y + 4 * allModelsStatus.table3[findFocusedIndex()].scale * 4 ,
                     allModelsStatus.table3[findFocusedIndex()].position.z
                 ]} 
                 visible={checkFocused()} 
