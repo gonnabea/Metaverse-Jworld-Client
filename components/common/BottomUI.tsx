@@ -67,6 +67,7 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
     const [images, setImages] = useState<[] | image[]>([]);
     const [videos, setVideos] = useState<[] | video[]>([]);
     const [_, forceRerender] = useState(0) // 컴포넌트 강제 리렌더링을 위함 - 채팅 상태 업데이트 시 리렌더링이 안됨.
+    const [loggedIn, setLoggedIn] = useState(false);
     
     
     
@@ -85,13 +86,16 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
         if(data.data) {
             const user = data.data.getMe.user;
             console.log(user.id)
-       
+            setLoggedIn(true)
             const imageData = await getImages(user.id);
             const videoData = await getVideos(user.id);
             setImages(imageData)
             setVideos(videoData)
         }
-        
+        // 비회원일 시
+        else {
+            setLoggedIn(false)
+        }
     }
 
     const getImages = async(userId: number) => {
@@ -191,7 +195,7 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
         </> : <div ref={chattingPop}></div>
         }
         {/* 방 만들기 버튼 */}
-        {createRoom ? <button onClick={() => {
+        {createRoom && loggedIn ? <button onClick={() => {
             setShowChats(false)
             setShowSettingModal(false)
             setShowRoomModal(showRoomModal => !showRoomModal); 
@@ -211,14 +215,16 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
 
         </div> : null }
 
-        {/* 설정 버튼 */}
-        <button onClick={() => { 
-            setShowChats(false);
-            setShowRoomModal(false); 
-            setShowSettingModal(showSettingModal => !showSettingModal); 
-        }} 
-            
-            className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >설정</button>
+        {/* 설정 버튼 */}{
+            loggedIn ? <button onClick={() => { 
+                setShowChats(false);
+                setShowRoomModal(false); 
+                setShowSettingModal(showSettingModal => !showSettingModal); 
+            }} 
+                
+                className="bg-black rounded-lg text-white hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >설정</button> : null
+        }
+
 
 
 
