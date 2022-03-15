@@ -210,7 +210,7 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
         <form className="flex flex-col w-3/6 h-2/6 justify-around " onSubmit={(e) => createRoom(e)}>
             <input className="text-center h-1/6 text-lg font-bold" type="text" maxLength={10} required={true} placeholder="채팅방 이름" />
             <input className="text-center h-1/6 text-lg font-bold pl-4" type="number" maxLength={1} max="8" min="1" required={true} placeholder="최대인원 설정" />
-            <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold" type="submit" value="스트림 월드 생성" />
+            <input className="text-center h-1/6 bg-black rounded-lg text-white hover:bg-blue-500 border-double border-4 font-bold cursor-pointer" type="submit" value="스트림 월드 생성" />
         </form>
 
         </div> : null }

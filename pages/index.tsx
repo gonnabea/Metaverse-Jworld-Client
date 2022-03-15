@@ -72,7 +72,7 @@ const Login: NextPage = () => {
   const activateLoginBtn = () => {
     console.log(inputs)
     if(validateEmail(email) && validatePw(password)) {
-      loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl"
+      loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl cursor-pointer"
     }
     else {
       loginSubmitBtn.current.className = "w-4/6 self-center p-10 bg-gray-400 text-white text-2xl"

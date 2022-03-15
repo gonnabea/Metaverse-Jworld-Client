@@ -63,7 +63,7 @@ const Join: NextPage = () => {
     const activateJoinBtn = () => {
       console.log(inputs)
       if(validateEmail(email) && validatePw(password) && password === password2 && nickname.length >= 2 && nickname.length <= 10) {
-        joinSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl"
+        joinSubmitBtn.current.className = "w-4/6 self-center p-10 bg-black text-white text-2xl cursor-pointer"
       }
       else {
         joinSubmitBtn.current.className = "w-4/6 self-center p-10 bg-gray-400 text-white text-2xl"
