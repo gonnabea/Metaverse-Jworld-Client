@@ -12,7 +12,7 @@ import { clone } from "../../../config/skeletonUtils";
 import Indicator from '../../common/Indicator';
 import { applyIsMyRoom } from '../../../stores/loggedUser';
 
-const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
+const FrameModel = ({isMyRoom, rerender, setRerender, initFocused, setImageInfo, showInfoPop}) => {
     const allModelsStatus = useReactiveVar(applyThreeModels);
     console.log(allModelsStatus.frame1)
 
@@ -156,7 +156,7 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
             <primitive 
                 onClick={(e) => {
                     if(isMyRoom && checkFocused()) {
-                        console.log("액자1 클릭")
+                    
                
                             initFocused()
                             setAllModelsStatus({
@@ -170,6 +170,15 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
                             
                             createModelStatus()
                             setRerender(value => value + 1)
+                        
+                    }
+                    else {
+                        showInfoPop(true)
+                        setImageInfo({
+                            imgSrc: allModelsStatus.frame1[0].imageUrl,
+                            title: "제목",
+                            description: "테스트 설명..."
+                        })
                         
                     }
             }} 
@@ -201,7 +210,7 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
                             
                             onClick={async(e) => {
                                 
-                                console.log(`액자1_${index} 클릭`)
+                                
                                 if(isMyRoom && checkFocused()){
                                     initFocused()
                                     console.log(model.position,model.isFocused)
@@ -215,6 +224,14 @@ const FrameModel = ({isMyRoom, rerender, setRerender, initFocused}) => {
                                     })
                                     createModelStatus()
                                     setRerender(value => value + 1)
+                                }
+                                else {
+                                    showInfoPop(true)
+                                    setImageInfo({
+                                        imgSrc: allModelsStatus.frame1[index].imageUrl,
+                                        title: "제목",
+                                        description: "테스트 설명..."
+                                    })
                                 }
                                 
                                 

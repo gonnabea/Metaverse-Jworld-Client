@@ -55,6 +55,7 @@ import Vase2Model from '../../../components/threeComponents/miniHompiModels/Vase
 import useWebsocket from '../../../hooks/useWebsocket';
 import useGetMe from '../../../hooks/useGetMe';
 import { Loader } from '@react-three/drei';
+import ImageInfoPop from '../../../components/minihompi/ImageInfoPop';
 
 
 
@@ -79,6 +80,12 @@ const MiniHomepage: NextPage = (props) => {
   const [nickname, setNickname] = useState<string>();
   const [userId, setUserId] = useState<number | string | null>();
   const [socketIoClient] = useWebsocket();
+  const [imageInfoPop, setImageInfoPop] = useState(false);
+  const [imageInfo, setImageInfo] = useState({
+    title: "",
+    description: "",
+    imgSrc: ""
+  })
 
 
 
@@ -264,6 +271,12 @@ const MiniHomepage: NextPage = (props) => {
         {/* 액자, tv 등의 모델에 이미지, 영상등을 등록하기 위한 UI */}
         <EnrollFileToModelScreen show={showUpdateUrlUI} setRerender={setRerender} rerender={rerender} initFocused={initFocused} />
 
+        {imageInfoPop ? <ImageInfoPop 
+          imgSrc={imageInfo.imgSrc} 
+          title={imageInfo.title} 
+          description={imageInfo.description} 
+          setOpen={setImageInfoPop} /> : null}
+
       </div>
 
       
@@ -294,7 +307,7 @@ const MiniHomepage: NextPage = (props) => {
               position={[0,10,0]}
               />   */}
               <RoomModel roomScale={roomScale} />
-              <FrameModel isMyRoom={isMyRoom} rerender={rerender} setRerender={setRerender} initFocused={initFocused} />
+              <FrameModel isMyRoom={isMyRoom} rerender={rerender} setRerender={setRerender} initFocused={initFocused} showInfoPop={setImageInfoPop} setImageInfo={setImageInfo} />
               <Carpet1Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
               <Carpet2Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
               <Carpet3Model rerender={rerender} setRerender={setRerender} isMyRoom={isMyRoom} initFocused={initFocused} />
