@@ -50,22 +50,17 @@ const SiteMark = ({title = "! Jetaverse !", bgColor="bg-blue-500", handleLeave}:
         <>
         <button className="absolute left-2 text-white py-2 px-4 top-1 font-extrabold italic z-10" 
         onClick={() => {router.push("/lobby");}}>Worlds</button> 
-        <button className="absolute right-2 text-white py-2 px-4 top-1 font-extrabold italic z-10" 
-        onClick={async() => {
-            const confirm = window.confirm("방을 생성하거나 초기화합니다. 계속하시겠습니까?")
-            
-            if(confirm) {
-              await reqCreateHompi()
-              window.location.replace("/mini_homepage/lobby")
-            }
 
-           
-
-
-            // router.push(`/mini_homepage/room/${roomId}`);
-            
-            
-            }}>MyRoom</button>
+        {jwtToken ? <button className="absolute right-2 text-white py-2 px-4 top-1 font-extrabold italic z-10" 
+            onClick={async() => {
+                const confirm = window.confirm("방을 생성하거나 초기화합니다. 계속하시겠습니까?")
+                
+                if(confirm) {
+                await reqCreateHompi()
+                window.location.replace("/mini_homepage/lobby")
+                }
+                // router.push(`/mini_homepage/room/${roomId}`);
+                }}>MyRoom</button> : null}
         </>
         : null}
 
