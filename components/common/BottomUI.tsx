@@ -75,6 +75,7 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
     const [showChats, setShowChats] = useState(false);
     const [showRoomModal, setShowRoomModal] = useState(false); // 방 만들기 모달 띄우기 상태
     const [showSettingModal, setShowSettingModal] = useState(false);
+    const [newMsgLight, setNewMsgLight] = useState(false);
     const [btnSoundEffect, setBtnSoundEffect] = useState();
     const chattingPop = useRef<HTMLInputElement>(null);
     const chatInput = useRef<HTMLInputElement>(null);
@@ -159,6 +160,11 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
             addChat(data);
             addNewMsgCount()
             forceRerender(num => num +1)
+            if(!showChats) {
+                // setShowChats(showChats => !showChats); 
+                // setTimeout(() => setShowChats(showChats => !showChats), 5000)
+                setNewMsgLight(true)
+            }
         })
         
         return () => { wsClient.off('chat'); }
@@ -173,9 +179,11 @@ const BottomUI = ({ createRoom, nickname, wsClient }:props) => {
             setShowSettingModal(false)
             setShowRoomModal(false); 
             setShowChats(showChats => !showChats); 
+            setNewMsgLight(false)
         }} 
         className="bg-black text-white rounded-lg hover:bg-blue-500 w-32 h-10 border-double border-4 font-bold z-30" >채팅</button>
-        
+        {/* 채팅 알림 */}
+        {newMsgLight ? <span className="bg-blue-300 w-3 h-3 relative right-4 text-white z-50 rounded-full "></span> : null}
         {/* 채팅 팝업 */}
         {showChats ? <>
             <div ref={chattingPop} id="chatScreen" 
