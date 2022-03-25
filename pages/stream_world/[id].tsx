@@ -159,10 +159,10 @@ const World:NextPage = () => {
 
         // 타 유저 캐릭터 위치 실시간 수신
         socketIoClient.on("avatar-move", ({roomId: senderRoomId, userId, position, rotateZ}) => {
-          console.log(userIndex)
+          console.log(userId)
           if(senderRoomId === roomId.current) {
-            setOthersPosition({position, index: userIndex})
-            setOthersRotateZ({rotateZ, index: userIndex})
+            setOthersPosition({position, index: userId})
+            setOthersRotateZ({rotateZ, index: userId})
             
           }
         })
@@ -172,25 +172,26 @@ const World:NextPage = () => {
         // 본인 룸에 입장 시 룸의 유저리스트 얻기
         socketIoClient.on('get-user-list', (data) => {
           console.log(data)
-          data.userList?.map(user => {
+          data.userList?.map((user, index) => {
             addConnectedUser({ id: user.id, connectedRoomId: user.connectedRoomId })
-            setUserIndex(index => index + 1)
           })
+          setUserIndex(data.userList.length - 1)
         })
 
 
         // 타 유저 룸에서 퇴장 시
         socketIoClient.on("leave-room", ({userId}) => {
           removeConnectedUser(userId)
-          setUserIndex(index => index - 1)
+          
 
         })
 
         // 타 유저 룸에 입장 시
-        socketIoClient.on("join-room", ({roomId, userId}) => {
+        socketIoClient.on("join-room", ({roomId, userId, userList}) => {
+          console.log(userList)
           if(roomId === roomId)
             addConnectedUser({id: userId , connectedRoomId: roomId })
-            setUserIndex(index => index + 1)
+            setUserIndex(userList.length - 1)
           
         })
       }
@@ -209,7 +210,7 @@ const World:NextPage = () => {
         
       // 서버에 캐릭터 위치 실시간 전송
       const sendCharacterPosition = setInterval(() => {
-        socketIoClient.emit("avatar-move", {roomId: roomId.current, userId, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
+        socketIoClient.emit("avatar-move", {roomId: roomId.current, userId: userIndex, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ})
       }, 30)
         
         return () => {
