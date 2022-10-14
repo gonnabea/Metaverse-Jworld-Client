@@ -1,12 +1,12 @@
 const serverUrls = {
     local: "http://localhost:4000/",
-    server: "http://152.70.232.36:4000/",
+    server: "http://146.56.145.39:4000/",
     server_dns: "https://jetaverse.site/"
 }
 
 const wsServerUrls = {
     local: "ws://localhost:4000/",
-    server: "ws://152.70.232.36:4000/",
+    server: "ws://146.56.145.39:4000/",
     server_dns: "wss://jetaverse.site/"
 }
 
