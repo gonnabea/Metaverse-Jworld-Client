@@ -6,7 +6,7 @@ const serverUrls = {
 
 const wsServerUrls = {
     local: "ws://localhost:4000/",
-    server: "ws://146.56.145.39:91/",
+    server: "ws://146.56.145.39:90/",
     server_dns: "wss://jetaverse.site/"
 }
 
