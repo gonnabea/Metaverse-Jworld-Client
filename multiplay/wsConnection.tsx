@@ -1,8 +1,7 @@
 import { io } from "socket.io-client";
-import { wsServerUrl } from "../config/urls";
 
 
-export const socketIoClient = io(wsServerUrl)
+export const socketIoClient = io(process.env.NEXT_PUBLIC_WS_URL)
 
 
 export default socketIoClient;

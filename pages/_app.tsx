@@ -8,7 +8,6 @@ import {
   gql
 } from "@apollo/react-hooks";
 import { persistCache } from 'apollo-cache-persist';
-import { serverUrl } from '../config/urls';
 
 const cache = new InMemoryCache()
 
@@ -39,7 +38,7 @@ const cache = new InMemoryCache()
 
 
 const client = new ApolloClient({
-  uri: `${serverUrl}graphql`,
+  uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
   cache: cache
 });
 

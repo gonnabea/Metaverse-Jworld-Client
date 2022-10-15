@@ -86,6 +86,9 @@ const Login: NextPage = () => {
   
   useEffect(() => {
     console.log("컴포넌트 마운트");
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.NEXT_PUBLIC_API_URL);
+    console.log()
     activateLoginBtn()
 }, [inputs])
 

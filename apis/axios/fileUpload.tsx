@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { serverUrl } from '../../config/urls';
 
 export interface PostFileInput {
 
@@ -24,7 +23,7 @@ export interface GetFileOutput {
 }
 
 const api = axios.create({
-    baseURL: serverUrl,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     
 })
 

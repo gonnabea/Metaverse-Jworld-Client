@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prod": "next dev",
     "dev-http": "next dev -p 80",
     "dev-https": "next dev -p 443",
     "build": "next build",

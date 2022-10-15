@@ -2,8 +2,10 @@
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  reactStrictMode: false
-
+  reactStrictMode: false,
+  env: {
+    BASE_URL: process.env.BASE_URL,
+  },
 }
 
 module.exports = {
