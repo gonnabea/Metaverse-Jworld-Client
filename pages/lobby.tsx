@@ -89,6 +89,7 @@ const Lobby:NextPage = () => {
     const handleSocketListeners = () => {
 
 
+        // 타 유저 접속 시 
         wsClient.on("enter-lobby", (data) => {
             clientId.current = data.clientId;
             setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
@@ -101,6 +102,12 @@ const Lobby:NextPage = () => {
             // 방 생성 후 리다이렉트 해주기
             router.push(`/stream_world/${data.roomId}`)
         })
+        
+        wsClient.on("get-worlds", (data) => {
+            setActiveRooms(data.activeRooms) // 로비 방 목록 생성해주기
+        });
+
+        wsClient.emit("get-worlds");
 
         // 로비 상태 변경됐을 경우
         wsClient.on("reload-lobby", ({activeRooms}) => {
