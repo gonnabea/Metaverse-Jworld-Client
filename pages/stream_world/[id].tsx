@@ -86,7 +86,10 @@ const World: NextPage = () => {
     const url = window.location.href;
     roomId.current = url.split("world/")[1];
 
-    socketIoClient.emit("get-user-list", { roomId: url.split("world/")[1] })
+    socketIoClient.emit("get-user-list", { roomId: url.split("world/")[1] }, (userList) => {
+      console.log(userList)
+      alert(userList.length - 1)
+    })
 
   }
 
@@ -160,40 +163,42 @@ const World: NextPage = () => {
   const handleSocketListeners = () => {
 
     // 타 유저 캐릭터 위치 실시간 수신
-    socketIoClient.on("avatar-move", ({ roomId: senderRoomId, userId, position, rotateZ }) => {
-      console.log(userId)
+    socketIoClient.on("avatar-move", ({ roomId: senderRoomId, userIndex, position, rotateZ }) => {
+      console.log(userIndex, position)
       if (senderRoomId === roomId.current) {
-        setOthersPosition({ position, index: userId })
-        setOthersRotateZ({ rotateZ, index: userId })
+        setOthersPosition({ position, index: userIndex })
+        setOthersRotateZ({ rotateZ, index: userIndex })
 
       }
     })
 
 
 
-    // 본인 룸에 입장 시 룸의 유저리스트 얻기
+    // 룸에 입장 시 룸의 유저리스트 얻기
     socketIoClient.on('get-user-list', (data) => {
       console.log(data)
       data.userList?.map((user, index) => {
         addConnectedUser({ id: user.id, connectedRoomId: user.connectedRoomId })
       })
-      setUserIndex(data.userList.length - 1)
+
+      setUserIndex(data.userList.length - 1);
+      
     })
 
 
-    // 타 유저 룸에서 퇴장 시
+    // 타 유저가 룸에서 퇴장 시
     socketIoClient.on("leave-room", ({ userId }) => {
       removeConnectedUser(userId)
       // setUserIndex(userList.length - 1)
 
     })
 
-    // 타 유저 룸에 입장 시
+    // 타 유저가 룸에 입장할 시
     socketIoClient.on("join-room", ({ roomId, userId, userList }) => {
-      console.log(userList)
+      
       if (roomId === roomId)
         addConnectedUser({ id: userId, connectedRoomId: roomId })
-      // setUserIndex(userList.length - 1)
+      // setUserIndex(userList.length)
 
     })
   }
@@ -212,7 +217,8 @@ const World: NextPage = () => {
 
     // 서버에 캐릭터 위치 실시간 전송
     const sendCharacterPosition = setInterval(() => {
-      socketIoClient.emit("avatar-move", { roomId: roomId.current, userId: userIndex, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ })
+      console.log(userIndex)
+      socketIoClient.emit("avatar-move", { roomId: roomId.current, userIndex, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ })
     }, 30)
 
     return () => {

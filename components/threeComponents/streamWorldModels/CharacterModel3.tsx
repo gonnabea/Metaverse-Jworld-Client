@@ -110,7 +110,7 @@ const CharacterModel3 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-       return applyConnectedUser().length > 2 ? (
+       return applyConnectedUser().length >= 0 ? (
             <>
                 {/* <primitive 
                     ref={characterRef}

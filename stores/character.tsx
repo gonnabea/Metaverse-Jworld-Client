@@ -72,7 +72,9 @@ export const setOthersRotateZ = ({rotateZ, index}: {rotateZ: number, index: numb
 export const applyConnectedUser = makeVar<wsUser[]>([])
 
 export const addConnectedUser = ({id, connectedRoomId}: wsUser) => {
+    alert("새 유저입장")
     applyConnectedUser().push({id, connectedRoomId})
+    console.log(applyConnectedUser())
 }
 
 export const removeConnectedUser = (userId: number) => {
