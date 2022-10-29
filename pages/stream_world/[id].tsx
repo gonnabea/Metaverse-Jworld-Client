@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { GETME } from '../../apis/gql-queries/user';
 import BottomUI from '../../components/common/BottomUI';
 import useWebsocket from '../../hooks/useWebsocket';
-import { applyCharacterStatus, applyConnectedUser, removeConnectedUser, setOthersPosition, setOthersRotateZ } from '../../stores/character';
+import { applyCharacterStatus, applyConnectedUser, applyOthersStatus, removeConnectedUser, setOthersPosition, setOthersRotateZ } from '../../stores/character';
 import CharacterModel2 from '../../components/threeComponents/streamWorldModels/CharacterModel2';
 import CharacterModel7 from '../../components/threeComponents/streamWorldModels/CharacterModel7';
 import CharacterModel8 from '../../components/threeComponents/streamWorldModels/CharacterModel8';
@@ -167,7 +167,7 @@ const World: NextPage = () => {
 
     // 타 유저 캐릭터 위치 실시간 수신
     socketIoClient.on("avatar-move", ({ roomId: senderRoomId, userIndex, position, rotateZ }) => {
-      console.log(userIndex, position)
+      // console.log(userIndex, position)
       if (senderRoomId === roomId.current) {
         setOthersPosition({ position, index: userIndex })
         setOthersRotateZ({ rotateZ, index: userIndex })

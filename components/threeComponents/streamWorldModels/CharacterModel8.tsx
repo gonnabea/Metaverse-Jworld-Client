@@ -48,6 +48,7 @@ const CharacterModel8 = ({ scale, rotation }: CharacterModelOpts) => {
     const raycaster = useThree((state) => state.raycaster);
     const scene = useThree((state) => state.scene)
 
+    const [_, forceRerender] = useState(9);
     
 
     const { forward, backward, left, right, jump } = usePersonControls()
@@ -112,7 +113,11 @@ const CharacterModel8 = ({ scale, rotation }: CharacterModelOpts) => {
         
         
         
+        const rerender = setInterval(() => {
+            forceRerender(num => num + 1)
+        }, 1)
 
+       return () => clearInterval(rerender)
        
 
         }, [])

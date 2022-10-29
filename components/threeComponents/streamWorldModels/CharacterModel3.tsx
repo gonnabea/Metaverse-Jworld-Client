@@ -27,6 +27,7 @@ const CharacterModel3 = ({ scale, rotation }: CharacterModelOpts) => {
     const { nodes, materials, animations } = useGLTF(modelList.character3) as GLTFResult;
     const group = useRef<THREE.Group>()
 
+    const [_, forceRerender] = useState(9);
     
 
     const { actions } = useAnimations<GLTFActions>(animations, group)
@@ -104,7 +105,11 @@ const CharacterModel3 = ({ scale, rotation }: CharacterModelOpts) => {
     useEffect(() => {
         
         
-        
+        const rerender = setInterval(() => {
+            forceRerender(num => num + 1)
+        }, 1)
+
+       return () => clearInterval(rerender)
 
        
 
