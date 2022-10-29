@@ -116,7 +116,7 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
 
         }, [])
                 
-        return applyConnectedUser().length >= 0 ? (
+        return (
             <>
 
             <group ref={group}>
@@ -152,7 +152,7 @@ const CharacterModel2 = ({ scale, rotation }: CharacterModelOpts) => {
           
         </mesh> */}
           </>
-        ) : null
+        )
         
     
     }

@@ -41,7 +41,7 @@ const World: NextPage = () => {
   const router = useRouter()
   const [socketIoClient] = useWebsocket();
   const [_, forceRerender] = useState(0);
-  const [userIndex, setUserIndex] = useState(0); // 방에 입장한 유저 상태관리를 위함
+  const userIndex = useRef(0);
 
 
   // 로비 입장 시 로그인 된 유저 정보 가져오기
@@ -88,7 +88,10 @@ const World: NextPage = () => {
 
     socketIoClient.emit("get-user-list", { roomId: url.split("world/")[1] }, (userList) => {
       console.log(userList)
-      alert(userList.length - 1)
+      alert(userList.length)
+      userIndex.current = userList.length - 1
+      alert(userIndex.current)
+
     })
 
   }
@@ -180,8 +183,7 @@ const World: NextPage = () => {
       data.userList?.map((user, index) => {
         addConnectedUser({ id: user.id, connectedRoomId: user.connectedRoomId })
       })
-
-      setUserIndex(data.userList.length - 1);
+      
       
     })
 
@@ -217,8 +219,8 @@ const World: NextPage = () => {
 
     // 서버에 캐릭터 위치 실시간 전송
     const sendCharacterPosition = setInterval(() => {
-      console.log(userIndex)
-      socketIoClient.emit("avatar-move", { roomId: roomId.current, userIndex, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ })
+      console.log(userIndex.current)
+      socketIoClient.emit("avatar-move", { roomId: roomId.current, userIndex: userIndex.current, position: applyCharacterStatus().position, rotateZ: applyCharacterStatus().rotateZ })
     }, 30)
 
     return () => {
