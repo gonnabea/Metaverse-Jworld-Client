@@ -155,7 +155,7 @@ const World: NextPage = () => {
     }
     else {
       return (
-        <mesh ref={ref} visible={false}   >
+        <mesh ref={ref} visible={true}   >
           <boxGeometry args={props.args} />
           <meshStandardMaterial color="orange" />
         </mesh>
@@ -316,6 +316,10 @@ const World: NextPage = () => {
             <ObstacleBox position={[0, 2, 7.5]} args={[21, 4, 0.1]} />
             <ObstacleBox position={[0, 2, -7.5]} args={[21, 4, 0.1]} />
 
+            <ObstacleBox position={[9.35392660808115, 1.337924409289988, -0.4]} args={[0.1, 15, 7]} />
+            <ObstacleBox position={[10, 1.337924409289988, -0.4]} args={[0.1, 15, 7]} />
+
+
             {/* 계단 위 바닥 */}
             <ObstacleBox position={[0, -0.3, 0]} args={[20, 0.1, 15]} isGround={true} />
 
@@ -330,6 +334,9 @@ const World: NextPage = () => {
             <ObstacleBox position={[15.5, 1, -7.5]} args={[10, 7, 0.1]} />
 
             <ObstacleBox position={[20, 1, 0]} args={[0.1, 7, 15]} />
+
+            <ObstacleBox position={[20, 1, 0]} args={[0.1, 7, 15]} />
+
 
 
 
